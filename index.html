@@ -1755,7 +1755,7 @@ function consigneAttente(box, g, q) {
   if (!idAdv) {
     box.innerHTML = `${enTete}<h2>En attente d'un adversaire</h2><p>Donnez ce code à la personne qui jouera ${LA[q.camp]} : <b style="font-family:var(--f-label);letter-spacing:.2em;font-size:1.3rem">${LIGNE.code}</b></p><p>Elle ouvre ce même jeu, saisit le code dans « En ligne, à deux » et clique Rejoindre. La partie commence dès qu'elle arrive.</p>`;
     if (BASE.web) {
-      const lien = location.origin + location.pathname + "#" + LIGNE.code;
+      const lien = (location.protocol === "file:" ? SITE_PUBLIC : location.origin + location.pathname) + "#" + LIGNE.code;   // fichier local : lien vers le site public, même relais
       box.insertAdjacentHTML("beforeend", `<p>Ou envoyez-lui directement ce lien : la partie s'ouvrira toute seule.</p><div class="choix"><input readonly style="flex:1;min-width:0;font:inherit;font-size:.85rem;padding:4px 6px" value="${attr(lien)}"><button class="btn prim" type="button" id="copierLien">Copier le lien</button></div><p class="lbl" id="etatLien"></p>`);
       $("copierLien").onclick = async () => { try { await navigator.clipboard.writeText(lien); $("etatLien").textContent = "Lien copié."; } catch { box.querySelector("input").select(); $("etatLien").textContent = "Copiez le lien sélectionné."; } };
     }
@@ -1798,6 +1798,7 @@ document.addEventListener("visibilitychange", () => { if (!document.hidden) docu
 // Imite le petit morceau de l'API « db » de Claude dont la partie en ligne a besoin (doc get/set/update/onSnapshot,
 // requête par joueur). Les décisions sont stockées en texte JSON : Firebase efface les null et les tableaux vides.
 const RELAIS_WEB = "ntfy:https://ntfy.sh";
+const SITE_PUBLIC = "https://yoyoyoal.github.io/100-ANS-Jeu/";
 function relaisFirebase(base) {
   base = base.replace(/\/+$/, "");
   const url = (path, q = "") => `${base}/${path}.json${q}`;
