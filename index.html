@@ -88,7 +88,7 @@ header.tete h1{font-size:clamp(1.3rem,2.4vw,1.9rem);line-height:1}
 @media (min-width:1100px) and (min-height:700px) and (max-height:859px){.phase{grid-template-columns:minmax(0,1fr);padding-left:6px}.phase > :first-child:not(div){display:none}}
 /* ---------- pistes */
 .score{position:relative;height:26px;border-radius:3px;background:linear-gradient(90deg,var(--gueules) 0 50%,var(--azur) 50% 100%);opacity:.92}
-.score .marq{position:absolute;top:-4px;width:6px;height:34px;background:var(--or);border:1px solid var(--encre);transform:translateX(-50%);transition:left .5s}
+.score .marq{position:absolute;top:-20px;width:26px;height:48px;background:url(pieces/pion_score.png) center bottom/contain no-repeat;transform:translateX(-50%);transition:left .5s;filter:drop-shadow(0 1px 1px rgba(0,0,0,.35))}
 .score .ech{position:absolute;inset:0;display:flex;justify-content:space-between;align-items:center;padding-inline:6px;color:var(--blanc);font-family:var(--f-label);font-size:.8rem}
 .score .ech b{font-size:1rem}
 .pistes{display:grid;grid-template-columns:auto 1fr 1fr;gap:3px 8px;align-items:center;font-size:.85rem}
@@ -105,6 +105,10 @@ header.tete h1{font-size:clamp(1.3rem,2.4vw,1.9rem);line-height:1}
 .loy i{height:10px;border-radius:2px;background:var(--velin);border:1px solid color-mix(in srgb,var(--sepia) 45%,transparent)}
 .loy i.c0{background:var(--velin-2)}
 .loy i.on.a{background:var(--gueules)} .loy i.on.f{background:var(--azur)} .loy i.on.n{background:var(--sepia)}
+/* cube de bois rendu dans Blender posé sur la case de loyauté */
+.loy i.on{position:relative;overflow:visible}
+.loy i.on::after{content:"";position:absolute;left:50%;top:50%;width:19px;height:19px;transform:translate(-50%,-56%);background:center/contain no-repeat;pointer-events:none}
+.loy i.on.a::after{background-image:url(pieces/cube_A.png)} .loy i.on.f::after{background-image:url(pieces/cube_F.png)} .loy i.on.n::after{background-image:url(pieces/cube_N.png)}
 .change-piste{outline:2px solid var(--halo);outline-offset:2px;border-radius:3px}
 /* ---------- consigne et récit */
 .consigne{border:2px solid var(--or);background:var(--velin)}
@@ -132,8 +136,10 @@ select{font:inherit;padding:3px 6px;background:var(--velin);color:var(--encre);b
 @media (max-width:480px){.grande{grid-template-columns:84px minmax(0,1fr)}.grande img,.grande .vide{width:84px}.duo{grid-template-columns:1fr}}
 .jet{display:grid;gap:6px;padding:8px 10px;border:1px dashed var(--sepia);border-radius:4px;background:color-mix(in srgb,var(--velin-2) 40%,var(--velin))}
 .jet .ligne{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-family:var(--f-label);font-size:.92rem}
-.de{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:7px;background:var(--blanc);border:2px solid var(--encre);font-family:var(--f-titre);font-size:1.4rem;line-height:1;box-shadow:1px 2px 0 var(--sepia)}
-.de.A{border-color:var(--gueules);color:var(--gueules)} .de.F{border-color:var(--azur);color:var(--azur)}
+.de{display:inline-grid;place-items:center;width:44px;height:44px;background:center/contain no-repeat;color:transparent;font-size:1px;line-height:1;overflow:hidden}
+.de.v1{background-image:url(pieces/de_1.png)} .de.v2{background-image:url(pieces/de_2.png)} .de.v3{background-image:url(pieces/de_3.png)}
+.de.v4{background-image:url(pieces/de_4.png)} .de.v5{background-image:url(pieces/de_5.png)} .de.v6{background-image:url(pieces/de_6.png)}
+.de.A,.de.F{box-shadow:0 3px 0 -1px var(--c)} .de.A{--c:var(--gueules)} .de.F{--c:var(--azur)}
 .de.roule{animation:roule .5s ease-out}
 @keyframes roule{0%{transform:rotate(-200deg) scale(.4);opacity:0}70%{transform:rotate(15deg) scale(1.1)}100%{transform:none;opacity:1}}
 .verdict{font-family:var(--f-titre);font-size:1.2rem}
@@ -228,11 +234,14 @@ select{font:inherit;padding:3px 6px;background:var(--velin);color:var(--encre);b
 @keyframes pulse{50%{stroke-width:8;opacity:.5}}
 @media (prefers-reduced-motion:reduce){.lieu .halo,.de.roule{animation:none!important}.score .marq{transition:none}}
 .lieu text{pointer-events:none}
-.pinf circle{stroke:var(--blanc);stroke-width:1.6} .pinf.A circle{fill:var(--gueules)} .pinf.F circle{fill:var(--azur)}
-.pinf text{fill:var(--blanc);font-family:var(--f-label);font-size:12.5px;font-weight:700}
+.pinf circle{fill:transparent;stroke:none}
+.pinf image,.lieu image.piece{pointer-events:none}
+.pinf image{transform-box:fill-box;transform-origin:center;transition:transform .15s}
+.pinf text{fill:var(--blanc);font-family:var(--f-label);font-size:12.5px;font-weight:700;paint-order:stroke;stroke:rgba(20,10,5,.55);stroke-width:2px}
+.lieu .corps{fill-opacity:0;stroke-opacity:0}
 .pinf.zero{display:none}
 #carte.selection .pinf{transform-box:fill-box}
-#carte.selection .pinf circle{r:10.5;stroke:var(--or);stroke-width:2}
+#carte.selection .pinf image{transform:scale(1.18)}
 #carte.selection .pinf text{font-size:14px}
 .prevu{display:none} .prevu.on{display:inline}
 .prevu rect{fill:var(--sinople);stroke:var(--blanc);stroke-width:1.5} .prevu.A rect{fill:var(--gueules)} .prevu.F rect{fill:var(--azur)}
@@ -296,6 +305,16 @@ select{font:inherit;padding:3px 6px;background:var(--velin);color:var(--encre);b
 .glisse{transition:transform 1s ease-in-out}
 @media (max-width:760px){.tuto{grid-template-columns:1fr}.tuto .menu{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}}
 @media (prefers-reduced-motion:reduce){.a{animation:none}}
+
+/* ---------- v20 : cadres d'enluminure (Flux schnell), parchemin (Juggernaut XL), sceaux de cire (Flux) — outils/cadres_web.py */
+.bloc{border:9px solid transparent;border-image:url(pieces/cadre_panneau.png) 40 / 9px round;border-radius:0;background:var(--velin) url(pieces/parchemin.jpg) 0 0/256px;background-clip:padding-box;padding:4px 7px}
+.consigne.A,.consigne.F{border-left-width:9px;box-shadow:inset 6px 0 0 var(--cc)} .consigne.A{--cc:var(--gueules)} .consigne.F{--cc:var(--azur)}
+.carte{border:solid transparent;border-width:7px 5px 8px;border-image:url(pieces/cadre_carte.png) 39 23 42 24 / 7px 5px 8px stretch;border-radius:0;position:relative;background:var(--velin) url(pieces/parchemin.jpg) 0 0/220px;background-clip:padding-box}
+.carte .corps,.main.mini .carte .corps{padding-inline:4px} .carte .corps{padding-block:3px 4px}
+.carte::after{content:"";position:absolute;inset:0;border:2px solid var(--cc,var(--sepia));pointer-events:none}
+.carte.A{--cc:var(--gueules)} .carte.F{--cc:var(--azur)} .carte.N{--cc:var(--sepia)} .carte.S{--cc:var(--or)}
+.pinf .nb{fill:var(--encre);stroke:var(--blanc);stroke-width:1.2}
+.pinf text{font-size:10.5px;stroke:none}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -794,7 +813,7 @@ function simDecompte(g, r) {
     ["A", "F"].map(c => `<span class="t${c}"><b>${NOM[c]}</b> : ${niv(c)} · ${m[c].length} lieu${m[c].length > 1 ? "x" : ""} contrôlé${m[c].length > 1 ? "s" : ""} dont ${m[c].filter(n => D.lieux[n].pf).length} place(s) forte(s) → <b>${pts[c]} pts</b></span>`).join("") +
     `<span>Écart ${ecart > 0 ? "+" : ""}${ecart} ${ecart > 0 ? "pour la France" : ecart < 0 ? "pour l'Angleterre" : ""} · score ${g.score > 0 ? "+" : ""}${g.score} → <b>${apres > 0 ? "+" : ""}${apres}</b></span></span>` };
 }
-function de_(v, c) { return `<span class="de roule ${c || ""}" aria-label="dé ${v}">${v}</span>`; }
+function de_(v, c) { return `<span class="de roule v${v} ${c || ""}" role="img" aria-label="dé ${v}">${v}</span>`; }
 function panneau(p) {
   const s = p.s, df = diff(p.avant, p.apres), c = s.camp;
   const effets = df.L.length ? `<ul class="effets">${df.L.map(x => `<li>${x}</li>`).join("")}</ul>` : "";
@@ -989,6 +1008,7 @@ document.addEventListener("keydown", e => {
 // Fond : terres, lavis des régions décomptées (chaque point prend la couleur du lieu le plus proche, liseré le long des
 // frontières, comme sur l'atelier), noms et valeurs des régions, fleuves, reliefs, liaisons et lieux.
 const SVGNS = "http://www.w3.org/2000/svg";
+const PIECES = {sceau_A: "pieces/sceau_A.png", sceau_F: "pieces/sceau_F.png", lieu_N: "pieces/lieu_N.png", lieu_A: "pieces/lieu_A.png", lieu_F: "pieces/lieu_F.png", forte_N: "pieces/forte_N.png", forte_A: "pieces/forte_A.png", forte_F: "pieces/forte_F.png", pion_A: "pieces/pion_A.png", pion_F: "pieces/pion_F.png"};
 const el = (t, at, p) => { const e = document.createElementNS(SVGNS, t); for (const k in at) e.setAttribute(k, at[k]); if (p) p.appendChild(e); return e; };
 const svg = $("carte");
 svg.setAttribute("viewBox", `0 0 ${PLAN.W} ${PLAN.H}`);
@@ -1015,11 +1035,14 @@ for (const n of D.noms) {
   const [x, y] = PLAN.lieux[n], L = D.lieux[n], r = 7 + L.defense * 1.6;
   const g = el("g", { class: "lieu", transform: `translate(${x},${y})`, tabindex: -1, role: "button", "aria-label": n, style: `--rc:${COUL[L.region]}` }, gP);
   el("circle", { class: "halo", r: r + 6 }, g);
-  const corps = L.pf ? el("rect", { x: -r, y: -r, width: 2 * r, height: 2 * r, rx: 3, "stroke-width": 2 }, g) : el("circle", { r, "stroke-width": 1.6 }, g);
+  // pièce rendue dans Blender (outils/pieces_blender.py) ; la forme SVG dessous reste la zone cliquable
+  const tp = 2 * r / (L.pf ? .656 : .762);
+  const img = el("image", { class: "piece", href: PIECES[(L.pf ? "forte_" : "lieu_") + "N"], x: -tp / 2, y: -tp / 2, width: tp, height: tp }, g);
+  const corps = L.pf ? el("rect", { class: "corps", x: -r, y: -r, width: 2 * r, height: 2 * r, rx: 3, "stroke-width": 2 }, g) : el("circle", { class: "corps", r, "stroke-width": 1.6 }, g);
   const def = el("text", { y: 4, "text-anchor": "middle", "font-size": 11, "font-family": "var(--f-label)" }, g);
   def.textContent = L.defense;
   // Influence : pastilles rouge (Angleterre, en haut à gauche) et bleue (France, en haut à droite)
-  const pastille = (x, cls) => { const p = el("g", { class: "pinf " + cls, transform: `translate(${x},${-r - 1})` }, g); el("circle", { r: 9 }, p); const t = el("text", { y: 4.3, "text-anchor": "middle" }, p); return t; };
+  const pastille = (x, cls) => { const p = el("g", { class: "pinf " + cls, transform: `translate(${x},${-r - 1})` }, g); el("circle", { r: 9 }, p); el("image", { href: PIECES["sceau_" + cls], x: -12, y: -12, width: 24, height: 24 }, p); el("circle", { class: "nb", cx: 8, cy: 8, r: 6.5 }, p); const t = el("text", { x: 8, y: 11.7, "text-anchor": "middle" }, p); return t; };
   const ia = pastille(-r - 4, "A"), iff = pastille(r + 4, "F");
   const prevu = el("g", { class: "prevu", transform: `translate(0,${-r - 14})` }, g); el("rect", { x: -15, y: -9, width: 30, height: 16, rx: 8 }, prevu);
   const prevuT = el("text", { y: 3.5, "text-anchor": "middle" }, prevu);
@@ -1027,7 +1050,7 @@ for (const n of D.noms) {
   const delta = el("text", { y: -r - 8, "text-anchor": "middle", class: "delta" }, g);
   g.addEventListener("click", () => cliquerLieu(n));
   g.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); cliquerLieu(n); } });
-  VUE[n] = { g, corps, def, ia, iff, delta, r, prevu, prevuT };
+  VUE[n] = { g, corps, img, def, ia, iff, delta, r, prevu, prevuT };
 }
 // mise en évidence d'une région (survol d'une carte de décompte, de la frise, d'un nom de région, ou décompte en cours)
 let regionSurvol = null, regionLecture = null;
@@ -1136,6 +1159,7 @@ function dessiner(snap, v) {
     o.corps.setAttribute("fill", c === "A" ? "var(--gueules)" : c === "F" ? "var(--azur)" : "var(--velin)");
     o.corps.setAttribute("stroke", c ? "var(--or)" : "var(--sepia)");
     o.def.setAttribute("fill", c ? "var(--blanc)" : "var(--encre)");
+    o.img.setAttribute("href", PIECES[(L.pf ? "forte_" : "lieu_") + (c || "N")]);
     o.ia.textContent = i[0] || ""; o.iff.textContent = i[1] || "";
     o.ia.parentNode.classList.toggle("zero", !i[0]); o.iff.parentNode.classList.toggle("zero", !i[1]);
     o.g.classList.toggle("change", changes.has(n));
@@ -1408,15 +1432,17 @@ const dé = () => 1 + Math.floor(Math.random() * 6);
 function tLieu(x, y, o) {
   const r = 16 + o.def * 3, c = o.a >= o.def + o.f && o.a > 0 ? "A" : o.f >= o.def + o.a && o.f > 0 ? "F" : null;
   const fill = c === "A" ? "var(--gueules)" : c === "F" ? "var(--azur)" : "var(--velin)";
-  const corps = o.pf ? `<rect x="${-r}" y="${-r}" width="${2 * r}" height="${2 * r}" rx="4" fill="${fill}" stroke="${c ? "var(--or)" : "var(--sepia)"}" stroke-width="3"/>` : `<circle r="${r}" fill="${fill}" stroke="${c ? "var(--or)" : "var(--sepia)"}" stroke-width="2.5"/>`;
+  const tp = 2 * r / (o.pf ? .656 : .762);
+  const corps = `<image href="${PIECES[(o.pf ? "forte_" : "lieu_") + (c || "N")]}" x="${-tp / 2}" y="${-tp / 2}" width="${tp}" height="${tp}"/>`;
+  const jeton = (x, cc, v) => `<g transform="translate(${x},${-r - 2})"><image href="${PIECES["pion_" + cc]}" x="-16" y="-16" width="32" height="32"/><text y="6" text-anchor="middle" font-size="17" font-weight="700" fill="#fff" style="paint-order:stroke;stroke:rgba(20,10,5,.55);stroke-width:2.5px">${v}</text></g>`;
   return `<g transform="translate(${x},${y})" ${o.id ? `id="${o.id}"` : ""} ${o.cls ? `class="${o.cls}"` : ""}>${o.halo ? `<circle r="${r + 10}" fill="none" stroke="var(--halo)" stroke-width="5"><animate attributeName="stroke-width" values="4;9;4" dur="1.4s" repeatCount="indefinite"/></circle>` : ""}${corps}
     <text y="6" text-anchor="middle" font-family="var(--f-label)" font-size="18" fill="${c ? "#fff" : "var(--encre)"}">${o.def}</text>
-    ${o.a ? `<text x="${-r - 6}" y="${-r + 4}" text-anchor="end" font-size="20" font-weight="700" fill="var(--gueules)">${o.a}</text>` : ""}
-    ${o.f ? `<text x="${r + 6}" y="${-r + 4}" font-size="20" font-weight="700" fill="var(--azur)">${o.f}</text>` : ""}
+    ${o.a ? jeton(-r - 6, "A", o.a) : ""}
+    ${o.f ? jeton(r + 6, "F", o.f) : ""}
     <text y="${r + 22}" text-anchor="middle" font-family="var(--f-label)" font-size="15" fill="var(--encre)">${o.nom || ""}${o.port ? " ⚓" : ""}</text></g>`;
 }
 const tCarte = (id, extra = "") => { const k = R.carte(D, id), t = TEXTES[id]; return `<div class="carte ${k.camp}" style="width:170px;${extra}"><div class="img" style="background-image:url('miniatures/${id}.jpg')"><span class="ops">${k.ops}</span></div><div class="corps"><span class="nom">${k.nom}</span><span class="lbl">${t.d}</span><p class="eff">${effetLisible(t.e)}</p></div></div>`; };
-const tDe = (v, c = "") => `<span class="de roule ${c}" style="width:52px;height:52px;font-size:2rem">${v}</span>`;
+const tDe = (v, c = "") => `<span class="de roule v${v} ${c}" role="img" aria-label="dé ${v}" style="width:56px;height:56px">${v}</span>`;
 const parId = nom => D.parNom[nom]?.id;
 
 const TUTO = [
