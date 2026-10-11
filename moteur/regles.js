@@ -70,7 +70,7 @@ const log = (g, m) => { if (g.journal) g.journal.push(`T${g.tour}.${g.round} ${m
 // de l'état, pour que l'interface puisse la rejouer. Inactif dans les simulations (pas de journal) et sans effet sur le hasard.
 let RECIT = null;
 export function activerRecit(t) { RECIT = t; }
-const photo = g => ({ inf: Object.values(g.inf).map(i => [i.A, i.F]), score: g.score, tresor: { ...g.tresor }, legit: { ...g.legit }, treve: g.treve, crise: g.crise, loy: { ...g.loy } });
+const photo = g => ({ inf: Object.values(g.inf).map(i => [i.A, i.F]), score: g.score, tresor: { ...g.tresor }, legit: { ...g.legit }, paliers: { ...g.paliers }, treve: g.treve, crise: g.crise, loy: { ...g.loy } });
 export function etape(g, o) { if (RECIT && g.journal) RECIT.push({ tour: g.tour, round: g.round, ...o, snap: photo(g) }); }
 
 // ---------------------------------------------------------------- contrôle et zones
@@ -210,42 +210,47 @@ export function assautsInterdits(D, g, n) {
   return false;
 }
 export function ciblesAssaut(D, g, c) { return D.noms.filter(n => g.inf[n][adv(c)] > 0 && !assautsInterdits(D, g, n)); }
-export function bonusAssaut(D, g, c, n) {
-  let b = 0;
-  if (D.lieux[n].voisins.some(v => controle(D, g, v) === c)) b += 1;
-  if (c === F && g.statuts.duGuesclin) b += 1;
-  if (c === F && g.statuts.compagnies) b += 1;
-  if (c === F && g.statuts.bureau && D.lieux[n].pf) b += 1;
-  if (rallie(g, "Bretagne") === c && ["Bretagne", "Normandie"].includes(D.lieux[n].region)) b += 1;
-  if (g.crise >= 4) b -= 1;
+// détail des bonus d'Assaut : [libellé, valeur] (affiché par l'interface)
+export function bonusAssautDetail(D, g, c, n) {
+  const b = [];
+  const v = D.lieux[n].voisins.find(v => controle(D, g, v) === c);
+  if (v) b.push([`lieu voisin contrôlé (${v})`, 1]);
+  if (c === F && g.statuts.duGuesclin) b.push(["Du Guesclin connétable", 1]);
+  if (c === F && g.statuts.compagnies) b.push(["Compagnies d'ordonnance", 1]);
+  if (c === F && g.statuts.bureau && D.lieux[n].pf) b.push(["Les frères Bureau (place forte)", 1]);
+  if (rallie(g, "Bretagne") === c && ["Bretagne", "Normandie"].includes(D.lieux[n].region)) b.push(["Bretagne ralliée", 1]);
+  if (g.crise >= 4) b.push([`Crise à ${g.crise}`, -1]);
   return b;
 }
+export function bonusAssaut(D, g, c, n) { return bonusAssautDetail(D, g, c, n).reduce((s, x) => s + x[1], 0); }
 export const coutAssaut = (D, g, n) => g.regles?.coutAssaut ? (D.lieux[n].pf ? 2 : 1) : (D.lieux[n].pf ? 1 : 0);
 export function assaut(D, g, c, ops, n, { depense = 0, gratuit = false, sansTreve = false } = {}) {
   if (!gratuit) { const k = coutAssaut(D, g, n); if (g.tresor[c] < k) return false; tresor(g, c, -k); }
   const dep = Math.min(depense, 4, g.tresor[c]); tresor(g, c, -dep);
-  const d = de(g), def = defense(D, g, n), bonus = bonusAssaut(D, g, c, n);
-  const r = d + ops - 2 * def + bonus + Math.floor(dep / 2);
+  const d = de(g), def = defense(D, g, n), bd = bonusAssautDetail(D, g, c, n), bonus = bd.reduce((s, x) => s + x[1], 0);
+  const r = d + ops - 2 * def + bonus + Math.floor(dep / 2), avant = g.inf[n][adv(c)];
+  let retireN = 0, occupe = 0;
   g.militaire[c] += ops; g.stats.assauts[c]++; g.stats.ciblesAssaut[n] = (g.stats.ciblesAssaut[n] || 0) + 1;
   if (r > 0) {
     const o = adv(c), retire = Math.min(r, g.inf[n][o]);
-    retirer(g, o, n, retire);
-    if (!(g.regles?.pillage && !D.lieux[n].pf)) ajouter(g, c, n, r - retire); // pillage : une chevauchée hors place forte dévaste sans occuper
+    retirer(g, o, n, retire); retireN = retire;
+    if (!(g.regles?.pillage && !D.lieux[n].pf)) { ajouter(g, c, n, r - retire); occupe = r - retire; } // pillage : une chevauchée hors place forte dévaste sans occuper
   }
   log(g, `${c} assaut ${n} (${ops} OPS) → ${r}`);
-  etape(g, { k: "assaut", camp: c, lieu: n, d, ops, def, bonus, dep, r, gratuit, pf: !!D.lieux[n].pf, treve: !!(D.lieux[n].pf && !sansTreve) });
+  etape(g, { k: "assaut", camp: c, lieu: n, d, ops, def, bonus, bd, dep, r, avant, retire: retireN, occupe, gratuit, pf: !!D.lieux[n].pf, treve: !!(D.lieux[n].pf && !sansTreve) });
   if (D.lieux[n].pf && !sansTreve) treve(D, g, -1);
   return r > 0;
 }
 export function siege(D, g, c, n, depense = 0) {
   const o = adv(c);
   const dep = Math.min(depense, g.tresor[c]); tresor(g, c, -dep);
-  const mod = (camp) => D.lieux[n].voisins.filter(v => controle(D, g, v) === camp).length + (g.inf[n][camp] > g.inf[n][adv(camp)] ? 1 : 0);
-  const da = de(g), dd = de(g), ma = mod(c), md = mod(o);
+  const vois = camp => D.lieux[n].voisins.filter(v => controle(D, g, v) === camp).length, sup = camp => (g.inf[n][camp] > g.inf[n][adv(camp)] ? 1 : 0);
+  const mod = camp => vois(camp) + sup(camp);
+  const da = de(g), dd = de(g), ma = mod(c), md = mod(o), det = { va: vois(c), sa: sup(c), vd: vois(o), sd: sup(o) };
   const ra = da + ma + Math.floor(dep / 2), rd = dd + md;
   g.stats.sieges[c]++;
   if (ra > rd) retirer(g, o, n, ra - rd); else if (rd > ra) retirer(g, c, n, rd - ra);
-  etape(g, { k: "siege", camp: c, lieu: n, da, ma, dep, ra, dd, md, rd });
+  etape(g, { k: "siege", camp: c, lieu: n, da, ma, dep, ra, dd, md, rd, ...det });
 }
 export function diplomatie(D, g, c, ops, f, depense = 0) {
   const dep = Math.min(depense, g.tresor[c]); tresor(g, c, -dep);
@@ -269,15 +274,16 @@ export function bataille(D, g, c, ops, siVictoire) {
   // Interprétation (à valider) : 1d6 + bonus ≥ 4 ; une Bataille compte ses OPS comme chevauchée.
   g.militaire[c] += ops;
   if (c === A && g.statuts.lundiNoir) { g.statuts.lundiNoir = false; etape(g, { k: "bataille", camp: c, lundiNoir: true, ok: false }); return false; }
-  let b = 0;
-  if (c === A && g.statuts.arc) b++;
-  if (c === A && g.statuts.jarretiere) { b++; g.statuts.jarretiere = false; }
-  if (c === F && g.statuts.jeanne) b++;
-  if (c === F && g.statuts.dunois) { b++; g.statuts.dunois = false; }
-  if (c === A && g.tourFlags.aiguillon) b++;
+  const bd = [];
+  if (c === A && g.statuts.arc) bd.push(["archers (Ordonnance sur le tir à l'arc)", 1]);
+  if (c === A && g.statuts.jarretiere) { bd.push(["Ordre de la Jarretière", 1]); g.statuts.jarretiere = false; }
+  if (c === F && g.statuts.jeanne) bd.push(["Jeanne d'Arc", 1]);
+  if (c === F && g.statuts.dunois) { bd.push(["Dunois", 1]); g.statuts.dunois = false; }
+  if (c === A && g.tourFlags.aiguillon) bd.push(["Aiguillon", 1]);
+  const b = bd.length;
   const d = de(g), ok = d + b >= 4;
   log(g, `${c} bataille → ${ok ? "victoire" : "échec"}`);
-  etape(g, { k: "bataille", camp: c, d, bonus: b, ok });
+  etape(g, { k: "bataille", camp: c, d, bonus: b, bd, ok });
   if (ok) siVictoire();
   return ok;
 }
@@ -468,12 +474,13 @@ function finDeTour(D, g) {
   etape(g, { k: "crise", peste });
   // légitimité et papauté
   g._ctx = "Légitimité/Papauté (fin de tour)";
+  const tete = g.legit.F > g.legit.A ? F : g.legit.A > g.legit.F ? A : null, p8 = g.paliers[8] || null;
   if (g.legit.F !== g.legit.A) vp(g, g.legit.F > g.legit.A ? F : A, 1);
   if (g.paliers[8]) vp(g, g.paliers[8], 1);
   const schisme = g.joues["Grand Schisme d'Occident"] && !g.joues["Concile de Constance"];
   const pape = rallie(g, "Papauté");
   if (pape && (!schisme || rallie(g, "Rome") === pape)) { legit(g, pape, 1); if (g.treve <= 3) g.treve += 1; }
-  etape(g, { k: "finLegit", pape: pape && (!schisme || rallie(g, "Rome") === pape) ? pape : null });
+  etape(g, { k: "finLegit", tete, p8, pape: pape && (!schisme || rallie(g, "Rome") === pape) ? pape : null });
   if (g.fin) return;
   // cartes de décompte gardées en main
   for (const c of [A, F]) if (g.mains[c].some(id => carte(D, id).decompte)) { terminer(g, adv(c), "Carte de décompte gardée en main"); return; }

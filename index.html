@@ -80,7 +80,8 @@ header.tete h1{font-size:clamp(1.3rem,2.4vw,1.9rem);line-height:1}
   #blocScore > .score{grid-column:1;grid-row:2}
   #blocScore > .pistes{grid-column:2;grid-row:1/3}
   #blocScore > .legit-eff{grid-column:3;grid-row:1/3}
-  .etat{grid-column:3;grid-row:2/4;min-height:0;overflow:hidden;grid-template-rows:auto minmax(80px,1fr)}
+  .etat{grid-column:3;grid-row:2/4;min-height:0;overflow:hidden;grid-template-rows:auto auto minmax(80px,1fr)}
+  .encours-l{max-height:22vh}
   .chronique{max-height:none!important;height:100%}
   .bloc.chron{min-height:0;grid-template-rows:auto minmax(0,1fr)}
 }
@@ -220,20 +221,21 @@ select{font:inherit;padding:3px 6px;background:var(--velin);color:var(--encre);b
 .lien.mer{stroke-dasharray:4 4;stroke:color-mix(in srgb,var(--azur) 45%,transparent)}
 .lieu{cursor:default;transition:opacity .2s}
 .lieu.cible{cursor:pointer}
-.lieu .halo{fill:none;stroke:var(--halo);stroke-width:4;opacity:0}
+.lieu .halo{fill:none;stroke:var(--halo);stroke-width:2.5;opacity:0}
 .lieu.cible .halo{opacity:1;animation:pulse 1.4s ease-in-out infinite}
 .lieu.plan .halo{opacity:1;stroke:var(--sinople)}
-.lieu.change .halo{opacity:1;stroke:var(--halo);stroke-width:6;animation:pulse 1s ease-in-out 3}
-.lieu.vise .halo{opacity:1;stroke:var(--encre);stroke-width:5;stroke-dasharray:5 3}
-.lieu.focus .halo{opacity:1;stroke:var(--rc);stroke-width:5}
-.lieu.estompe{opacity:.3}
-.lieu .delta{font-family:var(--f-label);font-size:12px;font-weight:700;paint-order:stroke;stroke:var(--blanc);stroke-width:3px}
+.lieu.change .halo{opacity:1;stroke:var(--halo);stroke-width:4;animation:pulse 1s ease-in-out 3}
+.lieu.vise .halo{opacity:1;stroke:var(--encre);stroke-width:3;stroke-dasharray:4 3}
+.lieu.focus .halo{opacity:1;stroke:var(--rc);stroke-width:3.5}
+.lieu.estompe,.nomlieu.estompe{opacity:.3} .nomlieu{transition:opacity .2s}
+.lieu .delta{font-family:var(--f-label);font-size:11px;font-weight:700;paint-order:stroke;stroke:var(--blanc);stroke-width:3px}
+.lieu .delta.A{fill:var(--gueules)} .lieu .delta.F{fill:var(--azur)}
 .nomreg{font-family:var(--f-label);letter-spacing:4px;opacity:.55;pointer-events:none;transition:opacity .2s}
 .nomreg.focus{opacity:1;font-weight:700}
 .valreg{font-family:var(--f-label);font-size:10px;opacity:.8;pointer-events:none}
-@keyframes pulse{50%{stroke-width:8;opacity:.5}}
+@keyframes pulse{50%{stroke-width:5;opacity:.45}}
 @media (prefers-reduced-motion:reduce){.lieu .halo,.de.roule{animation:none!important}.score .marq{transition:none}}
-.lieu text{pointer-events:none}
+.lieu text,.noms{pointer-events:none}
 .pinf circle{fill:transparent;stroke:none}
 .pinf image,.lieu image.piece{pointer-events:none}
 .pinf image{transform-box:fill-box;transform-origin:center;transition:transform .15s}
@@ -241,13 +243,11 @@ select{font:inherit;padding:3px 6px;background:var(--velin);color:var(--encre);b
 .lieu .corps{fill-opacity:0;stroke-opacity:0}
 .pinf.zero{display:none}
 #carte.selection .pinf{transform-box:fill-box}
-#carte.selection .pinf image{transform:scale(1.18)}
-#carte.selection .pinf text{font-size:14px}
-.prevu{display:none} .prevu.on{display:inline}
-.prevu rect{fill:var(--sinople);stroke:var(--blanc);stroke-width:1.5} .prevu.A rect{fill:var(--gueules)} .prevu.F rect{fill:var(--azur)}
-.prevu text{fill:var(--blanc);font-family:var(--f-label);font-size:12px;font-weight:700}
-.prevu.on rect{stroke:var(--halo);stroke-width:2.5}
-.nomlieu{font-family:var(--f-label);font-size:10px;fill:var(--encre);paint-order:stroke;stroke:var(--terre);stroke-width:3px}
+.nomlieu{font-family:var(--f-label);font-size:9.5px;fill:var(--encre);paint-order:stroke;stroke:var(--terre);stroke-width:2.6px;stroke-linejoin:round}
+/* aperçu en direct du placement : sceau prévu cerclé d'or, lieu qui change de main cerclé de vert */
+.pinf.plus .nb{fill:var(--halo);stroke:var(--encre)} .pinf.plus text{fill:var(--encre)}
+.pinf.plus image{filter:drop-shadow(0 0 2.5px var(--halo)) drop-shadow(0 0 1.5px var(--halo))}
+.lieu.bascule .halo{opacity:1;stroke:var(--sinople);stroke-width:4;stroke-dasharray:none;animation:pulse 1.2s ease-in-out infinite}
 /* ---------- accueil */
 .accueil{display:grid;gap:18px;max-width:760px;margin:3vh auto;text-align:center}
 .acc-txt{display:grid;gap:14px;align-content:center;min-width:0}
@@ -300,12 +300,43 @@ select{font:inherit;padding:3px 6px;background:var(--velin);color:var(--encre);b
 .stage .carte{align-self:start}
 .progres{height:4px;background:var(--velin-2);border-radius:2px;overflow:hidden}
 .progres i{display:block;height:100%;background:var(--or);width:0;transition:width linear}
-.a{animation:apparait .6s ease-out both;animation-delay:var(--d,0s)}
+.anim{animation:apparait .6s ease-out both;animation-delay:var(--d,0s)}
 @keyframes apparait{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 .glisse{transition:transform 1s ease-in-out}
 @media (max-width:760px){.tuto{grid-template-columns:1fr}.tuto .menu{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}}
-@media (prefers-reduced-motion:reduce){.a{animation:none}}
+@media (prefers-reduced-motion:reduce){.anim{animation:none}}
 
+/* la page est servie sans doctype (mode quirks) : les classes y sont insensibles à la casse, d'où « anim » et non « a »,
+   qui aurait aussi animé tout ce qui porte la classe A (Angleterre) à chaque rafraîchissement */
+/* ---------- v21 : barre d'usages sur la carte, détail des jets, effets en cours, cartes retirées */
+.barre{position:fixed;z-index:15;box-sizing:border-box;display:grid;gap:6px;align-content:start;padding:6px;background:color-mix(in srgb,var(--velin) 94%,transparent);border:2px solid var(--halo);border-radius:4px;box-shadow:0 6px 18px var(--ombre)}
+.barre.A{border-color:var(--gueules)} .barre.F{border-color:var(--azur)}
+.barre-t{display:flex;justify-content:space-between;align-items:center;gap:6px;font-family:var(--f-titre);font-size:1rem;line-height:1.05}
+.barre-t .x{border:0;background:none;font-size:.95rem;color:var(--sepia);padding:0 2px}
+.barre-modes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px}
+.bm{display:grid;justify-items:center;gap:1px;padding:4px 2px;border:1px solid var(--encre);border-radius:4px;background:var(--velin);color:var(--encre);font-family:var(--f-label);font-size:.68rem;letter-spacing:.02em;min-width:0}
+.bm .ic{width:1.45em;height:1.45em}
+.bm:not([disabled]):hover{background:var(--or)}
+.bm[disabled]{opacity:.4;cursor:not-allowed;border-style:dashed}
+.barre-sel{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-family:var(--f-label)} .barre-sel .ic{width:1.4em;height:1.4em}
+.barre-act{display:flex;gap:6px} .barre-act .prim{flex:1;font-size:1.05rem;padding:6px 10px}
+.usages{margin:0;padding-left:18px;display:grid;gap:2px;font-size:.88rem} .usages li.non{color:var(--sepia)}
+.pas{display:inline-flex;align-items:center;gap:6px} .pas .btn{padding:0 9px;font-size:1rem;line-height:1.4} .pas b{min-width:1.2em;text-align:center;font-size:1rem;color:var(--encre)}
+table.calc{border-collapse:collapse;font-family:var(--f-label);font-size:.88rem;min-width:min(320px,100%)}
+table.calc td{padding:1px 8px;border-bottom:1px dotted color-mix(in srgb,var(--sepia) 40%,transparent)}
+table.calc td.num{text-align:right;white-space:nowrap}
+table.calc tr.tot td{border-bottom:0;border-top:2px solid var(--encre);font-size:1rem}
+.lecture-nav.propre{flex-wrap:nowrap} .lecture-nav.propre .progres{flex:1}
+.lecture-nav.propre .progres i{transition-property:width;transition-timing-function:linear}
+.entete-bloc{display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap}
+.btn.petit{padding:1px 7px;font-size:.72rem}
+.encours-l{list-style:none;margin:0;padding:0;display:grid;gap:3px;overflow:auto;font-size:.8rem;line-height:1.25}
+.encours-l li{padding:2px 5px;border-left:4px solid var(--sepia);background:color-mix(in srgb,var(--velin) 70%,transparent);cursor:help}
+.encours-l li.A{border-left-color:var(--gueules)} .encours-l li.F{border-left-color:var(--azur)}
+.encours-l li b{font-family:var(--f-label);letter-spacing:.02em}
+.encours-l .vide{border:0;background:none;color:var(--sepia);cursor:default}
+.feuille.large{max-width:1100px}
+.grille-cartes{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px}
 /* ---------- v20 : cadres d'enluminure (Flux schnell), parchemin (Juggernaut XL), sceaux de cire (Flux) — outils/cadres_web.py */
 .bloc{border:9px solid transparent;border-image:url(pieces/cadre_panneau.png) 40 / 9px round;border-radius:0;background:var(--velin) url(pieces/parchemin.jpg) 0 0/256px;background-clip:padding-box;padding:4px 7px}
 .consigne.A,.consigne.F{border-left-width:9px;box-shadow:inset 6px 0 0 var(--cc)} .consigne.A{--cc:var(--gueules)} .consigne.F{--cc:var(--azur)}
@@ -313,8 +344,8 @@ select{font:inherit;padding:3px 6px;background:var(--velin);color:var(--encre);b
 .carte .corps,.main.mini .carte .corps{padding-inline:4px} .carte .corps{padding-block:3px 4px}
 .carte::after{content:"";position:absolute;inset:0;border:2px solid var(--cc,var(--sepia));pointer-events:none}
 .carte.A{--cc:var(--gueules)} .carte.F{--cc:var(--azur)} .carte.N{--cc:var(--sepia)} .carte.S{--cc:var(--or)}
-.pinf .nb{fill:var(--encre);stroke:var(--blanc);stroke-width:1.2}
-.pinf text{font-size:10.5px;stroke:none}
+.pinf .nb{fill:var(--encre);stroke:var(--blanc);stroke-width:1.1}
+.pinf text{font-size:9.5px;stroke:none}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -406,6 +437,7 @@ select{font:inherit;padding:3px 6px;background:var(--velin);color:var(--encre);b
     </section>
     <aside class="etat">
       <div class="bloc fac"><div class="lbl">Factions · Angleterre ← → France</div><div class="factions" id="factions"></div></div>
+      <div class="bloc encours"><div class="entete-bloc"><span class="lbl">Effets en cours des cartes</span><button class="btn btn-ic petit" type="button" id="voirCartes" data-tip="Cartes retirées du jeu et défausse">Cartes retirées</button></div><ul class="encours-l" id="enCours"></ul></div>
       <div class="bloc chron"><div class="lbl">Chronique</div><ol class="chronique" id="chronique"></ol></div>
     </aside>
     <section class="main-zone">
@@ -447,6 +479,12 @@ select{font:inherit;padding:3px 6px;background:var(--velin);color:var(--encre);b
         <button class="btn" type="button" id="tutoFermer">Fermer</button>
       </nav>
       <section class="scene" id="scene" aria-live="polite"></section>
+    </div>
+  </div>
+  <div class="voile" id="feuilleCartes" hidden role="dialog" aria-modal="true" aria-labelledby="titreCartes">
+    <div class="feuille large">
+      <div class="choix" style="justify-content:space-between"><h2 id="titreCartes">Cartes sorties du jeu</h2><button class="btn" type="button" id="fermerCartes">Fermer</button></div>
+      <div id="listeCartes" style="display:grid;gap:10px"></div>
     </div>
   </div>
   <div class="tip" id="tip" hidden role="tooltip"></div>
@@ -578,8 +616,10 @@ function placerTip(x, y) {
   if (t + r.height > innerHeight - 8) t = y - r.height - 12;
   TIP.style.left = Math.max(8, l) + "px"; TIP.style.top = Math.max(8, t) + "px";
 }
+let TIP_SUR = null;   // élément survolé : son infobulle suit les changements (aperçu du placement)
 document.addEventListener("pointerover", e => {
   const t = e.target.closest ? e.target.closest("[data-tip]") : null;
+  TIP_SUR = t;
   if (!t || e.pointerType === "touch") { TIP.hidden = true; return; }
   TIP.innerHTML = t.getAttribute("data-tip"); TIP.hidden = false; placerTip(e.clientX, e.clientY);
 });
@@ -656,7 +696,7 @@ for (const ev of ["pointerdown", "keydown"]) addEventListener(ev, () => { if (!$
 class Attente { constructor(q) { this.q = q; } }
 const IA = creerIA();
 const METHODES = ["placement", "retrait", "cibleAssaut", "ouverture", "action"];
-let partie = null, etat = null, lecture = null, minuteur = null, LIGNE = null;
+let partie = null, etat = null, lecture = null, minuteur = null, LIGNE = null, propreCamp = null;
 
 function decideur(camp, ctx) {
   const o = {};
@@ -688,7 +728,9 @@ function derouler() {
 function repondre(r) {
   jouerSon(etat.q.m === "action" || etat.q.m === "ouverture" ? "carte" : "place");
   partie.decisions.push({ r: r === undefined ? null : structuredClone(r), graine: etat.q.graine, camp: etat.q.camp, humain: true });
-  partie.dernierCamp = etat.q.camp;
+  partie.dernierCamp = etat.q.camp; propreCamp = etat.q.camp;
+  // placement un par un (événements) : le sceau s'affiche aussitôt, sans attendre le recalcul de la partie
+  if (etat.q.m === "placement" && typeof r === "string" && VUE[r]) { const n = r, i = [etat.g.inf[n].A, etat.g.inf[n].F]; i[etat.q.camp === "A" ? 0 : 1]++; peindreLieu(n, i, etat.q.camp, ctlSnap(n, [etat.g.inf[n].A, etat.g.inf[n].F])); cibles([], null); }
   if (partie.ligne && partie.ligne.mode !== "message") { envoyerCoup(); return; }
   avancer();
 }
@@ -702,6 +744,10 @@ function avancer() {
     if (partie.vu == null || partie.vu > etat.recit.length) partie.vu = etat.recit.length;
     choix = { id: null, mode: null, plan: [], cible: null, depense: 0, levee: false, ordre: "avant" };
     const pas = construireLecture(etat.recit, partie.vu);
+    // conséquences de l'action que le joueur vient de valider (dés, effets) : affichées d'elles-mêmes, sans « Suivant »,
+    // jusqu'à la première carte adverse ou la fin du tour
+    if (propreCamp) for (const p of pas) { const s = p.s; if (s.k === "tour" || s.k === "ouverture" || s.k === "chevauchees" || s.k === "fin" || (s.k === "carte" && s.camp !== propreCamp)) break; p.propre = true; }
+    propreCamp = null;
     sauver();
     if (pas.length) { lecture = { pas, i: 0 }; montrerPas(); }
     else finLecture();
@@ -739,6 +785,12 @@ function construireLecture(rec, debut) {
     if (s.k === "evenement" && i && rec[i - 1].k === "carte" && rec[i - 1].mode === "evenement" && estPropre(rec[i - 1])) continue;
     out.push({ s, avant, apres: s.snap, lieux: s.lieu ? [s.lieu] : [], ctx, fin: i, idx: i, rec });
   }
+  // carte adverse jouée pour placer de l'Influence : la carte et ses points s'affichent dans la même étape (plus de
+  // « Suivant » entre la carte et l'Influence qui apparaît sur le plan)
+  for (let i = out.length - 2; i >= 0; i--) {
+    const p = out[i], q = out[i + 1];
+    if (p.s.k === "carte" && p.s.mode === "influence" && q.s.k === "influence" && q.s.camp === p.s.camp && q.idx === p.fin + 1) { p.apres = q.apres; p.fin = q.fin; out.splice(i + 1, 1); }
+  }
   return out.filter(p => (p.vue = panneau(p)));
 }
 const inf2 = (snap, n) => snap.inf[D.noms.indexOf(n)];
@@ -764,7 +816,12 @@ function diff(a, b) {
   if (b.score !== a.score) { const d = b.score - a.score; L.push(`${ic("score")} Score : ${Math.abs(d)} point${Math.abs(d) > 1 ? "s" : ""} pour ${d > 0 ? "la France" : "l'Angleterre"} (score ${sg(b.score) || 0})`); pistes.push("score"); }
   for (const c of ["A", "F"]) {
     if (b.tresor[c] !== a.tresor[c]) { L.push(`${ic("tresor")} Trésor ${c === "A" ? "anglais" : "français"} : ${sg(b.tresor[c] - a.tresor[c])} (${b.tresor[c]})`); pistes.push("tresor"); }
-    if (b.legit[c] !== a.legit[c]) { L.push(`${ic("legit")} Légitimité de ${LA[c]} : ${sg(b.legit[c] - a.legit[c])} (${b.legit[c]})`); pistes.push("legit"); }
+    if (b.legit[c] !== a.legit[c]) {
+      // paliers : case 2 = 2 points au premier camp qui l'atteint (1 au second), case 8 = 4 points (2 au second)
+      const pal = [];
+      for (let k = a.legit[c] + 1; k <= b.legit[c]; k++) if (k === 2 || k === 8) { const prem = !(a.paliers || {})[k]; pal.push(`case ${k} atteinte${prem ? " la première" : ""} : +${k === 2 ? (prem ? 2 : 1) : (prem ? 4 : 2)} points`); }
+      L.push(`${ic("legit")} Légitimité de ${LA[c]} : ${sg(b.legit[c] - a.legit[c])} (${b.legit[c]})${pal.length ? ` → ${pal.join(", ")}` : ""}`); pistes.push("legit");
+    }
   }
   if (b.treve !== a.treve) { L.push(`${ic("treve")} Trêve : ${sg(b.treve - a.treve)} (${b.treve})`); pistes.push("treve"); }
   if (b.crise !== a.crise) { L.push(`${ic("crise")} Crise : ${sg(b.crise - a.crise)} (${b.crise})`); pistes.push("crise"); }
@@ -812,6 +869,10 @@ function simDecompte(g, r) {
   return { pts, ecart, apres, html: `<span class="sim"><b>Simulation du décompte ${r}</b>` +
     ["A", "F"].map(c => `<span class="t${c}"><b>${NOM[c]}</b> : ${niv(c)} · ${m[c].length} lieu${m[c].length > 1 ? "x" : ""} contrôlé${m[c].length > 1 ? "s" : ""} dont ${m[c].filter(n => D.lieux[n].pf).length} place(s) forte(s) → <b>${pts[c]} pts</b></span>`).join("") +
     `<span>Écart ${ecart > 0 ? "+" : ""}${ecart} ${ecart > 0 ? "pour la France" : ecart < 0 ? "pour l'Angleterre" : ""} · score ${g.score > 0 ? "+" : ""}${g.score} → <b>${apres > 0 ? "+" : ""}${apres}</b></span></span>` };
+}
+// détail d'un jet de dés : une ligne par terme, puis le total
+function tableJet(lignes, total, verdict) {
+  return `<table class="calc"><tbody>${lignes.map(([l, v]) => `<tr><td>${l}</td><td class="num">${v}</td></tr>`).join("")}<tr class="tot"><td>total</td><td class="num">${total}</td></tr></tbody></table>${verdict ? `<p class="chance">${verdict}</p>` : ""}`;
 }
 function de_(v, c) { return `<span class="de roule v${v} ${c || ""}" role="img" aria-label="dé ${v}">${v}</span>`; }
 function panneau(p) {
@@ -873,11 +934,15 @@ function panneau(p) {
       v.corps = `<p>${s.ops} OPS dépensés : 1 par point, 2 dans un lieu contrôlé par l'adversaire.</p>`;
       break;
     case "assaut": {
-      const tres = Math.floor(s.dep / 2);
+      const tres = Math.floor(s.dep / 2), o = R.adv(c), bd = s.bd || (s.bonus ? [["bonus", s.bonus]] : []);
       v.titre = `Assaut ${c === "A" ? "anglais" : "français"} sur ${s.lieu}`;
       v.vise = [s.lieu];
-      v.corps = `<div class="jet"><div class="ligne">${de_(s.d, c)} dé ${s.d} + ${s.ops} OPS − 2 × défense ${s.def}${s.bonus ? ` ${sg(s.bonus)} bonus` : ""}${tres ? ` + ${tres} (Trésor engagé)` : ""} = <b class="num">${s.r}</b></div>` +
-        `<div class="verdict ${s.r > 0 ? "ok" : "ko"}">${s.r > 0 ? `Réussite : jusqu'à ${s.r} Influence adverse retirée${s.pf ? ", le surplus occupe la place" : " (pillage, sans occupation)"}` : "Échec : il fallait un résultat positif"}</div></div>` +
+      const lignes = [["dé", String(s.d)], ["OPS engagés", sg(s.ops)], [`défense de ${s.lieu} : ${s.def} × 2`, sg(-2 * s.def)], ...bd.map(([l, x]) => [l, sg(x)]), ...(tres ? [[`Trésor engagé : ${s.dep} (+1 par 2)`, sg(tres)]] : [])];
+      const retire = s.retire ?? Math.min(s.r, s.avant ?? s.r);
+      const ok = s.r > 0 ? `Réussite (${s.r} &gt; 0) : ${retire} Influence ${ADJ[o]} retirée${s.avant != null ? ` (il y en avait ${s.avant})` : ""}` +
+        (s.pf ? (s.occupe ? ` ; le surplus, ${s.occupe}, devient de l'Influence ${ADJ[c]} : la place est occupée` : "") : " ; lieu ouvert : pillage, sans occupation") : `Échec : le total (${s.r}) doit dépasser 0`;
+      v.corps = `<div class="jet"><div class="ligne">${de_(s.d, c)}<span>Assaut = 1d6 + OPS − 2 × défense + bonus${tres ? " + Trésor" : ""}</span></div>${tableJet(lignes, `<b>${s.r}</b>`)}` +
+        `<div class="verdict ${s.r > 0 ? "ok" : "ko"}">${ok}</div></div>` +
         `<p class="lbl">${s.gratuit ? "Assaut gratuit (événement)" : `Coût : ${s.pf ? 2 : 1} Trésor`}${s.dep ? `, plus ${s.dep} Trésor engagé` : ""}${s.treve ? " · place forte : la Trêve baisse de 1" : ""} · compte pour les chevauchées</p>`;
       break;
     }
@@ -885,9 +950,9 @@ function panneau(p) {
       const o = R.adv(c), tres = Math.floor(s.dep / 2);
       v.titre = `Siège de ${s.lieu}`;
       v.vise = [s.lieu];
-      v.corps = `<div class="jet"><div class="ligne"><span class="t${c}">${NOM[c]}</span> ${de_(s.da, c)} + ${s.ma} (voisins, supériorité)${tres ? ` + ${tres} Trésor` : ""} = <b class="num">${s.ra}</b></div>` +
-        `<div class="ligne"><span class="t${o}">${NOM[o]}</span> ${de_(s.dd, o)} + ${s.md} = <b class="num">${s.rd}</b></div>` +
-        `<div class="verdict ${s.ra > s.rd ? "ok" : "ko"}">${s.ra > s.rd ? `${LA_[o]} perd jusqu'à ${s.ra - s.rd} Influence` : s.rd > s.ra ? `${LA_[c]} perd jusqu'à ${s.rd - s.ra} Influence` : "Égalité : rien ne bouge"}</div></div>`;
+      const cote = (cc, d, va, sa, t, tot) => `<div><span class="t${cc}"><b>${NOM[cc]}</b></span>${tableJet([["dé", String(d)], ...(va != null ? [[`lieux voisins contrôlés`, sg(va)], [`plus d'Influence sur place`, sg(sa)]] : [["voisins, supériorité", sg(tot - d - t)]]), ...(t ? [["Trésor engagé (+1 par 2)", sg(t)]] : [])], `<b>${tot}</b>`)}</div>`;
+      v.corps = `<div class="jet"><div class="ligne">${de_(s.da, c)} ${de_(s.dd, o)}<span>Jet opposé : 1d6 + voisins contrôlés + 1 si plus d'Influence sur place</span></div><div class="duo">${cote(c, s.da, s.va, s.sa, tres, s.ra)}${cote(o, s.dd, s.vd, s.sd, 0, s.rd)}</div>` +
+        `<div class="verdict ${s.ra > s.rd ? "ok" : "ko"}">${s.ra > s.rd ? `${s.ra} contre ${s.rd} : ${LA[o]} perd jusqu'à ${s.ra - s.rd} Influence` : s.rd > s.ra ? `${s.ra} contre ${s.rd} : ${LA[c]} perd jusqu'à ${s.rd - s.ra} Influence` : `Égalité ${s.ra} partout : rien ne bouge`}</div></div>`;
       break;
     }
     case "diplo": {
@@ -899,12 +964,12 @@ function panneau(p) {
     }
     case "legit":
       v.titre = `${LA_[c]} vise la case ${s.cible} de Légitimité`;
-      v.corps = `<div class="jet"><div class="ligne">${de_(s.d, c)} il fallait ${s.seuil} ou moins</div><div class="verdict ${s.ok ? "ok" : "ko"}">${s.ok ? "Réussite" : "Échec"}</div></div>`;
+      v.corps = `<div class="jet"><div class="ligne">${de_(s.d, c)}<span>dé ${s.d} : il fallait ${s.seuil} ou moins pour la case ${s.cible}</span></div><div class="verdict ${s.ok ? "ok" : "ko"}">${s.ok ? `Réussite : la Légitimité ${c === "A" ? "anglaise" : "française"} passe à ${s.cible}` : "Échec : la piste ne bouge pas"}</div></div>`;
       break;
     case "bataille":
       v.titre = `Bataille ${ADJ[c]}`;
       v.corps = s.lundiNoir ? `<div class="jet"><div class="verdict ko">Le Lundi noir annule cette bataille anglaise.</div></div>`
-        : `<div class="jet"><div class="ligne">${de_(s.d, c)} dé ${s.d}${s.bonus ? ` + ${s.bonus} bonus` : ""} = <b class="num">${s.d + s.bonus}</b>, il faut 4 ou plus</div><div class="verdict ${s.ok ? "ok" : "ko"}">${s.ok ? "Victoire : l'effet « si victoire » s'applique" : "Échec"}</div></div>`;
+        : `<div class="jet"><div class="ligne">${de_(s.d, c)}<span>Bataille : 1d6 + bonus, victoire à 4 ou plus</span></div>${tableJet([["dé", String(s.d)], ...(s.bd || (s.bonus ? [["bonus", s.bonus]] : [])).map(([l, x]) => [l, sg(x)])], `<b>${s.d + s.bonus}</b>`)}<div class="verdict ${s.ok ? "ok" : "ko"}">${s.ok ? "Victoire : l'effet « si victoire » s'applique" : `Échec : ${s.d + s.bonus} est inférieur à 4`}</div></div>`;
       break;
     case "decompte": {
       v.camp = null;
@@ -933,7 +998,13 @@ function panneau(p) {
     case "finLegit":
       if (!df.L.length) return null;
       v.camp = null; v.titre = "Légitimité et Papauté";
-      v.corps = `<p>Le camp le plus légitime marque 1 point${s.pape ? ` ; la Papauté ralliée donne 1 Légitimité à ${LA[s.pape]}` : ""}.</p>`;
+      {
+        const a = p.avant.legit, L2 = [];
+        L2.push(s.tete ? `<b class="t${s.tete}">${NOM[s.tete]}</b> plus légitime (${a[s.tete]} contre ${a[R.adv(s.tete)]}) : <b>+1 point</b> pour ${LA[s.tete]}.` : `Légitimité à égalité (${a.A} partout) : personne ne marque.`);
+        if (s.p8) L2.push(`<b class="t${s.p8}">${NOM[s.p8]}</b> a atteint la case 8 en premier : <b>+1 point</b> à chaque fin de tour.`);
+        if (s.pape) L2.push(`Papauté ralliée : <b>+1 Légitimité</b> à ${LA[s.pape]} (détail et palier éventuel ci-dessous).`);
+        v.corps = `<ul class="effets">${L2.map(x => `<li>${x}</li>`).join("")}</ul><p class="lbl">Résultat net sur le score et les pistes :</p>`;
+      }
       break;
     case "fin":
       v.titre = `${LA_[s.gagnant]} l'emporte`; v.camp = s.gagnant;
@@ -977,20 +1048,26 @@ function montrerPas() {
   box.className = "bloc consigne " + (v.camp || "");
   const n = lecture.pas.length, dernier = lecture.i === n - 1;
   const prec = lecture.pas[lecture.i - 1]?.vue?.cit, cit = v.cit && !(prec && prec.carte === v.cit.carte) ? v.cit : null;
-  box.innerHTML = `<div class="quand"><span class="lbl">${s.tour ? `Tour ${s.tour}` : "Mise en place"}${s.round ? ` · round ${s.round}` : ""}${v.camp ? ` · ${NOM[v.camp]}` : ""}</span><span class="lbl num">${lecture.i + 1} / ${n}</span></div>` +
+  barre(null);
+  const DES = ["assaut", "siege", "diplo", "legit", "bataille"];
+  // conséquences de sa propre action : pas de « Suivant », l'étape s'efface d'elle-même (barre de temps)
+  const propre = p.propre && s.k !== "fin", duree = (DES.includes(s.k) ? 3400 : s.k === "decompte" ? 3600 : 2000) + (cit && SON.on ? cit.duree * 1000 + 600 : 0);
+  box.innerHTML = `<div class="quand"><span class="lbl">${s.tour ? `Tour ${s.tour}` : "Mise en place"}${s.round ? ` · round ${s.round}` : ""}${v.camp ? ` · ${NOM[v.camp]}` : ""}</span><span class="lbl num">${propre ? "résultat de votre action" : `${lecture.i + 1} / ${n}`}</span></div>` +
     `<h2>${v.titre}</h2>${v.corps}${cit ? blocCitation(cit) : ""}${v.effets}` +
-    `<div class="lecture-nav"><div class="choix"><button class="btn prim" type="button" id="suivant">${dernier ? "Continuer" : "Suivant"}</button>${dernier ? "" : `<button class="btn" type="button" id="passer">Tout passer</button>`}</div>` +
-    `<label class="lbl"><input type="checkbox" id="auto" ${auto ? "checked" : ""}> lecture automatique</label></div>`;
+    (propre ? `<div class="lecture-nav propre"><div class="progres"><i style="transition-duration:${duree}ms"></i></div><button class="btn" type="button" id="suivant" data-tip="Passer à la suite">›</button></div>`
+      : `<div class="lecture-nav"><div class="choix"><button class="btn prim" type="button" id="suivant">${dernier ? "Continuer" : "Suivant"}</button>${dernier ? "" : `<button class="btn" type="button" id="passer">Tout passer</button>`}</div>` +
+      `<label class="lbl"><input type="checkbox" id="auto" ${auto ? "checked" : ""}> lecture automatique</label></div>`);
   $("suivant").onclick = suivant;
   if ($("passer")) $("passer").onclick = finLecture;
-  $("auto").onchange = e => { auto = e.target.checked; try { localStorage.setItem(AUTO, auto ? "1" : "0"); } catch {} if (auto) minuteur = setTimeout(suivant, 1800); else clearTimeout(minuteur); };
-  if (auto && s.k !== "fin") minuteur = setTimeout(suivant, (s.k === "carte" || s.k === "evenement" || s.k === "ouverture" ? 3200 : 2200) + (cit && SON.on ? cit.duree * 1000 + 600 : 0));
+  if ($("auto")) $("auto").onchange = e => { auto = e.target.checked; try { localStorage.setItem(AUTO, auto ? "1" : "0"); } catch {} if (auto) minuteur = setTimeout(suivant, 1800); else clearTimeout(minuteur); };
+  if (propre) { minuteur = setTimeout(suivant, duree); requestAnimationFrame(() => requestAnimationFrame(() => { const b = box.querySelector(".progres i"); if (b) b.style.width = "100%"; })); }
+  else if (auto && s.k !== "fin") minuteur = setTimeout(suivant, (s.k === "carte" || s.k === "evenement" || s.k === "ouverture" ? 3200 : 2200) + (cit && SON.on ? cit.duree * 1000 + 600 : 0));
   if ($("reecouter")) $("reecouter").onclick = () => direCitation(cit, true);
   if (VOIX.audio) { VOIX.audio.pause(); VOIX.audio = null; }
   if (cit) setTimeout(() => { if (lecture && lecture.pas[lecture.i]?.vue === v) direCitation(cit); }, 500);
   $("suivant").focus({ preventScroll: true });
   const SK = { carte: "carte", evenement: "carte", ouverture: "carte", place: "place", retire: "place", influence: "place", tour: "cloche", decompte: "decompte", fin: "fanfare", chevauchees: "clic", revenus: "clic", info: "clic", sansEffet: "clic", effets: "clic", crise: "clic", finLegit: "clic" };
-  if (["assaut", "siege", "diplo", "legit", "bataille"].includes(s.k)) {
+  if (DES.includes(s.k)) {
     const ok = s.k === "assaut" ? s.r > 0 : s.k === "siege" ? s.ra > s.rd : s.ok;
     jouerSon("de"); if (!s.lundiNoir) jouerSon(ok ? "ok" : "ko");
   } else if (SK[s.k]) jouerSon(SK[s.k]);
@@ -1028,35 +1105,99 @@ for (const [r, [x, y, rot, fs]] of Object.entries(NOMS_REG)) {
   v.textContent = D.regions[r] ? `décompte ${D.regions[r].join(" · ")}` : "non décomptée";
   NOMREG[r] = t;
 }
-const gL = el("g", {}, svg), gP = el("g", {}, svg);
-for (const [a, b, t] of PLAN.liens) { const p = PLAN.lieux[a], q = PLAN.lieux[b]; el("line", { x1: p[0], y1: p[1], x2: q[0], y2: q[1], class: "lien" + (t === "mer" ? " mer" : "") }, gL); }
+// Disposition lisible : les lieux trop proches sont écartés de quelques pixels (15 au plus) autour de leur position
+// géographique, puis les sceaux d'Influence et les noms sont posés là où ils ne recouvrent ni les lieux voisins,
+// ni les autres sceaux, ni les autres noms (placement glouton, des lieux les plus serrés aux plus isolés).
+const RAY = n => 6 + D.lieux[n].defense * 1.5, SR = 9.5;
+const POS = {}, SCEAUX = {}, ETIQ = {}, COURT = { "Saint-Denis": "St-Denis", "Mont-Saint-Michel": "Mt-St-Michel" };
+const nomCourt = n => (COURT[n] || n) + (D.lieux[n].port ? " ⚓" : "");
+(function disposer() {
+  const N = D.noms, O = PLAN.lieux;
+  for (const n of N) POS[n] = O[n].slice();
+  for (let it = 0; it < 300; it++) {
+    for (let i = 0; i < N.length; i++) for (let j = i + 1; j < N.length; j++) {
+      const a = POS[N[i]], b = POS[N[j]], need = RAY(N[i]) + RAY(N[j]) + 17;
+      const dx = b[0] - a[0], dy = b[1] - a[1], d = Math.hypot(dx, dy) || .01;
+      if (d < need) { const k = (need - d) / d * .25; a[0] -= dx * k; a[1] -= dy * k; b[0] += dx * k; b[1] += dy * k; }
+    }
+    for (const n of N) {
+      const p = POS[n], o = O[n];
+      p[0] += (o[0] - p[0]) * .03; p[1] += (o[1] - p[1]) * .03;
+      const dx = p[0] - o[0], dy = p[1] - o[1], d = Math.hypot(dx, dy);
+      if (d > 15) { p[0] = o[0] + dx / d * 15; p[1] = o[1] + dy / d * 15; }
+    }
+  }
+  const pen = (d, R) => Math.max(0, R - d) ** 2;
+  const dist = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1]);
+  const serre = n => N.filter(m => m !== n && dist(POS[n], POS[m]) < 50).length;
+  const ordre = N.slice().sort((a, b) => serre(b) - serre(a));
+  const poses = [];   // sceaux déjà posés : [x, y]
+  const rad = Math.PI / 180;
+  const pt = (n, deg) => { const R = RAY(n) + 5; return [POS[n][0] + Math.cos(deg * rad) * R, POS[n][1] + Math.sin(deg * rad) * R]; };
+  const coutSceau = (n, s) => { let c = 0; for (const m of N) if (m !== n) c += pen(dist(s, POS[m]), SR + RAY(m) + 1); for (const q of poses) c += pen(dist(s, q), 2 * SR); return c; };
+  const ANG = [-135, -45, -90, 180, 0, 135, 45, 90, -160, -20, -110, -70, 160, 20];
+  for (const n of ordre) {
+    let best = null;
+    for (const a of ANG) for (const f of ANG) {
+      let sep = Math.abs(a - f) % 360; if (sep > 180) sep = 360 - sep;
+      if (sep < 70) continue;
+      const sa = pt(n, a), sf = pt(n, f);
+      const c = coutSceau(n, sa) + coutSceau(n, sf) + pen(dist(sa, sf), 2 * SR) + .02 * (Math.abs(a + 135) + Math.abs(f + 45)) + (sa[0] > sf[0] + 4 ? 3 : 0);
+      if (!best || c < best.c) best = { c, sa, sf };
+    }
+    SCEAUX[n] = { A: [best.sa[0] - POS[n][0], best.sa[1] - POS[n][1]], F: [best.sf[0] - POS[n][0], best.sf[1] - POS[n][1]] };
+    poses.push(best.sa, best.sf);
+  }
+  // noms : boîte estimée (capitales réduites de 9,5 px), positions candidates autour de la pièce ; un premier passage
+  // glouton, puis quatre passages où chaque nom reprend la meilleure place compte tenu de tous les autres
+  const BOX = {};
+  const rectCercle = (b, c, R) => { const x = Math.max(b[0], Math.min(c[0], b[0] + b[2])), y = Math.max(b[1], Math.min(c[1], b[1] + b[3])); return pen(Math.hypot(c[0] - x, c[1] - y), R); };
+  const rectRect = (a, b) => Math.max(0, Math.min(a[0] + a[2], b[0] + b[2]) - Math.max(a[0], b[0])) * Math.max(0, Math.min(a[1] + a[3], b[1] + b[3]) - Math.max(a[1], b[1]));
+  const placer = n => {
+    const r = RAY(n), [x, y] = POS[n], w = nomCourt(n).length * 5.3 + 2, h = 10;
+    const cand = [[0, r + 10, "middle", 0], [r + 3, 3.5, "start", 1.2], [-r - 3, 3.5, "end", 1.2], [r * .6, r + 9, "start", 2], [-r * .6, r + 9, "end", 2], [r * .6, -r - 2, "start", 2.5], [-r * .6, -r - 2, "end", 2.5], [0, -r - 4, "middle", 2.5], [r + 3, 12, "start", 5], [-r - 3, 12, "end", 5], [r + 3, -5, "start", 5], [-r - 3, -5, "end", 5]];
+    let best = null;
+    for (const [dx, dy, an, pref] of cand) {
+      const bx = an === "middle" ? x + dx - w / 2 : an === "start" ? x + dx : x + dx - w, b = [bx, y + dy - 8, w, h];
+      let c = pref * 6;
+      for (const m of N) { c += rectCercle(b, POS[m], RAY(m) + (m === n ? 1 : 2)) * 3; for (const cc of ["A", "F"]) { const s = SCEAUX[m][cc]; c += rectCercle(b, [POS[m][0] + s[0], POS[m][1] + s[1]], SR + 1) * 5; } }
+      for (const [m, o] of Object.entries(BOX)) if (m !== n) c += rectRect(b, o) * 3;
+      if (b[0] < 2 || b[0] + w > PLAN.W - 2) c += 400;
+      if (!best || c < best.c) best = { c, dx, dy, an, b };
+    }
+    ETIQ[n] = best; BOX[n] = best.b;
+  };
+  for (let passe = 0; passe < 5; passe++) for (const n of ordre) placer(n);
+})();
+const gL = el("g", {}, svg), gP = el("g", {}, svg), gN = el("g", { class: "noms" }, svg);
+for (const [a, b, t] of PLAN.liens) { const p = POS[a], q = POS[b]; el("line", { x1: p[0], y1: p[1], x2: q[0], y2: q[1], class: "lien" + (t === "mer" ? " mer" : "") }, gL); }
 const VUE = {};
 for (const n of D.noms) {
-  const [x, y] = PLAN.lieux[n], L = D.lieux[n], r = 7 + L.defense * 1.6;
-  const g = el("g", { class: "lieu", transform: `translate(${x},${y})`, tabindex: -1, role: "button", "aria-label": n, style: `--rc:${COUL[L.region]}` }, gP);
-  el("circle", { class: "halo", r: r + 6 }, g);
+  const [x, y] = POS[n], L = D.lieux[n], r = RAY(n);
+  const g = el("g", { class: "lieu", transform: `translate(${x.toFixed(1)},${y.toFixed(1)})`, tabindex: -1, role: "button", "aria-label": n, style: `--rc:${COUL[L.region]}` }, gP);
+  el("circle", { class: "halo", r: r + 3 }, g);
   // pièce rendue dans Blender (outils/pieces_blender.py) ; la forme SVG dessous reste la zone cliquable
   const tp = 2 * r / (L.pf ? .656 : .762);
   const img = el("image", { class: "piece", href: PIECES[(L.pf ? "forte_" : "lieu_") + "N"], x: -tp / 2, y: -tp / 2, width: tp, height: tp }, g);
-  const corps = L.pf ? el("rect", { class: "corps", x: -r, y: -r, width: 2 * r, height: 2 * r, rx: 3, "stroke-width": 2 }, g) : el("circle", { class: "corps", r, "stroke-width": 1.6 }, g);
-  const def = el("text", { y: 4, "text-anchor": "middle", "font-size": 11, "font-family": "var(--f-label)" }, g);
+  const corps = L.pf ? el("rect", { class: "corps", x: -r - 2, y: -r - 2, width: 2 * r + 4, height: 2 * r + 4, rx: 3 }, g) : el("circle", { class: "corps", r: r + 2 }, g);
+  const def = el("text", { y: 3.6, "text-anchor": "middle", "font-size": 9.5, "font-family": "var(--f-label)", class: "def" }, g);
   def.textContent = L.defense;
-  // Influence : pastilles rouge (Angleterre, en haut à gauche) et bleue (France, en haut à droite)
-  const pastille = (x, cls) => { const p = el("g", { class: "pinf " + cls, transform: `translate(${x},${-r - 1})` }, g); el("circle", { r: 9 }, p); el("image", { href: PIECES["sceau_" + cls], x: -12, y: -12, width: 24, height: 24 }, p); el("circle", { class: "nb", cx: 8, cy: 8, r: 6.5 }, p); const t = el("text", { x: 8, y: 11.7, "text-anchor": "middle" }, p); return t; };
-  const ia = pastille(-r - 4, "A"), iff = pastille(r + 4, "F");
-  const prevu = el("g", { class: "prevu", transform: `translate(0,${-r - 14})` }, g); el("rect", { x: -15, y: -9, width: 30, height: 16, rx: 8 }, prevu);
-  const prevuT = el("text", { y: 3.5, "text-anchor": "middle" }, prevu);
-  const nom = el("text", { y: r + 12, "text-anchor": "middle", class: "nomlieu" }, g); nom.textContent = n + (L.port ? " ⚓" : "");
-  const delta = el("text", { y: -r - 8, "text-anchor": "middle", class: "delta" }, g);
+  // noms sur un calque au-dessus de tous les lieux : un nom n'est jamais caché par la pièce ou le sceau d'un voisin
+  const e = ETIQ[n], nom = el("text", { x: (x + e.dx).toFixed(1), y: (y + e.dy).toFixed(1), "text-anchor": e.an, class: "nomlieu" }, gN); nom.textContent = nomCourt(n);
+  // Influence : sceaux de cire rouge (Angleterre) et bleu (France), posés à l'écart des voisins ; le nombre est dans la pastille
+  const pastille = cls => { const [sx, sy] = SCEAUX[n][cls]; const p = el("g", { class: "pinf " + cls, transform: `translate(${sx.toFixed(1)},${sy.toFixed(1)})` }, g); el("circle", { r: SR }, p); el("image", { href: PIECES["sceau_" + cls], x: -SR - 1, y: -SR - 1, width: 2 * SR + 2, height: 2 * SR + 2 }, p); el("circle", { class: "nb", cx: 6, cy: 6, r: 5.6 }, p); const t = el("text", { x: 6, y: 9.4, "text-anchor": "middle" }, p); return t; };
+  const ia = pastille("A"), iff = pastille("F");
+  const delta = cls => { const [sx, sy] = SCEAUX[n][cls]; return el("text", { x: sx.toFixed(1), y: (sy - SR - 2).toFixed(1), "text-anchor": "middle", class: "delta " + cls }, g); };
+  const dA = delta("A"), dF = delta("F");
   g.addEventListener("click", () => cliquerLieu(n));
   g.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); cliquerLieu(n); } });
-  VUE[n] = { g, corps, img, def, ia, iff, delta, r, prevu, prevuT };
+  VUE[n] = { g, corps, img, def, ia, iff, dA, dF, r, nom };
 }
 // mise en évidence d'une région (survol d'une carte de décompte, de la frise, d'un nom de région, ou décompte en cours)
 let regionSurvol = null, regionLecture = null;
 function appliquerFocus() {
   const r = regionSurvol || regionLecture;
-  for (const n of D.noms) { const dedans = D.lieux[n].region === r; VUE[n].g.classList.toggle("estompe", !!r && !dedans); VUE[n].g.classList.toggle("focus", !!r && dedans); }
+  for (const n of D.noms) { const dedans = D.lieux[n].region === r; VUE[n].g.classList.toggle("estompe", !!r && !dedans); VUE[n].nom.classList.toggle("estompe", !!r && !dedans); VUE[n].g.classList.toggle("focus", !!r && dedans); }
   for (const [k, t] of Object.entries(NOMREG)) t.classList.toggle("focus", k === r);
 }
 document.addEventListener("pointerover", e => {
@@ -1114,6 +1255,78 @@ function frise(tour, jusque) {
   return blocs + `<div class="final" ${tip("<b>Fin du tour 10</b><br>Toutes les régions sont décomptées, puis le camp en tête au score gagne.")}>${ic("decompte")} Tour 10 : décompte final</div>`;
 }
 
+// Pièce, sceaux et infobulle d'un lieu pour une Influence donnée [anglaise, française] ; « plus » = points prévus mais
+// pas encore joués (aperçu en direct pendant le placement), « c0 » = contrôle avant ces points.
+function peindreLieu(n, i, plus = null, c0) {
+  const o = VUE[n], L = D.lieux[n], c = ctlSnap(n, i);
+  o.img.setAttribute("href", PIECES[(L.pf ? "forte_" : "lieu_") + (c || "N")]);
+  o.def.setAttribute("fill", c ? "var(--blanc)" : "var(--encre)");
+  o.ia.textContent = i[0] || ""; o.iff.textContent = i[1] || "";
+  o.ia.parentNode.classList.toggle("zero", !i[0]); o.iff.parentNode.classList.toggle("zero", !i[1]);
+  o.ia.parentNode.classList.toggle("plus", plus === "A"); o.iff.parentNode.classList.toggle("plus", plus === "F");
+  o.g.classList.toggle("bascule", !!plus && c !== c0);
+  const g = etat.g, d = R.defense(D, g, n);
+  const manque = cc => Math.max(0, d + i[cc === "A" ? 1 : 0] - i[cc === "A" ? 0 : 1]);
+  o.g.setAttribute("data-tip", `<b>${n}</b> · ${L.region}${D.regions[L.region] ? "" : " (non décomptée)"}<br>${L.pf ? `${ic("siege")} place forte` : "lieu ouvert"} · défense ${d}${L.port ? " · ⚓ port" : ""}<br>${ic("inf")} Influence : <span style="color:#f08a80">Angleterre ${i[0]}</span> · <span style="color:#9fb6ec">France ${i[1]}</span>${plus ? " (avec vos points prévus)" : ""}<br>` +
+    (c ? `Contrôlé par ${LA[c]}.` : `Personne ne contrôle : il manque ${manque("A")} à l'Angleterre, ${manque("F")} à la France (Influence ≥ défense + Influence adverse).`));
+  if (TIP_SUR === o.g && !TIP.hidden) TIP.innerHTML = o.g.getAttribute("data-tip");
+  return c;
+}
+let apercu = new Set();
+// Effets durables en cours : statuts posés par les cartes (moteur : g.statuts, g.tourFlags, malus d'OPS), avec la carte d'origine.
+const STATUTS = [
+  ["gabelle", "F", "Gabelle du sel", "revenus français +2 par tour"],
+  ["taille", "F", "Taille royale permanente", "revenus français +2 par tour"],
+  ["pragmatique", "F", "Pragmatique Sanction de Bourges", "revenus français +1 par tour"],
+  ["jacquesCoeur", "F", "Jacques Cœur, argentier", "revenus français +1 par tour"],
+  ["bedford", "A", "Bedford régent", "revenus anglais +1 par tour"],
+  ["duGuesclin", "F", "Du Guesclin connétable", "+1 aux Assauts français"],
+  ["compagnies", "F", "Compagnies d'ordonnance", "+1 aux Assauts français"],
+  ["bureau", "F", "Les frères Bureau", "+1 aux Assauts français contre une place forte"],
+  ["arc", "A", "Ordonnance sur le tir à l'arc", "+1 aux batailles anglaises"],
+  ["jeanne", "F", "Jeanne d'Arc", "+1 aux batailles françaises"],
+  ["jarretiere", "A", "Ordre de la Jarretière", "+1 à la prochaine bataille anglaise (une fois)"],
+  ["dunois", "F", "Dunois, Bâtard d'Orléans", "+1 à la prochaine bataille française (une fois)"],
+  ["lundiNoir", "F", "Lundi noir", "la prochaine bataille anglaise est annulée"],
+  ["roiCaptif", "A", "Bataille de Poitiers", "roi captif : OPS français −1 sur chaque carte"],
+  ["folieCharlesVI", "A", "Folie de Charles VI", "la France ne peut pas jouer d'événement de 1 OPS"],
+  ["owain", "F", "Owain Glyndŵr", "l'Angleterre perd 1 OPS sur sa première carte de chaque tour"],
+  ["calaisImprenable", "A", "Échec bourguignon devant Calais", "Calais ne peut pas être attaquée"],
+  ["cherbourgBrest", "A", "Cherbourg et Brest cédés à l'Angleterre", "cession en vigueur jusqu'au tour 8"],
+  ["artevelde", "A", "Jacques van Artevelde", "révolte flamande alliée de l'Angleterre"],
+];
+function effetsEnCours(g) {
+  const L = [], carte = nom => { const k = D.parNom[nom]; return k && TEXTES[k.id] ? `<b>${nom}</b><br>${TEXTES[k.id].e}` : nom; };
+  for (const [cle, camp, nom, txt] of STATUTS) if (g.statuts[cle]) L.push({ camp, nom, txt, info: carte(nom) });
+  if (g.statuts.manche) { const nom = g.joues["Bataille de la Seine"] && g.statuts.manche === "A" ? "Bataille de la Seine" : g.statuts.manche === "A" ? "Bataille de l'Écluse" : "Castille ralliée"; L.push({ camp: g.statuts.manche, nom, txt: `maîtrise de la Manche pour ${LA[g.statuts.manche]} : Influence possible dans tout port si elle tient un port`, info: carte(nom) }); }
+  if (g.joues["Fondation de la Bastille"]) L.push({ camp: "F", nom: "Fondation de la Bastille", txt: "Paris a une défense d'au moins 4", info: carte("Fondation de la Bastille") });
+  if (g.joues["Héritage flamand de Philippe le Hardi"]) L.push({ camp: "F", nom: "Héritage flamand de Philippe le Hardi", txt: "la loyauté de la Flandre passe à la Bourgogne", info: carte("Héritage flamand de Philippe le Hardi") });
+  if (g.joues["Grand Schisme d'Occident"] && !g.joues["Concile de Constance"]) L.push({ camp: null, nom: "Grand Schisme d'Occident", txt: "la Papauté n'agit que si Rome est ralliée au même camp (jusqu'au Concile de Constance)", info: carte("Grand Schisme d'Occident") });
+  if (g.tourFlags.aucunAssaut) L.push({ camp: null, nom: "Trêve de vingt-huit ans", txt: "aucun Assaut ce tour", info: carte("Trêve de vingt-huit ans") });
+  if (g.tourFlags.aucunAssautBretagne) L.push({ camp: null, nom: "Bretagne protégée", txt: "aucun Assaut en Bretagne ce tour (Jeanne la Flamme ou Trêve de Malestroit)", info: "Jeanne la Flamme / Trêve de Malestroit" });
+  if (g.tourFlags.aiguillon) L.push({ camp: "A", nom: "Siège d'Aiguillon", txt: "+1 aux batailles anglaises ce tour", info: carte("Siège d'Aiguillon") });
+  for (const c of ["A", "F"]) {
+    if (g.opsMalus[c]) L.push({ camp: R.adv(c), nom: `${NOM[c]} : −1 OPS`, txt: "sur sa prochaine carte jouée pour les OPS", info: "Malus posé par un événement (Flotte d'invasion de L'Écluse, Owain Glyndŵr…)." });
+    if (g.opsMalusTour[c]) L.push({ camp: R.adv(c), nom: `${NOM[c]} : −1 OPS ce tour`, txt: "sur chaque carte de ce tour", info: "Malus posé au tour précédent (mort d'un roi : Édouard III, Henri V)." });
+    if (g.prochainMalus?.[c]) L.push({ camp: R.adv(c), nom: `${NOM[c]} : −1 OPS au prochain tour`, txt: "sur chaque carte du tour suivant", info: "Mort d'un roi (Édouard III, Henri V)." });
+  }
+  return L;
+}
+function carteSortie(id) {
+  const k = R.carte(D, id), t = TEXTES[id], bg = IMAGES.has(id) ? `style="background-image:url('miniatures/${id}.jpg')"` : "";
+  return `<div class="carte ${k.camp}" ${tip(`<b>${k.nom}</b> · ${t.d}${t.h ? `<br><i>${t.h}</i>` : ""}`)}><div class="img" ${bg}><span class="ops">${k.decompte ? "★" : k.ops}</span></div><div class="corps"><span class="nom">${k.nom}</span><span class="lbl">${t.d} · ${{ A: "Angleterre", F: "France", N: "Neutre", S: "Décompte" }[k.camp]}</span><p class="eff">${k.decompte ? iconise(t.e) : effetLisible(t.e)}</p></div></div>`;
+}
+function ouvrirCartes() {
+  const g = etat.g;
+  const bloc = (titre, txt, ids) => `<section style="display:grid;gap:6px"><h3>${titre} (${ids.length})</h3><p class="lbl">${txt}</p>${ids.length ? `<div class="grille-cartes">${ids.slice().reverse().map(carteSortie).join("")}</div>` : "<p>Aucune pour l'instant.</p>"}</section>`;
+  $("listeCartes").innerHTML = bloc("Retirées du jeu", "Cartes dont l'événement a été joué et qui ne reviendront pas (la plus récente en premier).", g.retirees) +
+    bloc("Défausse", "Cartes jouées qui reviendront dans la pioche quand elle sera épuisée.", g.defausse);
+  $("feuilleCartes").hidden = false; $("fermerCartes").focus();
+}
+$("voirCartes").onclick = ouvrirCartes;
+$("fermerCartes").onclick = () => { $("feuilleCartes").hidden = true; };
+$("feuilleCartes").addEventListener("click", e => { if (e.target.id === "feuilleCartes") $("feuilleCartes").hidden = true; });
+document.addEventListener("keydown", e => { if (e.key === "Escape" && !$("feuilleCartes").hidden) $("feuilleCartes").hidden = true; });
 function dessiner(snap, v) {
   const g = etat.g, q = etat.q;
   const vue = snap || vueDepuis(g);
@@ -1149,29 +1362,22 @@ function dessiner(snap, v) {
     const camp = x <= -3 ? "A" : x >= 3 ? "F" : null;
     return s2 + `</div><span class="feff ${camp ? "actif t" + camp : ""}">${camp ? `<b>Ralliée ${camp === "A" ? "à l'Angleterre" : "à la France"}</b> : ` : "Si ralliée : "}${FAC_COURT[f]}</span>`;
   }).join("");
+  const ec = effetsEnCours(g);
+  $("enCours").innerHTML = ec.length ? ec.map(x => `<li class="${x.camp || ""}" ${tip(x.info)}><b>${x.nom}</b> : ${x.txt}</li>`).join("") : `<li class="vide">Aucun effet durable pour l'instant.</li>`;
+  $("voirCartes").textContent = `Cartes retirées (${g.retirees.length})`;
   const adv = R.adv(humainCourant());
   $("mainAdv").innerHTML = `${ic("carte")} ${NOM[adv]} : ${g.mains[adv].length} carte(s) en main · pioche ${g.pioche.length} · défausse ${g.defausse.length}`;
   // plan
   const vises = new Set(v ? v.vise : []), changes = new Set(v ? v.lieux : []);
   regionLecture = v && v.region || null; appliquerFocus();
   D.noms.forEach((n, k) => {
-    const o = VUE[n], i = vue.inf[k], c = ctlSnap(n, i), L = D.lieux[n];
-    o.corps.setAttribute("fill", c === "A" ? "var(--gueules)" : c === "F" ? "var(--azur)" : "var(--velin)");
-    o.corps.setAttribute("stroke", c ? "var(--or)" : "var(--sepia)");
-    o.def.setAttribute("fill", c ? "var(--blanc)" : "var(--encre)");
-    o.img.setAttribute("href", PIECES[(L.pf ? "forte_" : "lieu_") + (c || "N")]);
-    o.ia.textContent = i[0] || ""; o.iff.textContent = i[1] || "";
-    o.ia.parentNode.classList.toggle("zero", !i[0]); o.iff.parentNode.classList.toggle("zero", !i[1]);
+    const o = VUE[n], dl = v && v.deltas[n];
+    peindreLieu(n, vue.inf[k]);
     o.g.classList.toggle("change", changes.has(n));
     o.g.classList.toggle("vise", vises.has(n) && !changes.has(n));
-    const dl = v && v.deltas[n];
-    o.delta.textContent = dl ? [dl[0] ? `${sg(dl[0])}` : "", dl[1] ? `${sg(dl[1])}` : ""].filter(Boolean).join(" / ") : "";
-    o.delta.setAttribute("fill", dl && dl[0] && !dl[1] ? "var(--gueules)" : dl && dl[1] && !dl[0] ? "var(--azur)" : "var(--encre)");
-    const d = R.defense(D, g, n);
-    const manque = cc => Math.max(0, d + i[cc === "A" ? 1 : 0] - i[cc === "A" ? 0 : 1]);
-    o.g.setAttribute("data-tip", `<b>${n}</b> · ${L.region}${D.regions[L.region] ? "" : " (non décomptée)"}<br>${L.pf ? `${ic("siege")} place forte` : "lieu ouvert"} · défense ${d}${L.port ? " · ⚓ port" : ""}<br>${ic("inf")} Influence : <span style="color:#f08a80">Angleterre ${i[0]}</span> · <span style="color:#9fb6ec">France ${i[1]}</span><br>` +
-      (c ? `Contrôlé par ${LA[c]}.` : `Personne ne contrôle : il manque ${manque("A")} à l'Angleterre, ${manque("F")} à la France (Influence ≥ défense + Influence adverse).`));
+    o.dA.textContent = dl && dl[0] ? sg(dl[0]) : ""; o.dF.textContent = dl && dl[1] ? sg(dl[1]) : "";
   });
+  apercu = new Set();
   // chronique
   const lignes = [];
   for (let i = 0; i < jusque; i++) { const t = resumeLigne(rec[i], rec, i); if (t) lignes.push([i, rec[i], t]); }
@@ -1185,12 +1391,17 @@ function cibles(set, fn, plan = []) {
   lieuxCibles = new Set(set); onLieu = fn;
   $("carte").classList.toggle("selection", lieuxCibles.size > 0);
   const nb = {}; for (const n of plan) nb[n] = (nb[n] || 0) + 1;
-  const camp = etat?.q ? etat.q.camp : null;
+  const camp = etat?.q ? etat.q.camp : null, g = etat?.g;
+  // aperçu en direct : l'Influence prévue s'affiche déjà sur le plan (sceau, pièce, contrôle)
+  if (g && !lecture) for (const n of new Set([...apercu, ...Object.keys(nb)])) {
+    const base = [g.inf[n].A, g.inf[n].F], i = base.slice();
+    if (nb[n] && camp) i[camp === "A" ? 0 : 1] += nb[n];
+    peindreLieu(n, i, nb[n] ? camp : null, ctlSnap(n, base));
+  }
+  apercu = new Set(Object.keys(nb));
   for (const n of D.noms) {
-    VUE[n].prevu.classList.toggle("on", !!nb[n]); VUE[n].prevu.setAttribute("class", `prevu ${nb[n] ? "on" : ""} ${camp || ""}`);
-    VUE[n].prevuT.textContent = nb[n] ? `+${nb[n]}` : "";
     VUE[n].g.classList.toggle("cible", lieuxCibles.has(n));
-    VUE[n].g.classList.toggle("plan", plan.includes(n));
+    VUE[n].g.classList.toggle("plan", !!nb[n]);
     VUE[n].g.setAttribute("tabindex", lieuxCibles.has(n) ? 0 : -1);
   }
 }
@@ -1203,8 +1414,8 @@ function carteContexte(g) {
 }
 function consigne() {
   const g = etat.g, q = etat.q, box = $("consigne");
-  cibles([], null);
-  for (const n of D.noms) { VUE[n].g.classList.remove("change", "vise"); VUE[n].delta.textContent = ""; }
+  cibles([], null); barre(null);
+  for (const n of D.noms) { VUE[n].g.classList.remove("change", "vise"); VUE[n].dA.textContent = VUE[n].dF.textContent = ""; }
   if (g.fin) {
     box.className = "bloc consigne fin";
     box.innerHTML = `<h2>${LA_[g.fin.gagnant]} l'emporte</h2><p>${g.fin.raison}, au tour ${g.fin.tour}. Score final ${g.score > 0 ? "+" : ""}${g.score}.</p><div class="choix"><button class="btn prim" type="button" id="rejouer">Nouvelle partie</button></div>`;
@@ -1230,7 +1441,7 @@ function consigne() {
     const id = choix.id;
     box.innerHTML = `${enTete}<h2>${qui}choisissez votre carte d'ouverture</h2><p>Les deux camps révèlent une carte en même temps. Seul son événement est joué, la carte la plus forte en OPS d'abord. Une carte adverse ouverte joue son événement pour l'adversaire. Les décomptes sont interdits ici.</p>` +
       (id ? grandeCarte(id, `<p class="resume">${R.carte(D, id).camp === R.adv(q.camp) ? `Attention : c'est une carte ${ADJ[R.carte(D, id).camp]}, son événement profitera à ${LA[R.carte(D, id).camp]}.` : `Son événement se jouera pour ${LA[q.camp]}.`}</p>`) + `<div class="choix"><button class="btn prim" type="button" id="ok">Ouvrir avec « ${R.carte(D, id).nom} »</button></div>` : `<p><b>Cliquez une carte de votre main.</b></p>`);
-    if (id) $("ok").onclick = () => repondre(id);
+    if (id) { $("ok").onclick = () => { barre(null); repondre(id); }; barre({ id, k: R.carte(D, id), modes: [], m: "evenement", titre: "Ouverture", pret: true, fixe: true, info: "événement seul", valider: () => { barre(null); repondre(id); }, choisirMode: () => {} }); }
     if (!g.mains[q.camp].some(x => !R.carte(D, x).decompte)) { box.innerHTML += `<div class="choix"><button class="btn" type="button" id="sans">Pas d'ouverture</button></div>`; $("sans").onclick = () => repondre(null); }
   } else if (q.m === "action") consigneAction(box, qui, enTete);
   const h = box.querySelector("h2");
@@ -1264,6 +1475,9 @@ function modesPour(c, id) {
   L.push({ m: "legitimite", label: "Légitimité", desc: cible > 8 ? "Piste au maximum." : `Viser la case ${cible} : il faut ${REQ_LEGIT[cible]} OPS, réussite sur ${JET_LEGIT(cible)} ou moins.`, ok: !g.legitTente[c] && cible <= 8 && ops0 >= REQ_LEGIT[cible], why: g.legitTente[c] ? "Déjà tentée ce tour." : cible > 8 ? "Piste au maximum." : `Il faut ${REQ_LEGIT[cible]} OPS (la carte en donne ${ops0}, la levée ne compte pas).` });
   return L;
 }
+const MODE_COURT = { evenement: "Événement", influence: "Influence", assaut: "Assaut", siege: "Siège", diplomatie: "Diplomatie", legitimite: "Légitimité" };
+// sélecteur sans menu déroulant : − valeur +
+const pasBtn = (nom, v, max, lib) => `<span class="pas lbl">${lib} <button type="button" class="btn" data-pas="${nom}" data-d="-1" ${v <= 0 ? "disabled" : ""} aria-label="moins">−</button><b class="num">${v}</b><button type="button" class="btn" data-pas="${nom}" data-d="1" ${v >= max ? "disabled" : ""} aria-label="plus">+</button></span>`;
 function consigneAction(box, qui, enTete) {
   const g = etat.g, c = etat.q.camp, restants = etat.q.a[3];
   const id = choix.id;
@@ -1272,58 +1486,71 @@ function consigneAction(box, qui, enTete) {
   if (nbDec) h += `<p class="resume">Vous tenez ${nbDec} carte${nbDec > 1 ? "s" : ""} de décompte : jouez-la${nbDec > 1 ? "s" : ""} avant la fin du tour, sinon vous perdez. Rounds restants après celui-ci : ${restants}.</p>`;
   if (!id) {
     const mil = g.militaire[c], tv = g.treve;
-    h += `<p><b>Cliquez une carte de votre main.</b> Le badge sous chaque carte dit si son événement est jouable.</p>` +
+    h += `<p><b>Cliquez une carte de votre main</b> : ses usages s'affichent sur la carte elle-même.</p>` +
       `<p class="lbl">Chevauchées : ${mil} OPS militaires engagés sur ${tv} exigés par la Trêve d'ici la fin du tour${mil < tv ? ` (il en manque ${tv - mil} : autant de points pour l'adversaire)` : " (exigence remplie)"}.</p>`;
-    box.innerHTML = h; return;
+    box.innerHTML = h; barre(null); return;
   }
   const k = R.carte(D, id), ops0 = R.opsCarte(D, g, c, id), adv = R.adv(c);
   const peutLever = g.regles?.levee && g.tresor[c] >= 3;
   const ops = ops0 + (choix.levee && choix.mode !== "legitimite" ? 1 : 0);
   const modes = modesPour(c, id);
-  h += grandeCarte(id, `<p class="lbl">${k.decompte ? "" : `${ops0} OPS pour vous${ops0 !== k.ops ? ` (carte à ${k.ops}, modifiée par les effets en cours)` : ""}`}</p>`);
-  h += `<div class="modes">${modes.map(x => `<button type="button" class="mode ${choix.mode === x.m ? "sel" : ""}" data-mode="${x.m}" ${x.ok ? "" : "disabled"} ${tip(`<b>${x.label}</b><br>${x.ok ? x.desc : x.why}`)}>${ic(MODE_IC[x.m])}<b>${x.label}</b><span>${x.ok ? x.desc : x.why}</span></button>`).join("")}</div>`;
-  if (!modes.some(x => x.ok)) h += `<p>Aucun usage possible pour cette carte. Choisissez-en une autre.</p>`;
   const m = choix.mode;
+  h += grandeCarte(id, `<p class="lbl">${k.decompte ? "" : `${ops0} OPS pour vous${ops0 !== k.ops ? ` (carte à ${k.ops}, modifiée par les effets en cours)` : ""}`}</p>`);
+  if (!modes.some(x => x.ok)) h += `<p>Aucun usage possible pour cette carte. Choisissez-en une autre.</p>`;
+  else if (!m) h += `<p><b>Choisissez l'usage sur la carte.</b></p><ul class="usages">${modes.map(x => `<li class="${x.ok ? "" : "non"}">${ic(MODE_IC[x.m])} <b>${x.label}</b> : ${x.ok ? x.desc : x.why}</li>`).join("")}</ul>`;
   if (m && m !== "evenement" && m !== "legitimite" && peutLever)
     h += `<label class="lbl"><input type="checkbox" id="levee" ${choix.levee ? "checked" : ""}> Lever des compagnies : 3 Trésor pour +1 OPS</label>`;
   if (m && m !== "evenement" && k.camp === adv && !k.decompte && m !== "legitimite")
-    h += `<div class="choix lbl">L'événement ${ADJ[k.camp]} se déclenche : <label><input type="radio" name="ordre" value="avant" ${choix.ordre === "avant" ? "checked" : ""}> avant</label><label><input type="radio" name="ordre" value="apres" ${choix.ordre === "apres" ? "checked" : ""}> après votre action</label></div>`;
-  let pret = false, detail = "", resume = "";
+    h += `<div class="choix lbl">L'événement de cette carte ${ADJ[k.camp]} se déclenche : <label><input type="radio" name="ordre" value="avant" ${choix.ordre === "avant" ? "checked" : ""}> avant</label><label><input type="radio" name="ordre" value="apres" ${choix.ordre === "apres" ? "checked" : ""}> après votre action</label></div>`;
+  let pret = false, detail = "", resume = "", info = "";
   if (m === "evenement") { pret = true; resume = k.decompte ? `Décompter la région ${k.decompte} maintenant.${simDecompte(etat.g, k.decompte).html}` : `Jouer l'événement « ${k.nom} » pour ${LA[k.camp === "N" ? c : k.camp]}.`; }
   else if (m === "influence") {
     const acc = R.lieuxAccessibles(D, g, c), cout = n => R.coutInfluence(D, g, c, n);
     const depense = choix.plan.reduce((s, n) => s + cout(n), 0), reste = ops - depense;
-    detail = `<p>Cliquez les lieux qui clignotent (vos lieux et leurs voisins). Reste <b class="num">${reste}</b> OPS sur ${ops}.</p>` +
+    // effet en direct : contrôle avant / après les points prévus
+    const nb = {}; for (const n of choix.plan) nb[n] = (nb[n] || 0) + 1;
+    const prises = [], perdues = [];
+    for (const [n, x] of Object.entries(nb)) {
+      const i0 = [g.inf[n].A, g.inf[n].F], i1 = i0.slice(); i1[c === "A" ? 0 : 1] += x;
+      const c0 = ctlSnap(n, i0), c1 = ctlSnap(n, i1);
+      if (c1 === c && c0 !== c) prises.push(n); else if (c0 === adv && c1 !== adv) perdues.push(n);
+    }
+    detail = `<p>Cliquez les lieux qui clignotent (vos lieux et leurs voisins) : l'Influence apparaît tout de suite sur le plan. Reste <b class="num">${reste}</b> OPS sur ${ops}.</p>` +
+      (prises.length || perdues.length ? `<p class="resume">${prises.length ? `${ic("inf")} <b>Prise de contrôle</b> : ${prises.join(", ")}.` : ""}${perdues.length ? ` ${LA_[adv]} perd le contrôle de ${perdues.join(", ")}.` : ""}</p>` : "") +
       `<div class="choix"><button class="btn" type="button" id="annulerPt" ${choix.plan.length ? "" : "disabled"}>Retirer le dernier</button></div>`;
     pret = choix.plan.length > 0;
-    resume = pret ? `Placer ${choix.plan.length} Influence : ${choix.plan.join(", ")}.` : "";
-    cibles(acc.filter(n => cout(n) <= reste), n => { choix.plan.push(n); consigne(); }, choix.plan);
+    info = `Reste ${reste} OPS`;
+    resume = pret ? `Placer ${choix.plan.length} Influence : ${Object.entries(nb).map(([n, x]) => x > 1 ? `${n} ×${x}` : n).join(", ")}.` : "";
+    cibles(acc.filter(n => cout(n) <= reste), n => { choix.plan.push(n); jouerSon("place"); consigne(); }, choix.plan);
   } else if (m === "assaut") {
     const tres = g.tresor[c] - (choix.levee ? 3 : 0);
     const cs = R.ciblesAssaut(D, g, c).filter(n => tres >= R.coutAssaut(D, g, n));
     if (choix.cible && !cs.includes(choix.cible)) choix.cible = null;
     detail = `<p>Cliquez la cible sur le plan (lieux où l'adversaire a de l'Influence).</p>`;
+    info = "Choisissez la cible";
     if (choix.cible) {
       const n = choix.cible, cout = R.coutAssaut(D, g, n), maxDep = Math.max(0, Math.min(4, tres - cout));
       choix.depense = Math.min(choix.depense, maxDep);
-      const def = R.defense(D, g, n), bonus = R.bonusAssaut(D, g, c, n), tdep = Math.floor(choix.depense / 2);
+      const def = R.defense(D, g, n), bd = R.bonusAssautDetail(D, g, c, n), bonus = bd.reduce((s, x) => s + x[1], 0), tdep = Math.floor(choix.depense / 2);
       const base = ops - 2 * def + bonus + tdep;
       const p = Math.max(0, Math.min(6, 6 - Math.max(0, -base)));
       const ia = g.inf[n][adv];
       detail += `<p><b>${n}</b> · défense ${def} · Influence adverse ${ia}${D.lieux[n].pf ? " · place forte (la Trêve baissera de 1)" : ""}</p>` +
-        `<label class="lbl">Trésor engagé en plus (+1 par 2) <select id="dep">${[...Array(maxDep + 1).keys()].map(x => `<option ${x === choix.depense ? "selected" : ""}>${x}</option>`).join("")}</select></label>` +
-        `<p class="chance">1d6 + ${ops} OPS − ${2 * def} (2 × défense)${bonus ? ` ${sg(bonus)} bonus` : ""}${tdep ? ` + ${tdep} Trésor` : ""} = dé ${base >= 0 ? "+" : "−"} ${Math.abs(base)} · réussite si le total dépasse 0 : <b>${p} chance${p > 1 ? "s" : ""} sur 6</b></p>`;
-      pret = true;
+        pasBtn("dep", choix.depense, maxDep, "Trésor engagé en plus (+1 au dé par 2)") +
+        tableJet([["dé", "1d6"], [`OPS${choix.levee ? " (dont levée)" : ""}`, sg(ops)], [`défense ${def} × 2`, sg(-2 * def)], ...bd.map(([l, v]) => [l, sg(v)]), ...(tdep ? [[`Trésor engagé ${choix.depense}`, sg(tdep)]] : [])], `dé ${base >= 0 ? "+" : "−"} ${Math.abs(base)}`, `réussite si le total dépasse 0 : <b>${p} chance${p > 1 ? "s" : ""} sur 6</b>`);
+      pret = true; info = `${n} · ${p}/6`;
       resume = `Assaut sur ${n} : coût ${cout + choix.depense} Trésor${choix.levee ? " + 3 pour la levée" : ""}, ${p}/6 de réussite.`;
     }
     cibles(cs, n => { choix.cible = n; consigne(); }, choix.cible ? [choix.cible] : []);
   } else if (m === "siege") {
     const cs = R.ciblesAssaut(D, g, c).filter(n => R.controle(D, g, n) === adv);
     detail = `<p>Siège : ${ops} jet${ops > 1 ? "s" : ""} opposé${ops > 1 ? "s" : ""}. Chaque camp : 1d6 + 1 par lieu voisin contrôlé + 1 s'il a plus d'Influence sur place. Le perdant retire l'écart. Cliquez la cible.</p>`;
+    info = "Choisissez la cible";
     if (choix.cible && cs.includes(choix.cible)) {
-      const maxDep = Math.min(4, g.tresor[c] - (choix.levee ? 3 : 0));
-      detail += `<p><b>${choix.cible}</b></p><label class="lbl">Trésor engagé au premier jet (+1 par 2) <select id="dep">${[...Array(Math.max(0, maxDep) + 1).keys()].map(x => `<option ${x === choix.depense ? "selected" : ""}>${x}</option>`).join("")}</select></label>`;
-      pret = true;
+      const maxDep = Math.max(0, Math.min(4, g.tresor[c] - (choix.levee ? 3 : 0)));
+      choix.depense = Math.min(choix.depense, maxDep);
+      detail += `<p><b>${choix.cible}</b></p>` + pasBtn("dep", choix.depense, maxDep, "Trésor engagé au premier jet (+1 par 2)");
+      pret = true; info = choix.cible;
       resume = `Assiéger ${choix.cible} avec ${ops} jet${ops > 1 ? "s" : ""}.`;
     } else choix.cible = null;
     cibles(cs, n => { choix.cible = n; consigne(); }, choix.cible ? [choix.cible] : []);
@@ -1332,42 +1559,77 @@ function consigneAction(box, qui, enTete) {
     const fs = R.FACTIONS.filter(f => f !== "Rome" || schisme);
     if (!fs.includes(choix.cible)) choix.cible = fs[0];
     const f = choix.cible, maxDep = Math.max(0, Math.min(4, g.tresor[c] - (choix.levee ? 3 : 0)));
+    choix.depense = Math.min(choix.depense, maxDep);
     const bonus = (g.paliers[5] === c ? 1 : 0) + (Math.abs(g.loy[f]) === 2 && Math.sign(g.loy[f]) === (c === "F" ? 1 : -1) ? 1 : 0);
     const seuil = 5 + Math.abs(g.loy[f]) - ops - bonus - Math.floor(choix.depense / 2);
     const p = Math.max(0, Math.min(6, 7 - Math.max(1, seuil)));
-    detail = `<label class="lbl">Faction <select id="fac">${fs.map(x => `<option ${x === f ? "selected" : ""}>${x}</option>`).join("")}</select></label>` +
-      `<label class="lbl">Trésor engagé (+1 par 2) <select id="dep">${[...Array(maxDep + 1).keys()].map(x => `<option ${x === choix.depense ? "selected" : ""}>${x}</option>`).join("")}</select></label>` +
+    detail = `<div class="choix lbl">Faction : ${fs.map(x => `<button type="button" class="btn ${x === f ? "sel" : ""}" data-fac="${attr(x)}">${x} <span class="num">${g.loy[x] > 0 ? "+" : ""}${g.loy[x]}</span></button>`).join("")}</div>` +
+      pasBtn("dep", choix.depense, maxDep, "Trésor engagé (+1 par 2)") +
       `<p class="chance">Loyauté actuelle ${g.loy[f] > 0 ? "+" : ""}${g.loy[f]} : il faut ${5 + Math.abs(g.loy[f])} ou plus avec 1d6 + ${ops}${bonus ? ` + ${bonus}` : ""}${Math.floor(choix.depense / 2) ? ` + ${Math.floor(choix.depense / 2)}` : ""} · <b>${p} chance${p > 1 ? "s" : ""} sur 6</b></p>`;
-    pret = true;
+    pret = true; info = `${f} · ${p}/6`;
     resume = `Faire glisser ${f} d'un cran vers ${LA[c]} (${p}/6).`;
   } else if (m === "legitimite") {
     const cible = g.legit[c] + 1;
-    detail = `<p class="chance">Case ${cible} : réussite sur 1d6 ≤ ${JET_LEGIT(cible)}, soit <b>${JET_LEGIT(cible)} chances sur 6</b>. Une seule tentative par tour ; l'événement de la carte ne se déclenche pas.</p>`;
-    pret = true;
+    detail = `<p class="chance">Case ${cible} : réussite sur 1d6 ≤ ${JET_LEGIT(cible)}, soit <b>${JET_LEGIT(cible)} chances sur 6</b>. Une seule tentative par tour ; l'événement de la carte ne se déclenche pas.${cible === 2 || cible === 8 ? ` Atteindre la case ${cible} rapporte ${cible === 2 ? (g.paliers[2] ? 1 : 2) : (g.paliers[8] ? 2 : 4)} point${cible === 2 && g.paliers[2] ? "" : "s"}.` : ""}</p>`;
+    pret = true; info = `${JET_LEGIT(cible)}/6`;
     resume = `Tenter la case ${cible} de Légitimité.`;
   }
   if (resume && m !== "evenement" && m !== "legitimite" && k.camp === adv && !k.decompte) resume += ` ${choix.ordre === "apres" ? "Après" : "Avant"} votre action, l'événement « ${k.nom} » se joue pour ${LA[adv]}.`;
   h += detail;
-  if (m) h += (resume ? `<p class="resume">${resume}</p>` : "") + `<div class="choix"><button class="btn prim" type="button" id="ok" ${pret ? "" : "disabled"}>Jouer</button><button class="btn" type="button" id="annuler">Changer d'action</button></div>`;
+  if (m) h += (resume ? `<p class="resume">${resume}</p>` : "") + `<div class="choix"><button class="btn prim" type="button" id="ok" ${pret ? "" : "disabled"}>Jouer</button><button class="btn" type="button" id="annuler">Changer d'usage</button></div>`;
   box.innerHTML = h;
-  box.querySelectorAll("[data-mode]").forEach(b => b.onclick = () => { choix.mode = b.dataset.mode; choix.plan = []; choix.cible = null; choix.depense = 0; consigne(); });
-  const on = (sel, ev, fn) => { const e = box.querySelector(sel); if (e) e[ev] = fn; };
-  on("#levee", "onchange", e => { choix.levee = e.target.checked; choix.plan = []; consigne(); });
-  box.querySelectorAll("input[name=ordre]").forEach(r => r.onchange = () => { choix.ordre = r.value; consigne(); });
-  on("#dep", "onchange", e => { choix.depense = +e.target.value; consigne(); });
-  on("#fac", "onchange", e => { choix.cible = e.target.value; consigne(); });
-  on("#annulerPt", "onclick", () => { choix.plan.pop(); consigne(); });
-  on("#annuler", "onclick", () => { choix.mode = null; consigne(); });
-  on("#ok", "onclick", () => {
+  const valider = () => {
     const a = { id, mode: m };
     if (m !== "evenement" && m !== "legitimite") { if (choix.levee) a.levee = true; if (k.camp === adv) a.ordre = choix.ordre; }
     if (m === "influence") a.cibles = choix.plan.slice();
     if (m === "assaut") { a.cible = choix.cible; a.depense = choix.depense; }
     if (m === "siege") { a.cibles = [choix.cible]; a.depense = choix.depense; }
     if (m === "diplomatie") { a.cible = choix.cible; a.depense = choix.depense; }
-    repondre(a);
-  });
+    barre(null); repondre(a);
+  };
+  const choisirMode = x => { choix.mode = x; choix.plan = []; choix.cible = null; choix.depense = 0; consigne(); };
+  const on = (sel, ev, fn) => { const e = box.querySelector(sel); if (e) e[ev] = fn; };
+  on("#levee", "onchange", e => { choix.levee = e.target.checked; choix.plan = []; consigne(); });
+  box.querySelectorAll("input[name=ordre]").forEach(r => r.onchange = () => { choix.ordre = r.value; consigne(); });
+  box.querySelectorAll("[data-pas]").forEach(b => b.onclick = () => { choix.depense = Math.max(0, choix.depense + +b.dataset.d); consigne(); });
+  box.querySelectorAll("[data-fac]").forEach(b => b.onclick = () => { choix.cible = b.dataset.fac; consigne(); });
+  on("#annulerPt", "onclick", () => { choix.plan.pop(); consigne(); });
+  on("#annuler", "onclick", () => choisirMode(null));
+  on("#ok", "onclick", valider);
+  barre({ id, k, modes, m, pret, info, valider, choisirMode });
 }
+// Barre d'usages posée sur la carte choisie : on choisit l'usage et on joue sans quitter la carte des yeux.
+function barre(o) {
+  let b = $("barre");
+  if (!o) { if (b) b.remove(); return; }
+  if (!b) { b = document.createElement("div"); b.id = "barre"; b.className = "barre"; document.body.appendChild(b); }
+  const { k, modes, m, pret, info } = o;
+  b.className = "barre " + (k.camp || "");
+  b.innerHTML = `<div class="barre-t"><span>${k.nom}</span><button type="button" class="x" id="barreX" aria-label="Reposer la carte" data-tip="Reposer la carte">✕</button></div>` +
+    (m ? `<div class="barre-sel">${ic(MODE_IC[m])}<b>${o.titre || (k.decompte ? "Décompte" : MODE_COURT[m])}</b>${info ? `<span class="lbl">${info}</span>` : ""}</div>` +
+      `<div class="barre-act"><button type="button" class="btn prim" id="barreOk" ${pret ? "" : "disabled"}>✓ Jouer</button>${k.decompte || o.fixe ? "" : `<button type="button" class="btn" id="barreRetour" data-tip="Choisir un autre usage">↺</button>`}</div>`
+      : `<div class="barre-modes">${modes.map(x => `<button type="button" class="bm" data-bmode="${x.m}" ${x.ok ? "" : "disabled"} ${tip(`<b>${x.label}</b><br>${x.ok ? x.desc : x.why}`)}>${ic(MODE_IC[x.m])}<span>${MODE_COURT[x.m]}</span></button>`).join("")}</div>`);
+  b.querySelectorAll("[data-bmode]").forEach(x => x.onclick = () => o.choisirMode(x.dataset.bmode));
+  const q = s => b.querySelector(s);
+  if (q("#barreOk")) q("#barreOk").onclick = o.valider;
+  if (q("#barreRetour")) q("#barreRetour").onclick = () => o.choisirMode(null);
+  q("#barreX").onclick = () => { choix = { id: null, mode: null, plan: [], cible: null, depense: 0, levee: false, ordre: "avant" }; main(); consigne(); };
+  placerBarre();
+}
+function placerBarre() {
+  const b = $("barre"); if (!b) return;
+  const cc = $("main").querySelector(`.carte[data-id="${choix.id}"]`);
+  if (!cc) { b.remove(); return; }
+  const r = cc.getBoundingClientRect(), z = $("main").getBoundingClientRect();
+  b.style.left = Math.max(4, Math.min(innerWidth - Math.max(r.width, 180) - 4, r.left)) + "px";
+  b.style.width = Math.max(r.width, 180) + "px";
+  b.style.minHeight = Math.min(r.height, 150) + "px";
+  const h = b.offsetHeight;
+  // posée sur la carte ; si la carte est coupée par le bas de la main, la barre remonte pour rester visible
+  b.style.top = Math.max(4, Math.max(Math.min(z.top, innerHeight - h - 4), Math.min(r.top, z.bottom - h, innerHeight - h - 4))) + "px";
+}
+addEventListener("resize", placerBarre);
+addEventListener("scroll", placerBarre, true);
 
 function ordreMain(c, ids) {
   const rang = id => { const k = R.carte(D, id); return k.decompte ? 0 : k.camp === c ? 1 : k.camp === "N" ? 2 : 3; };
@@ -1395,11 +1657,12 @@ function main() {
     if (!jouables || (q.m === "ouverture" && k.decompte)) return;
     jouerSon("clic");
     if (choix.id !== id) choix = { id, mode: null, plan: [], cible: null, depense: 0, levee: false, ordre: "avant" };
-    if (k.decompte && q.m === "action") choix.mode = "evenement";
+    else if (!choix.mode) { choix.id = null; barre(null); }   // second clic sur la carte choisie : on la repose
+    if (choix.id && k.decompte && q.m === "action") choix.mode = "evenement";
     main(); consigne();
-    $("consigne").scrollIntoView({ block: "nearest", behavior: "smooth" });
   });
   ajusterMain();
+  if (!jouables) barre(null); else placerBarre();
 }
 function ajusterMain() {
   const M = $("main"), n = M.children.length;
@@ -1421,7 +1684,7 @@ function ajusterMain() {
 addEventListener("resize", () => { if (etat?.g) ajusterMain(); });
 // La consigne change de hauteur pendant la lecture des coups : la main se réajuste quand sa zone change de taille.
 let hMain = 0;
-new ResizeObserver(() => { const h = $("main").clientHeight; if (etat?.g && Math.abs(h - hMain) > 4) { hMain = h; requestAnimationFrame(ajusterMain); } }).observe($("main"));
+new ResizeObserver(() => { const h = $("main").clientHeight; if (etat?.g && Math.abs(h - hMain) > 4) { hMain = h; requestAnimationFrame(() => { ajusterMain(); placerBarre(); }); } }).observe($("main"));
 
 // ------------------------------------------------------------ tutoriel animé
 // Chaque chapitre est une suite de scènes : un décor (HTML/SVG), un texte, une durée. Les scènes « à manipuler »
@@ -1448,17 +1711,17 @@ const parId = nom => D.parNom[nom]?.id;
 const TUTO = [
   { titre: "Le but du jeu", scenes: [
     { duree: 9000, texte: "Deux royaumes, cent seize ans de guerre. Chaque camp pousse le score de son côté : la France vers +25, l'Angleterre vers −25. Le premier qui atteint son bout gagne aussitôt.",
-      decor: () => `<div style="width:min(560px,100%);display:grid;gap:10px"><div class="score" style="height:40px"><div class="ech"><span>Angleterre −25</span><b id="tsc">0</b><span>+25 France</span></div><div class="marq" id="tmq" style="left:50%;height:48px;transition:left 1.4s ease-in-out"></div></div><p class="lbl a" style="--d:.5s;text-align:center">${ic("score")} Décomptes, chevauchées manquées et événements font bouger le score.</p></div>`,
+      decor: () => `<div style="width:min(560px,100%);display:grid;gap:10px"><div class="score" style="height:40px"><div class="ech"><span>Angleterre −25</span><b id="tsc">0</b><span>+25 France</span></div><div class="marq" id="tmq" style="left:50%;height:48px;transition:left 1.4s ease-in-out"></div></div><p class="lbl anim" style="--d:.5s;text-align:center">${ic("score")} Décomptes, chevauchées manquées et événements font bouger le score.</p></div>`,
       jouer: () => { const pas = [[-6, 1200], [4, 3000], [-2, 4800], [9, 6600]]; for (const [v, t] of pas) tAttendre(t, () => { const m = $("tmq"); if (!m) return; m.style.left = (v + 25) * 2 + "%"; $("tsc").textContent = v > 0 ? `France +${v}` : `Angleterre +${-v}`; jouerSon("clic"); }); } },
     { duree: 9000, texte: "On peut aussi gagner d'un coup, en fin de tour : l'Angleterre avec Paris et Reims (la double monarchie), la France avec Bordeaux, Rouen et Paris.",
-      decor: () => `<svg viewBox="0 0 560 230" width="560"><g class="a" style="--d:.2s">${tLieu(90, 90, { def: 4, pf: 1, a: 6, f: 1, nom: "Paris" })}${tLieu(210, 90, { def: 3, pf: 1, a: 4, nom: "Reims" })}<text x="150" y="195" text-anchor="middle" font-family="var(--f-titre)" font-size="22" fill="var(--gueules)">Angleterre</text></g>
-        <g class="a" style="--d:1.6s">${tLieu(350, 90, { def: 3, pf: 1, f: 4, nom: "Bordeaux" })}${tLieu(440, 90, { def: 3, pf: 1, f: 5, a: 1, nom: "Rouen" })}${tLieu(520, 90, { def: 4, pf: 1, f: 5, nom: "Paris" })}<text x="440" y="195" text-anchor="middle" font-family="var(--f-titre)" font-size="22" fill="var(--azur)">France</text></g></svg>` },
+      decor: () => `<svg viewBox="0 0 560 230" width="560"><g class="anim" style="--d:.2s">${tLieu(90, 90, { def: 4, pf: 1, a: 6, f: 1, nom: "Paris" })}${tLieu(210, 90, { def: 3, pf: 1, a: 4, nom: "Reims" })}<text x="150" y="195" text-anchor="middle" font-family="var(--f-titre)" font-size="22" fill="var(--gueules)">Angleterre</text></g>
+        <g class="anim" style="--d:1.6s">${tLieu(350, 90, { def: 3, pf: 1, f: 4, nom: "Bordeaux" })}${tLieu(440, 90, { def: 3, pf: 1, f: 5, a: 1, nom: "Rouen" })}${tLieu(520, 90, { def: 4, pf: 1, f: 5, nom: "Paris" })}<text x="440" y="195" text-anchor="middle" font-family="var(--f-titre)" font-size="22" fill="var(--azur)">France</text></g></svg>` },
     { duree: 9000, texte: "Sinon, après le dixième tour, toutes les régions sont décomptées et le camp en tête l'emporte. Deux pièges font perdre sur-le-champ : garder une carte de décompte en fin de tour, et faire tomber la Trêve à 1.",
-      decor: () => `<div style="display:grid;gap:12px;width:min(600px,100%)"><div class="tours a" style="height:22px">${[...Array(10)].map((_, k) => `<i class="a" style="--d:${k * .25}s;height:18px"></i>`).join("")}</div><p class="a" style="--d:2.7s;text-align:center;font-family:var(--f-titre);font-size:1.4rem">${ic("decompte")} Tour 10 : décompte final</p><div class="duo a" style="--d:4s"><div class="resume">${ic("decompte")} Décompte gardé en main = défaite</div><div class="resume">${ic("treve")} Trêve à 1 = défaite du responsable</div></div></div>` },
+      decor: () => `<div style="display:grid;gap:12px;width:min(600px,100%)"><div class="tours anim" style="height:22px">${[...Array(10)].map((_, k) => `<i class="anim" style="--d:${k * .25}s;height:18px"></i>`).join("")}</div><p class="anim" style="--d:2.7s;text-align:center;font-family:var(--f-titre);font-size:1.4rem">${ic("decompte")} Tour 10 : décompte final</p><div class="duo anim" style="--d:4s"><div class="resume">${ic("decompte")} Décompte gardé en main = défaite</div><div class="resume">${ic("treve")} Trêve à 1 = défaite du responsable</div></div></div>` },
   ] },
   { titre: "Lieux et contrôle", scenes: [
     { duree: 10000, texte: "La carte compte 70 lieux. Le chiffre au centre est la défense. Un carré est une place forte, un rond un lieu ouvert, l'ancre un port. Les chiffres rouges et bleus sont l'Influence anglaise et française.",
-      decor: () => `<svg viewBox="0 0 560 210" width="560"><g class="a" style="--d:.2s">${tLieu(100, 90, { def: 1, nom: "Lieu ouvert" })}</g><g class="a" style="--d:1.5s">${tLieu(280, 90, { def: 3, pf: 1, nom: "Place forte" })}</g><g class="a" style="--d:3s">${tLieu(450, 90, { def: 2, pf: 1, a: 2, f: 1, nom: "Port", port: 1 })}</g></svg>` },
+      decor: () => `<svg viewBox="0 0 560 210" width="560"><g class="anim" style="--d:.2s">${tLieu(100, 90, { def: 1, nom: "Lieu ouvert" })}</g><g class="anim" style="--d:1.5s">${tLieu(280, 90, { def: 3, pf: 1, nom: "Place forte" })}</g><g class="anim" style="--d:3s">${tLieu(450, 90, { def: 2, pf: 1, a: 2, f: 1, nom: "Port", port: 1 })}</g></svg>` },
     { interactif: true, texte: "Un camp contrôle un lieu quand son Influence est au moins égale à la défense plus l'Influence adverse. À vous : ajoutez ou retirez de l'Influence et regardez Rouen changer de mains.",
       ex: "Exemple : avec 1 Influence anglaise, la France doit en avoir 3 + 1 = 4 pour contrôler Rouen (défense 3).",
       decor: () => `<div style="display:grid;gap:10px;justify-items:center"><svg viewBox="0 0 300 170" width="300" id="tRouen"></svg><div class="choix"><button class="btn" data-t="a+">+1 anglaise</button><button class="btn" data-t="a-">−1 anglaise</button><button class="btn" data-t="f+">+1 française</button><button class="btn" data-t="f-">−1 française</button></div><p class="chance" id="tCtl"></p></div>`,
@@ -1467,24 +1730,24 @@ const TUTO = [
           $("tCtl").innerHTML = `France : ${o.f} ≥ 3 + ${o.a} ? <b>${o.f >= 3 + o.a ? "oui" : "non"}</b> · Angleterre : ${o.a} ≥ 3 + ${o.f} ? <b>${o.a >= 3 + o.f ? "oui" : "non"}</b> → ${c ? `contrôlé par ${LA[c]}` : "personne ne contrôle"}`; };
         maj(); document.querySelectorAll("[data-t]").forEach(b => b.onclick = () => { const [k, s] = [b.dataset.t[0], b.dataset.t[1]]; o[k] = Math.max(0, Math.min(9, o[k] + (s === "+" ? 1 : -1))); jouerSon("place"); maj(); }); } },
     { duree: 9000, texte: "Les lieux sont groupés en régions colorées : ce sont elles qui rapportent des points aux décomptes. Survolez un nom de région ou une carte de décompte pendant la partie : la région s'allume sur la carte.",
-      decor: () => `<div class="decs" style="justify-content:center;gap:8px">${Object.keys(D.regions).map((r, k) => `<span class="dec a" style="--rc:${COUL[r]};--d:${k * .4}s;font-size:1rem;padding:3px 10px">${r} · ${D.regions[r].join("/")}</span>`).join("")}</div>` },
+      decor: () => `<div class="decs" style="justify-content:center;gap:8px">${Object.keys(D.regions).map((r, k) => `<span class="dec anim" style="--rc:${COUL[r]};--d:${k * .4}s;font-size:1rem;padding:3px 10px">${r} · ${D.regions[r].join("/")}</span>`).join("")}</div>` },
   ] },
   { titre: "Un tour de jeu", scenes: [
     { duree: 11000, texte: "Chaque tour suit la même séquence : la Trêve remonte, on complète sa main, chaque camp révèle une carte d'ouverture, puis on joue 6 ou 7 rounds (l'Angleterre puis la France), et on termine par la fin du tour.",
-      decor: () => `<div class="sequence" style="justify-content:center;gap:6px">${["Trêve +1", "Pioche", "Ouverture", "Round 1", "Round 2", "…", "Round 7", "Fin du tour"].map((e, k) => `<span class="a" style="--d:${k * .9}s;font-size:1rem;padding:4px 12px">${e}</span>`).join("")}</div>` },
+      decor: () => `<div class="sequence" style="justify-content:center;gap:6px">${["Trêve +1", "Pioche", "Ouverture", "Round 1", "Round 2", "…", "Round 7", "Fin du tour"].map((e, k) => `<span class="anim" style="--d:${k * .9}s;font-size:1rem;padding:4px 12px">${e}</span>`).join("")}</div>` },
     { duree: 10000, texte: "Ouverture : les deux camps choisissent une carte en secret et la révèlent ensemble. Seul l'événement compte, et la carte la plus forte en OPS se résout la première.",
-      decor: () => { const a = parId("Bataille de l'Écluse"), f = parId("Charles de Blois"); return `<div class="duo" style="width:min(420px,100%);justify-items:center"><div class="a" style="--d:.3s">${tCarte(a)}</div><div class="a" style="--d:1.3s">${tCarte(f)}</div></div>`; } },
+      decor: () => { const a = parId("Bataille de l'Écluse"), f = parId("Charles de Blois"); return `<div class="duo" style="width:min(420px,100%);justify-items:center"><div class="anim" style="--d:.3s">${tCarte(a)}</div><div class="anim" style="--d:1.3s">${tCarte(f)}</div></div>`; } },
     { duree: 10000, texte: "La fin du tour fait les comptes : chevauchées, revenus en Trésor, Crise, Légitimité, puis les victoires automatiques. Pendant la partie, chaque étape s'affiche dans le panneau central, avec un bouton Suivant.",
-      decor: () => `<div style="display:grid;gap:6px;width:min(460px,100%)">${[["treve", "Chevauchées : assez d'OPS militaires ?"], ["tresor", "Revenus : 1 + lieux/4 + port − Crise/2"], ["crise", "Crise : baisse de 1"], ["legit", "Légitimité : le plus légitime marque 1 point"], ["score", "Victoires automatiques"]].map(([i, t], k) => `<div class="resume a" style="--d:${k * 1.1}s">${ic(i)} ${t}</div>`).join("")}</div>` },
+      decor: () => `<div style="display:grid;gap:6px;width:min(460px,100%)">${[["treve", "Chevauchées : assez d'OPS militaires ?"], ["tresor", "Revenus : 1 + lieux/4 + port − Crise/2"], ["crise", "Crise : baisse de 1"], ["legit", "Légitimité : le plus légitime marque 1 point"], ["score", "Victoires automatiques"]].map(([i, t], k) => `<div class="resume anim" style="--d:${k * 1.1}s">${ic(i)} ${t}</div>`).join("")}</div>` },
   ] },
   { titre: "Jouer une carte", scenes: [
     { duree: 11000, texte: "Chaque carte se joue soit pour son événement (le texte), soit pour ses OPS (le chiffre dans le rond). Avec les OPS, on choisit une action : Influence, Assaut, Siège, Diplomatie ou Légitimité.",
-      decor: () => `<div style="display:grid;grid-template-columns:auto auto;gap:24px;align-items:center"><div class="a">${tCarte(parId("Bataille de Crécy"))}</div><div style="display:grid;gap:8px"><div class="resume a" style="--d:1.2s">${ic("evt")} <b>Événement</b> : appliquer le texte</div><div class="resume a" style="--d:2.4s">${ic("ops")} <b>OPS</b> : ${ic("inf")} ${ic("assaut")} ${ic("siege")} ${ic("diplo")} ${ic("legit")}</div></div></div>` },
+      decor: () => `<div style="display:grid;grid-template-columns:auto auto;gap:24px;align-items:center"><div class="anim">${tCarte(parId("Bataille de Crécy"))}</div><div style="display:grid;gap:8px"><div class="resume anim" style="--d:1.2s">${ic("evt")} <b>Événement</b> : appliquer le texte</div><div class="resume anim" style="--d:2.4s">${ic("ops")} <b>OPS</b> : ${ic("inf")} ${ic("assaut")} ${ic("siege")} ${ic("diplo")} ${ic("legit")}</div></div></div>` },
     { duree: 12000, texte: "Une carte de l'adversaire jouée pour ses OPS déclenche aussi son événement, à son profit. Vous choisissez s'il se joue avant ou après votre action. C'est le cœur du jeu : se débarrasser des cartes adverses au moment où elles font le moins de mal.",
       ex: "Exemple : la France joue « Godefroy d'Harcourt » (anglaise) pour 2 OPS d'Influence ; l'Angleterre reçoit quand même 2 Influence en Normandie.",
-      decor: () => `<div style="display:grid;grid-template-columns:auto auto;gap:24px;align-items:center"><div class="a">${tCarte(parId("Godefroy d'Harcourt"))}</div><div style="display:grid;gap:8px"><div class="resume a" style="--d:1.5s"><b class="tF">France</b> : ${ic("ops")} 2 OPS d'Influence</div><div class="resume a" style="--d:3.5s"><b class="tA">Angleterre</b> : ${ic("evt")} reçoit l'événement</div></div></div>` },
+      decor: () => `<div style="display:grid;grid-template-columns:auto auto;gap:24px;align-items:center"><div class="anim">${tCarte(parId("Godefroy d'Harcourt"))}</div><div style="display:grid;gap:8px"><div class="resume anim" style="--d:1.5s"><b class="tF">France</b> : ${ic("ops")} 2 OPS d'Influence</div><div class="resume anim" style="--d:3.5s"><b class="tA">Angleterre</b> : ${ic("evt")} reçoit l'événement</div></div></div>` },
     { duree: 10000, texte: "Sous chaque carte de votre main, un badge vous dit ce que vous pouvez en faire. Les effets sont écrits sur la carte, avec des icônes.",
-      decor: () => `<div style="display:grid;gap:8px;width:min(520px,100%)">${[["oui", "evt", "Évt jouable", "son événement est pour vous"], ["adv", "evt", "Évt adverse", "jouée pour ses OPS, elle sert l'adversaire"], ["non", "prereq", "Évt impossible", "il manque une carte jouée avant : OPS seulement"], ["dec", "decompte", "Décompte", "à jouer avant la fin du tour"]].map(([c, i, l, t], k) => `<div class="a" style="--d:${k}s;display:flex;gap:10px;align-items:center"><span class="carte" style="border:0;background:none"><span class="badge ${c}" style="position:static">${ic(i)}${l}</span></span>${t}</div>`).join("")}<p class="lbl a" style="--d:4.5s">${ic("inf")} Influence · ${ic("tresor")} Trésor · ${ic("treve")} Trêve · ${ic("crise")} Crise · ${ic("legit")} Légitimité · ${ic("loy")} Loyauté · ${ic("assaut")} Assaut · ${ic("bataille")} Bataille · ${ic("duree")} effet durable</p></div>` },
+      decor: () => `<div style="display:grid;gap:8px;width:min(520px,100%)">${[["oui", "evt", "Évt jouable", "son événement est pour vous"], ["adv", "evt", "Évt adverse", "jouée pour ses OPS, elle sert l'adversaire"], ["non", "prereq", "Évt impossible", "il manque une carte jouée avant : OPS seulement"], ["dec", "decompte", "Décompte", "à jouer avant la fin du tour"]].map(([c, i, l, t], k) => `<div class="anim" style="--d:${k}s;display:flex;gap:10px;align-items:center"><span class="carte" style="border:0;background:none"><span class="badge ${c}" style="position:static">${ic(i)}${l}</span></span>${t}</div>`).join("")}<p class="lbl anim" style="--d:4.5s">${ic("inf")} Influence · ${ic("tresor")} Trésor · ${ic("treve")} Trêve · ${ic("crise")} Crise · ${ic("legit")} Légitimité · ${ic("loy")} Loyauté · ${ic("assaut")} Assaut · ${ic("bataille")} Bataille · ${ic("duree")} effet durable</p></div>` },
   ] },
   { titre: "Placer de l'Influence", scenes: [
     { duree: 12000, texte: "Avec l'action Influence, chaque OPS place 1 Influence dans un lieu où vous êtes déjà, ou dans un lieu voisin. Placer dans un lieu contrôlé par l'adversaire coûte 2 OPS.",
@@ -1506,7 +1769,7 @@ const TUTO = [
           $("tAsR").innerHTML = `<div class="ligne">${tDe(d, "F")} ${d} + 3 − 4 + 1 = <b>${r}</b></div><div class="verdict ${r > 0 ? "ok" : "ko"}">${r > 0 ? `Réussite : l'Angleterre perd ${Math.min(r, 3)} Influence${r > 3 ? `, et ${r - 3} Influence française occupe la place` : ""}` : "Échec : le total doit dépasser 0"}</div>`;
           tAttendre(500, () => { if ($("tAs")) $("tAs").innerHTML = tLieu(150, 70, o2); jouerSon(r > 0 ? "ok" : "ko"); }); }; } },
     { duree: 9000, texte: "L'Assaut a un prix : 1 Trésor (2 sur une place forte). Vous pouvez engager du Trésor en plus (+1 par 2 Trésor) ou lever des compagnies (3 Trésor pour +1 OPS). Et chaque Assaut sur une place forte fait baisser la Trêve.",
-      decor: () => `<div style="display:grid;gap:8px;width:min(460px,100%)"><div class="resume a">${ic("tresor")} 1 Trésor, 2 sur place forte</div><div class="resume a" style="--d:1.3s">${ic("tresor")} +1 au dé par 2 Trésor engagés (maximum +2)</div><div class="resume a" style="--d:2.6s">${ic("ops")} Levée : 3 Trésor = +1 OPS</div><div class="resume a" style="--d:3.9s">${ic("treve")} place forte : Trêve −1</div></div>` },
+      decor: () => `<div style="display:grid;gap:8px;width:min(460px,100%)"><div class="resume anim">${ic("tresor")} 1 Trésor, 2 sur place forte</div><div class="resume anim" style="--d:1.3s">${ic("tresor")} +1 au dé par 2 Trésor engagés (maximum +2)</div><div class="resume anim" style="--d:2.6s">${ic("ops")} Levée : 3 Trésor = +1 OPS</div><div class="resume anim" style="--d:3.9s">${ic("treve")} place forte : Trêve −1</div></div>` },
   ] },
   { titre: "Siège, Diplomatie, Légitimité", scenes: [
     { interactif: true, texte: "Le Siège vise un lieu contrôlé par l'adversaire. Chaque OPS donne un jet opposé : 1d6 + 1 par lieu voisin contrôlé + 1 si l'on a plus d'Influence sur place. Le perdant retire l'écart.",
@@ -1527,29 +1790,29 @@ const TUTO = [
       jouer: () => { [4, 3, 2, 1].forEach((v, k) => tAttendre(2000 + k * 2300, () => { const is = document.querySelectorAll("#tTv i"); if (!is.length) return; is.forEach((i, j) => i.classList.toggle("on", j < v)); $("tTvT").textContent = `Trêve ${v} : ${TREVE_TXT[v]}.`; jouerSon(v === 1 ? "ko" : "clic"); })); } },
     { duree: 11000, texte: "Mais la guerre doit se faire : en fin de tour, chaque camp doit avoir engagé au moins autant d'OPS militaires (Assauts, batailles) que la Trêve. Chaque OPS manquant donne 1 point à l'adversaire.",
       ex: "Trêve à 4, la France n'a engagé que 2 OPS en Assaut : l'Angleterre marque 2 points.",
-      decor: () => `<div style="display:grid;gap:10px;width:min(460px,100%)"><div class="resume a">${ic("treve")} Trêve 4 → 4 OPS militaires exigés</div><div class="resume a" style="--d:1.5s">${ic("assaut")} France : 2 OPS engagés</div><div class="resume a" style="--d:3s">${ic("score")} il en manque 2 : <b class="tA">2 points pour l'Angleterre</b></div></div>` },
+      decor: () => `<div style="display:grid;gap:10px;width:min(460px,100%)"><div class="resume anim">${ic("treve")} Trêve 4 → 4 OPS militaires exigés</div><div class="resume anim" style="--d:1.5s">${ic("assaut")} France : 2 OPS engagés</div><div class="resume anim" style="--d:3s">${ic("score")} il en manque 2 : <b class="tA">2 points pour l'Angleterre</b></div></div>` },
   ] },
   { titre: "Les décomptes", scenes: [
     { duree: 12000, texte: "Huit régions sont décomptées. Leurs cartes de décompte entrent dans la pioche par phase : trois en phase I, trois en phase II, deux en phase III. La frise en haut de l'écran les montre, avec celles déjà jouées.",
-      decor: () => `<div class="frise" style="width:min(720px,100%);grid-template-columns:repeat(3,1fr)">${PH.map((ph, k) => `<div class="phase a" style="--d:${k * 1.6}s"><img src="miniatures/${ph.img}.jpg" alt=""><div><div class="t"><span>${ph.nom}</span><span>${ph.dates}</span></div><div class="decs">${DECOMPTES.filter(d => d.phase === ph.p).map(d => `<span class="dec" style="--rc:${COUL[d.r]}">${d.r}</span>`).join("")}</div></div></div>`).join("")}</div>` },
+      decor: () => `<div class="frise" style="width:min(720px,100%);grid-template-columns:repeat(3,1fr)">${PH.map((ph, k) => `<div class="phase anim" style="--d:${k * 1.6}s"><img src="miniatures/${ph.img}.jpg" alt=""><div><div class="t"><span>${ph.nom}</span><span>${ph.dates}</span></div><div class="decs">${DECOMPTES.filter(d => d.phase === ph.p).map(d => `<span class="dec" style="--rc:${COUL[d.r]}">${d.r}</span>`).join("")}</div></div></div>`).join("")}</div>` },
     { duree: 14000, texte: "Au décompte, chaque camp marque la valeur de son niveau : présence (au moins un lieu), domination (plus de lieux et plus de places fortes, dont un lieu ouvert) ou contrôle (plus de lieux et toutes les places fortes). Plus 1 par place forte contrôlée. La différence va au score.",
       ex: "Normandie (3 / 6 / 8) : l'Angleterre domine avec 1 place forte (6 + 1 = 7), la France est présente (3). L'Angleterre gagne 4 points.",
-      decor: () => `<div style="display:grid;gap:8px;width:min(500px,100%)"><div class="resume a"><b class="tA">Angleterre</b> : 2 lieux dont 1 place forte → domination 6 + 1 = <b>7</b></div><div class="resume a" style="--d:2s"><b class="tF">France</b> : 1 lieu ouvert → présence <b>3</b></div><div class="resume a" style="--d:4s">${ic("score")} 7 − 3 = <b class="tA">4 points pour l'Angleterre</b></div></div>`,
+      decor: () => `<div style="display:grid;gap:8px;width:min(500px,100%)"><div class="resume anim"><b class="tA">Angleterre</b> : 2 lieux dont 1 place forte → domination 6 + 1 = <b>7</b></div><div class="resume anim" style="--d:2s"><b class="tF">France</b> : 1 lieu ouvert → présence <b>3</b></div><div class="resume anim" style="--d:4s">${ic("score")} 7 − 3 = <b class="tA">4 points pour l'Angleterre</b></div></div>`,
       jouer: () => tAttendre(4200, () => jouerSon("decompte")) },
     { duree: 9000, texte: "Une carte de décompte se joue comme un événement. Jouez-la quand vous menez dans la région, mais toujours avant la fin du tour : la garder en main fait perdre.",
-      decor: () => `<div class="carte S a" style="width:170px;--rc:${COUL.Normandie}"><div class="img"><div class="decompte">${ic("decompte")}<span>Décompte<br>Normandie</span></div><span class="ops">★</span></div><div class="corps"><p class="eff">${iconise("Décompte de Normandie : 3 / 6 / 8 points. À jouer avant la fin du tour.")}</p></div></div>` },
+      decor: () => `<div class="carte S anim" style="width:170px;--rc:${COUL.Normandie}"><div class="img"><div class="decompte">${ic("decompte")}<span>Décompte<br>Normandie</span></div><span class="ops">★</span></div><div class="corps"><p class="eff">${iconise("Décompte de Normandie : 3 / 6 / 8 points. À jouer avant la fin du tour.")}</p></div></div>` },
   ] },
   { titre: "Trésor, factions, Crise", scenes: [
     { duree: 9000, texte: "Le Trésor (0 à 12) paie les Assauts, le Trésor engagé et la levée de compagnies. Il se remplit en fin de tour : 1, +1 par 4 lieux contrôlés, +1 si vous tenez un port, moins la moitié de la Crise.",
-      decor: () => `<div style="display:grid;gap:8px;width:min(460px,100%)"><div class="resume a">${ic("tresor")} Revenu = 1 + lieux/4 + port − Crise/2</div><div class="resume a" style="--d:1.5s">${ic("tresor")} Exemple : 9 lieux, un port, Crise 2 → 1 + 2 + 1 − 1 = 3</div></div>` },
+      decor: () => `<div style="display:grid;gap:8px;width:min(460px,100%)"><div class="resume anim">${ic("tresor")} Revenu = 1 + lieux/4 + port − Crise/2</div><div class="resume anim" style="--d:1.5s">${ic("tresor")} Exemple : 9 lieux, un port, Crise 2 → 1 + 2 + 1 − 1 = 3</div></div>` },
     { duree: 10000, texte: "Huit factions hésitent entre les deux couronnes, de −3 (ralliée à l'Angleterre) à +3 (ralliée à la France). Ralliée, chacune donne un avantage : Trésor flamand, flotte castillane, Influence bourguignonne…",
-      decor: () => `<div class="factions" style="width:min(460px,100%);font-size:1rem">${R.FACTIONS.slice(0, 6).map((f, k) => `<span class="a" style="--d:${k * .5}s">${f}</span><div class="loy a" style="--d:${k * .5}s">${[-3, -2, -1, 0, 1, 2, 3].map(j => `<i class="${j === 0 ? "c0" : ""} ${j === [-1, 0, 2, 2, 1, 0][k] ? "on " + (j < 0 ? "a" : j > 0 ? "f" : "n") : ""}" style="height:14px"></i>`).join("")}</div>`).join("")}</div>` },
+      decor: () => `<div class="factions" style="width:min(460px,100%);font-size:1rem">${R.FACTIONS.slice(0, 6).map((f, k) => `<span class="anim" style="--d:${k * .5}s">${f}</span><div class="loy anim" style="--d:${k * .5}s">${[-3, -2, -1, 0, 1, 2, 3].map(j => `<i class="${j === 0 ? "c0" : ""} ${j === [-1, 0, 2, 2, 1, 0][k] ? "on " + (j < 0 ? "a" : j > 0 ? "f" : "n") : ""}" style="height:14px"></i>`).join("")}</div>`).join("")}</div>` },
     { duree: 9000, texte: "La Crise (peste, révoltes, Écorcheurs) frappe les deux camps : elle réduit les revenus, puis affaiblit les Assauts et rend inutiles les cartes de 1 OPS. À 6, le royaume s'effondre. Elle baisse de 1 par tour.",
-      decor: () => `<div style="display:grid;gap:8px;width:min(460px,100%)"><div class="resume a">${ic("crise")} 2-3 : revenu −1</div><div class="resume a" style="--d:1.3s">${ic("crise")} 4-5 : revenu −2, Assauts −1, cartes de 1 OPS sans OPS</div><div class="resume a" style="--d:2.6s">${ic("crise")} 6 : effondrement</div></div>` },
+      decor: () => `<div style="display:grid;gap:8px;width:min(460px,100%)"><div class="resume anim">${ic("crise")} 2-3 : revenu −1</div><div class="resume anim" style="--d:1.3s">${ic("crise")} 4-5 : revenu −2, Assauts −1, cartes de 1 OPS sans OPS</div><div class="resume anim" style="--d:2.6s">${ic("crise")} 6 : effondrement</div></div>` },
   ] },
   { titre: "L'écran de jeu", scenes: [
     { duree: 12000, texte: "Le plan est à gauche. Au centre : l'événement en cours en haut, votre main au milieu avec toutes ses cartes et leurs effets, le score et les pistes en bas. Les factions et la chronique sont à droite, la frise tout en haut. Survolez n'importe quel élément pour une infobulle. Les coups adverses se rejouent pas à pas : Suivant, lecture automatique, ou Tout passer.",
-      decor: () => `<div style="display:grid;grid-template-columns:1.2fr 2fr 1fr;grid-template-rows:30px 50px 90px 40px;gap:6px;width:min(560px,100%);font-family:var(--f-label);font-size:.85rem;text-align:center">${[["Frise et séquence du tour", "1/-1", "1"], ["Plan", "1", "2/5"], ["Événement", "2", "2"], ["Factions, chronique", "3", "2/4"], ["Votre main", "2", "3"], ["Score et pistes", "2/4", "4"]].map(([t, c, r], k) => `<div class="bloc a" style="--d:${k * .8}s;grid-column:${c};grid-row:${r};place-items:center">${t}</div>`).join("")}</div>` },
+      decor: () => `<div style="display:grid;grid-template-columns:1.2fr 2fr 1fr;grid-template-rows:30px 50px 90px 40px;gap:6px;width:min(560px,100%);font-family:var(--f-label);font-size:.85rem;text-align:center">${[["Frise et séquence du tour", "1/-1", "1"], ["Plan", "1", "2/5"], ["Événement", "2", "2"], ["Factions, chronique", "3", "2/4"], ["Votre main", "2", "3"], ["Score et pistes", "2/4", "4"]].map(([t, c, r], k) => `<div class="bloc anim" style="--d:${k * .8}s;grid-column:${c};grid-row:${r};place-items:center">${t}</div>`).join("")}</div>` },
   ] },
 ];
 function tutoMenu() {
