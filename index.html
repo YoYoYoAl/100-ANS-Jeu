@@ -308,6 +308,12 @@ select{font:inherit;padding:3px 6px;background:var(--velin);color:var(--encre);b
 
 /* la page est servie sans doctype (mode quirks) : les classes y sont insensibles à la casse, d'où « anim » et non « a »,
    qui aurait aussi animé tout ce qui porte la classe A (Angleterre) à chaque rafraîchissement */
+/* ---------- zoom du plan */
+.plan{position:relative}
+.zoom{position:absolute;top:6px;right:6px;display:grid;gap:3px;z-index:2}
+.zoom .btn{width:30px;height:30px;padding:0;font-size:1.1rem;line-height:1;background:color-mix(in srgb,var(--velin) 92%,transparent);box-shadow:0 1px 4px var(--ombre)}
+#carte{cursor:grab} #carte.glisse-plan{cursor:grabbing}
+.plan.zoome #carte{touch-action:none}
 /* ---------- v21 : barre d'usages sur la carte, détail des jets, effets en cours, cartes retirées */
 .barre{position:fixed;z-index:15;box-sizing:border-box;display:grid;gap:6px;align-content:start;padding:6px;background:color-mix(in srgb,var(--velin) 94%,transparent);border:2px solid var(--halo);border-radius:4px;box-shadow:0 6px 18px var(--ombre)}
 .barre.A{border-color:var(--gueules)} .barre.F{border-color:var(--azur)}
@@ -426,10 +432,11 @@ table.calc tr.tot td{border-bottom:0;border-top:2px solid var(--encre);font-size
     </header>
     <div class="plan" id="plan">
       <svg id="carte" role="img" aria-label="Plan du royaume avec les régions décomptées et l'Influence de chaque camp"></svg>
+      <div class="zoom" role="group" aria-label="Zoom du plan"><button class="btn" type="button" id="zoomPlus" data-tip="Zoomer (ou molette, pincement)" aria-label="Zoomer">+</button><button class="btn" type="button" id="zoomMoins" data-tip="Dézoomer" aria-label="Dézoomer">−</button><button class="btn" type="button" id="zoomRaz" data-tip="Revoir tout le plan" aria-label="Revoir tout le plan">⤢</button></div>
       <div class="legende">
         <span>■ place forte · ● lieu ouvert · chiffre : défense</span>
         <span><b class="tA">rouge</b> / <b class="tF">bleu</b> : Influence</span>
-        <span>lieu plein : contrôlé</span><span>lavis : région décomptée (valeurs présence · domination · contrôle)</span>
+        <span>lieu plein : contrôlé</span><span>molette ou pincement : zoom · glisser : déplacer</span><span>lavis : région décomptée (valeurs présence · domination · contrôle)</span>
       </div>
     </div>
     <section class="centre">
@@ -1192,6 +1199,50 @@ for (const n of D.noms) {
   g.addEventListener("click", () => cliquerLieu(n));
   g.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); cliquerLieu(n); } });
   VUE[n] = { g, corps, img, def, ia, iff, dA, dF, r, nom };
+}
+// Zoom et déplacement du plan : on change la viewBox (molette centrée sur le pointeur, pincement à deux doigts, glisser,
+// boutons + − ⤢). Un glisser ne déclenche pas de clic sur un lieu.
+const ZOOM = { x: 0, y: 0, w: PLAN.W }, ZMIN = PLAN.W / 6;
+const zh = () => ZOOM.w * PLAN.H / PLAN.W;
+function appliquerZoom() {
+  ZOOM.w = Math.max(ZMIN, Math.min(PLAN.W, ZOOM.w));
+  ZOOM.x = Math.max(0, Math.min(PLAN.W - ZOOM.w, ZOOM.x)); ZOOM.y = Math.max(0, Math.min(PLAN.H - zh(), ZOOM.y));
+  svg.setAttribute("viewBox", `${ZOOM.x.toFixed(2)} ${ZOOM.y.toFixed(2)} ${ZOOM.w.toFixed(2)} ${zh().toFixed(2)}`);
+  $("plan").classList.toggle("zoome", ZOOM.w < PLAN.W - .5);
+}
+const versPlan = (cx, cy) => { const r = svg.getBoundingClientRect(); return [ZOOM.x + (cx - r.left) / r.width * ZOOM.w, ZOOM.y + (cy - r.top) / r.height * zh()]; };
+function zoomer(f, px, py) {   // f < 1 : on s'approche ; (px, py) : point du plan qui reste fixe
+  if (px == null) { px = ZOOM.x + ZOOM.w / 2; py = ZOOM.y + zh() / 2; }
+  const w = Math.max(ZMIN, Math.min(PLAN.W, ZOOM.w * f)), k = w / ZOOM.w;
+  ZOOM.x = px - (px - ZOOM.x) * k; ZOOM.y = py - (py - ZOOM.y) * k; ZOOM.w = w; appliquerZoom();
+}
+svg.addEventListener("wheel", e => { e.preventDefault(); const [px, py] = versPlan(e.clientX, e.clientY); zoomer(e.deltaY > 0 ? 1.18 : 1 / 1.18, px, py); }, { passive: false });
+$("zoomPlus").onclick = () => zoomer(1 / 1.4); $("zoomMoins").onclick = () => zoomer(1.4);
+$("zoomRaz").onclick = () => { ZOOM.x = ZOOM.y = 0; ZOOM.w = PLAN.W; appliquerZoom(); };
+{
+  const doigts = new Map(); let depart = null, bouge = false, pince = null;
+  svg.addEventListener("pointerdown", e => {
+    if (e.pointerType === "mouse" && e.button !== 0) return;
+    doigts.set(e.pointerId, [e.clientX, e.clientY]);
+    if (doigts.size === 1) { depart = { cx: e.clientX, cy: e.clientY, x: ZOOM.x, y: ZOOM.y }; bouge = false; }
+    if (doigts.size === 2) { const [a, b] = [...doigts.values()]; pince = { d: Math.hypot(a[0] - b[0], a[1] - b[1]), w: ZOOM.w, c: versPlan((a[0] + b[0]) / 2, (a[1] + b[1]) / 2) }; bouge = true; }
+  });
+  addEventListener("pointermove", e => {
+    if (!doigts.has(e.pointerId)) return;
+    doigts.set(e.pointerId, [e.clientX, e.clientY]);
+    if (pince && doigts.size >= 2) { const [a, b] = [...doigts.values()]; const d = Math.hypot(a[0] - b[0], a[1] - b[1]) || 1; zoomer(pince.w * pince.d / d / ZOOM.w, pince.c[0], pince.c[1]); return; }
+    if (!depart) return;
+    const dx = e.clientX - depart.cx, dy = e.clientY - depart.cy;
+    if (!bouge && Math.hypot(dx, dy) < 5) return;
+    if (ZOOM.w >= PLAN.W - .5) return;   // plan entier : rien à déplacer (la page défile normalement sur téléphone)
+    bouge = true; svg.classList.add("glisse-plan");
+    const r = svg.getBoundingClientRect();
+    ZOOM.x = depart.x - dx / r.width * ZOOM.w; ZOOM.y = depart.y - dy / r.height * zh(); appliquerZoom();
+  });
+  const fin = e => { doigts.delete(e.pointerId); if (doigts.size < 2) pince = null; if (!doigts.size) { depart = null; svg.classList.remove("glisse-plan"); } };
+  addEventListener("pointerup", fin); addEventListener("pointercancel", fin);
+  // après un glisser ou un pincement, le clic qui suit ne doit pas poser d'Influence par erreur
+  svg.addEventListener("click", e => { if (bouge) { e.stopPropagation(); e.preventDefault(); bouge = false; } }, true);
 }
 // mise en évidence d'une région (survol d'une carte de décompte, de la frise, d'un nom de région, ou décompte en cours)
 let regionSurvol = null, regionLecture = null;
