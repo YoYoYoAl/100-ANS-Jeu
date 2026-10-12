@@ -42,9 +42,9 @@ export function nouvellePartie(D, graine = 1, options = {}) {
     tresor: { A: options.tresorA ?? 7, F: options.tresorF ?? 5 },
     legit: { A: options.legitA ?? 0, F: options.legitF ?? 0 },
     paliers: {},
-    loy: { Flandre: -1, Bretagne: 0, Bourgogne: 2, "Écosse": 2, Castille: 1, Navarre: 0, "Papauté": 1, Rome: 0 },
+    loy: { Flandre: -1, Bretagne: 0, Bourgogne: 1, "Écosse": 1, Castille: 1, Navarre: 0, "Papauté": 1, Rome: 0, ...options.loyDepart },
     mains: { A: [], F: [] }, pioche: [], defausse: [], retirees: [],
-    joues: {}, sortis: {}, prerequisSouple: options.prerequisSouple ?? true, seuil: options.seuilScore ?? 25, regles: { pillage: options.pillage ?? true, revenuReduit: options.revenuReduit ?? true, coutAssaut: options.coutAssaut ?? true, levee: options.levee ?? true, decomptesPhase: options.decomptesPhase ?? null, valeurs: options.valeursRegion ?? null }, statuts: {}, tourFlags: {}, opsMalus: { A: 0, F: 0 }, opsMalusTour: { A: 0, F: 0 },
+    joues: {}, sortis: {}, prerequisSouple: options.prerequisSouple ?? false, seuil: options.seuilScore ?? 25, regles: { pillage: options.pillage ?? false, revenuReduit: options.revenuReduit ?? true, coutAssaut: options.coutAssaut ?? false, levee: options.levee ?? true, decomptesPhase: options.decomptesPhase ?? null, decomptesGarantis: options.decomptesGarantis ?? true, factions2: options.factions2 ?? true, valeurs: options.valeursRegion ?? null }, statuts: {}, tourFlags: {}, opsMalus: { A: 0, F: 0 }, opsMalusTour: { A: 0, F: 0 },
     militaire: { A: 0, F: 0 }, diplo: { A: false, F: false }, legitTente: { A: false, F: false },
     fin: null, journal: options.journal ? [] : null,
     stats: { evenements: {}, assauts: { A: 0, F: 0 }, sieges: { A: 0, F: 0 }, diplomatie: { A: 0, F: 0 }, legitimite: { A: 0, F: 0 }, influence: { A: 0, F: 0 }, penalitesMil: { A: 0, F: 0 }, decomptes: [], vp: {}, ciblesAssaut: {}, tresorPerdu: { A: 0, F: 0 }, tresorFinTour: [] },
@@ -52,8 +52,8 @@ export function nouvellePartie(D, graine = 1, options = {}) {
   etape(g, { k: "debut" });
   // Influence libre de la mise en place (Interprétation : placée par le décideur, France d'abord)
   for (const [n, k] of Object.entries(options.infSupF ?? {})) ajouter(g, F, n, k);
-  placerLibre(D, g, F, options.libreF ?? 3, D.noms.filter(n => (options.franceGuyenne || D.lieux[n].region !== "Guyenne") && D.lieux[n].region !== "Angleterre"));
-  placerLibre(D, g, A, options.libreA ?? 8, D.noms.filter(n => (options.libreAGuyenne === false ? ["Flandre", "Bretagne"] : ["Guyenne", "Flandre", "Bretagne"]).includes(D.lieux[n].region) || (D.lieux[n].port && D.lieux[n].region !== "Angleterre")));
+  placerLibre(D, g, F, options.libreF ?? 1, D.noms.filter(n => (options.franceGuyenne || D.lieux[n].region !== "Guyenne") && D.lieux[n].region !== "Angleterre"));
+  placerLibre(D, g, A, options.libreA ?? 12, D.noms.filter(n => (options.libreAGuyenne === false ? ["Flandre", "Bretagne"] : ["Guyenne", "Flandre", "Bretagne"]).includes(D.lieux[n].region) || (D.lieux[n].port && D.lieux[n].region !== "Angleterre")));
   ajouterPhase(D, g, 1);
   return g;
 }
@@ -61,6 +61,11 @@ export function nouvellePartie(D, graine = 1, options = {}) {
 function ajouterPhase(D, g, p) {
   const ids = D.cartes.filter(c => (g.regles?.decomptesPhase?.[c.decompte] ?? c.phase) === p).map(c => c.id);
   g.pioche = melanger(g, g.pioche.concat(ids));
+  // les décomptes d'une nouvelle phase sont glissés parmi les 12 cartes du dessus : ils sortent au plus tard au tour suivant
+  if (p > 1 && g.regles?.decomptesGarantis) for (const id of ids.filter(id => carte(D, id).decompte)) {
+    g.pioche.splice(g.pioche.indexOf(id), 1);
+    g.pioche.splice(Math.max(0, g.pioche.length - Math.floor(alea(g) * 12)), 0, id);
+  }
 }
 
 export const carte = (D, id) => D.cartes[id - 1];
@@ -151,12 +156,26 @@ function palier(g, c, k) {
   if (k === 2) vp(g, c, premier ? 2 : 1);
   if (k === 8) vp(g, c, premier ? 4 : 2);
 }
+export const HERITAGE = "Héritage flamand de Philippe le Hardi";
+export const fusionFlandre = g => !!g.joues[HERITAGE];
 export function loy(g, f, d) { // d > 0 : vers la France
-  if (f === "Flandre" && g.joues["Héritage flamand de Philippe le Hardi"]) f = "Bourgogne";
+  if (f === "Flandre" && fusionFlandre(g)) f = "Bourgogne"; // après 1384, Flandre et Bourgogne n'ont plus qu'une piste
   g.loy[f] = Math.max(-3, Math.min(3, g.loy[f] + d));
 }
 export const versCamp = (c, n) => (c === F ? n : -n);
-const rallie = (g, f) => (g.loy[f] >= 3 ? F : g.loy[f] <= -3 ? A : null);
+const piste = (g, f) => g.loy[f === "Flandre" && fusionFlandre(g) ? "Bourgogne" : f];
+const rallie = (g, f) => (piste(g, f) >= 3 ? F : piste(g, f) <= -3 ? A : null);
+// faction qui penche nettement (±2, demi-effet) ou ralliée (±3)
+const penche = (g, f) => (g.regles?.factions2 === false ? rallie(g, f) : piste(g, f) >= 2 ? F : piste(g, f) <= -2 ? A : null);
+// lieux propres à une faction (bonus de Siège à ±2) ; la Bourgogne garde la Flandre après la fusion
+export function lieuxFaction(D, g, f) {
+  if (f === "Navarre") return ["Évreux", "Cherbourg"];
+  if (f === "Bourgogne" && fusionFlandre(g)) return zone(D, { r: ["Bourgogne", "Flandre"] });
+  if (["Flandre", "Bretagne", "Bourgogne"].includes(f)) return zone(D, { r: f });
+  return [];
+}
+// factions qu'on peut courtiser : plus de Flandre après la fusion, Rome seulement pendant le Grand Schisme
+export const factionsActives = g => FACTIONS.filter(f => !(f === "Flandre" && fusionFlandre(g)) && (f !== "Rome" || (g.joues["Grand Schisme d'Occident"] && !g.joues["Concile de Constance"])));
 
 export function terminer(g, gagnant, raison) {
   g.fin = { gagnant, raison, tour: g.tour };
@@ -180,7 +199,7 @@ export function lieuxAccessibles(D, g, c) {
   for (const n of D.noms) if (g.inf[n][c] > 0) { acc.add(n); for (const v of D.lieux[n].voisins) acc.add(v); }
   if (maitriseManche(D, g) === c && D.noms.some(n => D.lieux[n].port && controle(D, g, n) === c))
     for (const n of D.noms) if (D.lieux[n].port) acc.add(n);
-  if (rallie(g, "Flandre") === c && !g.joues["Héritage flamand de Philippe le Hardi"])
+  if (rallie(g, "Flandre") === c)
     for (const n of zone(D, { r: "Flandre" })) acc.add(n);
   if (c === F) for (const n of zone(D, { r: "Angleterre" })) if (g.inf[n].F === 0) acc.delete(n); // Interprétation : pas d'implantation française en Angleterre sans tête de pont
   return [...acc];
@@ -221,13 +240,21 @@ export function bonusAssautDetail(D, g, c, n) {
   if (c === F && g.statuts.compagnies) b.push(["Compagnies d'ordonnance", 1]);
   if (c === F && g.statuts.bureau && D.lieux[n].pf) b.push(["Les frères Bureau (place forte)", 1]);
   if (rallie(g, "Bretagne") === c && ["Bretagne", "Normandie"].includes(D.lieux[n].region)) b.push(["Bretagne ralliée", 1]);
+  else if (penche(g, "Bretagne") === c && D.lieux[n].region === "Bretagne") b.push(["Bretagne favorable (±2)", 1]);
+  if (penche(g, "Navarre") === c && ["Évreux", "Cherbourg"].includes(n)) b.push(["Navarre favorable", 1]);
+  if (penche(g, "Castille") === c && D.lieux[n].port) b.push(["flotte castillane (port)", 1]);
   if (g.crise >= 4) b.push([`Crise à ${g.crise}`, -1]);
   return b;
 }
 export function bonusAssaut(D, g, c, n) { return bonusAssautDetail(D, g, c, n).reduce((s, x) => s + x[1], 0); }
-export const coutAssaut = (D, g, n) => g.regles?.coutAssaut ? (D.lieux[n].pf ? 2 : 1) : (D.lieux[n].pf ? 1 : 0);
+export const coutAssaut = (D, g, n) => g.regles?.coutAssaut ? (D.lieux[n].pf ? 2 : 1) : 0; // règle Twilight : l'Assaut (coup d'État) ne coûte rien
 export function assaut(D, g, c, ops, n, { depense = 0, gratuit = false, sansTreve = false } = {}) {
   if (!gratuit) { const k = coutAssaut(D, g, n); if (g.tresor[c] < k) return false; tresor(g, c, -k); }
+  if (c === A && g.statuts.grandFerre) { // Le Grand Ferré annule le prochain Assaut anglais
+    g.statuts.grandFerre = false; g.militaire[c] += ops; g.stats.assauts[c]++;
+    etape(g, { k: "assaut", camp: c, lieu: n, annule: "Le Grand Ferré", d: 0, ops, def: defense(D, g, n), bonus: 0, bd: [], dep: 0, r: 0, avant: g.inf[n][adv(c)], retire: 0, occupe: 0, gratuit, pf: !!D.lieux[n].pf, treve: false });
+    return false;
+  }
   const dep = Math.min(depense, 4, g.tresor[c]); tresor(g, c, -dep);
   const d = de(g), def = defense(D, g, n), bd = bonusAssautDetail(D, g, c, n), bonus = bd.reduce((s, x) => s + x[1], 0);
   const r = d + ops - 2 * def + bonus + Math.floor(dep / 2), avant = g.inf[n][adv(c)];
@@ -247,8 +274,9 @@ export function siege(D, g, c, n, depense = 0) {
   const o = adv(c);
   const dep = Math.min(depense, g.tresor[c]); tresor(g, c, -dep);
   const vois = camp => D.lieux[n].voisins.filter(v => controle(D, g, v) === camp).length, sup = camp => (g.inf[n][camp] > g.inf[n][adv(camp)] ? 1 : 0);
-  const mod = camp => vois(camp) + sup(camp);
-  const da = de(g), dd = de(g), ma = mod(c), md = mod(o), det = { va: vois(c), sa: sup(c), vd: vois(o), sd: sup(o) };
+  const fac = camp => ["Flandre", "Bretagne", "Bourgogne", "Navarre"].filter(f => !(f === "Flandre" && fusionFlandre(g)) && penche(g, f) === camp && lieuxFaction(D, g, f).includes(n));
+  const mod = camp => vois(camp) + sup(camp) + fac(camp).length;
+  const da = de(g), dd = de(g), ma = mod(c), md = mod(o), det = { va: vois(c), sa: sup(c), vd: vois(o), sd: sup(o), fa: fac(c), fd: fac(o) };
   const ra = da + ma + Math.floor(dep / 2), rd = dd + md;
   g.stats.sieges[c]++;
   if (ra > rd) retirer(g, o, n, ra - rd); else if (rd > ra) retirer(g, c, n, rd - ra);
@@ -267,9 +295,10 @@ export function tentativeLegit(D, g, c, id) {
   const cible = g.legit[c] + 1;
   if (cible > 8 || opsCarte(D, g, c, id) < REQ_LEGIT[cible]) return false;
   g.legitTente[c] = true; g.stats.legitimite[c]++;
-  const d = de(g), ok = d <= JET_LEGIT(cible);
+  const seuil = JET_LEGIT(cible) + (penche(g, "Papauté") === c ? 1 : 0); // Papauté favorable : le jet est plus facile
+  const d = de(g), ok = d <= seuil;
   if (ok) legit(g, c, 1);
-  etape(g, { k: "legit", camp: c, cible, d, seuil: JET_LEGIT(cible), ok });
+  etape(g, { k: "legit", camp: c, cible, d, seuil, ok, pape: penche(g, "Papauté") === c });
   return true;
 }
 export function bataille(D, g, c, ops, siVictoire) {
@@ -405,10 +434,12 @@ export function jouerTour(D, g) {
   etape(g, { k: "tour", phase: p, rounds, main, nouvellePhase: g.tour === 4 || g.tour === 8 });
   // bonus des factions ralliées en début de tour
   for (const c of [A, F]) {
-    if (rallie(g, "Bourgogne") === c) etape(g, { k: "info", camp: c, txt: "La Bourgogne ralliée donne 2 Influence en Bourgogne ou Île-de-France." });
-    if (rallie(g, "Navarre") === c) etape(g, { k: "info", camp: c, txt: "La Navarre ralliée donne 1 Influence à Évreux ou Cherbourg." });
-    if (rallie(g, "Bourgogne") === c) placerLibre(D, g, c, 2, zone(D, { r: ["Bourgogne", "Île-de-France"] }));
-    if (rallie(g, "Navarre") === c) placerLibre(D, g, c, 1, ["Évreux", "Cherbourg"]);
+    const fl = fusionFlandre(g) ? ["Flandre"] : [], et = fusionFlandre(g) ? ", Flandre" : "";
+    if (rallie(g, "Bourgogne") === c) { etape(g, { k: "info", camp: c, txt: `La Bourgogne ralliée donne 2 Influence en Bourgogne, Île-de-France${et}.` }); placerLibre(D, g, c, 2, zone(D, { r: ["Bourgogne", "Île-de-France", ...fl] })); }
+    else if (penche(g, "Bourgogne") === c) { etape(g, { k: "info", camp: c, txt: `La Bourgogne favorable (±2) donne 1 Influence en Bourgogne${et}.` }); placerLibre(D, g, c, 1, zone(D, { r: ["Bourgogne", ...fl] })); }
+    if (rallie(g, "Bretagne") === c) { etape(g, { k: "info", camp: c, txt: "La Bretagne ralliée donne 1 Influence en Bretagne." }); placerLibre(D, g, c, 1, zone(D, { r: "Bretagne" })); }
+    if (rallie(g, "Navarre") === c) { etape(g, { k: "info", camp: c, txt: "La Navarre ralliée donne 1 Influence à Évreux ou Cherbourg." }); placerLibre(D, g, c, 1, ["Évreux", "Cherbourg"]); }
+    if (rallie(g, "Écosse") === c) { g.opsMalus[adv(c)] = 1; etape(g, { k: "info", camp: c, txt: `L'Écosse ralliée retient ${adv(c) === A ? "l'Angleterre" : "la France"} : −1 OPS sur sa première carte du tour.` }); }
   }
   if (g.statuts.owain) g.opsMalus.A = 1;
   // ouverture (headline)
@@ -462,7 +493,8 @@ function finDeTour(D, g) {
     if (c === F && g.statuts.taille) rev += 2;
     if (c === F && g.statuts.jacquesCoeur) rev += 1;
     if (c === A && g.statuts.bedford) rev += 1;
-    if (rallie(g, "Flandre") === c) rev += 1;
+    if (rallie(g, "Flandre") === c) rev += 2; else if (penche(g, "Flandre") === c) rev += 1; // laine flamande (Bourgogne après la fusion)
+    if (penche(g, "Écosse") === adv(c)) rev -= 1; // frontière écossaise à garder
     g.stats.tresorPerdu[c] += Math.max(0, g.tresor[c] + Math.max(0, rev) - 12);
     tresor(g, c, Math.max(0, rev));
     revs[c] = Math.max(0, rev);
@@ -503,4 +535,4 @@ export function jouerPartie(D, g) {
   while (!g.fin) jouerTour(D, g);
   return g;
 }
-export { FACTIONS, rallie };
+export { FACTIONS, rallie, penche };

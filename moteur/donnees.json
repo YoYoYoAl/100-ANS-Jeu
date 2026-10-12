@@ -14,8 +14,8 @@
 "voisins": [
 "Abbeville",
 "Arras",
-"Douvres",
-"Ypres"
+"Bruges",
+"Douvres"
 ]
 },
 {
@@ -30,8 +30,8 @@
 "F": 0
 },
 "voisins": [
-"Gand",
-"Ypres"
+"Calais",
+"Gand"
 ]
 },
 {
@@ -51,23 +51,6 @@
 ]
 },
 {
-"nom": "Ypres",
-"region": "Flandre",
-"pays": "Flandre",
-"defense": 2,
-"pf": false,
-"port": false,
-"inf": {
-"A": 0,
-"F": 0
-},
-"voisins": [
-"Bruges",
-"Calais",
-"Lille"
-]
-},
-{
 "nom": "Tournai",
 "region": "Flandre",
 "pays": "Tournaisis",
@@ -79,25 +62,8 @@
 "F": 1
 },
 "voisins": [
-"Gand",
-"Lille"
-]
-},
-{
-"nom": "Lille",
-"region": "Flandre",
-"pays": "Flandre",
-"defense": 2,
-"pf": false,
-"port": false,
-"inf": {
-"A": 0,
-"F": 0
-},
-"voisins": [
 "Arras",
-"Tournai",
-"Ypres"
+"Gand"
 ]
 },
 {
@@ -114,8 +80,8 @@
 "voisins": [
 "Amiens",
 "Calais",
-"Lille",
-"Reims"
+"Reims",
+"Tournai"
 ]
 },
 {
@@ -149,8 +115,8 @@
 "voisins": [
 "Abbeville",
 "Arras",
-"Beauvais",
-"Compiègne"
+"Compiègne",
+"Rouen"
 ]
 },
 {
@@ -166,7 +132,7 @@
 },
 "voisins": [
 "Abbeville",
-"Beauvais",
+"Amiens",
 "Caen",
 "Harfleur",
 "Paris",
@@ -185,8 +151,8 @@
 "F": 0
 },
 "voisins": [
-"Alençon",
 "Cherbourg",
+"Le Mans",
 "Rouen"
 ]
 },
@@ -202,7 +168,6 @@
 "F": 0
 },
 "voisins": [
-"Portsmouth",
 "Rouen",
 "Southampton"
 ]
@@ -236,26 +201,9 @@
 "F": 0
 },
 "voisins": [
-"Alençon",
 "Chartres",
-"Rouen"
-]
-},
-{
-"nom": "Alençon",
-"region": "Normandie",
-"pays": "Normandie",
-"defense": 1,
-"pf": false,
-"port": false,
-"inf": {
-"A": 0,
-"F": 0
-},
-"voisins": [
-"Caen",
 "Le Mans",
-"Évreux"
+"Rouen"
 ]
 },
 {
@@ -270,11 +218,11 @@
 "F": 0
 },
 "voisins": [
-"Alençon",
-"Angers",
+"Caen",
 "Chartres",
 "Fougères",
-"Tours"
+"Tours",
+"Évreux"
 ]
 },
 {
@@ -305,9 +253,9 @@
 "F": 0
 },
 "voisins": [
+"Brest",
 "Fougères",
-"Nantes",
-"Ploërmel"
+"Nantes"
 ]
 },
 {
@@ -322,10 +270,10 @@
 "F": 0
 },
 "voisins": [
-"Angers",
+"Brest",
 "La Rochelle",
 "Rennes",
-"Vannes"
+"Tours"
 ]
 },
 {
@@ -340,42 +288,9 @@
 "F": 0
 },
 "voisins": [
-"Hennebont",
-"Ploërmel",
-"Plymouth"
-]
-},
-{
-"nom": "Hennebont",
-"region": "Bretagne",
-"pays": "Bretagne",
-"defense": 2,
-"pf": false,
-"port": true,
-"inf": {
-"A": 0,
-"F": 0
-},
-"voisins": [
-"Brest",
-"Vannes"
-]
-},
-{
-"nom": "Vannes",
-"region": "Bretagne",
-"pays": "Bretagne",
-"defense": 2,
-"pf": false,
-"port": true,
-"inf": {
-"A": 0,
-"F": 0
-},
-"voisins": [
-"Hennebont",
 "Nantes",
-"Ploërmel"
+"Plymouth",
+"Rennes"
 ]
 },
 {
@@ -396,23 +311,6 @@
 ]
 },
 {
-"nom": "Ploërmel",
-"region": "Bretagne",
-"pays": "Bretagne",
-"defense": 1,
-"pf": false,
-"port": false,
-"inf": {
-"A": 0,
-"F": 0
-},
-"voisins": [
-"Brest",
-"Rennes",
-"Vannes"
-]
-},
-{
 "nom": "Paris",
 "region": "Île-de-France",
 "pays": "Île-de-France",
@@ -425,27 +323,10 @@
 },
 "voisins": [
 "Chartres",
+"Compiègne",
 "Meaux",
 "Orléans",
-"Rouen",
-"Saint-Denis"
-]
-},
-{
-"nom": "Saint-Denis",
-"region": "Île-de-France",
-"pays": "Île-de-France",
-"defense": 2,
-"pf": false,
-"port": false,
-"inf": {
-"A": 0,
-"F": 1
-},
-"voisins": [
-"Beauvais",
-"Compiègne",
-"Paris"
+"Rouen"
 ]
 },
 {
@@ -484,24 +365,6 @@
 ]
 },
 {
-"nom": "Beauvais",
-"region": "Île-de-France",
-"pays": "Beauvaisis",
-"defense": 1,
-"pf": false,
-"port": false,
-"inf": {
-"A": 0,
-"F": 0
-},
-"voisins": [
-"Amiens",
-"Compiègne",
-"Rouen",
-"Saint-Denis"
-]
-},
-{
 "nom": "Compiègne",
 "region": "Île-de-France",
 "pays": "Valois",
@@ -514,9 +377,8 @@
 },
 "voisins": [
 "Amiens",
-"Beauvais",
-"Reims",
-"Saint-Denis"
+"Paris",
+"Reims"
 ]
 },
 {
@@ -570,7 +432,7 @@
 },
 "voisins": [
 "Auxerre",
-"Chalon",
+"Lyon",
 "Nancy",
 "Troyes"
 ]
@@ -587,57 +449,9 @@
 "F": 0
 },
 "voisins": [
+"Bourges",
 "Dijon",
-"Nevers",
 "Troyes"
-]
-},
-{
-"nom": "Nevers",
-"region": "Bourgogne",
-"pays": "Nivernais",
-"defense": 1,
-"pf": false,
-"port": false,
-"inf": {
-"A": 0,
-"F": 0
-},
-"voisins": [
-"Auxerre",
-"Bourges"
-]
-},
-{
-"nom": "Chalon",
-"region": "Bourgogne",
-"pays": "Bourgogne",
-"defense": 1,
-"pf": false,
-"port": false,
-"inf": {
-"A": 0,
-"F": 0
-},
-"voisins": [
-"Dijon",
-"Mâcon"
-]
-},
-{
-"nom": "Mâcon",
-"region": "Bourgogne",
-"pays": "Mâconnais",
-"defense": 1,
-"pf": false,
-"port": false,
-"inf": {
-"A": 0,
-"F": 0
-},
-"voisins": [
-"Chalon",
-"Lyon"
 ]
 },
 {
@@ -652,9 +466,9 @@
 "F": 1
 },
 "voisins": [
-"Clermont",
-"Mâcon",
-"Nîmes"
+"Bourges",
+"Dijon",
+"Montpellier"
 ]
 },
 {
@@ -686,8 +500,8 @@
 "F": 0
 },
 "voisins": [
+"Bayonne",
 "Castillon",
-"Dax",
 "La Rochelle",
 "Plymouth"
 ]
@@ -704,24 +518,8 @@
 "F": 0
 },
 "voisins": [
-"Dax",
+"Bordeaux",
 "Orthez"
-]
-},
-{
-"nom": "Dax",
-"region": "Guyenne",
-"pays": "Gascogne",
-"defense": 1,
-"pf": false,
-"port": false,
-"inf": {
-"A": 1,
-"F": 0
-},
-"voisins": [
-"Bayonne",
-"Bordeaux"
 ]
 },
 {
@@ -736,24 +534,8 @@
 "F": 0
 },
 "voisins": [
-"Bergerac",
-"Bordeaux"
-]
-},
-{
-"nom": "Bergerac",
-"region": "Guyenne",
-"pays": "Périgord",
-"defense": 1,
-"pf": true,
-"port": false,
-"inf": {
-"A": 0,
-"F": 0
-},
-"voisins": [
 "Aiguillon",
-"Castillon",
+"Bordeaux",
 "Périgueux"
 ]
 },
@@ -769,7 +551,8 @@
 "F": 1
 },
 "voisins": [
-"Bergerac",
+"Aiguillon",
+"Castillon",
 "Limoges"
 ]
 },
@@ -785,24 +568,9 @@
 "F": 1
 },
 "voisins": [
-"Agen",
-"Bergerac"
-]
-},
-{
-"nom": "Agen",
-"region": "Guyenne",
-"pays": "Agenais",
-"defense": 1,
-"pf": false,
-"port": false,
-"inf": {
-"A": 0,
-"F": 1
-},
-"voisins": [
-"Aiguillon",
+"Castillon",
 "Lectoure",
+"Périgueux",
 "Toulouse"
 ]
 },
@@ -818,7 +586,7 @@
 "F": 3
 },
 "voisins": [
-"Agen",
+"Aiguillon",
 "Carcassonne",
 "Lectoure"
 ]
@@ -835,40 +603,8 @@
 "F": 1
 },
 "voisins": [
-"Narbonne",
-"Toulouse"
-]
-},
-{
-"nom": "Narbonne",
-"region": "Languedoc",
-"pays": "Languedoc",
-"defense": 1,
-"pf": false,
-"port": true,
-"inf": {
-"A": 0,
-"F": 0
-},
-"voisins": [
-"Béziers",
-"Carcassonne"
-]
-},
-{
-"nom": "Béziers",
-"region": "Languedoc",
-"pays": "Languedoc",
-"defense": 1,
-"pf": false,
-"port": false,
-"inf": {
-"A": 0,
-"F": 0
-},
-"voisins": [
 "Montpellier",
-"Narbonne"
+"Toulouse"
 ]
 },
 {
@@ -883,25 +619,8 @@
 "F": 0
 },
 "voisins": [
-"Béziers",
-"Nîmes"
-]
-},
-{
-"nom": "Nîmes",
-"region": "Languedoc",
-"pays": "Languedoc",
-"defense": 1,
-"pf": false,
-"port": false,
-"inf": {
-"A": 0,
-"F": 0
-},
-"voisins": [
-"Clermont",
-"Lyon",
-"Montpellier"
+"Carcassonne",
+"Lyon"
 ]
 },
 {
@@ -916,7 +635,7 @@
 "F": 0
 },
 "voisins": [
-"Agen",
+"Aiguillon",
 "Orthez",
 "Toulouse"
 ]
@@ -967,9 +686,9 @@
 "F": 1
 },
 "voisins": [
-"Angers",
 "Chinon",
 "Le Mans",
+"Nantes",
 "Orléans"
 ]
 },
@@ -990,23 +709,6 @@
 ]
 },
 {
-"nom": "Angers",
-"region": "Val de Loire",
-"pays": "Anjou",
-"defense": 2,
-"pf": false,
-"port": false,
-"inf": {
-"A": 0,
-"F": 0
-},
-"voisins": [
-"Le Mans",
-"Nantes",
-"Tours"
-]
-},
-{
 "nom": "Bourges",
 "region": "Val de Loire",
 "pays": "Berry",
@@ -1018,8 +720,9 @@
 "F": 2
 },
 "voisins": [
-"Clermont",
-"Nevers",
+"Auxerre",
+"Limoges",
+"Lyon",
 "Orléans"
 ]
 },
@@ -1069,27 +772,9 @@
 "F": 0
 },
 "voisins": [
-"Clermont",
+"Bourges",
 "Poitiers",
 "Périgueux"
-]
-},
-{
-"nom": "Clermont",
-"region": "Val de Loire",
-"pays": "Auvergne",
-"defense": 1,
-"pf": false,
-"port": false,
-"inf": {
-"A": 0,
-"F": 0
-},
-"voisins": [
-"Bourges",
-"Limoges",
-"Lyon",
-"Nîmes"
 ]
 },
 {
@@ -1106,22 +791,6 @@
 "voisins": [
 "Douvres",
 "Pays de Galles",
-"Southampton"
-]
-},
-{
-"nom": "Portsmouth",
-"region": "Angleterre",
-"pays": "Hampshire",
-"defense": 2,
-"pf": false,
-"port": true,
-"inf": {
-"A": 1,
-"F": 0
-},
-"voisins": [
-"Harfleur",
 "Southampton"
 ]
 },
@@ -1159,8 +828,7 @@
 "Douvres",
 "Harfleur",
 "Londres",
-"Plymouth",
-"Portsmouth"
+"Plymouth"
 ]
 },
 {

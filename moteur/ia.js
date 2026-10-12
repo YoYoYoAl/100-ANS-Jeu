@@ -3,7 +3,7 @@
 // suivent des règles gloutonnes rapides.
 import {
   A, F, adv, carte, controle, defense, zone, lieuxAccessibles, coutInfluence, ciblesAssaut, bonusAssaut, coutAssaut,
-  evenementPossible, opsCarte, jouer, resoudreEvenement, etatRegion, FACTIONS, alea,
+  evenementPossible, opsCarte, jouer, resoudreEvenement, etatRegion, FACTIONS, factionsActives, alea,
 } from "./regles.js";
 
 const CAPITALES = { Paris: 4, Reims: 2.5, Rouen: 2, Bordeaux: 3, Londres: 3, Calais: 1.5, "Orléans": 1.5, Bourges: 1 };
@@ -128,10 +128,10 @@ export function creerIA(opts = {}) {
             const cibles = ciblesAssaut(D, g, c).filter(n => g.tresor[c] >= coutAssaut(D, g, n)).map(n => [n, valeurAssaut(D, g, c, ops, n)]).sort((x, y) => y[1] - x[1]).slice(0, 3);
             for (const [n] of cibles) candidats.push({ id, mode: "assaut", cible: n, depense: g.tresor[c] >= 6 ? 2 : 0 });
             if (lev && cibles.length && g.tresor[c] >= 3 + coutAssaut(D, g, cibles[0][0])) candidats.push({ id, mode: "assaut", cible: cibles[0][0], depense: 0, levee: true });
-            const sieges = ciblesAssaut(D, g, c).filter(n => controle(D, g, n) === adv(c)).slice(0, 1);
+            const sieges = ciblesAssaut(D, g, c).sort((x, y) => valeurLieu(D, y) * (controle(D, g, y) === adv(c) ? 2 : 1) - valeurLieu(D, x) * (controle(D, g, x) === adv(c) ? 2 : 1)).slice(0, 1);
             if (sieges.length) candidats.push({ id, mode: "siege", cibles: sieges });
             if (!g.diplo[c]) {
-              const f = FACTIONS.filter(f => f !== "Rome" || (g.joues["Grand Schisme d'Occident"] && !g.joues["Concile de Constance"]))
+              const f = factionsActives(g)
                 .filter(f => Math.abs(g.loy[f]) < 3 || Math.sign(g.loy[f]) !== (c === F ? 1 : -1))
                 .sort((x, y) => (c === F ? g.loy[x] - g.loy[y] : g.loy[y] - g.loy[x]))[0];
               if (f) candidats.push({ id, mode: "diplomatie", cible: f, depense: g.tresor[c] >= 4 ? 2 : 0 });
