@@ -34,7 +34,18 @@ export function evaluer(D, g) { // point de vue de la France
   if (ctl("Bordeaux") === F) v += 3; if (ctl("Rouen") === F) v += 2;
   v += 0.8 * Math.max(0, g.treve - g.militaire.A) - 0.8 * Math.max(0, g.treve - g.militaire.F);
   let tot = 0; for (const n of D.noms) tot += g.inf[n].F - g.inf[n].A;
-  return v + 0.05 * tot;
+  return v + 0.05 * tot + valeurStatuts(g);
+}
+// effets durables des cartes : valeur par tour restant (point de vue français), sinon l'IA ne joue jamais ces événements
+const STATUT_TOUR = { gabelle: 0.5, taille: 0.5, pragmatique: 0.25, jacquesCoeur: 0.25, bedford: -0.25, duGuesclin: 0.4, compagnies: 0.4, bureau: 0.3, arc: -0.2, jeanne: 0.2, roiCaptif: -1, folieCharlesVI: -0.2, owain: 0.5, calaisImprenable: -0.1 };
+const STATUT_UNE_FOIS = { jarretiere: -0.4, dunois: 0.4, lundiNoir: 0.5, grandFerre: 0.5 };
+function valeurStatuts(g) {
+  const restants = Math.max(0, 10 - g.tour) + 0.5;
+  let v = 0;
+  for (const [k, x] of Object.entries(STATUT_TOUR)) if (g.statuts[k]) v += x * restants;
+  for (const [k, x] of Object.entries(STATUT_UNE_FOIS)) if (g.statuts[k]) v += x;
+  if (g.statuts.manche) v += (g.statuts.manche === F ? 0.3 : -0.3) * restants;
+  return v;
 }
 const pourCamp = (c, v) => (c === F ? v : -v);
 
