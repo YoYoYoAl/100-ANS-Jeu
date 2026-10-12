@@ -788,7 +788,10 @@ function construireLecture(rec, debut) {
       prec.lieux.push(s.lieu); prec.apres = s.snap; prec.fin = i; continue;
     }
     if (s.k === "debut" || s.k === "finTour") continue;
-    if (["place", "retire", "carte", "influence"].includes(s.k) && estPropre(s)) continue;
+    // sa propre Influence reste affichée quand l'événement adverse s'est joué avant elle (sinon les points posés semblent
+    // disparaître pendant l'événement) ou quand le moteur a refusé un point prévu
+    const apresEvt = s.k === "influence" && rec[i - 1]?.k !== "carte";
+    if (["place", "retire", "carte", "influence"].includes(s.k) && estPropre(s) && !apresEvt && !s.refus?.length) continue;
     if (s.k === "evenement" && i && rec[i - 1].k === "carte" && rec[i - 1].mode === "evenement" && estPropre(rec[i - 1])) continue;
     out.push({ s, avant, apres: s.snap, lieux: s.lieu ? [s.lieu] : [], ctx, fin: i, idx: i, rec });
   }
@@ -936,10 +939,15 @@ function panneau(p) {
       v.titre = `« ${nomC(s.id)} » : pas d'effet`;
       v.corps = `<p>L'événement ne peut pas se résoudre maintenant${TEXTES[s.id].p ? ` : il faut que « ${TEXTES[s.id].p} » soit déjà sortie` : ""}.</p>`;
       break;
-    case "influence":
-      v.titre = `${LA_[c]} place de l'Influence`;
-      v.corps = `<p>${s.ops} OPS dépensés : 1 par point, 2 dans un lieu contrôlé par l'adversaire.</p>`;
+    case "influence": {
+      const propre = estPropre(s), apresEvt = p.rec[p.idx - 1]?.k !== "carte";
+      const pourquoi = ([n, r, k]) => `<li><b>${n}</b> : ${r === "acces" ? "n'était plus voisin de vos lieux après l'événement" : k > 1 ? "coûtait désormais 2 OPS (lieu passé à l'adversaire pendant l'événement) et il n'en restait pas assez" : "plus d'OPS : un point précédent a coûté 2, son lieu étant passé à l'adversaire pendant l'événement"}</li>`;
+      v.titre = propre ? "Votre Influence est posée" : `${LA_[c]} place de l'Influence`;
+      v.corps = (propre && apresEvt ? `<p>L'événement adverse s'est joué d'abord ; vos points arrivent maintenant sur le plan.</p>` : "") +
+        `<p>${s.ops} OPS dépensés : 1 par point, 2 dans un lieu contrôlé par l'adversaire.</p>` +
+        (s.refus?.length ? `<p class="resume">${s.refus.length} point${s.refus.length > 1 ? "s" : ""} prévu${s.refus.length > 1 ? "s" : ""} n'${s.refus.length > 1 ? "ont" : "a"} pas pu être posé${s.refus.length > 1 ? "s" : ""} :</p><ul class="effets">${s.refus.map(pourquoi).join("")}</ul>` : "");
       break;
+    }
     case "assaut": {
       const tres = Math.floor(s.dep / 2), o = R.adv(c), bd = s.bd || (s.bonus ? [["bonus", s.bonus]] : []);
       v.titre = `Assaut ${c === "A" ? "anglais" : "français"} sur ${s.lieu}`;
@@ -1552,7 +1560,8 @@ function consigneAction(box, qui, enTete) {
   if (m && m !== "evenement" && m !== "legitimite" && peutLever)
     h += `<label class="lbl"><input type="checkbox" id="levee" ${choix.levee ? "checked" : ""}> Lever des compagnies : 3 Trésor pour +1 OPS</label>`;
   if (m && m !== "evenement" && k.camp === adv && !k.decompte && m !== "legitimite")
-    h += `<div class="choix lbl">L'événement de cette carte ${ADJ[k.camp]} se déclenche : <label><input type="radio" name="ordre" value="avant" ${choix.ordre === "avant" ? "checked" : ""}> avant</label><label><input type="radio" name="ordre" value="apres" ${choix.ordre === "apres" ? "checked" : ""}> après votre action</label></div>`;
+    h += `<div class="choix lbl">L'événement de cette carte ${ADJ[k.camp]} se déclenche : <label><input type="radio" name="ordre" value="avant" ${choix.ordre === "avant" ? "checked" : ""}> avant</label><label><input type="radio" name="ordre" value="apres" ${choix.ordre === "apres" ? "checked" : ""}> après votre action</label></div>` +
+      (m === "influence" && choix.ordre === "avant" ? `<p class="lbl">Avant : l'événement se joue d'abord, vos points s'affichent juste après. S'il retourne un lieu prévu, ce point peut coûter plus cher ou devenir impossible.</p>` : "");
   let pret = false, detail = "", resume = "", info = "";
   if (m === "evenement") { pret = true; resume = k.decompte ? `Décompter la région ${k.decompte} maintenant.${simDecompte(etat.g, k.decompte).html}` : `Jouer l'événement « ${k.nom} » pour ${LA[k.camp === "N" ? c : k.camp]}.`; }
   else if (m === "influence") {

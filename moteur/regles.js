@@ -190,13 +190,15 @@ export function actionInfluence(D, g, c, ops, choix) {
   const acc = new Set(lieuxAccessibles(D, g, c));
   const couts = Object.fromEntries([...acc].map(n => [n, coutInfluence(D, g, n === n ? c : c, n)]));
   let reste = ops;
+  const refus = []; // points prévus mais non posés (l'événement adverse joué avant l'action a pu changer le lieu)
   for (const n of choix) {
-    if (!acc.has(n)) continue;
+    if (!acc.has(n)) { refus.push([n, "acces"]); continue; }
     const k = couts[n];
-    if (k > reste) continue;
+    if (k > reste) { refus.push([n, "cout", k]); continue; }
     reste -= k; ajouter(g, c, n);
     g.stats.influence[c]++;
   }
+  return refus;
 }
 export function assautsInterdits(D, g, n) {
   const r = D.lieux[n].region;
@@ -370,7 +372,7 @@ export function jouer(D, g, c, action) {
     etape(g, { k: "carte", camp: c, id, mode: action.mode, ops, levee, declenche, ordre: action.ordre || "avant", cibles: action.cibles, cible: action.cible, depense: action.depense || 0 });
     if (declenche && action.ordre !== "apres") evt = resoudreEvenement(D, g, adv(c), id);
     if (!g.fin) {
-      if (action.mode === "influence") { actionInfluence(D, g, c, ops, action.cibles); etape(g, { k: "influence", camp: c, ops, cibles: action.cibles }); }
+      if (action.mode === "influence") { const refus = actionInfluence(D, g, c, ops, action.cibles); etape(g, { k: "influence", camp: c, ops, cibles: action.cibles, refus }); }
       else if (action.mode === "assaut") assaut(D, g, c, ops, action.cible, { depense: action.depense || 0 });
       else if (action.mode === "siege") for (let i = 0; i < ops && !g.fin; i++) { const n = action.cibles[i] || action.cibles[0]; if (g.inf[n][adv(c)] > 0) siege(D, g, c, n, i === 0 ? action.depense || 0 : 0); }
       else if (action.mode === "diplomatie") diplomatie(D, g, c, ops, action.cible, action.depense || 0);
