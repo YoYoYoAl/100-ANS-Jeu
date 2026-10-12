@@ -14,8 +14,8 @@
 "voisins": [
 "Abbeville",
 "Arras",
-"Bruges",
-"Douvres"
+"Douvres",
+"Ypres"
 ]
 },
 {
@@ -30,8 +30,8 @@
 "F": 0
 },
 "voisins": [
-"Calais",
-"Gand"
+"Gand",
+"Ypres"
 ]
 },
 {
@@ -51,6 +51,23 @@
 ]
 },
 {
+"nom": "Ypres",
+"region": "Flandre",
+"pays": "Flandre",
+"defense": 2,
+"pf": false,
+"port": false,
+"inf": {
+"A": 0,
+"F": 0
+},
+"voisins": [
+"Bruges",
+"Calais",
+"Lille"
+]
+},
+{
 "nom": "Tournai",
 "region": "Flandre",
 "pays": "Tournaisis",
@@ -62,8 +79,25 @@
 "F": 1
 },
 "voisins": [
+"Gand",
+"Lille"
+]
+},
+{
+"nom": "Lille",
+"region": "Flandre",
+"pays": "Flandre",
+"defense": 2,
+"pf": false,
+"port": false,
+"inf": {
+"A": 0,
+"F": 0
+},
+"voisins": [
 "Arras",
-"Gand"
+"Tournai",
+"Ypres"
 ]
 },
 {
@@ -80,8 +114,8 @@
 "voisins": [
 "Amiens",
 "Calais",
-"Reims",
-"Tournai"
+"Lille",
+"Reims"
 ]
 },
 {
@@ -168,6 +202,7 @@
 "F": 0
 },
 "voisins": [
+"Portsmouth",
 "Rouen",
 "Southampton"
 ]
@@ -270,10 +305,10 @@
 "F": 0
 },
 "voisins": [
-"Brest",
 "La Rochelle",
 "Rennes",
-"Tours"
+"Tours",
+"Vannes"
 ]
 },
 {
@@ -288,9 +323,25 @@
 "F": 0
 },
 "voisins": [
-"Nantes",
 "Plymouth",
-"Rennes"
+"Rennes",
+"Vannes"
+]
+},
+{
+"nom": "Vannes",
+"region": "Bretagne",
+"pays": "Bretagne",
+"defense": 2,
+"pf": false,
+"port": true,
+"inf": {
+"A": 0,
+"F": 0
+},
+"voisins": [
+"Brest",
+"Nantes"
 ]
 },
 {
@@ -323,10 +374,26 @@
 },
 "voisins": [
 "Chartres",
-"Compiègne",
 "Meaux",
 "Orléans",
-"Rouen"
+"Rouen",
+"Saint-Denis"
+]
+},
+{
+"nom": "Saint-Denis",
+"region": "Île-de-France",
+"pays": "Île-de-France",
+"defense": 2,
+"pf": false,
+"port": false,
+"inf": {
+"A": 0,
+"F": 1
+},
+"voisins": [
+"Compiègne",
+"Paris"
 ]
 },
 {
@@ -377,8 +444,8 @@
 },
 "voisins": [
 "Amiens",
-"Paris",
-"Reims"
+"Reims",
+"Saint-Denis"
 ]
 },
 {
@@ -449,9 +516,25 @@
 "F": 0
 },
 "voisins": [
-"Bourges",
 "Dijon",
+"Nevers",
 "Troyes"
+]
+},
+{
+"nom": "Nevers",
+"region": "Bourgogne",
+"pays": "Nivernais",
+"defense": 1,
+"pf": false,
+"port": false,
+"inf": {
+"A": 0,
+"F": 0
+},
+"voisins": [
+"Auxerre",
+"Bourges"
 ]
 },
 {
@@ -500,8 +583,8 @@
 "F": 0
 },
 "voisins": [
-"Bayonne",
 "Castillon",
+"Dax",
 "La Rochelle",
 "Plymouth"
 ]
@@ -518,8 +601,24 @@
 "F": 0
 },
 "voisins": [
-"Bordeaux",
+"Dax",
 "Orthez"
+]
+},
+{
+"nom": "Dax",
+"region": "Guyenne",
+"pays": "Gascogne",
+"defense": 1,
+"pf": false,
+"port": false,
+"inf": {
+"A": 1,
+"F": 0
+},
+"voisins": [
+"Bayonne",
+"Bordeaux"
 ]
 },
 {
@@ -720,9 +819,9 @@
 "F": 2
 },
 "voisins": [
-"Auxerre",
 "Limoges",
 "Lyon",
+"Nevers",
 "Orléans"
 ]
 },
@@ -795,6 +894,22 @@
 ]
 },
 {
+"nom": "Portsmouth",
+"region": "Angleterre",
+"pays": "Hampshire",
+"defense": 2,
+"pf": false,
+"port": true,
+"inf": {
+"A": 1,
+"F": 0
+},
+"voisins": [
+"Harfleur",
+"Southampton"
+]
+},
+{
 "nom": "Plymouth",
 "region": "Angleterre",
 "pays": "Devon",
@@ -828,7 +943,8 @@
 "Douvres",
 "Harfleur",
 "Londres",
-"Plymouth"
+"Plymouth",
+"Portsmouth"
 ]
 },
 {
@@ -2015,7 +2131,7 @@
 "camp": "F",
 "ops": 3,
 "nom": "Bataille de Patay",
-"prerequis": "",
+"prerequis": "Jeanne d'Arc",
 "retiree": true
 },
 {
@@ -2078,7 +2194,7 @@
 "camp": "F",
 "ops": 4,
 "nom": "Reprise de Paris",
-"prerequis": "",
+"prerequis": "Congrès d'Arras",
 "retiree": true
 },
 {
@@ -2168,7 +2284,7 @@
 "camp": "F",
 "ops": 3,
 "nom": "Prise de Rouen",
-"prerequis": "",
+"prerequis": "Compagnies d'ordonnance",
 "retiree": true
 },
 {
@@ -2177,7 +2293,7 @@
 "camp": "F",
 "ops": 4,
 "nom": "Bataille de Formigny",
-"prerequis": "",
+"prerequis": "Compagnies d'ordonnance",
 "retiree": true
 },
 {
@@ -2195,7 +2311,7 @@
 "camp": "F",
 "ops": 3,
 "nom": "Prise de Bordeaux",
-"prerequis": "",
+"prerequis": "Compagnies d'ordonnance",
 "retiree": true
 },
 {
@@ -2213,7 +2329,7 @@
 "camp": "F",
 "ops": 4,
 "nom": "Bataille de Castillon",
-"prerequis": "",
+"prerequis": "Talbot à Bordeaux",
 "retiree": true
 },
 {
@@ -2232,6 +2348,69 @@
 "ops": 2,
 "nom": "Procès de Jacques Cœur",
 "prerequis": "Jacques Cœur, argentier",
+"retiree": true
+},
+{
+"id": 153,
+"phase": 1,
+"camp": "A",
+"ops": 3,
+"nom": "Édouard Balliol",
+"prerequis": "",
+"retiree": true
+},
+{
+"id": 154,
+"phase": 1,
+"camp": "A",
+"ops": 2,
+"nom": "Hommage de Jean de Montfort",
+"prerequis": "",
+"retiree": true
+},
+{
+"id": 155,
+"phase": 1,
+"camp": "A",
+"ops": 2,
+"nom": "Traité de Berwick",
+"prerequis": "",
+"retiree": true
+},
+{
+"id": 156,
+"phase": 2,
+"camp": "A",
+"ops": 3,
+"nom": "Traité de Westminster",
+"prerequis": "",
+"retiree": true
+},
+{
+"id": 157,
+"phase": 3,
+"camp": "A",
+"ops": 2,
+"nom": "Jacques Ier d'Écosse en France",
+"prerequis": "",
+"retiree": true
+},
+{
+"id": 158,
+"phase": 2,
+"camp": "A",
+"ops": 3,
+"nom": "Le captal de Buch",
+"prerequis": "",
+"retiree": true
+},
+{
+"id": 159,
+"phase": 2,
+"camp": "A",
+"ops": 3,
+"nom": "Chevauchée de Buckingham",
+"prerequis": "",
 "retiree": true
 }
 ],

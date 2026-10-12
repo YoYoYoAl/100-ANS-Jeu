@@ -42,9 +42,9 @@ export function nouvellePartie(D, graine = 1, options = {}) {
     tresor: { A: options.tresorA ?? 7, F: options.tresorF ?? 5 },
     legit: { A: options.legitA ?? 0, F: options.legitF ?? 0 },
     paliers: {},
-    loy: { Flandre: -1, Bretagne: 0, Bourgogne: 1, "Écosse": 1, Castille: 1, Navarre: 0, "Papauté": 1, Rome: 0, ...options.loyDepart },
+    loy: { Flandre: -1, Bretagne: 0, Bourgogne: 2, "Écosse": 2, Castille: 1, Navarre: 0, "Papauté": 1, Rome: 0, ...options.loyDepart },
     mains: { A: [], F: [] }, pioche: [], defausse: [], retirees: [],
-    joues: {}, sortis: {}, prerequisSouple: options.prerequisSouple ?? false, seuil: options.seuilScore ?? 25, regles: { pillage: options.pillage ?? false, revenuReduit: options.revenuReduit ?? true, coutAssaut: options.coutAssaut ?? false, levee: options.levee ?? true, decomptesPhase: options.decomptesPhase ?? null, decomptesGarantis: options.decomptesGarantis ?? true, factions2: options.factions2 ?? true, valeurs: options.valeursRegion ?? null }, statuts: {}, tourFlags: {}, opsMalus: { A: 0, F: 0 }, opsMalusTour: { A: 0, F: 0 },
+    joues: {}, sortis: {}, prerequisSouple: options.prerequisSouple ?? false, seuil: options.seuilScore ?? 25, regles: { pillage: options.pillage ?? true, revenuReduit: options.revenuReduit ?? true, coutAssaut: options.coutAssaut ?? true, levee: options.levee ?? true, decomptesPhase: options.decomptesPhase ?? null, decomptesGarantis: options.decomptesGarantis ?? true, factions2: options.factions2 ?? true, valeurs: options.valeursRegion ?? null }, statuts: {}, tourFlags: {}, opsMalus: { A: 0, F: 0 }, opsMalusTour: { A: 0, F: 0 },
     militaire: { A: 0, F: 0 }, diplo: { A: false, F: false }, legitTente: { A: false, F: false },
     fin: null, journal: options.journal ? [] : null,
     stats: { evenements: {}, assauts: { A: 0, F: 0 }, sieges: { A: 0, F: 0 }, diplomatie: { A: 0, F: 0 }, legitimite: { A: 0, F: 0 }, influence: { A: 0, F: 0 }, penalitesMil: { A: 0, F: 0 }, decomptes: [], vp: {}, ciblesAssaut: {}, tresorPerdu: { A: 0, F: 0 }, tresorFinTour: [] },
@@ -52,8 +52,8 @@ export function nouvellePartie(D, graine = 1, options = {}) {
   etape(g, { k: "debut" });
   // Influence libre de la mise en place (Interprétation : placée par le décideur, France d'abord)
   for (const [n, k] of Object.entries(options.infSupF ?? {})) ajouter(g, F, n, k);
-  placerLibre(D, g, F, options.libreF ?? 1, D.noms.filter(n => (options.franceGuyenne || D.lieux[n].region !== "Guyenne") && D.lieux[n].region !== "Angleterre"));
-  placerLibre(D, g, A, options.libreA ?? 12, D.noms.filter(n => (options.libreAGuyenne === false ? ["Flandre", "Bretagne"] : ["Guyenne", "Flandre", "Bretagne"]).includes(D.lieux[n].region) || (D.lieux[n].port && D.lieux[n].region !== "Angleterre")));
+  placerLibre(D, g, F, options.libreF ?? 3, D.noms.filter(n => (options.franceGuyenne || D.lieux[n].region !== "Guyenne") && D.lieux[n].region !== "Angleterre"));
+  placerLibre(D, g, A, options.libreA ?? 8, D.noms.filter(n => (options.libreAGuyenne === false ? ["Flandre", "Bretagne"] : ["Guyenne", "Flandre", "Bretagne"]).includes(D.lieux[n].region) || (D.lieux[n].port && D.lieux[n].region !== "Angleterre")));
   ajouterPhase(D, g, 1);
   return g;
 }
@@ -436,7 +436,6 @@ export function jouerTour(D, g) {
   for (const c of [A, F]) {
     const fl = fusionFlandre(g) ? ["Flandre"] : [], et = fusionFlandre(g) ? ", Flandre" : "";
     if (rallie(g, "Bourgogne") === c) { etape(g, { k: "info", camp: c, txt: `La Bourgogne ralliée donne 2 Influence en Bourgogne, Île-de-France${et}.` }); placerLibre(D, g, c, 2, zone(D, { r: ["Bourgogne", "Île-de-France", ...fl] })); }
-    else if (penche(g, "Bourgogne") === c) { etape(g, { k: "info", camp: c, txt: `La Bourgogne favorable (±2) donne 1 Influence en Bourgogne${et}.` }); placerLibre(D, g, c, 1, zone(D, { r: ["Bourgogne", ...fl] })); }
     if (rallie(g, "Bretagne") === c) { etape(g, { k: "info", camp: c, txt: "La Bretagne ralliée donne 1 Influence en Bretagne." }); placerLibre(D, g, c, 1, zone(D, { r: "Bretagne" })); }
     if (rallie(g, "Navarre") === c) { etape(g, { k: "info", camp: c, txt: "La Navarre ralliée donne 1 Influence à Évreux ou Cherbourg." }); placerLibre(D, g, c, 1, ["Évreux", "Cherbourg"]); }
     if (rallie(g, "Écosse") === c) { g.opsMalus[adv(c)] = 1; etape(g, { k: "info", camp: c, txt: `L'Écosse ralliée retient ${adv(c) === A ? "l'Angleterre" : "la France"} : −1 OPS sur sa première carte du tour.` }); }
@@ -492,7 +491,7 @@ function finDeTour(D, g) {
     if (c === F && g.statuts.pragmatique) rev += 1;
     if (c === F && g.statuts.taille) rev += 2;
     if (c === F && g.statuts.jacquesCoeur) rev += 1;
-    if (c === A && g.statuts.bedford) rev += 1;
+    if (c === A && g.statuts.bedford) rev += 2;
     if (rallie(g, "Flandre") === c) rev += 2; else if (penche(g, "Flandre") === c) rev += 1; // laine flamande (Bourgogne après la fusion)
     if (penche(g, "Écosse") === adv(c)) rev -= 1; // frontière écossaise à garder
     g.stats.tresorPerdu[c] += Math.max(0, g.tresor[c] + Math.max(0, rev) - 12);
