@@ -21,17 +21,18 @@ jobs:
       - name: Dépendances
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg >/dev/null
-          pip install --quiet torch torchaudio --index-url https://download.pytorch.org/whl/cpu
-          pip install --quiet "demucs==4.0.1" soundfile
+          pip install --quiet "torch==2.5.1" "torchaudio==2.5.1" --index-url https://download.pytorch.org/whl/cpu
+          pip install --quiet "demucs==4.0.1" soundfile "numpy<2"
       - name: Séparation
         run: |
-          python -m demucs --two-stems=vocals -n htdemucs_ft -o sep audio/chanson/${{ matrix.chanson }}.mp3
+          mkdir -p audio/separation
+          python -m demucs --two-stems=vocals -n htdemucs_ft -o sep audio/chanson/${{ matrix.chanson }}.mp3 2>&1 | tail -60 > audio/separation/${{ matrix.chanson }}.log; test -f sep/htdemucs_ft/${{ matrix.chanson }}/vocals.wav || { cat audio/separation/${{ matrix.chanson }}.log; exit 0; }
           mkdir -p audio/separation
           ffmpeg -y -loglevel error -i sep/htdemucs_ft/${{ matrix.chanson }}/vocals.wav -ac 2 -ar 44100 -b:a 160k audio/separation/${{ matrix.chanson }}_voix.mp3
       - name: Enregistrer
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898287+github-actions[bot]@users.noreply.github.com"
-          git add audio/separation/${{ matrix.chanson }}_voix.mp3
+          git add audio/separation/${{ matrix.chanson }}*
           git commit -m "Voix seule : ${{ matrix.chanson }}"
           for i in 1 2 3 4 5 6; do git pull --rebase origin transcription && git push origin HEAD:transcription && break; sleep $((i*5)); done
