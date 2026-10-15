@@ -692,7 +692,11 @@ function musique(on) {
     }
   } catch {}
 }
-for (const ev of ["pointerdown", "keydown"]) addEventListener(ev, () => { if (!$("accueil").hidden && MUSIQUE.a?.paused !== false) musique(true); }, { capture: true });
+// la chanson est chargée et lancée dès l'affichage ; si le navigateur bloque la lecture automatique, elle part au premier geste
+for (const ev of ["pointerdown", "keydown", "touchstart", "wheel"]) addEventListener(ev, () => { if (!$("accueil").hidden && MUSIQUE.a?.paused !== false) musique(true); }, { capture: true });
+try { MUSIQUE.a = new Audio("musique_accueil.mp3?v=1"); MUSIQUE.a.loop = true; MUSIQUE.a.preload = "auto"; MUSIQUE.a.load(); } catch {}
+setTimeout(() => musique(true), 0);
+window.MUSIQUE = MUSIQUE;
 
 
 // ------------------------------------------------------------ partie rejouée à partir des décisions
