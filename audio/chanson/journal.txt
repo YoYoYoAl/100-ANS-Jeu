@@ -1,0 +1,63 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+vive_la_pe_a.mp3
+   0.00    6.86  pour la paix du rouayaume. Je pardonne la mort de mon père, et me tourne vers le roué Charles.
+   7.74   13.68  Ouvrez les portes au conétable ! Paris est au roué Charles, et vive la paix !
+  13.68   20.62  Les églises de notre rouayaume seront gouvernées selon les 5 conciles, et non selon le plèzir de Rome.
+  21.80   27.38  Que le roué prègne la tèye chacun an, pourvu que lè jen d'arme ne puie le pôvre peuple.
+  27.98   34.94  Mon Père, nous autres, nos compagnies, Levons-nous, beauxseigneurs, et qu'ils comptent
+  34.94   35.68  avec nous.
+  36.22   40.70  Le rouet à Henri, prince à femme, Marguerite d'Anjou et Triève sont criés par tout
+  40.70   41.98  le royaume.
+  42.16   44.80  Les anglois ont pris fougière en pleine Triève.
+  45.70   49.24  Puis, qu'ils rompent la paix, nous reprendrons la guerre.
+  49.70   54.94  Feux sur rue, coups l'œuvre innée, Et voici le Connaitable qui vient par le
+  54.94   55.10  pont.
+  55.10   60.04  Les communes de Quintes marchent sur Londres et crient que le royaume est perdu par les
+  60.04   62.00  mauvais conseillers du Rouais.
+  62.36   64.34  Bordeaux est rendu au Rouais de France.
+  64.98   68.70  Après Trouet-Saint-Anne, la Guienne est Françoise.
+  70.08   75.82  Revenez, Monseigneur de Talbot, Bordeaux ne peut vivre sans l'ENF et les marchands
+  75.82   76.92  d'Angleterre.
+  77.38   82.84  Leur Henri ne parle, ne connaît personne, et le royaume d'Angleterre est sans
+  82.84   83.50  gouvernement.
+  83.50   89.94  Sire Edouard, je vous fais hommage d'Écosse, Et vous doigne les marches du midi.
+  90.60   96.26  Sire, je vous tiens pour Drouet, oué de France, Et de vos reliefs, ma duchée de Bretagne.
+  96.74  102.50  Cinq mille marres pour ma rançon, Mieux vaut ma terre pauvre que mon corps en prison.
+ 103.48  109.78  Je fui nourri en Angleterre, Et au rouet, Edouard, je m'allie contre les François.
+ 112.28  119.46  Écosoènes, votre rouée est en mon hoste, Qui porte arme pour le dauphin et les porte
+ 119.46  120.42  contre son seigneur.
+ 122.12  128.14  Je suis gascon et tiens du prince de Galles, J'approue le roué de France, ne l'airai
+ 128.14  133.90  La fouée de Calais jusqu'à Nantes avant chevauchée
+ 136.10  138.64  Erre le plat-pahis de France.
+vive_la_pe_b.mp3
+   0.00    6.90  Pour la paix du rouayôme, je pardonne la mort de mon père, et me tourne vers le roué Charles.
+   7.84   13.40  Ouvrez les portes au conétable, Paris est hôte Charles, et vive la paix !
+  13.40   19.42  Les églises de notre rouayôme seront gouvernées selon les cinq conciles, et non selon le plèzir de Rome.
+  19.88   25.42  Que le roué prègne la tèye chacun an, pourvu que lè jen d'arme ne piye plus le pôvre peuple.
+  25.42   31.68  Mon Père, nous ôtes nos compagnies, Levons-nous, beaux seigneurs, et qu'ils comptent avec
+  31.68   32.04  nous.
+  33.42   37.58  Le Rouet, Henri, Prince-Famme, Marguerite d'Anjou et Triève sont criés par tout
+  37.58   38.36  le royaume.
+  39.14   43.56  Les Angouets ont pris Fougière en pleine triève, puis qu'ils rompent la paix, nous
+  43.56   44.58  reprendrons la guerre.
+  45.36   49.48  Feux sur rue, coup le vrignet, et voici le Connaitable qui vient par le pont.
+  50.16   53.52  Les communes de Quinte marchent sur Londres, et crient que le royaume est perdu
+  53.52   55.16  C'est pas les mauvais conseillers du rouet.
+  55.66   57.30  Bordeaux est rendu au rouet de France.
+  57.86   60.68  Après, troué sans, la Guienne est Françoise.
+  63.44   64.82  Revenez, Monseigneur de Talbot.
+  65.70   68.62  Bordeaux ne peut vivre sans les nefs et les marchands d'Angleterre.
+  69.14   71.12  Le rouet Henri ne parle, ne connaît personne.
+  71.86   73.90  Et le royaume d'Angleterre est sans gouvernement.
+  75.80   78.54  Sire Edward, je vous fais hommage d'Ecosse
+  78.54   80.16  et vous dois les marches du Midi.
+  80.62   82.48  Sire, je vous tiens pour le rouet de France
+  82.48   87.16  C'est de vos reliefs, ma duchie de Bretagne C'est mille marres pour ma rançon
+  87.16   89.78  Mieux vaut ma terre pauvre que mon corps en prison
+  90.68   94.36  Je funerai Angleterre Et au rouet Édouard
+  94.36   98.68  Je m'allie contre les François Et qu'au souhait
+  98.68  102.08  Votre rouet est en mon ostie Qui porte armes pour le dauphin
+ 102.08  107.50  Il les porte contre son seigneur Je suis gascon et tien du prince de Galles
+ 107.50  109.70  Là, pour le rouet de France, ne l'airai m'affouer
+ 109.70  112.46  De Calais jusqu'à Nantes avant chevauchier
+ 112.46  114.44  Et harlepla pays de France
