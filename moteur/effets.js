@@ -94,7 +94,7 @@ export const EFFETS = {
   "Fondation de la Bastille": () => {},
   "Sac de Limoges": (D, g) => { legit(g, A, -1); inf(D, g, F, 2, { p: ["Limousin"] }); },
   "Du Guesclin connétable": (D, g) => { g.statuts.duGuesclin = true; },
-  "Bataille de Pontvallain": (D, g) => { assautGratuit(D, g, F, 2, { p: ["Maine"] }); },
+  "Bataille de Pontvallain": (D, g) => { assautGratuit(D, g, F, 2, { p: ["Maine", "Touraine"] }); },
   "Bataille de La Rochelle": (D, g) => { g.statuts.manche = null; inf(D, g, F, 2, { p: ["Poitou", "Aunis"] }); },
   "Grande chevauchée de Jean de Gand": (D, g) => { perd(D, g, F, 3, { sauf: [] }); tresor(g, A, -1); },
   "Trêve de Bruges": (D, g, c) => { treve(D, g, 1); loy(g, "Papauté", versCamp(c, 1)); },

@@ -52,8 +52,8 @@ export function nouvellePartie(D, graine = 1, options = {}) {
   etape(g, { k: "debut" });
   // Influence libre de la mise en place (Interprétation : placée par le décideur, France d'abord)
   for (const [n, k] of Object.entries(options.infSupF ?? {})) ajouter(g, F, n, k);
-  placerLibre(D, g, F, options.libreF ?? 3, D.noms.filter(n => (options.franceGuyenne || D.lieux[n].region !== "Guyenne") && D.lieux[n].region !== "Angleterre"));
-  placerLibre(D, g, A, options.libreA ?? 8, D.noms.filter(n => (options.libreAGuyenne === false ? ["Flandre", "Bretagne"] : ["Guyenne", "Flandre", "Bretagne"]).includes(D.lieux[n].region) || (D.lieux[n].port && D.lieux[n].region !== "Angleterre")));
+  placerLibre(D, g, F, options.libreF ?? 2, D.noms.filter(n => (options.franceGuyenne || D.lieux[n].region !== "Guyenne") && D.lieux[n].region !== "Angleterre"));
+  placerLibre(D, g, A, options.libreA ?? 9, D.noms.filter(n => (options.libreAGuyenne === false ? ["Flandre", "Bretagne"] : ["Guyenne", "Flandre", "Bretagne"]).includes(D.lieux[n].region) || (D.lieux[n].port && D.lieux[n].region !== "Angleterre")));
   ajouterPhase(D, g, 1);
   return g;
 }
@@ -365,6 +365,12 @@ export function evenementPossible(D, g, c, id) {
   if (c === F && k.camp === F && k.ops === 1 && g.statuts.folieCharlesVI) return false;
   return true;
 }
+// ce qu'un événement peut changer : sert à repérer ceux qui restent sans effet (condition non réunie)
+const HORS_SIGNATURE = new Set(["graine", "journal", "stats", "_ctx", "joues", "sortis"]);
+export const signatureEtat = g => JSON.stringify(g, (k, v) => HORS_SIGNATURE.has(k) ? undefined : v);
+// cartes dont l'effet tient au seul fait d'avoir été jouées (règle lue ailleurs, ou prérequis d'une autre carte)
+const MARQUEURS = new Set(["Fondation de la Bastille", HERITAGE, "Grand Schisme d'Occident", "Concile de Constance", "Traité de Troyes", "Bataille de Mauron"]);
+export const effetMarqueur = (D, nom) => MARQUEURS.has(nom) || D.cartes.some(x => x.prerequis === nom);
 export function resoudreEvenement(D, g, joueur, id) {
   const k = carte(D, id);
   g._ctx = k.decompte ? `Décompte ${k.decompte}` : `Évt ${k.nom}`;
@@ -372,8 +378,9 @@ export function resoudreEvenement(D, g, joueur, id) {
   if (!prerequisOk(D, g, k)) { etape(g, { k: "sansEffet", id, camp: joueur }); return false; }
   const benef = k.camp === "N" ? joueur : k.camp;
   etape(g, { k: "evenement", id, camp: benef, joueur });
+  const avant = RECIT && g.journal ? signatureEtat(g) : null;
   EFFETS[k.nom](D, g, benef);
-  etape(g, { k: "effets", id, camp: benef });
+  etape(g, { k: "effets", id, camp: benef, vide: avant !== null && avant === signatureEtat(g) && !effetMarqueur(D, k.nom) }); // vide : condition non réunie, rien n'a changé
   g.joues[k.nom] = true;
   g.stats.evenements[k.nom] = (g.stats.evenements[k.nom] || 0) + 1;
   log(g, `Événement ${k.nom} (${benef})`);
