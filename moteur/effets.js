@@ -4,7 +4,7 @@
 import {
   A, F, adv, zone, ajouter, retirer, forcerControle, placerLibre, retirerChoisi, treve, crise, tresor,
   vp, legit, loy, versCamp, assaut, bataille, controle, DECIDEURS, de,
-} from "./regles.js";
+} from "./regles.js?v=84564bbb";
 
 const inf = (D, g, c, n, z) => placerLibre(D, g, c, n, zone(D, z));
 const perd = (D, g, c, n, z) => retirerChoisi(D, g, c, n, zone(D, z));

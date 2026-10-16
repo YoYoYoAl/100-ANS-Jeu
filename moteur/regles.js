@@ -350,7 +350,7 @@ export function decompter(D, g, r) {
 }
 
 // ---------------------------------------------------------------- jouer une carte
-import { EFFETS } from "./effets.js";
+import { EFFETS } from "./effets.js?v=84564bbb";
 export function prerequisOk(D, g, k) {
   if (!k.prerequis) return true;
   if (k.prerequis === "Roi captif") return !!g.statuts.roiCaptif;
