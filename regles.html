@@ -1,0 +1,2127 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Règles · Guerre de Cent Ans</title><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@400;700&family=IM+Fell+English:ital@0;1&family=Alegreya+Sans+SC:wght@500;700&display=swap">
+<style>
+/* Table de jeu sur un seul écran (grand écran) : plan à gauche sur toute la hauteur, consigne au centre, état (score, pistes,
+   factions, chronique) à droite, main en bas sous la consigne et l'état, toutes les cartes visibles avec leur effet.
+   En dessous de 1100 × 700 px, tout s'empile : plan, consigne, main, état. */
+:root{
+  --velin:#f1e6c8; --velin-2:#e6d5ab; --mer:#c6d4cd; --terre:#efe2bf; --encre:#2a1d12; --sepia:#6b5236;
+  --or:#b8892e; --azur:#2d4f9e; --gueules:#a32b24; --sinople:#2e683e; --halo:#e0a91c; --blanc:#fff; --ombre:#00000033;
+  --f-titre:"Grenze Gotisch","Palatino Linotype",Palatino,Georgia,serif;
+  --f-texte:"IM Fell English","Palatino Linotype",Palatino,Georgia,serif;
+  --f-label:"Alegreya Sans SC","Gill Sans","Trebuchet MS",sans-serif;
+  --hh:120px;
+  color-scheme:light;
+}
+html,body{background:var(--velin);color:var(--encre)}
+[hidden]{display:none!important}
+body{margin:0;font-family:var(--f-texte);font-size:16px;line-height:1.4;padding-inline:16px;padding-block:10px 24px}
+h1,h2,h3{font-family:var(--f-titre);font-weight:400;margin:0;text-wrap:balance}
+button{font:inherit;cursor:pointer}
+button:focus-visible,select:focus-visible,.lieu:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--halo);outline-offset:2px}
+.lbl{font-family:var(--f-label);font-size:.78rem;letter-spacing:.06em;color:var(--sepia)}
+.num{font-variant-numeric:tabular-nums}
+.tA{color:var(--gueules)} .tF{color:var(--azur)}
+.ic{width:1.05em;height:1.05em;vertical-align:-.17em;flex:none;display:inline-block}
+.ic-tresor,.ic-legit{color:var(--or)} .ic-crise{color:#4b3a2c} .ic-assaut,.ic-bataille{color:var(--gueules)} .ic-treve{color:var(--sepia)}
+.ic-loy{color:var(--sinople)} .ic-score{color:var(--halo)} .ic-inf{color:var(--encre)} .ic-ops{color:var(--azur)} .ic-duree{color:var(--sepia)}
+.page{max-width:1600px;margin-inline:auto}
+/* ---------- en-tête, séquence, frise */
+header.tete{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:6px 16px;align-items:center;border-bottom:2px solid var(--or);padding-bottom:6px}
+header.tete h1{font-size:clamp(1.3rem,2.4vw,1.9rem);line-height:1}
+.date{font-family:var(--f-label);letter-spacing:.06em;font-size:.85rem;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px}
+.date .tour-gros{font-family:var(--f-titre);font-size:1.45rem;letter-spacing:0;color:var(--encre);background:var(--or);padding:0 10px;border-radius:5px;line-height:1.3}
+.date .tour-gros b{font-size:1.7rem}
+.date .tour-gros small{font-size:.9rem;opacity:.75}
+.date .round-gros{font-size:1rem;color:var(--encre)}
+.date .round-gros b{font-family:var(--f-titre);font-size:1.25rem}
+.date .qui-gros{font-size:.9rem;font-weight:700;text-transform:uppercase}
+.date .phase-gros{color:var(--sepia)}
+.ban-tour{position:fixed;left:50%;top:38%;transform:translate(-50%,-50%);z-index:30;pointer-events:none;font-family:var(--f-titre);font-size:clamp(2rem,6vw,4rem);color:var(--encre);background:color-mix(in srgb,var(--velin) 92%,transparent);border:4px double var(--or);border-radius:10px;padding:10px 36px;text-align:center;box-shadow:0 8px 30px var(--ombre);animation:banTour 2.2s ease forwards}
+.ban-tour small{display:block;font-family:var(--f-label);font-size:1rem;letter-spacing:.08em;color:var(--sepia);text-transform:uppercase}
+@keyframes banTour{0%{opacity:0;transform:translate(-50%,-40%) scale(.9)}15%,75%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-60%) scale(1)}}
+@media (prefers-reduced-motion:reduce){.ban-tour{animation:none;opacity:0}}
+.chronique li{display:grid;gap:0;border-left:3px solid transparent;padding-left:5px}
+.chronique li.cA{border-left-color:var(--gueules)} .chronique li.cF{border-left-color:var(--azur)}
+.chronique li.tete{font-family:var(--f-titre);font-size:1rem;background:color-mix(in srgb,var(--or) 22%,transparent);border-left-color:var(--or);margin-top:4px}
+.chronique li.sep{font-family:var(--f-label);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--sepia);border-bottom:0;padding-top:3px}
+.chronique .cons{font-size:.74rem;color:var(--sepia);line-height:1.25}
+.chronique .cons b.tA{color:var(--gueules)} .chronique .cons b.tF{color:var(--azur)}
+.outils{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.btn-ic{display:inline-flex;align-items:center;gap:6px}
+.sequence{display:flex;flex-wrap:wrap;gap:3px;align-items:center}
+.sequence span{font-family:var(--f-label);font-size:.72rem;letter-spacing:.04em;padding:1px 7px;border:1px solid color-mix(in srgb,var(--sepia) 45%,transparent);border-radius:10px;color:var(--sepia);background:var(--velin)}
+.sequence span.passe{background:color-mix(in srgb,var(--sepia) 14%,var(--velin))}
+.sequence span.ici{background:var(--encre);color:var(--velin);border-color:var(--encre)}
+.sequence .qui{border:0;background:none;padding:0 0 0 6px;color:var(--encre);font-size:.8rem}
+.frise{grid-column:1/-1;display:grid;grid-template-columns:3fr 4fr 3fr auto;gap:6px;min-width:0}
+.phase{display:grid;grid-template-columns:44px minmax(0,1fr);gap:6px;align-items:center;border:1px solid color-mix(in srgb,var(--sepia) 45%,transparent);border-radius:4px;padding:3px 6px 3px 3px;background:color-mix(in srgb,var(--velin-2) 40%,var(--velin));min-width:0}
+.phase.ici{border-color:var(--or);box-shadow:0 0 0 2px color-mix(in srgb,var(--or) 50%,transparent)}
+.phase img{width:44px;height:44px;object-fit:cover;border-radius:3px;border:1px solid var(--sepia)}
+.phase .t{display:flex;justify-content:space-between;gap:6px;font-family:var(--f-label);font-size:.72rem;letter-spacing:.04em}
+.tours{display:flex;gap:2px}
+.tours i{flex:1;height:7px;border-radius:2px;background:var(--velin);border:1px solid color-mix(in srgb,var(--sepia) 50%,transparent)}
+.tours i.passe{background:color-mix(in srgb,var(--sepia) 40%,var(--velin))} .tours i.ici{background:var(--halo);border-color:var(--encre)}
+.decs{display:flex;flex-wrap:wrap;gap:3px;margin-top:2px}
+.dec{font-family:var(--f-label);font-size:.68rem;letter-spacing:.02em;padding:0 5px;border-radius:3px;border:1px solid var(--rc,var(--sepia));color:var(--encre);background:var(--velin);cursor:help;display:inline-flex;gap:3px;align-items:center}
+.dec::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--rc,var(--sepia))}
+.dec.fait{opacity:.85;text-decoration:none;background:color-mix(in srgb,var(--rc) 18%,var(--velin))}
+.dec .res{font-weight:700}
+.final{display:grid;place-items:center;text-align:center;border:1px dashed var(--sepia);border-radius:4px;padding:2px 8px;font-family:var(--f-label);font-size:.72rem;max-width:110px}
+@media (max-width:700px){.frise{grid-template-columns:1fr}.final{max-width:none}header.tete{grid-template-columns:1fr}.outils{justify-content:flex-start}}
+/* ---------- table */
+#jeu{display:grid;gap:10px}
+.plan{background:var(--mer);border:1px solid var(--sepia);border-radius:4px;overflow:hidden;display:flex;flex-direction:column;min-width:0}
+.plan svg{display:block;width:100%;height:auto;flex:1;min-height:0}
+.legende{display:flex;flex-wrap:wrap;gap:2px 12px;padding:4px 8px;background:var(--velin);border-top:1px solid var(--sepia);font-family:var(--f-label);font-size:.7rem;color:var(--sepia)}
+.centre,.etat{display:grid;gap:8px;min-width:0;align-content:start}
+#jeu > header{order:0} .plan{order:1} .centre{order:2} .main-zone{order:3} #blocScore{order:4} .etat{order:5}
+.bloc{background:color-mix(in srgb,var(--velin-2) 55%,var(--velin));border:1px solid color-mix(in srgb,var(--sepia) 40%,transparent);border-radius:4px;padding:8px 10px;display:grid;gap:6px;min-width:0}
+@media (min-width:1100px) and (min-height:700px){
+  body{height:100vh;overflow:hidden;padding-block:8px;box-sizing:border-box}
+  .page{height:100%;max-width:2400px}
+  #jeu{height:100%;grid-template-columns:calc((100vh - var(--hh) - 40px) * .74) minmax(0,1fr) 320px;grid-template-rows:auto auto minmax(0,1fr) auto;gap:8px 12px}
+  #jeu > header{grid-column:1/-1}
+  .plan{grid-column:1;grid-row:2/5;height:calc(100vh - var(--hh) - 32px)}
+  .plan svg{height:100%;width:auto;max-width:100%;margin-inline:auto}
+  /* Événement en haut, main au milieu, score en bas ; factions et chronique à droite */
+  .centre{grid-column:2;grid-row:2;min-height:0;max-height:42vh;overflow:auto}
+  .main-zone{grid-column:2;grid-row:3;min-height:0;display:grid;grid-template-rows:auto minmax(0,1fr);overflow:hidden}
+  .main{min-height:0;overflow:hidden;align-content:start;grid-auto-rows:max-content}
+  .main.defile{overflow:auto}
+  #blocScore{grid-column:2/4;grid-row:4;grid-template-columns:minmax(190px,1fr) auto minmax(220px,1.3fr);align-items:center;gap:4px 18px}
+  #blocScore > .choix{grid-column:1;grid-row:1}
+  #blocScore > .score{grid-column:1;grid-row:2}
+  #blocScore > .pistes{grid-column:2;grid-row:1/3}
+  #blocScore > .legit-eff{grid-column:3;grid-row:1/3}
+  .etat{grid-column:3;grid-row:2/4;min-height:0;overflow:hidden;grid-template-rows:auto auto minmax(80px,1fr)}
+  .encours-l{max-height:22vh}
+  .chronique{max-height:none!important;height:100%}
+  .bloc.chron{min-height:0;grid-template-rows:auto minmax(0,1fr)}
+}
+@media (max-width:1099px),(max-height:699px){.plan svg{max-height:85vh}}
+@media (min-width:1100px) and (min-height:700px) and (max-height:859px){.phase{grid-template-columns:minmax(0,1fr);padding-left:6px}.phase > :first-child:not(div){display:none}}
+/* ---------- pistes */
+.score{position:relative;height:26px;border-radius:3px;background:linear-gradient(90deg,var(--gueules) 0 50%,var(--azur) 50% 100%);opacity:.92}
+.score .marq{position:absolute;top:-20px;width:26px;height:48px;background:url(pieces/pion_score.png) center bottom/contain no-repeat;transform:translateX(-50%);transition:left .5s;filter:drop-shadow(0 1px 1px rgba(0,0,0,.35))}
+.score .ech{position:absolute;inset:0;display:flex;justify-content:space-between;align-items:center;padding-inline:6px;color:var(--blanc);font-family:var(--f-label);font-size:.8rem}
+.score .ech b{font-size:1rem}
+.pistes{display:grid;grid-template-columns:auto 1fr 1fr;gap:3px 8px;align-items:center;font-size:.85rem}
+.pistes .t{font-family:var(--f-label);font-size:.78rem;letter-spacing:.04em;display:inline-flex;gap:4px;align-items:center;cursor:help}
+.cases{display:inline-flex;gap:1px;flex-wrap:nowrap;vertical-align:middle}
+.cases i{box-sizing:border-box;width:7px;height:11px;border:1px solid color-mix(in srgb,var(--sepia) 60%,transparent);border-radius:2px;background:var(--velin)}
+.cases.A i.on{background:var(--gueules)} .cases.F i.on{background:var(--azur)} .cases.N i.on{background:var(--sepia)}
+.factions{display:grid;grid-template-columns:auto 1fr;gap:2px 8px;align-items:center;font-size:.82rem}
+.factions span{cursor:help}
+.loy{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;cursor:help}
+.feff{grid-column:1/-1;font-family:var(--f-label);font-size:.7rem;letter-spacing:.02em;color:var(--sepia);line-height:1.2;margin:-1px 0 3px}
+.feff.actif{color:inherit;background:color-mix(in srgb,var(--or) 18%,transparent);border-radius:3px;padding:1px 4px}
+.leff{display:block;font-family:var(--f-label);font-size:.7rem;letter-spacing:.02em;color:var(--sepia);line-height:1.25;margin:-1px 0 3px}
+.loy i{height:10px;border-radius:2px;background:var(--velin);border:1px solid color-mix(in srgb,var(--sepia) 45%,transparent)}
+.loy i.c0{background:var(--velin-2)}
+.loy i.on.a{background:var(--gueules)} .loy i.on.f{background:var(--azur)} .loy i.on.n{background:var(--sepia)}
+/* cube de bois rendu dans Blender posé sur la case de loyauté */
+.loy i.on{position:relative;overflow:visible}
+.loy i.on::after{content:"";position:absolute;left:50%;top:50%;width:19px;height:19px;transform:translate(-50%,-56%);background:center/contain no-repeat;pointer-events:none}
+.loy i.on.a::after{background-image:url(pieces/cube_A.png)} .loy i.on.f::after{background-image:url(pieces/cube_F.png)} .loy i.on.n::after{background-image:url(pieces/cube_N.png)}
+.change-piste{outline:2px solid var(--halo);outline-offset:2px;border-radius:3px}
+/* ---------- consigne et récit */
+.consigne{border:2px solid var(--or);background:var(--velin)}
+.consigne.attente{border-color:color-mix(in srgb,var(--sepia) 40%,transparent)}
+.consigne.A{border-left:8px solid var(--gueules)} .consigne.F{border-left:8px solid var(--azur)}
+.consigne h2{font-size:1.4rem}
+.consigne p{margin:0}
+.consigne .quand{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.choix{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.btn{border:1px solid var(--encre);background:var(--velin);color:var(--encre);border-radius:3px;padding:4px 10px;font-family:var(--f-label);letter-spacing:.04em}
+.btn.prim{background:var(--encre);color:var(--velin)}
+.btn[disabled]{opacity:.4;cursor:not-allowed}
+.btn.sel{background:var(--or);color:var(--encre)}
+.btn.gros{font-size:1.1rem;padding:8px 16px}
+.chance{font-family:var(--f-label);font-size:.9rem;color:var(--encre)}
+select{font:inherit;padding:3px 6px;background:var(--velin);color:var(--encre);border:1px solid var(--sepia)}
+.grande{display:grid;grid-template-columns:110px minmax(0,1fr);gap:12px;align-items:start}
+.grande img,.grande .vide{width:110px;aspect-ratio:3/4;object-fit:cover;border-radius:5px;border:3px solid var(--sepia);background:var(--velin-2)}
+.grande.A img,.grande.A .vide{border-color:var(--gueules)} .grande.F img,.grande.F .vide{border-color:var(--azur)} .grande.S .vide{border-color:var(--or)}
+.grande .vide{display:grid;place-items:center;text-align:center;font-family:var(--f-titre);font-size:1.1rem;padding:6px}
+.grande .txt{display:grid;gap:4px;min-width:0}
+.grande h3{font-size:1.2rem}
+.grande .e{font-size:.95rem}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:480px){.grande{grid-template-columns:84px minmax(0,1fr)}.grande img,.grande .vide{width:84px}.duo{grid-template-columns:1fr}}
+.jet{display:grid;gap:6px;padding:8px 10px;border:1px dashed var(--sepia);border-radius:4px;background:color-mix(in srgb,var(--velin-2) 40%,var(--velin))}
+.jet .ligne{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-family:var(--f-label);font-size:.92rem}
+.de{display:inline-grid;place-items:center;width:44px;height:44px;background:center/contain no-repeat;color:transparent;font-size:1px;line-height:1;overflow:hidden}
+.de.v1{background-image:url(pieces/de_1.png)} .de.v2{background-image:url(pieces/de_2.png)} .de.v3{background-image:url(pieces/de_3.png)}
+.de.v4{background-image:url(pieces/de_4.png)} .de.v5{background-image:url(pieces/de_5.png)} .de.v6{background-image:url(pieces/de_6.png)}
+.de.A,.de.F{box-shadow:0 3px 0 -1px var(--c)} .de.A{--c:var(--gueules)} .de.F{--c:var(--azur)}
+.de.roule{animation:roule .5s ease-out}
+.melee{max-width:100%;margin:0 auto 4px;width:min(420px,100%)}
+.melee svg{display:block;width:100%;height:auto;overflow:visible}
+.melee .jambe{stroke:var(--encre);stroke-width:2;stroke-linecap:round}
+.melee .avance{animation:charge 1.7s cubic-bezier(.5,0,.6,1) both}
+.melee .sold .corps-s{animation:trot .28s ease-in-out 4 alternate;transform-box:fill-box;transform-origin:50% 100%}
+.melee .arme{transform-box:fill-box;transform-origin:0% 100%;animation:frappe .34s ease-in-out .75s 3 alternate}
+.melee .choc{opacity:0;transform-box:fill-box;transform-origin:center;animation:etincelle 1s ease-out .78s both}
+.melee.gagne .def .avance,.melee.perd .att .avance{animation:charge 1.7s cubic-bezier(.5,0,.6,1) both,recul .7s ease-in 1.75s forwards}
+.melee.gagne .def .sold:nth-child(n+4) .corps-s,.melee.perd .att .sold:nth-child(n+4) .corps-s{animation:trot .28s ease-in-out 4 alternate,tombe .5s ease-in 1.8s forwards}
+@keyframes charge{0%{transform:translateX(-30px)}55%,100%{transform:translateX(90px)}}
+@keyframes recul{from{transform:translateX(90px)}to{transform:translateX(-12px);opacity:.55}}
+@keyframes trot{to{transform:translateY(-2px) rotate(3deg)}}
+@keyframes frappe{to{transform:rotate(-38deg)}}
+@keyframes etincelle{0%{opacity:0;transform:scale(.2)}20%{opacity:1;transform:scale(1.25) rotate(20deg)}60%{opacity:.9;transform:scale(.9)}100%{opacity:0;transform:scale(1.4) rotate(45deg)}}
+@keyframes tombe{to{transform:rotate(80deg) translateY(4px);opacity:.6}}
+@keyframes roule{0%{transform:rotate(-200deg) scale(.4);opacity:0}70%{transform:rotate(15deg) scale(1.1)}100%{transform:none;opacity:1}}
+.verdict{font-family:var(--f-titre);font-size:1.2rem}
+.verdict.ok{color:var(--sinople)} .verdict.ko{color:var(--gueules)}
+.effets{margin:0;padding-left:18px;display:grid;gap:2px;font-size:.95rem}
+.lecture-nav{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;border-top:1px solid color-mix(in srgb,var(--sepia) 30%,transparent);padding-top:8px}
+.modes{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px}
+.mode{display:grid;grid-template-columns:auto 1fr;column-gap:6px;text-align:left;border:1px solid var(--encre);background:var(--velin);color:var(--encre);border-radius:4px;padding:6px 8px}
+.mode .ic{width:1.5em;height:1.5em;grid-row:span 2;align-self:center}
+.mode b{font-family:var(--f-label);letter-spacing:.04em;font-size:.95rem}
+.mode span{font-size:.78rem;line-height:1.25;color:var(--sepia)}
+.mode.sel{background:var(--or)}
+.mode.sel span{color:var(--encre)}
+.mode[disabled]{opacity:.55;cursor:not-allowed;border-style:dashed}
+.mode[disabled] span{color:var(--gueules)}
+.resume{padding:6px 8px;border-left:4px solid var(--or);background:color-mix(in srgb,var(--halo) 12%,var(--velin));font-size:.95rem}
+.citation{margin:0;padding:8px 12px;border-left:4px solid var(--or);background:color-mix(in srgb,var(--halo) 10%,var(--velin));display:grid;gap:4px}
+.citation blockquote{margin:0;font-style:italic;font-size:1.08rem;line-height:1.35}
+.citation figcaption{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;font-size:.88rem}
+.citation figcaption .btn{margin-left:auto;padding:1px 8px;font-size:.8rem}
+.sim{display:grid;gap:2px;margin-top:6px;padding:6px 8px;border:1px dashed var(--sepia);border-radius:4px;background:var(--velin);font-size:.9rem}
+.sim > span{display:block}
+.carte .simc{font-family:var(--f-label);font-size:.72rem;letter-spacing:.02em;padding:2px 5px;border-radius:3px;background:color-mix(in srgb,var(--or) 22%,var(--velin))}
+/* ---------- chronique */
+.chronique{max-height:220px;overflow:auto;font-size:.82rem;display:grid;gap:1px;margin:0;padding:0;list-style:none;align-content:start}
+.chronique li{padding:1px 0;border-bottom:1px dotted color-mix(in srgb,var(--sepia) 30%,transparent)}
+.chronique li.neuf{background:color-mix(in srgb,var(--halo) 22%,transparent)}
+.chronique .tt{font-family:var(--f-label);font-size:.7rem;color:var(--sepia);margin-right:5px}
+/* ---------- main : cartes lisibles sans clic */
+.main-zone{display:grid;gap:4px;min-width:0}
+.main-zone .entete{display:flex;align-items:center;gap:4px 16px;flex-wrap:wrap}
+.main-zone .entete > :last-child{margin-left:auto}
+.main-zone h2{font-size:1.15rem}
+/* Le nombre de colonnes (--cols) est calculé pour que toute la main tienne sur le moins de rangées possible, sans rangée
+   orpheline ; si la main reste trop haute, les bandeaux d'image rétrécissent (compacte) puis deviennent un filet (mini). */
+.main{display:grid;grid-template-columns:repeat(var(--cols,4),minmax(0,1fr));align-items:stretch;gap:8px}
+.carte{display:grid;grid-template-rows:auto 1fr;background:var(--velin);border:2px solid var(--sepia);border-radius:6px;overflow:hidden;text-align:left;padding:0;color:var(--encre);scroll-snap-align:start;transition:transform .15s,box-shadow .15s}
+.carte.jouable:hover{transform:translateY(-3px);box-shadow:0 4px 10px var(--ombre)}
+.carte.A{border-color:var(--gueules)} .carte.F{border-color:var(--azur)} .carte.N{border-color:var(--sepia)} .carte.S{border-color:var(--or)}
+.carte .img{aspect-ratio:20/9;max-width:100%;background:var(--velin-2) center 30%/cover no-repeat;position:relative}
+.carte .ops{position:absolute;top:4px;left:4px;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-family:var(--f-titre);font-size:1.1rem;color:var(--blanc);border:2px solid var(--or)}
+.carte.A .ops{background:var(--gueules)} .carte.F .ops{background:var(--azur)} .carte.N .ops{background:var(--sepia)} .carte.S .ops{background:var(--or);color:var(--encre)}
+.carte .badge{position:absolute;bottom:4px;right:4px;font-family:var(--f-label);font-size:.64rem;letter-spacing:.03em;padding:0 5px;border-radius:3px;background:var(--velin);border:1px solid var(--sepia);display:inline-flex;gap:3px;align-items:center}
+.carte .badge.oui{background:var(--sinople);color:var(--blanc);border-color:var(--sinople)}
+.carte .badge.adv{background:var(--encre);color:var(--halo);border-color:var(--encre)}
+.carte .badge.non{color:var(--sepia);border-style:dashed}
+.carte .badge.vide{color:var(--gueules);border-color:var(--gueules);border-style:dashed;background:var(--velin)}
+.grande{position:relative}
+.tampon{position:absolute;top:18%;left:50%;transform:translateX(-50%) rotate(-12deg);margin:0;padding:6px 14px;border:3px double var(--gueules);border-radius:6px;color:var(--gueules);background:color-mix(in srgb,var(--velin) 82%,transparent);font-family:var(--f-titre);font-size:1.5rem;line-height:1;text-align:center;text-transform:uppercase;letter-spacing:.06em;pointer-events:none;z-index:2;box-shadow:0 0 0 2px color-mix(in srgb,var(--gueules) 25%,transparent)}
+.tampon small{font-family:var(--f-label);font-size:.62rem;letter-spacing:.04em;text-transform:none}
+.carte .badge.dec{background:var(--or);color:var(--encre);border-color:var(--encre)}
+.carte .corps{padding:4px 7px 6px;display:grid;gap:2px;align-content:start}
+.carte .nom{font-family:var(--f-titre);font-size:1.12rem;line-height:1.05}
+.carte .corps .lbl{font-size:.64rem}
+.carte .eff{margin:2px 0 0;font-size:.86rem;line-height:1.25}
+.eff{display:grid;gap:3px}
+.eff .ligne{display:block}
+.eff .qui{font-family:var(--f-label);letter-spacing:.03em}
+.eff .ctx{color:var(--sepia)}
+.eff .gain{color:var(--sinople)} .eff .perte{color:var(--gueules)}
+.jeton{display:inline-flex;align-items:center;gap:2px;padding:0 6px 0 4px;margin:0 1px;border-radius:999px;font-family:var(--f-label);font-weight:700;font-size:.92em;line-height:1.45;letter-spacing:.02em;white-space:nowrap;vertical-align:baseline;border:2px solid transparent}
+.jeton .ic{width:1em;height:1em}
+.jeton.jA.gain{background:var(--gueules);color:var(--blanc)} .jeton.jF.gain{background:var(--azur);color:var(--blanc)}
+.jeton.jA.perte{background:var(--blanc);color:var(--gueules);border-color:var(--gueules)} .jeton.jF.perte{background:var(--blanc);color:var(--azur);border-color:var(--azur)}
+.jeton.jN{background:color-mix(in srgb,var(--sepia) 16%,var(--blanc));color:var(--encre);border-color:color-mix(in srgb,var(--sepia) 55%,transparent)}
+.jeton.jO{background:var(--halo);color:var(--encre)}
+.jeton.jN.perte,.jeton.jO.perte{border-style:dashed}
+.carte .pied{display:flex;gap:6px;flex-wrap:wrap;font-family:var(--f-label);font-size:.62rem;color:var(--sepia)}
+.carte.choisie{outline:4px solid var(--halo);outline-offset:-2px}
+.carte.jouable{cursor:pointer}
+.carte:not(.jouable){cursor:default}
+.carte .decompte{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:4px;font-family:var(--f-titre);font-size:1.05rem;line-height:1.05;background:repeating-linear-gradient(45deg,color-mix(in srgb,var(--rc) 25%,var(--velin)) 0 8px,var(--velin) 8px 16px);color:var(--encre)}
+.main.compacte .carte .img{aspect-ratio:auto;height:46px}
+.main.mini .carte .img{aspect-ratio:auto;height:28px}
+.main.compacte .carte .decompte > *,.main.mini .carte .decompte > *{display:none}
+.main.mini .carte .ops{width:22px;height:22px;font-size:.95rem;top:2px;left:3px}
+.main.mini .carte .badge{bottom:3px}
+.main.mini .carte .corps > .lbl{display:none}
+.main.mini .carte .corps{padding:3px 6px 5px}
+/* ---------- plan */
+.lien-fond{stroke:color-mix(in srgb,var(--velin) 80%,transparent);stroke-width:4.6;stroke-linecap:round}
+.lien-fond.mer{stroke:color-mix(in srgb,var(--velin) 65%,transparent);stroke-width:4}
+.lien{stroke:var(--encre);stroke-opacity:.78;stroke-width:2;stroke-linecap:round;transition:stroke .15s,stroke-width .15s}
+.lien.mer{stroke-dasharray:6 4;stroke:var(--azur);stroke-opacity:.9;stroke-width:2}
+.lien.actif{stroke:var(--halo);stroke-opacity:1;stroke-width:3.6}
+#tInf .lien{stroke-width:2.4}
+.lieu{cursor:default;transition:opacity .2s}
+.lieu.cible{cursor:pointer}
+.lieu .halo{fill:none;stroke:var(--halo);stroke-width:2.5;opacity:0}
+.lieu.cible .halo{opacity:1;animation:pulse 1.4s ease-in-out infinite}
+.lieu.plan .halo{opacity:1;stroke:var(--sinople)}
+.lieu.change .halo{opacity:1;stroke:var(--halo);stroke-width:4;animation:pulse 1s ease-in-out 3}
+.lieu.vise .halo{opacity:1;stroke:var(--encre);stroke-width:3;stroke-dasharray:4 3}
+.lieu.focus .halo{opacity:1;stroke:var(--rc);stroke-width:3.5}
+.lieu.estompe,.nomlieu.estompe{opacity:.3} .nomlieu{transition:opacity .2s}
+.lieu .delta{font-family:var(--f-label);font-size:11px;font-weight:700;paint-order:stroke;stroke:var(--blanc);stroke-width:3px}
+.lieu .delta.A{fill:var(--gueules)} .lieu .delta.F{fill:var(--azur)}
+.nomreg{font-family:var(--f-label);letter-spacing:4px;opacity:.55;pointer-events:none;transition:opacity .2s}
+.nomreg.focus{opacity:1;font-weight:700}
+.valreg{font-family:var(--f-label);font-size:10px;opacity:.8;pointer-events:none}
+@keyframes pulse{50%{stroke-width:5;opacity:.45}}
+@media (prefers-reduced-motion:reduce){.lieu .halo,.de.roule,.melee *{animation:none!important}.score .marq{transition:none}}
+.lieu text,.noms{pointer-events:none}
+.pinf circle{fill:transparent;stroke:none}
+.pinf image,.lieu image.piece{pointer-events:none}
+.pinf image{transform-box:fill-box;transform-origin:center;transition:transform .15s}
+.pinf text{fill:var(--blanc);font-family:var(--f-label);font-size:12.5px;font-weight:700;paint-order:stroke;stroke:rgba(20,10,5,.55);stroke-width:2px}
+.lieu .corps{fill-opacity:0;stroke-opacity:0}
+.pinf.zero{display:none}
+#carte.selection .pinf{transform-box:fill-box}
+.nomlieu{font-family:var(--f-label);font-size:9.5px;fill:var(--encre);paint-order:stroke;stroke:var(--terre);stroke-width:2.6px;stroke-linejoin:round}
+/* aperçu en direct du placement : sceau prévu cerclé d'or, lieu qui change de main cerclé de vert */
+.pinf.plus .nb{fill:var(--halo);stroke:var(--encre)} .pinf.plus text{fill:var(--encre)}
+.pinf.plus image{filter:drop-shadow(0 0 2.5px var(--halo)) drop-shadow(0 0 1.5px var(--halo))}
+.lieu.bascule .halo{opacity:1;stroke:var(--sinople);stroke-width:4;stroke-dasharray:none;animation:pulse 1.2s ease-in-out infinite}
+/* ---------- accueil */
+.accueil{display:grid;gap:18px;max-width:760px;margin:3vh auto;text-align:center}
+.acc-txt{display:grid;gap:14px;align-content:center;min-width:0}
+.enlum{margin:0;border:6px double var(--or);border-radius:4px;background:var(--velin-2);box-shadow:0 6px 18px var(--ombre);overflow:hidden;max-width:100%}
+.enlum img{display:block;width:100%;height:auto;max-height:46vh;object-fit:cover;object-position:50% 45%}
+@media (min-width:980px){
+  .accueil{max-width:1320px;grid-template-columns:minmax(0,auto) minmax(420px,1fr);align-items:center;gap:40px;min-height:88vh;margin-block:2vh}
+  .enlum img{height:min(86vh,1607px);max-height:none;width:auto;max-width:100%}
+}
+.accueil h1{font-size:clamp(2.6rem,7vw,4.4rem);line-height:1}
+.accueil .choix{justify-content:center}
+.ligne{display:grid;gap:10px;border:1px solid color-mix(in srgb,var(--sepia) 45%,transparent);border-radius:4px;padding:12px 14px;background:color-mix(in srgb,var(--velin-2) 45%,var(--velin));text-align:left}
+.ligne h2{font-size:1.35rem;text-align:center}
+.ligne p{margin:0}
+.ligne input{font:inherit;font-family:var(--f-label);letter-spacing:.2em;text-transform:uppercase;width:9ch;padding:4px 8px;border:1px solid var(--encre);border-radius:3px;background:var(--velin);color:var(--encre)}
+.ligne .msg{color:var(--gueules);font-family:var(--f-label);font-size:.85rem;min-height:1em}
+.mes-parties{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.mes-parties li{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:center;padding:5px 8px;border-radius:3px;background:var(--velin);border:1px solid color-mix(in srgb,var(--sepia) 30%,transparent)}
+.mes-parties li.tour{border-color:var(--or);box-shadow:inset 4px 0 0 var(--or)}
+.mes-parties .code{font-family:var(--f-label);letter-spacing:.15em}
+.mes-parties li > :last-child{margin-left:auto}
+.ligne-info{font-family:var(--f-label);font-size:.78rem;letter-spacing:.03em;color:var(--sepia)}
+.ligne-info b{color:var(--encre);letter-spacing:.15em}
+.tuile-tuto{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center;text-align:left;border:2px solid var(--or);border-radius:6px;padding:10px 14px;background:color-mix(in srgb,var(--halo) 10%,var(--velin));color:var(--encre)}
+.tuile-tuto .ic{width:42px;height:42px;color:var(--gueules)}
+.tuile-tuto b{font-family:var(--f-titre);font-size:1.4rem;font-weight:400}
+.fin{border:3px double var(--or);padding:10px 12px;background:var(--velin)}
+.fin h2{font-size:1.9rem}
+/* ---------- infobulle */
+.tip{position:fixed;z-index:30;max-width:320px;background:var(--encre);color:var(--velin);border-radius:5px;padding:7px 10px;font-size:.85rem;line-height:1.3;pointer-events:none;box-shadow:0 4px 14px var(--ombre)}
+.tip b{color:var(--halo);font-weight:400;font-family:var(--f-label);letter-spacing:.04em}
+.tip .ic{color:var(--halo)}
+/* ---------- aide et tutoriel */
+.niveaux{display:grid;gap:4px;justify-items:start}
+.niveaux .choix{gap:6px}
+.carte .loupe{position:absolute;top:3px;left:34px;width:24px;height:24px;padding:0;border-radius:50%;display:grid;place-items:center;background:color-mix(in srgb,var(--velin) 88%,transparent);border:1px solid var(--sepia);color:var(--encre);cursor:zoom-in;opacity:.85}
+.carte .loupe:hover,.carte .loupe:focus-visible{opacity:1;background:var(--velin)}
+.carte .loupe .ic{width:14px;height:14px}
+.main.mini .carte .loupe{top:2px;left:29px;width:22px;height:22px}
+.tip-img{display:block;width:min(240px,100%);height:auto;margin:0 auto 6px;border:2px solid var(--or);border-radius:4px}
+.grande img[data-id]{cursor:zoom-in}
+.feuille.image{width:min(720px,100%);max-height:calc(100vh - 32px);display:grid;gap:8px;overflow:auto;justify-items:center}
+.feuille.image img{max-width:100%;max-height:calc(100vh - 170px);width:auto;height:auto;border:3px solid var(--or);border-radius:6px}
+/* ---------- victoire et tableau d'honneur */
+.feuille.victoire{width:min(980px,100%);max-height:calc(100vh - 32px);overflow:auto;display:grid;gap:10px}
+.parade-svg{display:block;width:100%;height:auto;border:2px solid var(--or);border-radius:6px;background:#9cc2de}
+.parade-svg .cortege{animation:defile 15s linear infinite}
+.parade-svg .monture{animation:sautille .5s ease-in-out infinite alternate}
+.parade-svg .patte{transform-box:view-box;animation:pas .5s ease-in-out infinite alternate;animation-delay:calc(var(--k) * -.5s)}
+.parade-svg .pieton .jb{stroke:#3a2a1a;stroke-width:3;stroke-linecap:round}
+.parade-svg .pieton{animation:sautille .4s ease-in-out infinite alternate;animation-delay:calc(var(--k) * -.2s)}
+.parade-svg .trompe{transform-box:fill-box;transform-origin:0 50%;animation:souffle 1.2s ease-in-out infinite alternate}
+.parade-svg .flotte{animation:flotte 1.6s ease-in-out infinite alternate}
+.parade-svg .sceptre{transform-box:fill-box;transform-origin:0 100%;animation:salut 2.4s ease-in-out infinite alternate}
+.parade-svg .spect{animation:liesse .7s ease-in-out infinite alternate;animation-delay:calc(var(--k) * -1s)}
+.parade-svg .bras{transform-box:fill-box;transform-origin:50% 100%;animation:agite .45s ease-in-out infinite alternate;animation-delay:calc(var(--k) * -1s)}
+.parade-svg .chapeau{transform-box:fill-box;transform-origin:center;animation:lance 3.6s ease-out infinite;animation-delay:var(--k)}
+.parade-svg .petale{animation:tombepet var(--d) linear infinite;animation-delay:calc(var(--k) * -1)}
+@keyframes defile{from{transform:translateX(-120px)}to{transform:translateX(1150px)}}
+@keyframes sautille{to{transform:translateY(-3px)}}
+@keyframes pas{from{transform:rotate(-14deg)}to{transform:rotate(14deg)}}
+@keyframes souffle{to{transform:rotate(-8deg)}}
+@keyframes flotte{to{transform:skewY(-6deg) scaleX(.92)}}
+@keyframes salut{to{transform:rotate(-16deg)}}
+@keyframes liesse{to{transform:translateY(-5px)}}
+@keyframes agite{from{transform:rotate(-12deg)}to{transform:rotate(12deg)}}
+@keyframes lance{0%{transform:translateY(0) rotate(0);opacity:0}10%{opacity:1}45%{transform:translateY(-150px) rotate(300deg)}80%,100%{transform:translateY(0) rotate(720deg);opacity:0}}
+@keyframes tombepet{from{transform:translate(var(--x),-10px)}to{transform:translate(calc(var(--x) + 60px),460px)}}
+.hall-tab{overflow-x:auto}
+.hall-tab table{border-collapse:collapse;width:100%;font-size:.86rem;font-variant-numeric:tabular-nums}
+.hall-tab th,.hall-tab td{padding:4px 7px;border-bottom:1px solid color-mix(in srgb,var(--sepia) 35%,transparent);text-align:left;white-space:nowrap}
+.hall-tab th{font-family:var(--f-label);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--sepia)}
+.hall-tab .num{text-align:right}
+.hall-tab tr.neuf td{background:color-mix(in srgb,var(--halo) 28%,transparent);font-weight:600}
+@media (prefers-reduced-motion:reduce){.parade-svg *{animation:none!important}.parade-svg .cortege{transform:translateX(420px)}}
+.voile{position:fixed;inset:0;background:color-mix(in srgb,var(--encre) 60%,transparent);display:grid;place-items:center;padding:16px;z-index:20}
+.feuille{background:var(--velin);border:2px solid var(--or);border-radius:6px;max-width:780px;width:100%;max-height:calc(100vh - 32px);overflow:auto;padding:16px 18px;display:grid;gap:10px;box-sizing:border-box}
+.feuille h2{font-size:1.8rem} .feuille h3{font-size:1.2rem}
+.feuille p,.feuille ul{margin:0} .feuille ul{padding-left:18px;display:grid;gap:3px}
+.tuto{max-width:1080px;display:grid;grid-template-columns:240px minmax(0,1fr);gap:16px;align-content:start}
+.tuto .menu{display:grid;gap:4px;align-content:start}
+.tuto .menu label{display:flex;gap:6px;align-items:center;font-size:.92rem;padding:3px 6px;border-radius:3px;cursor:pointer}
+.tuto .menu label.ici{background:var(--or)}
+.tuto .menu .lbl{margin-top:4px}
+.scene{display:grid;gap:10px;min-width:0}
+.scene .chap{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.scene h3{font-size:1.5rem}
+.scene .texte{font-size:1.05rem;min-height:3em}
+.scene .ex{font-size:.92rem;color:var(--sepia);font-style:italic}
+.stage{position:relative;min-height:290px;border:1px solid var(--sepia);border-radius:6px;background:var(--terre);overflow:hidden;display:grid;place-items:center;padding:12px}
+.stage svg:not(.ic){max-width:100%;height:auto}
+.stage .carte{align-self:start}
+.progres{height:4px;background:var(--velin-2);border-radius:2px;overflow:hidden}
+.progres i{display:block;height:100%;background:var(--or);width:0;transition:width linear}
+.anim{animation:apparait .6s ease-out both;animation-delay:var(--d,0s)}
+@keyframes apparait{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.glisse{transition:transform 1s ease-in-out}
+@media (max-width:760px){.tuto{grid-template-columns:1fr}.tuto .menu{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}}
+@media (prefers-reduced-motion:reduce){.anim{animation:none}}
+
+/* la page est servie sans doctype (mode quirks) : les classes y sont insensibles à la casse, d'où « anim » et non « a »,
+   qui aurait aussi animé tout ce qui porte la classe A (Angleterre) à chaque rafraîchissement */
+/* ---------- zoom du plan */
+.plan{position:relative}
+.zoom{position:absolute;top:6px;right:6px;display:grid;gap:3px;z-index:2}
+.zoom .btn{width:30px;height:30px;padding:0;font-size:1.1rem;line-height:1;background:color-mix(in srgb,var(--velin) 92%,transparent);box-shadow:0 1px 4px var(--ombre)}
+#carte{cursor:grab} #carte.glisse-plan{cursor:grabbing}
+.plan.zoome #carte{touch-action:none}
+/* ---------- v21 : barre d'usages sur la carte, détail des jets, effets en cours, cartes retirées */
+.barre{position:fixed;z-index:15;box-sizing:border-box;display:grid;gap:6px;align-content:start;padding:6px;background:color-mix(in srgb,var(--velin) 94%,transparent);border:2px solid var(--halo);border-radius:4px;box-shadow:0 6px 18px var(--ombre)}
+.barre.A{border-color:var(--gueules)} .barre.F{border-color:var(--azur)}
+.barre-t{display:flex;justify-content:space-between;align-items:center;gap:6px;font-family:var(--f-titre);font-size:1rem;line-height:1.05}
+.barre-t .x{border:0;background:none;font-size:.95rem;color:var(--sepia);padding:0 2px}
+.barre-modes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px}
+.bm{display:grid;justify-items:center;gap:1px;padding:4px 2px;border:1px solid var(--encre);border-radius:4px;background:var(--velin);color:var(--encre);font-family:var(--f-label);font-size:.68rem;letter-spacing:.02em;min-width:0}
+.bm .ic{width:1.45em;height:1.45em}
+.bm:not([disabled]):hover{background:var(--or)}
+.bm[disabled]{opacity:.4;cursor:not-allowed;border-style:dashed}
+.barre-sel{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-family:var(--f-label)} .barre-sel .ic{width:1.4em;height:1.4em}
+.barre-act{display:flex;gap:6px} .barre-act .prim{flex:1;font-size:1.05rem;padding:6px 10px}
+.usages{margin:0;padding-left:18px;display:grid;gap:2px;font-size:.88rem} .usages li.non{color:var(--sepia)}
+.pas{display:inline-flex;align-items:center;gap:6px} .pas .btn{padding:0 9px;font-size:1rem;line-height:1.4} .pas b{min-width:1.2em;text-align:center;font-size:1rem;color:var(--encre)}
+table.calc{border-collapse:collapse;font-family:var(--f-label);font-size:.88rem;min-width:min(320px,100%)}
+table.calc td{padding:1px 8px;border-bottom:1px dotted color-mix(in srgb,var(--sepia) 40%,transparent)}
+table.calc td.num{text-align:right;white-space:nowrap}
+table.calc tr.tot td{border-bottom:0;border-top:2px solid var(--encre);font-size:1rem}
+.lecture-nav.propre{flex-wrap:nowrap} .lecture-nav.propre .progres{flex:1}
+.lecture-nav.propre .progres i{transition-property:width;transition-timing-function:linear}
+.entete-bloc{display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap}
+.btn.petit{padding:1px 7px;font-size:.72rem}
+.encours-l{list-style:none;margin:0;padding:0;display:grid;gap:3px;overflow:auto;font-size:.8rem;line-height:1.25}
+.encours-l li{padding:2px 5px;border-left:4px solid var(--sepia);background:color-mix(in srgb,var(--velin) 70%,transparent);cursor:help}
+.encours-l li.A{border-left-color:var(--gueules)} .encours-l li.F{border-left-color:var(--azur)}
+.encours-l li b{font-family:var(--f-label);letter-spacing:.02em}
+.encours-l .vide{border:0;background:none;color:var(--sepia);cursor:default}
+.feuille.large{max-width:1100px}
+.grille-cartes{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px}
+/* ---------- v20 : cadres d'enluminure (Flux schnell), parchemin (Juggernaut XL), sceaux de cire (Flux) — outils/cadres_web.py */
+.bloc{border:9px solid transparent;border-image:url(pieces/cadre_panneau.png) 40 / 9px round;border-radius:0;background:var(--velin) url(pieces/parchemin.jpg) 0 0/256px;background-clip:padding-box;padding:4px 7px}
+.consigne.A,.consigne.F{border-left-width:9px;box-shadow:inset 6px 0 0 var(--cc)} .consigne.A{--cc:var(--gueules)} .consigne.F{--cc:var(--azur)}
+.carte{border:solid transparent;border-width:7px 5px 8px;border-image:url(pieces/cadre_carte.png) 39 23 42 24 / 7px 5px 8px stretch;border-radius:0;position:relative;background:var(--velin) url(pieces/parchemin.jpg) 0 0/220px;background-clip:padding-box}
+.carte .corps,.main.mini .carte .corps{padding-inline:4px} .carte .corps{padding-block:3px 4px}
+.carte::after{content:"";position:absolute;inset:0;border:2px solid var(--cc,var(--sepia));pointer-events:none}
+.carte.A{--cc:var(--gueules)} .carte.F{--cc:var(--azur)} .carte.N{--cc:var(--sepia)} .carte.S{--cc:var(--or)}
+.pinf .nb{fill:var(--encre);stroke:var(--blanc);stroke-width:1.1}
+.pinf text{font-size:9.5px;stroke:none}
+/* règles complètes (rendues depuis regles.md par outils/regles_html.py) */
+#feuilleRegles{z-index:25} .feuille.regles{max-width:1180px;height:calc(100vh - 32px);grid-template-rows:auto 1fr;overflow:hidden;padding:12px 14px}
+.rg-corps{display:grid;grid-template-columns:270px 1fr;gap:16px;min-height:0}
+.rg-sel{display:none;font:inherit;padding:4px}
+.rg-som{display:grid;grid-template-rows:auto auto 1fr;gap:6px;min-height:0}
+.rg-som ol{list-style:none;margin:0;padding:0 4px 0 0;overflow:auto;font-size:.88rem;line-height:1.25}
+.rg-som li.n2{margin-top:7px;font-weight:bold} .rg-som li.n3{padding-left:14px}
+.rg-som a{color:var(--encre);text-decoration:none;display:block;padding:1px 4px;border-radius:3px} .rg-som a:hover,.rg-som a.ici{background:var(--velin-2)}
+.rg-cherche{font:inherit;padding:5px 8px;border:1px solid var(--sepia);border-radius:3px;background:var(--blanc);color:var(--encre)}
+.rg-texte{overflow:auto;min-height:0;padding:0 10px 40px 4px;line-height:1.45;font-size:1rem;max-width:none}
+.rg-texte h2{font-size:1.6rem;margin:22px 0 6px;border-bottom:2px solid var(--or);padding-bottom:2px} .rg-texte h2:first-of-type{margin-top:4px}
+.rg-texte h3{font-size:1.2rem;margin:16px 0 4px} .rg-texte p,.rg-texte ul,.rg-texte ol{margin:0 0 8px;max-width:78ch} .rg-texte ul,.rg-texte ol{padding-left:22px}
+.rg-texte hr{border:0;border-top:1px solid var(--velin-2);margin:14px 0}
+.rg-table{overflow-x:auto;margin:0 0 10px} .rg-texte table{border-collapse:collapse;font-size:.9rem} .rg-texte th,.rg-texte td{border:1px solid color-mix(in srgb,var(--sepia) 45%,transparent);padding:3px 7px;text-align:left;vertical-align:top}
+.rg-texte th{background:var(--velin-2);font-family:var(--f-label)} .rg-texte a{color:var(--azur)}
+.rg-texte mark{background:color-mix(in srgb,var(--halo) 55%,transparent);color:inherit;border-radius:2px} .rg-texte mark.ici{background:var(--halo);outline:2px solid var(--gueules)}
+.rg-texte .rg-cache{display:none}
+@media (max-width:760px){.rg-corps{grid-template-columns:1fr;grid-template-rows:auto 1fr}.rg-som ol{display:none}.rg-som{grid-template-rows:auto auto auto}.rg-sel{display:block}}
+
+body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:100vh;max-height:none;border-width:0 2px;border-radius:0}</style></head>
+<body><div class="feuille regles"><div class="choix" style="justify-content:space-between"><h2>Règles complètes · Guerre de Cent Ans</h2><a class="btn" href="index.html">Jouer</a></div>
+<div class="rg-corps" id="rgCorps"><nav class="rg-som" aria-label="Sommaire"><input type="search" class="rg-cherche" placeholder="Chercher dans les règles…" aria-label="Chercher dans les règles"><select class="rg-sel" aria-label="Aller à la section"><option value="">Aller à la section…</option><option value="r-1-but-du-jeu-et-fin-de-partie">1. But du jeu et fin de partie</option><option value="r-2-materiel-et-lecture-de-l-ecran">2. Matériel et lecture de l'écran</option><option value="r-3-mise-en-place-1337">3. Mise en place (1337)</option><option value="r-4-controle-d-un-lieu-et-acces-pour-l-influence">4. Contrôle d'un lieu et accès pour l'Influence</option><option value="r-5-deroulement-d-un-tour">5. Déroulement d'un tour</option><option value="r-6-jouer-une-carte">6. Jouer une carte</option><option value="r-7-les-actions-d-ops">7. Les actions d'OPS</option><option value="r-8-batailles">8. Batailles</option><option value="r-9-la-treve">9. La Trêve</option><option value="r-10-decomptes-des-regions">10. Décomptes des régions</option><option value="r-11-tresor-crise-et-legitimite">11. Trésor, Crise et Légitimité</option><option value="r-12-factions-et-loyaute">12. Factions et Loyauté</option><option value="r-13-modes-de-jeu-niveaux-de-l-ia-et-tableau-d-honneur">13. Modes de jeu, niveaux de l'IA et tableau d'honneur</option><option value="r-14-glossaire">14. Glossaire</option><option value="r-15-ou-trouver-quoi">15. Où trouver quoi</option></select><p class="rg-nb lbl" aria-live="polite"></p><ol><li class="n2"><a href="#r-1-but-du-jeu-et-fin-de-partie">1. But du jeu et fin de partie</a></li><li class="n3"><a href="#r-1-1-le-score">1.1 Le score</a></li><li class="n3"><a href="#r-1-2-toutes-les-facons-de-gagner-ou-de-perdre">1.2 Toutes les façons de gagner ou de perdre</a></li><li class="n3"><a href="#r-1-3-qui-perd-quand-la-treve-tombe-a-1">1.3 Qui perd quand la Trêve tombe à 1</a></li><li class="n2"><a href="#r-2-materiel-et-lecture-de-l-ecran">2. Matériel et lecture de l'écran</a></li><li class="n3"><a href="#r-2-1-le-plan">2.1 Le plan</a></li><li class="n3"><a href="#r-2-2-les-regions">2.2 Les régions</a></li><li class="n3"><a href="#r-2-3-les-cartes">2.3 Les cartes</a></li><li class="n3"><a href="#r-2-4-les-pistes">2.4 Les pistes</a></li><li class="n3"><a href="#r-2-5-l-ecran-de-jeu">2.5 L'écran de jeu</a></li><li class="n2"><a href="#r-3-mise-en-place-1337">3. Mise en place (1337)</a></li><li class="n2"><a href="#r-4-controle-d-un-lieu-et-acces-pour-l-influence">4. Contrôle d'un lieu et accès pour l'Influence</a></li><li class="n3"><a href="#r-4-1-controle">4.1 Contrôle</a></li><li class="n3"><a href="#r-4-2-ou-peut-on-placer-de-l-influence">4.2 Où peut-on placer de l'Influence ?</a></li><li class="n3"><a href="#r-4-3-la-maitrise-de-la-manche">4.3 La maîtrise de la Manche</a></li><li class="n2"><a href="#r-5-deroulement-d-un-tour">5. Déroulement d'un tour</a></li><li class="n3"><a href="#r-5-1-les-phases">5.1 Les phases</a></li><li class="n3"><a href="#r-5-2-la-sequence-d-un-tour">5.2 La séquence d'un tour</a></li><li class="n3"><a href="#r-5-3-l-ouverture">5.3 L'ouverture</a></li><li class="n3"><a href="#r-5-4-les-rounds-d-action">5.4 Les rounds d'action</a></li><li class="n3"><a href="#r-5-5-les-chevauchees">5.5 Les chevauchées</a></li><li class="n2"><a href="#r-6-jouer-une-carte">6. Jouer une carte</a></li><li class="n3"><a href="#r-6-1-evenement-ou-ops">6.1 Événement ou OPS</a></li><li class="n3"><a href="#r-6-2-que-devient-la-carte">6.2 Que devient la carte ?</a></li><li class="n3"><a href="#r-6-3-prerequis">6.3 Prérequis</a></li><li class="n3"><a href="#r-6-4-evenements-sans-effet">6.4 Événements sans effet</a></li><li class="n3"><a href="#r-6-5-valeur-en-ops-d-une-carte">6.5 Valeur en OPS d'une carte</a></li><li class="n3"><a href="#r-6-6-effets-durables">6.6 Effets durables</a></li><li class="n2"><a href="#r-7-les-actions-d-ops">7. Les actions d'OPS</a></li><li class="n3"><a href="#r-7-1-generalites">7.1 Généralités</a></li><li class="n3"><a href="#r-7-2-influence">7.2 Influence</a></li><li class="n3"><a href="#r-7-3-assaut">7.3 Assaut</a></li><li class="n3"><a href="#r-7-4-siege">7.4 Siège</a></li><li class="n3"><a href="#r-7-5-diplomatie">7.5 Diplomatie</a></li><li class="n3"><a href="#r-7-6-legitimite">7.6 Légitimité</a></li><li class="n2"><a href="#r-8-batailles">8. Batailles</a></li><li class="n2"><a href="#r-9-la-treve">9. La Trêve</a></li><li class="n2"><a href="#r-10-decomptes-des-regions">10. Décomptes des régions</a></li><li class="n3"><a href="#r-10-1-les-niveaux">10.1 Les niveaux</a></li><li class="n3"><a href="#r-10-2-les-points">10.2 Les points</a></li><li class="n3"><a href="#r-10-3-quand-decompte-t-on">10.3 Quand décompte-t-on ?</a></li><li class="n3"><a href="#r-10-4-exemple-de-decompte-detaille-ile-de-france">10.4 Exemple de décompte détaillé : Île-de-France</a></li><li class="n2"><a href="#r-11-tresor-crise-et-legitimite">11. Trésor, Crise et Légitimité</a></li><li class="n3"><a href="#r-11-1-tresor-et-revenus">11.1 Trésor et revenus</a></li><li class="n3"><a href="#r-11-2-crise">11.2 Crise</a></li><li class="n3"><a href="#r-11-3-legitimite">11.3 Légitimité</a></li><li class="n2"><a href="#r-12-factions-et-loyaute">12. Factions et Loyauté</a></li><li class="n3"><a href="#r-12-1-principe">12.1 Principe</a></li><li class="n3"><a href="#r-12-2-tableau-des-factions">12.2 Tableau des factions</a></li><li class="n3"><a href="#r-12-3-le-grand-schisme-et-rome">12.3 Le Grand Schisme et Rome</a></li><li class="n3"><a href="#r-12-4-la-fusion-flandre-bourgogne-1384">12.4 La fusion Flandre-Bourgogne (1384)</a></li><li class="n2"><a href="#r-13-modes-de-jeu-niveaux-de-l-ia-et-tableau-d-honneur">13. Modes de jeu, niveaux de l'IA et tableau d'honneur</a></li><li class="n3"><a href="#r-13-1-modes-de-jeu">13.1 Modes de jeu</a></li><li class="n3"><a href="#r-13-2-niveaux-de-l-ia">13.2 Niveaux de l'IA</a></li><li class="n3"><a href="#r-13-3-tableau-d-honneur">13.3 Tableau d'honneur</a></li><li class="n2"><a href="#r-14-glossaire">14. Glossaire</a></li><li class="n2"><a href="#r-15-ou-trouver-quoi">15. Où trouver quoi</a></li></ol></nav><article class="rg-texte" data-titre="Règles du jeu, version 0.4">
+<p><em>Guerre de Cent Ans</em> est un jeu de cartes et d'influence pour deux joueurs, ou pour un joueur contre l'ordinateur. L'un dirige l'Angleterre, l'autre la France, de 1337 à 1453. Le jeu reprend les grands principes de <em>Twilight Struggle</em> : chaque carte porte un événement historique et une valeur en points d'opérations (OPS), et l'on se dispute des régions qui sont décomptées au fil de la partie.</p>
+<p>Ce livret décrit les règles exactement comme le jeu les applique. Les valeurs chiffrées peuvent encore évoluer au fil des réglages.</p>
+<hr />
+<h2 id="r-1-but-du-jeu-et-fin-de-partie">1. But du jeu et fin de partie</h2>
+<h3 id="r-1-1-le-score">1.1 Le score</h3>
+<p>Le score est une piste unique qui va de <strong>−25 à +25</strong>. Une valeur positive avantage la France, une valeur négative avantage l'Angleterre. L'écran l'affiche sous la forme « France +4 » ou « Angleterre +4 ». Tous les points gagnés par un camp déplacent ce marqueur vers lui : quand on lit « +2 points pour l'Angleterre », le score recule de 2.</p>
+<h3 id="r-1-2-toutes-les-facons-de-gagner-ou-de-perdre">1.2 Toutes les façons de gagner ou de perdre</h3>
+<div class="rg-table"><table>
+<thead>
+<tr>
+<th>Condition</th>
+<th>Quand on la vérifie</th>
+<th>Résultat</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Score à +25 ou −25</strong></td>
+<td>À tout moment, dès que le marqueur l'atteint, même au milieu d'un événement ou d'un décompte</td>
+<td>La France gagne à +25, l'Angleterre à −25.</td>
+</tr>
+<tr>
+<td><strong>Trêve à 1</strong></td>
+<td>Dès que la piste de Trêve tombe à 1</td>
+<td>Le <strong>joueur actif</strong> perd immédiatement (voir 1.3).</td>
+</tr>
+<tr>
+<td><strong>Carte de décompte gardée en main</strong></td>
+<td>À la fin de chaque tour, après la Légitimité</td>
+<td>Le camp qui garde une carte de décompte perd. Si les deux camps en gardent une, l'Angleterre est vérifiée la première : c'est elle qui perd.</td>
+</tr>
+<tr>
+<td><strong>Double monarchie</strong> (victoire anglaise automatique)</td>
+<td>À la fin de chaque tour, après la vérification des décomptes</td>
+<td>L'Angleterre gagne si elle contrôle <strong>Paris et Reims</strong>.</td>
+</tr>
+<tr>
+<td><strong>Reconquête</strong> (victoire française automatique)</td>
+<td>À la fin de chaque tour, juste après la double monarchie</td>
+<td>La France gagne si elle contrôle <strong>Bordeaux, Rouen et Paris</strong>. Calais peut rester anglaise.</td>
+</tr>
+<tr>
+<td><strong>Décompte final</strong></td>
+<td>À la fin du tour 10, si personne n'a encore gagné</td>
+<td>Les 8 régions sont décomptées une à une. Si le score atteint ±25 pendant ce décompte, la partie s'arrête là. Sinon, le camp en tête gagne.</td>
+</tr>
+<tr>
+<td><strong>Égalité au décompte final</strong></td>
+<td>Score exactement à 0 après le décompte final</td>
+<td>L'Angleterre gagne si elle contrôle Paris. Dans tous les autres cas (Paris français ou contrôlé par personne), la France gagne.</td>
+</tr>
+</tbody>
+</table></div>
+<p>L'ordre de la fin de tour compte : les chevauchées, les revenus, la Crise et la Légitimité sont résolus d'abord (et peuvent faire atteindre ±25), puis on vérifie les cartes de décompte gardées, puis les victoires automatiques, puis, au tour 10, le décompte final. Une carte de décompte gardée en main à la fin du tour 10 fait donc perdre avant même le décompte final.</p>
+<h3 id="r-1-3-qui-perd-quand-la-treve-tombe-a-1">1.3 Qui perd quand la Trêve tombe à 1</h3>
+<p>La Trêve tombe à 1 à cause d'un Assaut sur une place forte ou d'un événement qui la fait baisser. Le perdant est toujours <strong>le joueur actif</strong>, c'est-à-dire celui qui est en train de jouer la carte qui provoque la baisse. Pendant l'ouverture, c'est le joueur qui a révélé la carte.</p>
+<p>C'est vrai même quand la baisse vient d'un événement de l'adversaire. <strong>Exemple :</strong> la Trêve est à 2. L'Angleterre joue pour ses OPS la carte française « Usurpation d'Henri IV » (Légitimité anglaise −2, Trêve −1). L'événement français se déclenche pendant le tour de jeu anglais : la Trêve tombe à 1 et c'est l'<strong>Angleterre</strong> qui perd. Les quatre cartes qui font baisser la Trêve sont toutes françaises : « Confiscation de la Guyenne », « Confiscation de l'Aquitaine », « Usurpation d'Henri IV » et « Sac de Fougères ». L'Angleterre doit s'en méfier quand la Trêve est basse.</p>
+<hr />
+<h2 id="r-2-materiel-et-lecture-de-l-ecran">2. Matériel et lecture de l'écran</h2>
+<h3 id="r-2-1-le-plan">2.1 Le plan</h3>
+<p>Le plan compte <strong>57 lieux</strong>, reliés par des liaisons. Deux lieux reliés sont <strong>voisins</strong> (les liaisons fonctionnent dans les deux sens). Chaque lieu est dessiné par une pièce :</p>
+<ul>
+<li><strong>La défense</strong> (1 à 4) est le chiffre inscrit sur la pièce. Elle sert au contrôle (section <a href="#r-4-controle-d-un-lieu-et-acces-pour-l-influence" data-sec>4</a>), à l'Assaut (section <a href="#r-7-les-actions-d-ops" data-sec>7</a>) et à certains effets de Crise.</li>
+<li><strong>Une place forte</strong> est dessinée par une pièce en forme de forteresse ; un lieu ouvert par une pièce simple. Les places fortes comptent à part dans les décomptes et rendent l'Assaut plus coûteux, mais permettent d'occuper le lieu.</li>
+<li><strong>Un port</strong> porte le symbole ⚓ à côté de son nom. Les ports comptent pour le revenu, pour la maîtrise de la Manche et pour le bonus de la Castille.</li>
+<li><strong>La couleur de la pièce</strong> indique qui contrôle le lieu : rouge pour l'Angleterre, bleu pour la France, neutre si personne.</li>
+<li><strong>Les deux sceaux</strong> sous la pièce indiquent l'Influence anglaise (rouge) et française (bleue). Un sceau vide signifie 0.</li>
+</ul>
+<p>Survolez un lieu pour voir son infobulle : région, place forte ou lieu ouvert, défense, port, Influence de chaque camp, et ce qui manque à chaque camp pour le contrôler. Le survol allume aussi ses liaisons.</p>
+<h3 id="r-2-2-les-regions">2.2 Les régions</h3>
+<p>Les lieux sont répartis en <strong>8 régions décomptées</strong> et une base arrière, l'<strong>Angleterre</strong>, qui n'est jamais décomptée et ne peut jamais être attaquée.</p>
+<div class="rg-table"><table>
+<thead>
+<tr>
+<th>Région</th>
+<th>Lieux (✦ place forte, ⚓ port, défense entre parenthèses)</th>
+<th>Lieux</th>
+<th>Places fortes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Flandre</td>
+<td>Calais ✦⚓ (3), Bruges ✦⚓ (2), Gand ✦ (2), Amiens ✦ (2), Ypres (2), Tournai (2), Lille (2), Arras (2), Abbeville ⚓ (1)</td>
+<td>9</td>
+<td>4</td>
+</tr>
+<tr>
+<td>Normandie</td>
+<td>Mont-Saint-Michel ✦⚓ (4), Rouen ✦⚓ (3), Caen ✦⚓ (2), Cherbourg ✦⚓ (2), Harfleur ⚓ (2), Le Mans (2), Évreux (1)</td>
+<td>7</td>
+<td>4</td>
+</tr>
+<tr>
+<td>Bretagne</td>
+<td>Rennes ✦ (3), Brest ✦⚓ (3), Nantes ✦⚓ (2), Fougères ✦ (2), Vannes ⚓ (2)</td>
+<td>5</td>
+<td>4</td>
+</tr>
+<tr>
+<td>Île-de-France</td>
+<td>Paris ✦ (4), Reims ✦ (3), Meaux ✦ (2), Saint-Denis (2), Chartres (2), Compiègne (2), Troyes (2)</td>
+<td>7</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Bourgogne</td>
+<td>Dijon ✦ (3), Lyon ✦ (2), Nancy (2), Auxerre (1), Nevers (1)</td>
+<td>5</td>
+<td>2</td>
+</tr>
+<tr>
+<td>Guyenne</td>
+<td>Bordeaux ✦⚓ (3), Bayonne ✦⚓ (2), Dax (1), Castillon (1), Périgueux (1), Aiguillon (1)</td>
+<td>6</td>
+<td>2</td>
+</tr>
+<tr>
+<td>Languedoc</td>
+<td>Toulouse ✦ (3), Carcassonne ✦ (3), Montpellier ⚓ (2), Orthez (2), Lectoure (1)</td>
+<td>5</td>
+<td>2</td>
+</tr>
+<tr>
+<td>Val de Loire</td>
+<td>Orléans ✦ (3), Bourges ✦ (3), Chinon ✦ (2), La Rochelle ✦⚓ (2), Tours (2), Poitiers (2), Limoges (2)</td>
+<td>7</td>
+<td>4</td>
+</tr>
+<tr>
+<td>Angleterre (non décomptée)</td>
+<td>Londres ✦⚓ (4), Douvres ✦⚓ (3), Southampton ⚓ (2), Portsmouth ⚓ (2), Plymouth ⚓ (2), Pays de Galles (2)</td>
+<td>6</td>
+<td>2</td>
+</tr>
+</tbody>
+</table></div>
+<p>Au total : 27 places fortes et 20 ports. Les deux capitales sont <strong>Paris</strong> (voisins : Chartres, Meaux, Orléans, Rouen, Saint-Denis) et <strong>Londres</strong> (voisins : Douvres, Pays de Galles, Southampton).</p>
+<h3 id="r-2-3-les-cartes">2.3 Les cartes</h3>
+<p>Le paquet compte <strong>159 cartes</strong>, réparties en trois paquets de phase :</p>
+<div class="rg-table"><table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Tours</th>
+<th>Période</th>
+<th>Cartes</th>
+<th>Anglaises</th>
+<th>Françaises</th>
+<th>Neutres</th>
+<th>Décomptes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>I</td>
+<td>1 à 3</td>
+<td>1337-1360</td>
+<td>48</td>
+<td>22</td>
+<td>15</td>
+<td>8</td>
+<td>3 (Guyenne, Flandre, Val de Loire)</td>
+</tr>
+<tr>
+<td>II</td>
+<td>4 à 7</td>
+<td>1360-1415</td>
+<td>54</td>
+<td>19</td>
+<td>18</td>
+<td>14</td>
+<td>3 (Bretagne, Normandie, Languedoc)</td>
+</tr>
+<tr>
+<td>III</td>
+<td>8 à 10</td>
+<td>1415-1453</td>
+<td>57</td>
+<td>25</td>
+<td>25</td>
+<td>5</td>
+<td>2 (Île-de-France, Bourgogne)</td>
+</tr>
+</tbody>
+</table></div>
+<p>Chaque carte d'événement porte un camp (anglais, français ou neutre), une valeur de <strong>1 à 4 OPS</strong>, un texte d'effet, parfois un <strong>prérequis</strong>, et l'indication qu'elle est <strong>retirée</strong> après son événement. Les 8 cartes de décompte n'ont pas d'OPS. Sur les 159 cartes, 146 sont retirées après leur événement ; seules les 8 cartes de décompte et 5 événements restent en jeu : « Charles de Blois », « Le roi de Bourges », « Dunois, Bâtard d'Orléans », « La Hire et Xaintrailles » et « Écorcheurs ».</p>
+<p>Sous chaque carte de votre main, un <strong>badge</strong> indique ce que vous pouvez en faire :</p>
+<div class="rg-table"><table>
+<thead>
+<tr>
+<th>Badge</th>
+<th>Sens</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Évt jouable</td>
+<td>Son événement est pour vous : vous pouvez jouer l'événement ou les OPS.</td>
+</tr>
+<tr>
+<td>Évt adverse</td>
+<td>Carte du camp adverse : jouée pour ses OPS, son événement profitera à l'adversaire.</td>
+</tr>
+<tr>
+<td>Évt impossible</td>
+<td>Il manque l'événement prérequis : la carte ne sert que pour ses OPS.</td>
+</tr>
+<tr>
+<td>Évt sans effet</td>
+<td>La condition n'est pas réunie : jouée maintenant, la carte ne changerait rien. Mieux vaut ses OPS.</td>
+</tr>
+<tr>
+<td>Décompte</td>
+<td>À jouer avant la fin du tour, sinon vous perdez.</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="r-2-4-les-pistes">2.4 Les pistes</h3>
+<div class="rg-table"><table>
+<thead>
+<tr>
+<th>Piste</th>
+<th>Étendue</th>
+<th>Rôle</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Score</td>
+<td>−25 à +25</td>
+<td>Positif : France. Négatif : Angleterre.</td>
+</tr>
+<tr>
+<td>Trêve</td>
+<td>5 à 1</td>
+<td>Protège des régions contre les Assauts et fixe les chevauchées exigées. À 1, le joueur actif perd.</td>
+</tr>
+<tr>
+<td>Crise</td>
+<td>0 à 6</td>
+<td>Réduit les revenus et les Assauts, puis provoque l'effondrement.</td>
+</tr>
+<tr>
+<td>Trésor</td>
+<td>0 à 12, une par camp</td>
+<td>Paie les Assauts, le Trésor engagé et la levée de compagnies.</td>
+</tr>
+<tr>
+<td>Légitimité</td>
+<td>0 à 8, une par camp</td>
+<td>Rapporte des points chaque tour et des paliers.</td>
+</tr>
+<tr>
+<td>Loyauté</td>
+<td>−3 à +3, une par faction</td>
+<td>Flandre, Bretagne, Bourgogne, Écosse, Castille, Navarre, Papauté et Rome. −3 : ralliée à l'Angleterre ; +3 : ralliée à la France.</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="r-2-5-l-ecran-de-jeu">2.5 L'écran de jeu</h3>
+<ul>
+<li><strong>En haut</strong> : la séquence du tour (l'étape en cours est surlignée) et la <strong>frise</strong> des phases, qui montre quelles cartes de décompte appartiennent à chaque phase et lesquelles ont déjà été jouées.</li>
+<li><strong>À gauche</strong> : le plan, avec zoom (boutons, molette ou pincement).</li>
+<li><strong>Au centre</strong> : l'événement en cours en haut, votre main au milieu avec les badges, le score et les pistes en bas, ainsi que la liste des effets durables en cours.</li>
+<li><strong>À droite</strong> : les factions (piste de Loyauté et effet actif) et la chronique de la partie.</li>
+<li>Les coups adverses sont rejoués pas à pas : bouton Suivant, lecture automatique, ou Tout passer.</li>
+<li>Chaque élément a une infobulle au survol.</li>
+</ul>
+<hr />
+<h2 id="r-3-mise-en-place-1337">3. Mise en place (1337)</h2>
+<ol>
+<li><strong>Influence fixe.</strong> On place l'Influence historique de 1337 : 20 Influence anglaise et 28 Influence française.</li>
+</ol>
+<div class="rg-table"><table>
+<thead>
+<tr>
+<th>Camp</th>
+<th>Lieux</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Angleterre (20)</td>
+<td>Londres 4, Bordeaux 3, Douvres 3, Bayonne 2, Southampton 2, Pays de Galles 2, Abbeville 1, Dax 1, Portsmouth 1, Plymouth 1</td>
+</tr>
+<tr>
+<td>France (28)</td>
+<td>Paris 4, Rouen 3, Reims 3, Toulouse 3, Mont-Saint-Michel 2, Orléans 2, Bourges 2, Tournai 1, Arras 1, Amiens 1, Saint-Denis 1, Lyon 1, Périgueux 1, Aiguillon 1, Carcassonne 1, Tours 1</td>
+</tr>
+</tbody>
+</table></div>
+<p>L'Agenais (Aiguillon) et le Périgord (Périgueux) sont tenus par la France depuis 1324. Au départ, l'Angleterre contrôle Abbeville, Bordeaux, Bayonne, Dax et ses quatre lieux anglais Londres, Douvres, Southampton et Pays de Galles ; la France contrôle Paris, Reims, Rouen, Toulouse, Périgueux et Aiguillon.</p>
+<ol start="2">
+<li><strong>Influence libre.</strong> La <strong>France place 2 Influence</strong> libres, une par une, dans n'importe quel lieu hors de Guyenne et d'Angleterre (sans condition de voisinage). Puis l'<strong>Angleterre place 9 Influence</strong> libres, une par une, en Guyenne, en Flandre, en Bretagne ou dans n'importe quel port hors d'Angleterre.</li>
+<li><strong>Pistes.</strong> Trêve 5, Crise 0, score 0. Trésor : Angleterre 7, France 5. Légitimité : 0 et 0.</li>
+<li><strong>Loyautés.</strong></li>
+</ol>
+<div class="rg-table"><table>
+<thead>
+<tr>
+<th>Flandre</th>
+<th>Bretagne</th>
+<th>Bourgogne</th>
+<th>Écosse</th>
+<th>Castille</th>
+<th>Navarre</th>
+<th>Papauté</th>
+<th>Rome</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>−1</td>
+<td>0</td>
+<td>+2</td>
+<td>+2</td>
+<td>+1</td>
+<td>0</td>
+<td>+1</td>
+<td>0 (inactive)</td>
+</tr>
+</tbody>
+</table></div>
+<p>Dès le départ, la Bourgogne (+2) donne donc à la France +1 à ses Sièges en Bourgogne, et l'Écosse (+2) fait perdre 1 Trésor par tour à l'Angleterre.
+5. <strong>Cartes.</strong> On mélange le paquet de la phase I. Le tour 1 commence : chaque joueur reçoit 8 cartes.</p>
+<hr />
+<h2 id="r-4-controle-d-un-lieu-et-acces-pour-l-influence">4. Contrôle d'un lieu et accès pour l'Influence</h2>
+<h3 id="r-4-1-controle">4.1 Contrôle</h3>
+<p>Un camp <strong>contrôle</strong> un lieu si son Influence est <strong>au moins égale à la défense du lieu plus l'Influence adverse</strong> :</p>
+<blockquote>
+<p>Influence du camp ≥ défense + Influence adverse</p>
+</blockquote>
+<p>Si aucun camp ne remplit cette condition, personne ne contrôle le lieu.</p>
+<p><strong>Exemple.</strong> Rouen a une défense de 3. La France y a 3 Influence, l'Angleterre 0 : 3 ≥ 3 + 0, la France contrôle Rouen. L'Angleterre y place 1 Influence : la France a 3, il lui faudrait 3 + 1 = 4. Personne ne contrôle plus Rouen. Pour le reprendre, la France doit remonter à 4. Pour le contrôler, l'Angleterre devrait atteindre 3 + 3 = 6.</p>
+<h3 id="r-4-2-ou-peut-on-placer-de-l-influence">4.2 Où peut-on placer de l'Influence ?</h3>
+<p>Avec l'action Influence (section <a href="#r-7-2-influence" data-sec>7.2</a>), un camp peut placer de l'Influence dans les lieux suivants :</p>
+<ol>
+<li>tout lieu où il a <strong>déjà au moins 1 Influence</strong> ;</li>
+<li>tout lieu <strong>voisin</strong> d'un lieu où il a au moins 1 Influence (il n'est pas nécessaire de contrôler ce lieu) ;</li>
+<li><strong>tous les ports</strong>, s'il a la <strong>maîtrise de la Manche</strong> et contrôle au moins un port ;</li>
+<li><strong>tous les lieux de Flandre</strong>, si la Flandre lui est ralliée (après la fusion de 1384, si la Bourgogne lui est ralliée).</li>
+</ol>
+<p>Une restriction s'ajoute : <strong>la France ne peut pas placer d'Influence en Angleterre</strong>, sauf dans un lieu anglais où elle a déjà au moins 1 Influence.</p>
+<p>L'accès est établi <strong>au début de l'action</strong> : un lieu que l'on vient d'atteindre en y posant un premier point n'ouvre pas ses voisins pendant la même action.</p>
+<h3 id="r-4-3-la-maitrise-de-la-manche">4.3 La maîtrise de la Manche</h3>
+<p>Un camp a la maîtrise de la Manche :</p>
+<ul>
+<li>si la <strong>Castille lui est ralliée</strong> (+3 pour la France, −3 pour l'Angleterre) ;</li>
+<li>ou si un événement la lui donne. La victoire anglaise à la « Bataille de l'Écluse » et la « Bataille de la Seine » la donnent à l'Angleterre ; la « Bataille de La Rochelle » l'annule. Tant qu'un événement a fixé la maîtrise, il l'emporte sur la Castille.</li>
+</ul>
+<hr />
+<h2 id="r-5-deroulement-d-un-tour">5. Déroulement d'un tour</h2>
+<h3 id="r-5-1-les-phases">5.1 Les phases</h3>
+<p>La partie dure <strong>10 tours</strong> au plus : phase I (tours 1 à 3), phase II (tours 4 à 7) et phase III (tours 8 à 10).</p>
+<div class="rg-table"><table>
+<thead>
+<tr>
+<th></th>
+<th>Phase I</th>
+<th>Phases II et III</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Taille de main</td>
+<td>8 cartes</td>
+<td>9 cartes</td>
+</tr>
+<tr>
+<td>Rounds d'action</td>
+<td>6</td>
+<td>7</td>
+</tr>
+</tbody>
+</table></div>
+<p>Au début des tours 4 et 8, les cartes de la nouvelle phase sont mélangées avec la pioche restante (pas avec la défausse). Les cartes de décompte de la nouvelle phase sont ensuite glissées au hasard parmi les <strong>12 cartes du dessus</strong> de la pioche : elles arrivent en main le plus souvent dès ce tour, au plus tard au tour suivant. Les décomptes de la phase I sont simplement mélangés dans le paquet de départ.</p>
+<p>Quand la pioche est vide, on mélange la défausse pour former une nouvelle pioche. Les cartes retirées ne reviennent jamais ; une carte de décompte jouée va à la défausse et peut donc revenir.</p>
+<h3 id="r-5-2-la-sequence-d-un-tour">5.2 La séquence d'un tour</h3>
+<div class="rg-table"><table>
+<thead>
+<tr>
+<th>Étape</th>
+<th>Ce qui se passe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. Nouvelle phase</td>
+<td>Aux tours 4 et 8 seulement : ajout du paquet de la phase (5.1).</td>
+</tr>
+<tr>
+<td>2. Remise à zéro</td>
+<td>Les compteurs du tour repartent à zéro : OPS militaires engagés, Diplomatie tentée, Légitimité tentée, effets « ce tour ».</td>
+</tr>
+<tr>
+<td>3. Trêve</td>
+<td>La Trêve remonte de 1 (maximum 5).</td>
+</tr>
+<tr>
+<td>4. Pioche</td>
+<td>L'Angleterre puis la France complètent leur main à 8 cartes (phase I) ou 9 (phases II et III). Les cartes gardées du tour précédent comptent.</td>
+</tr>
+<tr>
+<td>5. Factions ralliées</td>
+<td>Chaque camp reçoit les bonus de début de tour de ses factions ralliées : Influence gratuite de la Bourgogne, de la Bretagne et de la Navarre, OPS retiré à l'adversaire par l'Écosse (section <a href="#r-12-factions-et-loyaute" data-sec>12</a>).</td>
+</tr>
+<tr>
+<td>6. Ouverture</td>
+<td>Chaque camp choisit une carte, puis les deux sont révélées et résolues (5.3).</td>
+</tr>
+<tr>
+<td>7. Rounds d'action</td>
+<td>6 rounds en phase I, 7 ensuite. Dans chaque round, l'Angleterre joue une carte, puis la France (5.4).</td>
+</tr>
+<tr>
+<td>8. Chevauchées</td>
+<td>Chaque OPS militaire manquant par rapport à la Trêve donne 1 point à l'adversaire (5.5).</td>
+</tr>
+<tr>
+<td>9. Finances</td>
+<td>Chaque camp encaisse son revenu (section <a href="#r-11-1-tresor-et-revenus" data-sec>11.1</a>).</td>
+</tr>
+<tr>
+<td>10. Crise</td>
+<td>À 6, effondrement ; puis la Crise baisse de 1 (section <a href="#r-11-2-crise" data-sec>11.2</a>).</td>
+</tr>
+<tr>
+<td>11. Légitimité et Papauté</td>
+<td>Points de Légitimité, palier 8, Papauté ralliée (section <a href="#r-11-3-legitimite" data-sec>11.3</a>).</td>
+</tr>
+<tr>
+<td>12. Fin de tour</td>
+<td>Défaite si une carte de décompte est gardée en main, puis victoires automatiques, puis, au tour 10, décompte final (section <a href="#r-1-2-toutes-les-facons-de-gagner-ou-de-perdre" data-sec>1.2</a>).</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="r-5-3-l-ouverture">5.3 L'ouverture</h3>
+<p>Chaque joueur choisit une carte de sa main en secret ; on les révèle ensemble.</p>
+<ul>
+<li><strong>Seul l'événement</strong> de la carte d'ouverture est joué. Ses OPS ne servent qu'à fixer l'ordre.</li>
+<li><strong>Ordre de résolution</strong> : la carte qui a <strong>le plus d'OPS</strong> est résolue en premier. En cas d'égalité, celle de l'Angleterre passe d'abord.</li>
+<li><strong>Une carte de décompte est interdite</strong> en ouverture. Un joueur qui n'a plus que des cartes de décompte en main peut ne pas ouvrir.</li>
+<li>Une <strong>carte adverse</strong> ouverte joue son événement au profit de l'adversaire. Une <strong>carte neutre</strong> joue son événement pour celui qui l'a ouverte.</li>
+<li>Si l'événement ne peut pas être joué (prérequis absent), la carte est défaussée sans effet.</li>
+</ul>
+<h3 id="r-5-4-les-rounds-d-action">5.4 Les rounds d'action</h3>
+<p>À chaque round, l'Angleterre joue une carte, puis la France. Un joueur dont la main est vide passe. Chaque carte est jouée soit pour son événement, soit pour ses OPS (section <a href="#r-6-jouer-une-carte" data-sec>6</a>). Avec 8 cartes et 7 cartes jouées par tour en phase I (ouverture + 6 rounds), ou 9 et 8 ensuite, chaque joueur garde en principe 1 carte pour le tour suivant.</p>
+<p>Une carte de décompte doit être jouée pendant un round d'action ; elle occupe ce round. Si vous tenez plus de cartes de décompte qu'il ne vous reste de rounds, vous perdrez à la fin du tour.</p>
+<h3 id="r-5-5-les-chevauchees">5.5 Les chevauchées</h3>
+<p>À la fin de chaque tour, chaque camp doit avoir engagé ce tour <strong>au moins autant d'OPS militaires que le niveau actuel de la Trêve</strong>. Pour chaque OPS manquant, l'adversaire gagne 1 point.</p>
+<p>Comptent comme OPS militaires :</p>
+<ul>
+<li>les OPS de chaque Assaut, levée de compagnies comprise ;</li>
+<li>les OPS des Assauts gratuits donnés par les événements ;</li>
+<li>les 4 OPS de chaque carte de bataille, attribués au camp de la carte, que la bataille soit gagnée, perdue ou annulée, et même si c'est l'adversaire qui l'a déclenchée en jouant la carte pour ses OPS.</li>
+</ul>
+<p>Les Sièges, l'Influence, la Diplomatie et la Légitimité ne comptent pas.</p>
+<p><strong>Exemple.</strong> La Trêve est à 4 en fin de tour. L'Angleterre a mené un Assaut à 3 OPS : il lui manque 1 OPS, la France marque 1 point. La France n'a mené aucun Assaut : il lui manque 4 OPS, l'Angleterre marque 4 points. Bilan : 3 points pour l'Angleterre.</p>
+<hr />
+<h2 id="r-6-jouer-une-carte">6. Jouer une carte</h2>
+<h3 id="r-6-1-evenement-ou-ops">6.1 Événement ou OPS</h3>
+<p>Une carte se joue <strong>soit pour son événement, soit pour ses OPS</strong>, jamais les deux pour le même camp.</p>
+<div class="rg-table"><table>
+<thead>
+<tr>
+<th>Carte jouée</th>
+<th>Événement</th>
+<th>OPS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Carte de votre camp</td>
+<td>Vous pouvez jouer l'événement.</td>
+<td>Vous pouvez utiliser les OPS ; l'événement ne se produit pas.</td>
+</tr>
+<tr>
+<td>Carte neutre</td>
+<td>Vous pouvez jouer l'événement, qui vous profite.</td>
+<td>Vous pouvez utiliser les OPS ; l'événement ne se produit pas.</td>
+</tr>
+<tr>
+<td>Carte adverse</td>
+<td>Vous ne pouvez pas jouer l'événement.</td>
+<td>Vous utilisez les OPS, <strong>et l'événement adverse se déclenche</strong> au profit de l'adversaire, <strong>avant ou après</strong> votre action, à votre choix (voir ci-dessous).</td>
+</tr>
+<tr>
+<td>Carte de décompte</td>
+<td>Elle se joue uniquement comme un décompte.</td>
+<td>Aucun OPS.</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Carte adverse jouée pour ses OPS : avant ou après.</strong> En choisissant la carte, vous décidez quand l'événement adverse se résout.</p>
+<ul>
+<li><strong>« Événement adverse d'abord » (avant).</strong> L'événement se résout <strong>tout de suite</strong>, avant que vous ayez choisi quoi que ce soit d'autre. Vous voyez donc le plateau tel que l'événement l'a laissé, <strong>puis</strong> vous décidez de l'usage des OPS : Influence, Assaut, Siège ou Diplomatie. C'est l'option prudente quand l'événement risque de retourner un lieu ou de changer un coût.</li>
+<li><strong>Influence, Assaut, Siège ou Diplomatie directement (après).</strong> Vous choisissez et résolvez votre action d'abord ; l'événement adverse se résout <strong>ensuite</strong>. C'est l'option à prendre quand votre action peut rendre l'événement moins nuisible (par exemple contrôler d'abord le lieu qu'il vise).</li>
+</ul>
+<p>Si l'événement adverse joué « d'abord » met fin à la partie (par exemple en faisant tomber la Trêve à 1), vous ne jouez pas vos OPS. Les OPS de la carte sont comptés au moment où vous les utilisez, après l'événement : un malus d'OPS qu'il impose s'applique donc.</p>
+<p><strong>Exemple.</strong> L'Angleterre tient « Le Grand Ferré » (carte française, 1 OPS). Elle choisit « Événement adverse d'abord » : la France gagne 1 Influence en Picardie et le prochain Assaut anglais est annulé. Voyant cela, l'Angleterre utilise son OPS en Influence plutôt que de gâcher un Assaut.</p>
+<p><strong>Exception : la Légitimité.</strong> Une carte adverse jouée pour une tentative de Légitimité (section <a href="#r-7-6-legitimite" data-sec>7.6</a>) <strong>ne déclenche pas</strong> son événement. C'est le seul moyen de se défausser d'une carte adverse sans en subir l'effet.</p>
+<h3 id="r-6-2-que-devient-la-carte">6.2 Que devient la carte ?</h3>
+<ul>
+<li>Une carte dont l'événement a été joué et qui est marquée « retirée » <strong>quitte la partie</strong>. C'est vrai aussi pour un événement adverse déclenché par vos OPS, et pour un événement joué alors qu'il était sans effet.</li>
+<li>Toutes les autres cartes vont à la <strong>défausse</strong> et peuvent revenir quand la défausse est remélangée.</li>
+</ul>
+<h3 id="r-6-3-prerequis">6.3 Prérequis</h3>
+<p>Certaines cartes exigent qu'un autre événement ait déjà été joué (par exemple « Jeanne d'Arc » exige « Siège d'Orléans »). « Traité de Brétigny » exige que le roi de France soit captif (victoire anglaise à la « Bataille de Poitiers », tant que ni « Avènement de Charles V » ni le traité lui-même ne l'ont libéré).</p>
+<p>Tant que le prérequis manque, la carte porte le badge « Évt impossible » : elle ne peut servir que pour ses OPS. Si c'est une carte adverse jouée pour ses OPS, son événement ne se déclenche pas et la carte va à la défausse : elle pourra revenir quand le prérequis sera rempli.</p>
+<h3 id="r-6-4-evenements-sans-effet">6.4 Événements sans effet</h3>
+<p>Le jeu simule l'événement de chaque carte de votre main. Si l'événement ne changerait rien sur le plateau (par exemple un Assaut gratuit dans une région où l'adversaire n'a aucune Influence), la carte porte le badge <strong>« Évt sans effet »</strong>. Vous pouvez quand même jouer l'événement, mais il ne se passera rien, et la carte sera retirée si elle est marquée ainsi. Les cartes dont l'effet est d'avoir été jouées (prérequis d'une autre carte, ou règle lue ailleurs comme « Héritage flamand de Philippe le Hardi » ou « Grand Schisme d'Occident ») ne portent jamais ce badge.</p>
+<h3 id="r-6-5-valeur-en-ops-d-une-carte">6.5 Valeur en OPS d'une carte</h3>
+<p>La valeur imprimée peut être modifiée :</p>
+<div class="rg-table"><table>
+<thead>
+<tr>
+<th>Modificateur</th>
+<th>Effet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Crise à 4 ou plus</td>
+<td>Les cartes de 1 OPS ne donnent <strong>plus aucun OPS</strong> : elles ne peuvent servir que pour leur événement.</td>
+</tr>
+<tr>
+<td>Roi captif (après la victoire anglaise à Poitiers)</td>
+<td>−1 OPS sur chaque carte jouée par la France pour ses OPS.</td>
+</tr>
+<tr>
+<td>Écosse ralliée à l'adversaire, « Owain Glyndŵr » (contre l'Angleterre), « Flotte d'invasion de L'Écluse » (contre l'Angleterre)</td>
+<td>−1 OPS sur la prochaine carte jouée pour ses OPS. Ces malus ne se cumulent pas entre eux.</td>
+</tr>
+<tr>
+<td>« Mort d'Édouard III », « Mort d'Henri V », « Révolte de Jack Cade »</td>
+<td>−1 OPS sur toutes les cartes jouées par l'Angleterre pour leurs OPS pendant le tour suivant.</td>
+</tr>
+</tbody>
+</table></div>
+<p>Ces malus se cumulent entre catégories, mais une carte d'au moins 1 OPS garde toujours au moins 1 OPS (sauf la règle de Crise ci-dessus).</p>
+<h3 id="r-6-6-effets-durables">6.6 Effets durables</h3>
+<p>Certains événements restent actifs après avoir été joués : jusqu'à la fin du tour, jusqu'à une autre carte, ou jusqu'à la fin de la partie. L'écran les liste dans les effets en cours.</p>
+<div class="rg-table"><table>
+<thead>
+<tr>
+<th>Effet</th>
+<th>Carte d'origine</th>
+<th>Effet en jeu</th>
+<th>Fin</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Revenus</td>
+<td>Gabelle du sel (F +2), Taille royale permanente (F +2), Pragmatique Sanction (F +1), Jacques Cœur (F +1), Bedford régent (A +2)</td>
+<td>Revenu de fin de tour augmenté</td>
+<td>Jacques Cœur : « Procès de Jacques Cœur ». Bedford : « Mort de Bedford ». Les autres : permanents.</td>
+</tr>
+<tr>
+<td>Assauts français</td>
+<td>Du Guesclin connétable, Compagnies d'ordonnance, Les frères Bureau (places fortes seulement)</td>
+<td>+1 aux Assauts français chacun</td>
+<td>Du Guesclin : « Mort de du Guesclin ». Les autres : permanents.</td>
+</tr>
+<tr>
+<td>Batailles anglaises</td>
+<td>Ordonnance sur le tir à l'arc ; Ordre de la Jarretière (une fois) ; Siège d'Aiguillon (ce tour)</td>
+<td>+1 à la bataille anglaise</td>
+<td>Arc : « Compagnies d'ordonnance ».</td>
+</tr>
+<tr>
+<td>Batailles françaises</td>
+<td>Jeanne d'Arc ; Dunois (une fois)</td>
+<td>+1 à la bataille française</td>
+<td>Jeanne : « Capture à Compiègne ».</td>
+</tr>
+<tr>
+<td>Annulations</td>
+<td>Lundi noir ; Le Grand Ferré</td>
+<td>La prochaine bataille anglaise, ou le prochain Assaut anglais, est annulé</td>
+<td>Une fois.</td>
+</tr>
+<tr>
+<td>Roi captif</td>
+<td>Bataille de Poitiers (victoire)</td>
+<td>−1 OPS sur chaque carte jouée par la France ; permet « Traité de Brétigny »</td>
+<td>« Avènement de Charles V » ou « Traité de Brétigny ».</td>
+</tr>
+<tr>
+<td>Folie de Charles VI</td>
+<td>Folie de Charles VI</td>
+<td>La France ne peut pas jouer l'événement de ses cartes françaises de 1 OPS</td>
+<td>« Mort de Charles VI ».</td>
+</tr>
+<tr>
+<td>Révolte galloise</td>
+<td>Owain Glyndŵr</td>
+<td>−1 OPS sur la première carte anglaise jouée pour ses OPS, chaque tour</td>
+<td>« Bataille de Shrewsbury ».</td>
+</tr>
+<tr>
+<td>Calais imprenable</td>
+<td>Échec bourguignon devant Calais</td>
+<td>Calais ne peut plus être attaquée</td>
+<td>Permanent.</td>
+</tr>
+<tr>
+<td>Bastille</td>
+<td>Fondation de la Bastille</td>
+<td>Paris a une défense d'au moins 4</td>
+<td>Permanent.</td>
+</tr>
+<tr>
+<td>Bretagne protégée</td>
+<td>Jeanne la Flamme, Trêve de Malestroit</td>
+<td>Aucun Assaut en Bretagne</td>
+<td>Fin du tour.</td>
+</tr>
+<tr>
+<td>Trêve générale</td>
+<td>Trêve de vingt-huit ans</td>
+<td>Aucun Assaut nulle part</td>
+<td>Fin du tour.</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="r-7-les-actions-d-ops">7. Les actions d'OPS</h2>
+<h3 id="r-7-1-generalites">7.1 Généralités</h3>
+<p>Une carte jouée pour ses OPS permet <strong>une seule action</strong> parmi cinq : Influence, Assaut, Siège, Diplomatie ou Légitimité.</p>
+<p><strong>Levée de compagnies.</strong> Avant une action d'Influence, d'Assaut, de Siège ou de Diplomatie, on peut payer <strong>3 Trésor pour +1 OPS</strong>, une fois par carte. Il faut avoir au moins 3 Trésor. La levée ne compte jamais pour la Légitimité.</p>
+<p><strong>Trésor engagé.</strong> Pour l'Assaut, le Siège et la Diplomatie, on peut engager du Trésor en plus : <strong>+1 au dé par tranche de 2 Trésor</strong>, avec au plus 4 Trésor engagés (donc +2 au plus). Le Trésor engagé est dépensé même en cas d'échec ; un nombre impair gaspille 1 Trésor.</p>
+<h3 id="r-7-2-influence">7.2 Influence</h3>
+<ul>
+<li>Chaque point d'Influence placé coûte <strong>1 OPS</strong>, ou <strong>2 OPS</strong> dans un lieu <strong>contrôlé par l'adversaire</strong>.</li>
+<li>On place les points un par un, dans un ou plusieurs lieux accessibles (section <a href="#r-4-2-ou-peut-on-placer-de-l-influence" data-sec>4.2</a>), plusieurs fois dans le même lieu si on le souhaite.</li>
+<li>Le coût de chaque lieu est fixé <strong>au début de l'action</strong> : un lieu contrôlé par l'adversaire coûte 2 OPS par point pendant toute l'action, même si le premier point lui a déjà fait perdre ce contrôle.</li>
+<li>Les OPS non dépensés sont perdus.</li>
+</ul>
+<p><strong>Exemple.</strong> L'Angleterre a 1 Influence à Abbeville, voisine de Rouen (contrôlé par la France, 3 Influence française) et de Calais (vide). Elle joue une carte de 3 OPS : 1 point à Rouen (2 OPS) et 1 point à Calais (1 OPS). Rouen n'est plus contrôlé par personne (il faudrait 4 à la France).</p>
+<h3 id="r-7-3-assaut">7.3 Assaut</h3>
+<p>L'Assaut est le coup de force du jeu, l'équivalent du coup d'État de <em>Twilight Struggle</em>.</p>
+<p><strong>Cible.</strong> Un lieu où l'adversaire a au moins 1 Influence, hors des régions interdites :</p>
+<ul>
+<li>l'<strong>Angleterre</strong>, toujours ;</li>
+<li>les régions protégées par la Trêve : <strong>Île-de-France</strong> si la Trêve est à 4 ou moins, <strong>Guyenne</strong> à 3 ou moins, <strong>Normandie</strong> à 2 ou moins (section <a href="#r-9-la-treve" data-sec>9</a>) ;</li>
+<li>la <strong>Bretagne</strong> pendant le tour où « Jeanne la Flamme » ou « Trêve de Malestroit » a été jouée ; <strong>partout</strong> pendant le tour de la « Trêve de vingt-huit ans » ;</li>
+<li><strong>Calais</strong> après « Échec bourguignon devant Calais ».</li>
+</ul>
+<p><strong>Coût.</strong> <strong>1 Trésor</strong>, ou <strong>2 Trésor</strong> contre une place forte, payé avant le jet. Sans ce Trésor, pas d'Assaut.</p>
+<p><strong>Résultat.</strong></p>
+<blockquote>
+<p>Résultat = 1d6 + OPS − 2 × défense + bonus + (Trésor engagé ÷ 2, arrondi à l'inférieur)</p>
+</blockquote>
+<div class="rg-table"><table>
+<thead>
+<tr>
+<th>Bonus et malus</th>
+<th>Valeur</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Contrôler au moins un lieu voisin de la cible (un seul bonus, quel que soit le nombre de voisins)</td>
+<td>+1</td>
+</tr>
+<tr>
+<td>Du Guesclin connétable (France)</td>
+<td>+1</td>
+</tr>
+<tr>
+<td>Compagnies d'ordonnance (France)</td>
+<td>+1</td>
+</tr>
+<tr>
+<td>Les frères Bureau (France, contre une place forte)</td>
+<td>+1</td>
+</tr>
+<tr>
+<td>Bretagne ralliée : cible en Bretagne ou en Normandie ; sinon Bretagne à ±2 : cible en Bretagne</td>
+<td>+1</td>
+</tr>
+<tr>
+<td>Navarre à ±2 ou plus : cible à Évreux ou Cherbourg</td>
+<td>+1</td>
+</tr>
+<tr>
+<td>Castille à ±2 ou plus : cible dans un port</td>
+<td>+1</td>
+</tr>
+<tr>
+<td>Crise à 4 ou plus</td>
+<td>−1</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Effet.</strong> Si le résultat est <strong>supérieur à 0</strong>, l'adversaire retire autant d'Influence du lieu (au plus ce qu'il y a). Ensuite :</p>
+<ul>
+<li><strong>sur une place forte</strong>, le surplus (résultat moins l'Influence retirée) devient de l'Influence de l'attaquant : il <strong>occupe</strong> la place ;</li>
+<li><strong>hors place forte</strong>, le surplus est perdu : la chevauchée <strong>pille</strong> sans occuper.</li>
+</ul>
+<p><strong>Trêve.</strong> Un Assaut contre une <strong>place forte</strong> fait <strong>baisser la Trêve de 1</strong>, qu'il réussisse ou non. Si elle tombe à 1, l'attaquant perd la partie.</p>
+<p><strong>Chevauchées.</strong> Les OPS de l'Assaut (levée comprise) comptent comme OPS militaires.</p>
+<p><strong>Exemple d'Assaut détaillé.</strong> Tour 2, Trêve 5, Crise 0. L'Angleterre contrôle Abbeville et a 7 Trésor. Elle joue une carte de 3 OPS contre Rouen (place forte, défense 3, 3 Influence française, aucune Influence anglaise).</p>
+<ol>
+<li>Levée de compagnies : 3 Trésor, la carte passe à 4 OPS. Trésor : 4.</li>
+<li>Coût de l'Assaut sur place forte : 2 Trésor. Trésor : 2.</li>
+<li>Trésor engagé : 2, soit +1. Trésor : 0.</li>
+<li>Calcul : 1d6 + 4 (OPS) − 6 (défense 3 × 2) + 1 (Abbeville, voisin contrôlé) + 1 (Trésor engagé) = <strong>1d6 + 0</strong>.</li>
+<li>Le dé donne 5 : résultat 5. La France retire ses 3 Influence ; le surplus de 2 devient de l'Influence anglaise à Rouen. Rouen a maintenant 2 Influence anglaise et 0 française : personne ne le contrôle (il faudrait 3 à l'Angleterre).</li>
+<li>La Trêve passe de 5 à 4. L'Angleterre a engagé 4 OPS militaires ce tour.</li>
+</ol>
+<p>Si la même attaque visait Évreux (lieu ouvert, défense 1), le coût ne serait que de 1 Trésor, la Trêve ne bougerait pas, mais tout surplus serait perdu : l'Assaut ne ferait que retirer de l'Influence française.</p>
+<p><strong>Assauts gratuits des événements.</strong> Certains événements donnent un Assaut gratuit (par exemple « Chevauchée du Cambrésis », « Derby en Gascogne », « Bataille de Pontvallain », « La Hire et Xaintrailles »). Il se résout avec la même formule, mais <strong>ne coûte pas de Trésor</strong>, <strong>ne fait pas baisser la Trêve</strong>, vise n'importe quel lieu de la zone indiquée par la carte où l'adversaire a de l'Influence, sans tenir compte des interdictions de l'Assaut ordinaire (régions protégées par la Trêve, trêves du tour), et compte pour les chevauchées.</p>
+<h3 id="r-7-4-siege">7.4 Siège</h3>
+<p>Le Siège est l'équivalent du réalignement de <em>Twilight Struggle</em> : une série de jets opposés.</p>
+<p><strong>Cible.</strong> Un lieu où l'adversaire a au moins 1 Influence, avec les mêmes interdictions que pour l'Assaut (Angleterre, régions protégées par la Trêve, Bretagne ou partout selon les trêves du tour, Calais imprenable).</p>
+<p><strong>Déroulement.</strong> Le Siège donne <strong>un jet par OPS</strong>, tous dans le lieu choisi. À chaque jet, les deux camps lancent 1d6 et ajoutent :</p>
+<div class="rg-table"><table>
+<thead>
+<tr>
+<th>Modificateur (pour chaque camp)</th>
+<th>Valeur</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Par lieu voisin de la cible que ce camp contrôle</td>
+<td>+1 chacun</td>
+</tr>
+<tr>
+<td>Si ce camp a plus d'Influence que l'adversaire dans le lieu</td>
+<td>+1</td>
+</tr>
+<tr>
+<td>Faction à ±2 ou plus vers ce camp, dans ses lieux : Flandre en Flandre (jusqu'en 1384), Bretagne en Bretagne, Bourgogne en Bourgogne (et en Flandre après 1384), Navarre à Évreux et Cherbourg</td>
+<td>+1 par faction</td>
+</tr>
+<tr>
+<td>Trésor engagé par l'assiégeant, au premier jet seulement</td>
+<td>+1 par 2 Trésor</td>
+</tr>
+</tbody>
+</table></div>
+<p>Le camp qui a le total le plus faible <strong>retire autant d'Influence que l'écart</strong> dans ce lieu (au plus ce qu'il y a). En cas d'égalité, rien ne se passe. L'assiégeant peut donc perdre de l'Influence. Les modificateurs sont recalculés à chaque jet. Le Siège s'arrête dès que l'adversaire n'a plus d'Influence dans le lieu.</p>
+<p>Le Siège ne coûte pas de Trésor, ne fait pas baisser la Trêve et ne compte pas pour les chevauchées.</p>
+<p><strong>Exemple de Siège détaillé.</strong> Trêve 5. La France contrôle La Rochelle ; l'Angleterre contrôle Dax. Bordeaux (voisins : Castillon, Dax, La Rochelle, Plymouth) a 3 Influence anglaise et 1 française. La France joue une carte de 2 OPS en Siège sur Bordeaux et engage 2 Trésor.</p>
+<div class="rg-table"><table>
+<thead>
+<tr>
+<th>Jet</th>
+<th>France</th>
+<th>Angleterre</th>
+<th>Résultat</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>dé 5 + 1 (La Rochelle) + 1 (Trésor) = 7</td>
+<td>dé 3 + 1 (Dax) + 1 (plus d'Influence : 3 contre 1) = 5</td>
+<td>L'Angleterre retire 2 : Bordeaux passe à 1 anglaise, 1 française.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>dé 2 + 1 (La Rochelle) = 3</td>
+<td>dé 4 + 1 (Dax) = 5 (égalité d'Influence, pas de bonus)</td>
+<td>La France retire 2, mais n'a que 1 : Bordeaux passe à 1 anglaise, 0 française.</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="r-7-5-diplomatie">7.5 Diplomatie</h3>
+<p><strong>Cible.</strong> Une faction active : Flandre (jusqu'à la fusion de 1384), Bretagne, Bourgogne, Écosse, Castille, Navarre, Papauté, et Rome seulement pendant le Grand Schisme (section <a href="#r-12-3-le-grand-schisme-et-rome" data-sec>12.3</a>).</p>
+<p><strong>Jet.</strong></p>
+<blockquote>
+<p>1d6 + OPS + bonus + (Trésor engagé ÷ 2) ≥ 5 + valeur absolue de la Loyauté actuelle</p>
+</blockquote>
+<div class="rg-table"><table>
+<thead>
+<tr>
+<th>Bonus</th>
+<th>Valeur</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Être le premier camp arrivé à la case 5 de Légitimité</td>
+<td>+1</td>
+</tr>
+<tr>
+<td>La faction est exactement à ±2 de votre côté (+2 pour la France, −2 pour l'Angleterre)</td>
+<td>+1</td>
+</tr>
+<tr>
+<td>Trésor engagé (au plus 4)</td>
+<td>+1 par 2 Trésor</td>
+</tr>
+</tbody>
+</table></div>
+<p>En cas de réussite, la Loyauté de la faction glisse d'<strong>un cran vers vous</strong> (sans dépasser ±3). Le seuil est d'autant plus haut que la faction est engagée d'un côté ou de l'autre : 5 pour une faction à 0, 8 pour une faction ralliée.</p>
+<p><strong>Une seule Diplomatie par tour</strong> et par camp, réussie ou non.</p>
+<p><strong>Exemples.</strong> La France joue 3 OPS sur la Flandre à −1 : il faut 5 + 1 = 6, donc un dé de 3 ou plus (4 chances sur 6). En engageant 2 Trésor, un dé de 2 suffit (5 chances sur 6). L'Angleterre veut rallier la Flandre, qui est à −2 : il faut 7 ; avec 3 OPS et le bonus de faction à ±2, un dé de 3 ou plus suffit.</p>
+<h3 id="r-7-6-legitimite">7.6 Légitimité</h3>
+<p>L'équivalent de la course à l'espace de <em>Twilight Struggle</em>.</p>
+<ul>
+<li><strong>Une tentative par tour</strong> et par camp.</li>
+<li>On vise la case suivante de sa piste. La carte doit donner <strong>au moins le nombre d'OPS requis</strong>, compte tenu des malus d'OPS mais <strong>sans la levée de compagnies</strong>.</li>
+<li>On lance 1d6 : la réussite fait monter la piste d'une case. L'échec ne coûte rien d'autre que la carte.</li>
+<li>L'<strong>événement de la carte ne se déclenche pas</strong>, même s'il s'agit d'une carte adverse.</li>
+</ul>
+<div class="rg-table"><table>
+<thead>
+<tr>
+<th>Case visée</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OPS requis</td>
+<td>2</td>
+<td>2</td>
+<td>3</td>
+<td>3</td>
+<td>3</td>
+<td>4</td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr>
+<td>Réussite si le dé fait au plus</td>
+<td>4</td>
+<td>4</td>
+<td>4</td>
+<td>4</td>
+<td>3</td>
+<td>3</td>
+<td>3</td>
+<td>2</td>
+</tr>
+</tbody>
+</table></div>
+<p>Si la Papauté est à ±2 ou plus de votre côté, le jet réussit sur 1 de plus (par exemple 5 ou moins pour les cases 1 à 4).</p>
+<p><strong>Exemple.</strong> La France est à 4 et vise la case 5 : il lui faut une carte d'au moins 3 OPS (une carte de 2 OPS avec levée ne suffit pas). Elle réussit sur 3 ou moins, soit 3 chances sur 6, ou 4 chances sur 6 si la Papauté est à +2 ou plus.</p>
+<hr />
+<h2 id="r-8-batailles">8. Batailles</h2>
+<p>Six cartes sont des batailles : « Bataille de l'Écluse », « Bataille de Crécy », « Bataille de Poitiers », « Bataille d'Azincourt » (anglaises), « Bataille de Formigny » et « Bataille de Castillon » (françaises). Quand leur événement est joué, la bataille se résout ainsi :</p>
+<blockquote>
+<p>Victoire si 1d6 + bonus ≥ 4</p>
+</blockquote>
+<p>Sans bonus, la victoire a donc 3 chances sur 6. En cas de victoire, on applique l'effet « Si victoire » de la carte ; sinon, rien ne se passe.</p>
+<div class="rg-table"><table>
+<thead>
+<tr>
+<th>Camp</th>
+<th>Bonus possibles (+1 chacun)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Angleterre</td>
+<td>Ordonnance sur le tir à l'arc (jusqu'à « Compagnies d'ordonnance ») ; Ordre de la Jarretière (une seule bataille) ; Siège d'Aiguillon (ce tour)</td>
+</tr>
+<tr>
+<td>France</td>
+<td>Jeanne d'Arc (jusqu'à « Capture à Compiègne ») ; Dunois, Bâtard d'Orléans (une seule bataille)</td>
+</tr>
+</tbody>
+</table></div>
+<p>« <strong>Lundi noir</strong> » annule la prochaine bataille anglaise : elle n'a pas lieu, sans jet. Une bataille compte toujours <strong>4 OPS militaires</strong> pour les chevauchées de son camp, qu'elle soit gagnée, perdue ou annulée, même quand c'est l'adversaire qui l'a déclenchée en jouant la carte pour ses OPS.</p>
+<p><strong>Exemple.</strong> L'Angleterre joue « Bataille de Crécy » avec l'arc et la Jarretière : 1d6 + 2 ≥ 4, elle gagne sur 2 ou plus (5 chances sur 6). La Jarretière est alors consommée. En cas de victoire : +2 points pour l'Angleterre, la France retire 3 Influence où l'Angleterre le choisit, et la Légitimité française baisse de 1.</p>
+<hr />
+<h2 id="r-9-la-treve">9. La Trêve</h2>
+<p>La Trêve est l'équivalent de la DEFCON de <em>Twilight Struggle</em>. Elle va de 5 (paix relative) à 1 (royaume ruiné).</p>
+<div class="rg-table"><table>
+<thead>
+<tr>
+<th>Trêve</th>
+<th>Régions où les Assauts et les Sièges sont interdits</th>
+<th>Chevauchées exigées par camp</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5</td>
+<td>Angleterre seulement</td>
+<td>5 OPS militaires</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Angleterre, Île-de-France</td>
+<td>4</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Angleterre, Île-de-France, Guyenne</td>
+<td>3</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Angleterre, Île-de-France, Guyenne, Normandie</td>
+<td>2</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Le joueur actif perd immédiatement (section <a href="#r-1-3-qui-perd-quand-la-treve-tombe-a-1" data-sec>1.3</a>)</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Ce qui fait bouger la Trêve.</strong></p>
+<ul>
+<li>Elle <strong>remonte de 1</strong> au début de chaque tour (maximum 5).</li>
+<li>Elle <strong>baisse de 1</strong> à chaque Assaut contre une place forte (pas pour les Assauts gratuits des événements).</li>
+<li>Les événements « Confiscation de la Guyenne », « Confiscation de l'Aquitaine », « Usurpation d'Henri IV » et « Sac de Fougères » la font baisser de 1.</li>
+<li>Les événements « Trêve d'Esplechin », « Trêve de Malestroit », « Lundi noir », « Trêve de Bruges » (+1), « Trêve de Leulinghem », « Trêve de vingt-huit ans », « Trêve de Tours » (+2) la font remonter ; « Traité de Brétigny » la remet à 5.</li>
+<li>La <strong>Papauté ralliée</strong> la fait remonter de 1 en fin de tour si elle est à 3 ou moins (section <a href="#r-12-factions-et-loyaute" data-sec>12</a>).</li>
+</ul>
+<p><strong>Le dilemme des chevauchées.</strong> Plus la Trêve est haute, plus chaque camp doit engager d'OPS militaires pour ne pas offrir de points à l'adversaire ; mais chaque Assaut sur une place forte la fait baisser, et s'approcher de 1 devient dangereux.</p>
+<hr />
+<h2 id="r-10-decomptes-des-regions">10. Décomptes des régions</h2>
+<h3 id="r-10-1-les-niveaux">10.1 Les niveaux</h3>
+<p>Pour chaque camp, on compte les lieux qu'il contrôle dans la région.</p>
+<div class="rg-table"><table>
+<thead>
+<tr>
+<th>Niveau</th>
+<th>Condition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Présence</strong></td>
+<td>Contrôler au moins un lieu de la région.</td>
+</tr>
+<tr>
+<td><strong>Domination</strong></td>
+<td>Contrôler plus de lieux que l'adversaire, <strong>et</strong> plus de places fortes que l'adversaire, <strong>et</strong> au moins un lieu qui n'est pas une place forte.</td>
+</tr>
+<tr>
+<td><strong>Contrôle</strong></td>
+<td>Contrôler plus de lieux que l'adversaire <strong>et toutes</strong> les places fortes de la région.</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="r-10-2-les-points">10.2 Les points</h3>
+<p>Chaque camp marque :</p>
+<ul>
+<li>la <strong>valeur du niveau</strong> atteint dans la région (tableau ci-dessous, 0 sans présence) ;</li>
+<li><strong>+1 par place forte</strong> qu'il contrôle dans la région ;</li>
+<li><strong>+1 par lieu contrôlé voisin de la capitale adverse</strong> : Paris pour l'Angleterre (Chartres, Meaux, Orléans, Rouen, Saint-Denis), Londres pour la France. Les voisins de Londres étant tous en Angleterre, région jamais décomptée, ce bonus ne profite en pratique qu'à l'Angleterre.</li>
+</ul>
+<p>La <strong>différence</strong> entre les deux camps va au score.</p>
+<div class="rg-table"><table>
+<thead>
+<tr>
+<th>Région</th>
+<th>Présence</th>
+<th>Domination</th>
+<th>Contrôle</th>
+<th>Carte de décompte</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Guyenne</td>
+<td>2</td>
+<td>5</td>
+<td>7</td>
+<td>Phase I</td>
+</tr>
+<tr>
+<td>Flandre</td>
+<td>2</td>
+<td>4</td>
+<td>6</td>
+<td>Phase I</td>
+</tr>
+<tr>
+<td>Val de Loire</td>
+<td>3</td>
+<td>6</td>
+<td>8</td>
+<td>Phase I</td>
+</tr>
+<tr>
+<td>Bretagne</td>
+<td>2</td>
+<td>4</td>
+<td>6</td>
+<td>Phase II</td>
+</tr>
+<tr>
+<td>Normandie</td>
+<td>3</td>
+<td>6</td>
+<td>8</td>
+<td>Phase II</td>
+</tr>
+<tr>
+<td>Languedoc</td>
+<td>2</td>
+<td>4</td>
+<td>6</td>
+<td>Phase II</td>
+</tr>
+<tr>
+<td>Île-de-France</td>
+<td>3</td>
+<td>6</td>
+<td>9</td>
+<td>Phase III</td>
+</tr>
+<tr>
+<td>Bourgogne</td>
+<td>2</td>
+<td>5</td>
+<td>7</td>
+<td>Phase III</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="r-10-3-quand-decompte-t-on">10.3 Quand décompte-t-on ?</h3>
+<ul>
+<li>Quand un joueur joue une <strong>carte de décompte</strong> pendant un round d'action. Peu importe qui la joue : la région est comptée pour les deux camps. La carte va ensuite à la défausse.</li>
+<li>À la <strong>fin du tour 10</strong>, toutes les régions sont décomptées dans l'ordre : Guyenne, Flandre, Bretagne, Normandie, Languedoc, Île-de-France, Bourgogne, Val de Loire.</li>
+</ul>
+<p>Avant de jouer une carte de décompte, l'écran affiche une simulation : niveau de chaque camp, lieux et places fortes contrôlés, points de chacun et score après le décompte.</p>
+<h3 id="r-10-4-exemple-de-decompte-detaille-ile-de-france">10.4 Exemple de décompte détaillé : Île-de-France</h3>
+<p>L'Île-de-France a 7 lieux, dont 3 places fortes : Paris, Meaux et Reims.</p>
+<ul>
+<li>La France contrôle Paris ✦, Reims ✦, Saint-Denis et Compiègne : 4 lieux, 2 places fortes.</li>
+<li>L'Angleterre contrôle Meaux ✦ et Chartres : 2 lieux, 1 place forte.</li>
+</ul>
+<div class="rg-table"><table>
+<thead>
+<tr>
+<th></th>
+<th>France</th>
+<th>Angleterre</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Niveau</td>
+<td>Domination (4 lieux contre 2, 2 places fortes contre 1, et des lieux ouverts) : 6</td>
+<td>Présence : 3</td>
+</tr>
+<tr>
+<td>Places fortes</td>
+<td>+2</td>
+<td>+1</td>
+</tr>
+<tr>
+<td>Voisins de la capitale adverse</td>
+<td>0</td>
+<td>+2 (Meaux et Chartres sont voisins de Paris)</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td><strong>8</strong></td>
+<td><strong>6</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Le score bouge de <strong>2 vers la France</strong>. Si la France prenait aussi Meaux, elle contrôlerait les 3 places fortes et 5 lieux : Contrôle 9 + 3 = 12 ; l'Angleterre, avec Chartres seul, aurait 3 + 0 + 1 = 4. Le score bougerait alors de 8 vers la France.</p>
+<hr />
+<h2 id="r-11-tresor-crise-et-legitimite">11. Trésor, Crise et Légitimité</h2>
+<h3 id="r-11-1-tresor-et-revenus">11.1 Trésor et revenus</h3>
+<p>Le Trésor de chaque camp va de 0 à 12. Ce qui dépasse 12 est perdu. On dépense du Trésor pour :</p>
+<ul>
+<li>le coût de l'Assaut (1, ou 2 sur une place forte) ;</li>
+<li>le Trésor engagé à l'Assaut, au Siège ou à la Diplomatie (+1 par 2, au plus 4) ;</li>
+<li>la levée de compagnies (3 pour +1 OPS) ;</li>
+<li>certains événements.</li>
+</ul>
+<p><strong>Revenu de fin de tour.</strong></p>
+<blockquote>
+<p>Revenu = 1 + 1 par tranche de 4 lieux contrôlés + 1 si l'on contrôle au moins un port − (Crise ÷ 2, arrondi à l'inférieur) + bonus</p>
+</blockquote>
+<div class="rg-table"><table>
+<thead>
+<tr>
+<th>Bonus et malus de revenu</th>
+<th>Valeur</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Gabelle du sel (France)</td>
+<td>+2</td>
+</tr>
+<tr>
+<td>Taille royale permanente (France)</td>
+<td>+2</td>
+</tr>
+<tr>
+<td>Pragmatique Sanction de Bourges (France)</td>
+<td>+1</td>
+</tr>
+<tr>
+<td>Jacques Cœur, argentier (France, jusqu'à son procès)</td>
+<td>+1</td>
+</tr>
+<tr>
+<td>Bedford régent (Angleterre, jusqu'à sa mort)</td>
+<td>+2</td>
+</tr>
+<tr>
+<td>Flandre ralliée à ce camp (Bourgogne après 1384) ; sinon Flandre à ±2</td>
+<td>+2 ; sinon +1</td>
+</tr>
+<tr>
+<td>Écosse à ±2 ou plus du côté adverse</td>
+<td>−1</td>
+</tr>
+</tbody>
+</table></div>
+<p>Un revenu négatif compte pour 0 : on ne perd jamais de Trésor à cette étape. Les lieux d'Angleterre comptent comme les autres.</p>
+<p><strong>Exemple.</strong> La France contrôle 9 lieux dont un port, la Crise est à 3, la Gabelle est en jeu : 1 + 2 + 1 − 1 + 2 = <strong>5 Trésor</strong>. Au même moment, l'Angleterre contrôle 8 lieux dont des ports, mais l'Écosse est à +2 : 1 + 2 + 1 − 1 − 1 = <strong>2 Trésor</strong>.</p>
+<h3 id="r-11-2-crise">11.2 Crise</h3>
+<p>La Crise va de 0 à 6. Elle monte avec les événements (Peste noire, jacqueries, révoltes, Écorcheurs…) et baisse de 1 à chaque fin de tour.</p>
+<div class="rg-table"><table>
+<thead>
+<tr>
+<th>Crise</th>
+<th>Effets</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0 à 1</td>
+<td>Aucun.</td>
+</tr>
+<tr>
+<td>2 à 3</td>
+<td>Revenu −1 pour chaque camp.</td>
+</tr>
+<tr>
+<td>4 à 5</td>
+<td>Revenu −2 ; Assauts −1 ; les cartes de 1 OPS ne donnent plus d'OPS.</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Revenu −3 ; Assauts −1 ; cartes de 1 OPS sans OPS ; <strong>effondrement</strong> : à l'étape Crise de la fin de tour, chaque camp retire 1 Influence de chaque lieu de défense 1 (jacqueries, routiers).</td>
+</tr>
+</tbody>
+</table></div>
+<p>L'effondrement a lieu avant la baisse de 1 de la Crise.</p>
+<h3 id="r-11-3-legitimite">11.3 Légitimité</h3>
+<p>La piste de Légitimité de chaque camp va de 0 à 8. Elle monte par l'action Légitimité (section <a href="#r-7-6-legitimite" data-sec>7.6</a>), par les événements, et par la Papauté ralliée ; elle baisse par les événements.</p>
+<p><strong>Paliers.</strong> Le premier camp à atteindre une case reçoit son bonus ; le second reçoit le bonus réduit quand il en existe un. Si une piste redescend sous une case puis l'atteint de nouveau, le camp reçoit encore le bonus réduit (+1 pour la case 2, +2 pour la case 8), même s'il avait été le premier.</p>
+<div class="rg-table"><table>
+<thead>
+<tr>
+<th>Case</th>
+<th>Premier arrivé</th>
+<th>Second arrivé</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2</td>
+<td>+2 points</td>
+<td>+1 point</td>
+</tr>
+<tr>
+<td>5</td>
+<td>+1 au jet de Diplomatie pour le reste de la partie</td>
+<td>—</td>
+</tr>
+<tr>
+<td>8</td>
+<td>+4 points, puis +1 point à chaque fin de tour pour le reste de la partie</td>
+<td>+2 points</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Points de fin de tour.</strong> À l'étape Légitimité de chaque fin de tour :</p>
+<ol>
+<li>le camp dont la Légitimité est la plus haute marque <strong>1 point</strong> (personne en cas d'égalité) ;</li>
+<li>le premier camp arrivé à la case 8 marque <strong>1 point</strong>, même si sa piste est redescendue depuis ;</li>
+<li>la <strong>Papauté ralliée</strong> donne <strong>+1 Légitimité</strong> à son camp (avec le palier éventuel) et, si la Trêve est à 3 ou moins, la fait remonter de 1. Pendant le Grand Schisme, elle n'agit que si Rome est ralliée au même camp.</li>
+</ol>
+<hr />
+<h2 id="r-12-factions-et-loyaute">12. Factions et Loyauté</h2>
+<h3 id="r-12-1-principe">12.1 Principe</h3>
+<p>Chaque faction a une piste de −3 (ralliée à l'Angleterre) à +3 (ralliée à la France). La Loyauté bouge par la Diplomatie (section <a href="#r-7-5-diplomatie" data-sec>7.5</a>) et par les événements.</p>
+<ul>
+<li>À <strong>±2</strong> (« favorable »), la faction donne son premier effet au camp vers lequel elle penche.</li>
+<li>À <strong>±3</strong> (« ralliée »), elle donne en plus son effet de ralliement. Les effets à ±2 restent actifs, sauf quand l'effet à ±3 les remplace (Trésor de la Flandre, bonus d'Assaut de la Bretagne).</li>
+</ul>
+<h3 id="r-12-2-tableau-des-factions">12.2 Tableau des factions</h3>
+<div class="rg-table"><table>
+<thead>
+<tr>
+<th>Faction</th>
+<th>Départ</th>
+<th>À ±2 (favorable)</th>
+<th>À ±3 (ralliée)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Flandre</td>
+<td>−1</td>
+<td>+1 Trésor par tour ; +1 aux Sièges en Flandre</td>
+<td>+2 Trésor par tour (au lieu de +1) ; Influence dans tous les lieux de Flandre sans voisinage</td>
+</tr>
+<tr>
+<td>Bretagne</td>
+<td>0</td>
+<td>+1 aux Assauts et aux Sièges en Bretagne</td>
+<td>+1 aux Assauts en Bretagne <strong>et</strong> en Normandie ; +1 aux Sièges en Bretagne ; 1 Influence gratuite par tour en Bretagne</td>
+</tr>
+<tr>
+<td>Bourgogne</td>
+<td>+2</td>
+<td>+1 aux Sièges en Bourgogne</td>
+<td>2 Influence gratuites par tour en Bourgogne ou en Île-de-France</td>
+</tr>
+<tr>
+<td>Écosse</td>
+<td>+2</td>
+<td>Le camp adverse perd 1 Trésor par tour</td>
+<td>En plus, le camp adverse perd 1 OPS sur sa première carte jouée pour ses OPS dans le tour</td>
+</tr>
+<tr>
+<td>Castille</td>
+<td>+1</td>
+<td>+1 aux Assauts contre les ports</td>
+<td>Maîtrise de la Manche : Influence dans tous les ports si l'on en contrôle un (section <a href="#r-4-3-la-maitrise-de-la-manche" data-sec>4.3</a>)</td>
+</tr>
+<tr>
+<td>Navarre</td>
+<td>0</td>
+<td>+1 aux Assauts et aux Sièges à Évreux et Cherbourg</td>
+<td>1 Influence gratuite par tour à Évreux ou Cherbourg</td>
+</tr>
+<tr>
+<td>Papauté</td>
+<td>+1</td>
+<td>Le jet de Légitimité réussit sur 1 de plus</td>
+<td>+1 Légitimité par tour ; Trêve +1 en fin de tour si elle est à 3 ou moins. Pendant le Grand Schisme, il faut aussi Rome ralliée au même camp</td>
+</tr>
+<tr>
+<td>Rome</td>
+<td>0 (inactive)</td>
+<td>Aucun effet propre</td>
+<td>Pendant le Grand Schisme, condition pour que la Papauté ralliée agisse</td>
+</tr>
+</tbody>
+</table></div>
+<p>Les Influences gratuites et le malus d'OPS de l'Écosse sont donnés au début du tour, après la pioche et avant l'ouverture. Le camp bénéficiaire choisit où placer les Influences gratuites.</p>
+<h3 id="r-12-3-le-grand-schisme-et-rome">12.3 Le Grand Schisme et Rome</h3>
+<ul>
+<li>La carte « <strong>Grand Schisme d'Occident</strong> » ouvre le Schisme : Rome devient une faction active, placée à <strong>−2</strong> (côté anglais). La Papauté (Avignon) monte d'un cran vers la France, puis d'un cran vers le joueur qui a joué la carte.</li>
+<li>Pendant le Schisme, on peut viser <strong>Rome</strong> par la Diplomatie comme les autres factions.</li>
+<li>La Papauté ralliée ne donne ses effets de fin de tour que si Rome est ralliée au <strong>même</strong> camp.</li>
+<li>La carte « <strong>Concile de Constance</strong> » clôt le Schisme : la Papauté glisse de 2 crans vers le joueur qui l'a jouée, et Rome redevient inactive.</li>
+</ul>
+<h3 id="r-12-4-la-fusion-flandre-bourgogne-1384">12.4 La fusion Flandre-Bourgogne (1384)</h3>
+<p>Après la carte « <strong>Héritage flamand de Philippe le Hardi</strong> » :</p>
+<ul>
+<li>la Flandre n'a plus de piste propre : elle suit celle de la <strong>Bourgogne</strong>, et tout effet qui ferait bouger la Flandre fait bouger la Bourgogne ;</li>
+<li>la Flandre ne peut plus être visée par la Diplomatie ;</li>
+<li>la Bourgogne reprend les effets de la Flandre : Trésor (+1 à ±2, +2 à ±3), Influence sans voisinage en Flandre une fois ralliée, et son bonus de Siège s'étend à la Flandre ;</li>
+<li>les 2 Influences gratuites de la Bourgogne ralliée peuvent aussi aller en Flandre.</li>
+</ul>
+<hr />
+<h2 id="r-13-modes-de-jeu-niveaux-de-l-ia-et-tableau-d-honneur">13. Modes de jeu, niveaux de l'IA et tableau d'honneur</h2>
+<h3 id="r-13-1-modes-de-jeu">13.1 Modes de jeu</h3>
+<div class="rg-table"><table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Fonctionnement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Solo contre l'IA</strong></td>
+<td>Choisissez la France ou l'Angleterre ; l'IA joue l'autre camp. Chaque coup adverse est rejoué pas à pas.</td>
+</tr>
+<tr>
+<td><strong>Deux joueurs, même écran</strong></td>
+<td>Les deux camps jouent à tour de rôle sur le même appareil.</td>
+</tr>
+<tr>
+<td><strong>En ligne, à deux</strong></td>
+<td>Chacun joue sur son ordinateur ou son téléphone. L'un crée la partie et communique son code de 5 caractères, l'autre le saisit pour la rejoindre. Chaque coup est enregistré : on peut jouer en direct ou revenir plus tard.</td>
+</tr>
+<tr>
+<td><strong>Par message</strong></td>
+<td>Sans compte ni serveur. À la fin de votre tour de jeu, le jeu fabrique un message (il contient un code commençant par GCA1) à envoyer par SMS, messagerie ou e-mail. L'adversaire le colle dans son jeu, joue, et renvoie le sien.</td>
+</tr>
+</tbody>
+</table></div>
+<p>La partie en cours est enregistrée dans le navigateur et peut être reprise depuis l'accueil. Un tutoriel animé (« Apprendre à jouer ») et une page « Règles en bref » sont accessibles à tout moment.</p>
+<h3 id="r-13-2-niveaux-de-l-ia">13.2 Niveaux de l'IA</h3>
+<div class="rg-table"><table>
+<thead>
+<tr>
+<th>Niveau</th>
+<th>Style</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Écuyer</strong></td>
+<td>Débutant : une seule simulation par coup et beaucoup de hasard ; il joue vite et se trompe souvent.</td>
+</tr>
+<tr>
+<td><strong>Chevalier</strong></td>
+<td>Équilibré (niveau par défaut) : il simule chaque coup avec plusieurs jets de dés et garde le meilleur.</td>
+</tr>
+<tr>
+<td><strong>Connétable</strong></td>
+<td>Réfléchi : il étudie plus de coups et départage les meilleurs par des simulations supplémentaires.</td>
+</tr>
+<tr>
+<td><strong>Roi</strong></td>
+<td>Le plus fort : comme le Connétable, et il simule en plus la réponse adverse à ses meilleurs coups.</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="r-13-3-tableau-d-honneur">13.3 Tableau d'honneur</h3>
+<p>Chaque partie terminée est inscrite au tableau d'honneur de l'appareil, sous le nom du roi vainqueur de la phase (Jean II le Bon, Charles V le Sage ou Charles VII le Victorieux pour la France ; Édouard III, Henri IV de Lancastre ou Henri V pour l'Angleterre), avec le type de victoire, le nombre de tours, l'écart de score et l'adversaire. Le classement met en tête le plus grand écart de score, puis la victoire la plus rapide. Les 15 meilleures parties sont affichées ; le tableau est gardé dans le navigateur.</p>
+<hr />
+<h2 id="r-14-glossaire">14. Glossaire</h2>
+<div class="rg-table"><table>
+<thead>
+<tr>
+<th>Terme</th>
+<th>Définition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Assaut</strong></td>
+<td>Action d'OPS : coup de force contre un lieu où l'adversaire a de l'Influence (section <a href="#r-7-3-assaut" data-sec>7.3</a>).</td>
+</tr>
+<tr>
+<td><strong>Assaut gratuit</strong></td>
+<td>Assaut donné par un événement : sans Trésor, sans effet sur la Trêve.</td>
+</tr>
+<tr>
+<td><strong>Bataille</strong></td>
+<td>Événement résolu par 1d6 + bonus ≥ 4 (section <a href="#r-8-batailles" data-sec>8</a>).</td>
+</tr>
+<tr>
+<td><strong>Carte retirée</strong></td>
+<td>Carte qui quitte la partie une fois son événement résolu.</td>
+</tr>
+<tr>
+<td><strong>Chevauchée</strong></td>
+<td>Raid militaire. En fin de tour, chaque camp doit avoir engagé autant d'OPS militaires que la Trêve (section <a href="#r-5-5-les-chevauchees" data-sec>5.5</a>).</td>
+</tr>
+<tr>
+<td><strong>Contrôle (d'un lieu)</strong></td>
+<td>Influence ≥ défense + Influence adverse (section <a href="#r-4-1-controle" data-sec>4.1</a>).</td>
+</tr>
+<tr>
+<td><strong>Contrôle (d'une région)</strong></td>
+<td>Plus haut niveau de décompte : plus de lieux que l'adversaire et toutes les places fortes (section <a href="#r-10-1-les-niveaux" data-sec>10.1</a>).</td>
+</tr>
+<tr>
+<td><strong>Décompte</strong></td>
+<td>Comptage des points d'une région, déclenché par une carte de décompte ou au tour 10.</td>
+</tr>
+<tr>
+<td><strong>Défense</strong></td>
+<td>Chiffre de 1 à 4 propre à chaque lieu.</td>
+</tr>
+<tr>
+<td><strong>Domination</strong></td>
+<td>Niveau de décompte intermédiaire (section <a href="#r-10-1-les-niveaux" data-sec>10.1</a>).</td>
+</tr>
+<tr>
+<td><strong>Effet durable</strong></td>
+<td>Effet d'événement qui reste actif après la carte (section <a href="#r-6-6-effets-durables" data-sec>6.6</a>).</td>
+</tr>
+<tr>
+<td><strong>Évt</strong></td>
+<td>Abréviation d'événement.</td>
+</tr>
+<tr>
+<td><strong>Faction favorable / ralliée</strong></td>
+<td>Faction à ±2 / à ±3 sur sa piste de Loyauté (section <a href="#r-12-factions-et-loyaute" data-sec>12</a>).</td>
+</tr>
+<tr>
+<td><strong>Inf.</strong></td>
+<td>Influence : marqueurs d'un camp posés sur un lieu.</td>
+</tr>
+<tr>
+<td><strong>Joueur actif</strong></td>
+<td>Le joueur qui est en train de jouer la carte en cours (ouverture comprise).</td>
+</tr>
+<tr>
+<td><strong>Levée de compagnies</strong></td>
+<td>3 Trésor pour +1 OPS, sauf pour la Légitimité.</td>
+</tr>
+<tr>
+<td><strong>Lieu ouvert</strong></td>
+<td>Lieu qui n'est pas une place forte.</td>
+</tr>
+<tr>
+<td><strong>Maîtrise de la Manche</strong></td>
+<td>Permet de placer de l'Influence dans tous les ports si l'on en contrôle un (section <a href="#r-4-3-la-maitrise-de-la-manche" data-sec>4.3</a>).</td>
+</tr>
+<tr>
+<td><strong>Occupation</strong></td>
+<td>Sur une place forte, le surplus d'un Assaut réussi devient de l'Influence de l'attaquant.</td>
+</tr>
+<tr>
+<td><strong>OPS</strong></td>
+<td>Points d'opérations d'une carte, de 1 à 4, dépensés en Influence, Assaut, Siège, Diplomatie ou Légitimité.</td>
+</tr>
+<tr>
+<td><strong>Ouverture</strong></td>
+<td>Carte révélée en début de tour et jouée pour son seul événement (section <a href="#r-5-3-l-ouverture" data-sec>5.3</a>).</td>
+</tr>
+<tr>
+<td><strong>OPS militaires</strong></td>
+<td>OPS engagés en Assauts (y compris gratuits) et en batailles, comptés pour les chevauchées.</td>
+</tr>
+<tr>
+<td><strong>Palier</strong></td>
+<td>Case de Légitimité qui donne un bonus au premier camp arrivé (section <a href="#r-11-3-legitimite" data-sec>11.3</a>).</td>
+</tr>
+<tr>
+<td><strong>Pillage</strong></td>
+<td>Hors place forte, le surplus d'un Assaut réussi est perdu : on dévaste sans occuper.</td>
+</tr>
+<tr>
+<td><strong>Place forte (✦)</strong></td>
+<td>Lieu fortifié : Assaut à 2 Trésor qui fait baisser la Trêve, occupation possible, +1 point au décompte.</td>
+</tr>
+<tr>
+<td><strong>Port (⚓)</strong></td>
+<td>Lieu côtier : revenu, maîtrise de la Manche, bonus de la Castille.</td>
+</tr>
+<tr>
+<td><strong>Prérequis</strong></td>
+<td>Événement qui doit avoir été joué avant qu'une carte puisse jouer le sien.</td>
+</tr>
+<tr>
+<td><strong>Présence</strong></td>
+<td>Premier niveau de décompte : au moins un lieu contrôlé dans la région.</td>
+</tr>
+<tr>
+<td><strong>Round</strong></td>
+<td>Moment où l'Angleterre puis la France jouent chacune une carte.</td>
+</tr>
+<tr>
+<td><strong>Siège</strong></td>
+<td>Action d'OPS : jets opposés, un par OPS, le perdant retire l'écart (section <a href="#r-7-4-siege" data-sec>7.4</a>).</td>
+</tr>
+<tr>
+<td><strong>Trésor engagé</strong></td>
+<td>Trésor ajouté à un Assaut, un Siège ou une Diplomatie : +1 au dé par 2.</td>
+</tr>
+<tr>
+<td><strong>Trêve</strong></td>
+<td>Piste de 5 à 1 qui protège des régions et fixe les chevauchées ; à 1, le joueur actif perd (section <a href="#r-9-la-treve" data-sec>9</a>).</td>
+</tr>
+<tr>
+<td><strong>Point (de score)</strong></td>
+<td>Un cran sur la piste de score, vers le camp qui le marque.</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="r-15-ou-trouver-quoi">15. Où trouver quoi</h2>
+<div class="rg-table"><table>
+<thead>
+<tr>
+<th>Je cherche…</th>
+<th>Section</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Comment gagner, toutes les conditions de victoire</td>
+<td><a href="#r-1-2-toutes-les-facons-de-gagner-ou-de-perdre" data-sec>1.2</a></td>
+</tr>
+<tr>
+<td>Qui perd quand la Trêve tombe à 1</td>
+<td><a href="#r-1-3-qui-perd-quand-la-treve-tombe-a-1" data-sec>1.3</a></td>
+</tr>
+<tr>
+<td>La liste des lieux, défenses, places fortes et ports</td>
+<td><a href="#r-2-2-les-regions" data-sec>2.2</a></td>
+</tr>
+<tr>
+<td>Le sens des badges sous les cartes</td>
+<td><a href="#r-2-3-les-cartes" data-sec>2.3</a></td>
+</tr>
+<tr>
+<td>L'Influence et les loyautés de départ</td>
+<td><a href="#r-3-mise-en-place-1337" data-sec>3</a></td>
+</tr>
+<tr>
+<td>La règle de contrôle d'un lieu</td>
+<td><a href="#r-4-1-controle" data-sec>4.1</a></td>
+</tr>
+<tr>
+<td>Où je peux placer de l'Influence</td>
+<td><a href="#r-4-2-ou-peut-on-placer-de-l-influence" data-sec>4.2</a></td>
+</tr>
+<tr>
+<td>La maîtrise de la Manche</td>
+<td><a href="#r-4-3-la-maitrise-de-la-manche" data-sec>4.3</a></td>
+</tr>
+<tr>
+<td>L'ordre des étapes d'un tour</td>
+<td><a href="#r-5-2-la-sequence-d-un-tour" data-sec>5.2</a></td>
+</tr>
+<tr>
+<td>L'ouverture</td>
+<td><a href="#r-5-3-l-ouverture" data-sec>5.3</a></td>
+</tr>
+<tr>
+<td>Les chevauchées et les OPS militaires</td>
+<td><a href="#r-5-5-les-chevauchees" data-sec>5.5</a></td>
+</tr>
+<tr>
+<td>Jouer une carte adverse</td>
+<td><a href="#r-6-1-evenement-ou-ops" data-sec>6.1</a></td>
+</tr>
+<tr>
+<td>Pourquoi une carte est « sans effet » ou « impossible »</td>
+<td><a href="#r-6-3-prerequis" data-sec>6.3</a>, <a href="#r-6-4-evenements-sans-effet" data-sec>6.4</a></td>
+</tr>
+<tr>
+<td>Pourquoi une carte donne moins d'OPS</td>
+<td><a href="#r-6-5-valeur-en-ops-d-une-carte" data-sec>6.5</a></td>
+</tr>
+<tr>
+<td>Les effets durables</td>
+<td><a href="#r-6-6-effets-durables" data-sec>6.6</a></td>
+</tr>
+<tr>
+<td>La levée de compagnies et le Trésor engagé</td>
+<td><a href="#r-7-1-generalites" data-sec>7.1</a></td>
+</tr>
+<tr>
+<td>Le coût de l'Influence</td>
+<td><a href="#r-7-2-influence" data-sec>7.2</a></td>
+</tr>
+<tr>
+<td>La formule de l'Assaut, le pillage et l'occupation</td>
+<td><a href="#r-7-3-assaut" data-sec>7.3</a></td>
+</tr>
+<tr>
+<td>Le Siège</td>
+<td><a href="#r-7-4-siege" data-sec>7.4</a></td>
+</tr>
+<tr>
+<td>La Diplomatie</td>
+<td><a href="#r-7-5-diplomatie" data-sec>7.5</a></td>
+</tr>
+<tr>
+<td>L'action Légitimité et ses jets</td>
+<td><a href="#r-7-6-legitimite" data-sec>7.6</a></td>
+</tr>
+<tr>
+<td>Les batailles</td>
+<td><a href="#r-8-batailles" data-sec>8</a></td>
+</tr>
+<tr>
+<td>Les régions protégées par la Trêve</td>
+<td><a href="#r-9-la-treve" data-sec>9</a></td>
+</tr>
+<tr>
+<td>Les niveaux et valeurs des décomptes</td>
+<td><a href="#r-10-1-les-niveaux" data-sec>10.1</a>, <a href="#r-10-2-les-points" data-sec>10.2</a></td>
+</tr>
+<tr>
+<td>Quand sortent les cartes de décompte</td>
+<td><a href="#r-5-1-les-phases" data-sec>5.1</a>, <a href="#r-10-3-quand-decompte-t-on" data-sec>10.3</a></td>
+</tr>
+<tr>
+<td>Le revenu de fin de tour</td>
+<td><a href="#r-11-1-tresor-et-revenus" data-sec>11.1</a></td>
+</tr>
+<tr>
+<td>Les effets de la Crise</td>
+<td><a href="#r-11-2-crise" data-sec>11.2</a></td>
+</tr>
+<tr>
+<td>Les paliers et points de Légitimité</td>
+<td><a href="#r-11-3-legitimite" data-sec>11.3</a></td>
+</tr>
+<tr>
+<td>Les effets des factions</td>
+<td><a href="#r-12-2-tableau-des-factions" data-sec>12.2</a></td>
+</tr>
+<tr>
+<td>Le Grand Schisme et Rome</td>
+<td><a href="#r-12-3-le-grand-schisme-et-rome" data-sec>12.3</a></td>
+</tr>
+<tr>
+<td>La fusion Flandre-Bourgogne</td>
+<td><a href="#r-12-4-la-fusion-flandre-bourgogne-1384" data-sec>12.4</a></td>
+</tr>
+<tr>
+<td>Les modes de jeu et les niveaux de l'IA</td>
+<td><a href="#r-13-modes-de-jeu-niveaux-de-l-ia-et-tableau-d-honneur" data-sec>13</a></td>
+</tr>
+<tr>
+<td>Le vocabulaire</td>
+<td><a href="#r-14-glossaire" data-sec>14</a></td>
+</tr>
+</tbody>
+</table></div></article></div></div><script>const $ = id => document.getElementById(id);
+/*RG-DEBUT*/
+const RG = { marques: [], i: -1 };
+$("rgCorps").addEventListener("click", e => {
+  const a = e.target.closest("a[href^='#']"); if (!a) return;
+  e.preventDefault(); const el = $("rgCorps").querySelector(a.getAttribute("href")); if (el) el.scrollIntoView({ block: "start", behavior: "smooth" });
+});
+const rgSans = t => t.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+const rgEffacer = () => { for (const m of RG.marques) m.replaceWith(document.createTextNode(m.textContent)); RG.marques = []; RG.i = -1; $("rgCorps").querySelector(".rg-texte").normalize(); };
+const rgAller = d => {
+  if (!RG.marques.length) return;
+  RG.marques[RG.i]?.classList.remove("ici");
+  RG.i = (RG.i + d + RG.marques.length) % RG.marques.length;
+  const m = RG.marques[RG.i]; m.classList.add("ici"); m.scrollIntoView({ block: "center" });
+  $("rgCorps").querySelector(".rg-nb").textContent = `${RG.i + 1} / ${RG.marques.length} résultat${RG.marques.length > 1 ? "s" : ""} (Entrée : suivant)`;
+};
+let rgMinuteur = 0;
+const rgChercher = () => {
+  rgEffacer();
+  const q = rgSans($("rgCorps").querySelector(".rg-cherche").value.trim()), nb = $("rgCorps").querySelector(".rg-nb");
+  if (q.length < 2) { nb.textContent = ""; return; }
+  const art = $("rgCorps").querySelector(".rg-texte"), w = document.createTreeWalker(art, NodeFilter.SHOW_TEXT), noeuds = [];
+  while (w.nextNode()) noeuds.push(w.currentNode);
+  for (const n of noeuds) {
+    const t = n.textContent, ts = t.split("").map(ch => (rgSans(ch) || ch)[0]).join(""); let k = ts.indexOf(q); if (k < 0) continue;
+    const frag = document.createDocumentFragment(); let d = 0;
+    while (k >= 0 && RG.marques.length < 500) {
+      frag.append(t.slice(d, k)); const m = document.createElement("mark"); m.textContent = t.slice(k, k + q.length); frag.append(m); RG.marques.push(m);
+      d = k + q.length; k = ts.indexOf(q, d);
+    }
+    frag.append(t.slice(d)); n.replaceWith(frag);
+  }
+  if (!RG.marques.length) { nb.textContent = "Aucun résultat"; return; }
+  rgAller(1);
+};
+$("rgCorps").querySelector(".rg-cherche").addEventListener("input", () => { clearTimeout(rgMinuteur); rgMinuteur = setTimeout(rgChercher, 250); });
+$("rgCorps").querySelector(".rg-cherche").addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); rgAller(e.shiftKey ? -1 : 1); } });
+$("rgCorps").querySelector(".rg-sel").onchange = e => { const h = e.target.value && $("rgCorps").querySelector("#" + e.target.value); if (h) h.scrollIntoView({ block: "start" }); e.target.value = ""; };
+if ($("rgSuiv")) { $("rgSuiv").onclick = () => rgAller(1); $("rgPrec").onclick = () => rgAller(-1); }
+{ // sommaire : section en cours
+  const art = $("rgCorps").querySelector(".rg-texte"), liens = [...$("rgCorps").querySelectorAll(".rg-som a")];
+  art.addEventListener("scroll", () => {
+    let ici = null; for (const a of liens) { const h = art.querySelector(a.getAttribute("href")); if (h && h.offsetTop - art.offsetTop <= art.scrollTop + 30) ici = a; }
+    for (const a of liens) a.classList.toggle("ici", a === ici);
+  }, { passive: true });
+}
+</script></body></html>

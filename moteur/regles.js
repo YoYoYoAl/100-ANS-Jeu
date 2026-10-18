@@ -350,7 +350,7 @@ export function decompter(D, g, r) {
 }
 
 // ---------------------------------------------------------------- jouer une carte
-import { EFFETS } from "./effets.js?v=84564bbb";
+import { EFFETS } from "./effets.js?v=fec60982";
 export function prerequisOk(D, g, k) {
   if (!k.prerequis) return true;
   if (k.prerequis === "Roi captif") return !!g.statuts.roiCaptif;
@@ -394,6 +394,7 @@ function defausser(D, g, id, evenementJoue) {
 // action = { id, mode: "evenement" | "influence" | "assaut" | "siege" | "diplomatie" | "legitimite", cibles, cible, depense, ordre }
 export function jouer(D, g, c, action) {
   const { id } = action;
+  action = { ...action };
   const k = carte(D, id);
   g.mains[c] = g.mains[c].filter(x => x !== id);
   let evt = false;
@@ -401,11 +402,23 @@ export function jouer(D, g, c, action) {
     etape(g, { k: "carte", camp: c, id, mode: "evenement" });
     evt = resoudreEvenement(D, g, c, id);
   } else {
+    // « différé » : carte adverse dont l'événement se joue d'abord ; le joueur choisit ensuite l'usage de ses OPS
+    // (Influence, Assaut, Siège ou Diplomatie ; la Légitimité, qui ne déclenche pas l'événement, n'est plus possible)
+    let apresEvt = false;
+    if (action.mode === "differe") {
+      etape(g, { k: "carte", camp: c, id, mode: "differe", ops: opsCarte(D, g, c, id), declenche: true, ordre: "avant" });
+      evt = resoudreEvenement(D, g, adv(c), id);
+      if (g.fin) { g.opsMalus[c] = 0; defausser(D, g, id, evt); return; }
+      const suite = DECIDEURS[c].apresEvenement ? DECIDEURS[c].apresEvenement(D, g, c, id) : null;
+      action = { ...(suite || { mode: "influence", cibles: [] }), id, ordre: "avant" };
+      if (!["influence", "assaut", "siege", "diplomatie"].includes(action.mode)) action = { id, mode: "influence", cibles: [], ordre: "avant" };
+      apresEvt = true;
+    }
     let ops = opsCarte(D, g, c, id);
     const levee = !!(action.levee && g.regles?.levee && g.tresor[c] >= 3 && action.mode !== "legitimite");
     if (levee) { tresor(g, c, -3); ops += 1; } // lever des compagnies
-    const declenche = k.camp === adv(c) && action.mode !== "legitimite";
-    etape(g, { k: "carte", camp: c, id, mode: action.mode, ops, levee, declenche, ordre: action.ordre || "avant", cibles: action.cibles, cible: action.cible, depense: action.depense || 0 });
+    const declenche = k.camp === adv(c) && action.mode !== "legitimite" && !apresEvt;
+    etape(g, { k: "carte", camp: c, id, mode: action.mode, ops, levee, declenche, apresEvt, ordre: action.ordre || "avant", cibles: action.cibles, cible: action.cible, depense: action.depense || 0 });
     if (declenche && action.ordre !== "apres") evt = resoudreEvenement(D, g, adv(c), id);
     if (!g.fin) {
       if (action.mode === "influence") { const refus = actionInfluence(D, g, c, ops, action.cibles); etape(g, { k: "influence", camp: c, ops, cibles: action.cibles, refus }); }
