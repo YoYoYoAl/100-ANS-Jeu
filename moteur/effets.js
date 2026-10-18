@@ -4,7 +4,7 @@
 import {
   A, F, adv, zone, ajouter, retirer, forcerControle, placerLibre, retirerChoisi, treve, crise, tresor,
   vp, legit, loy, versCamp, assaut, bataille, controle, DECIDEURS, de, assautsInterdits, terminer,
-} from "./regles.js?v=ef8d3d6b";
+} from "./regles.js?v=29f76231";
 
 const inf = (D, g, c, n, z) => placerLibre(D, g, c, n, zone(D, z));
 const perd = (D, g, c, n, z) => retirerChoisi(D, g, c, n, zone(D, z));
@@ -67,7 +67,7 @@ export const EFFETS = {
   "Bataille de Poitiers": (D, g) => bataille(D, g, A, 4, () => { g.statuts.roiCaptif = true; legit(g, F, -2); vp(g, A, 2); }),
   "Du Guesclin au siège de Rennes": (D, g) => ajouter(g, F, "Rennes", 3),
   "Étienne Marcel": (D, g) => { perd(D, g, F, 2, { r: "Île-de-France" }); crise(g, 1); legit(g, F, -1); },
-  "Grande Jacquerie": (D, g) => { crise(g, 2); perd(D, g, F, 2, { r: "Île-de-France" }); perd(D, g, A, 2, { r: "Île-de-France" }); },
+  "Grande Jacquerie": (D, g) => { const l = [...zone(D, { r: "Île-de-France" }), ...zone(D, { p: ["Picardie"] })]; crise(g, 2); perd(D, g, F, 2, { l }); perd(D, g, A, 2, { l }); },
   "Le Grand Ferré": (D, g) => { inf(D, g, F, 1, { p: ["Picardie", "Valois"] }); g.statuts.grandFerre = true; },
   "David II à Château-Gaillard": (D, g) => loy(g, "Écosse", 2),
   "Campagne de Reims": (D, g) => { if (controle(D, g, "Reims") === A) legit(g, A, 3); else legit(g, A, 1); },
@@ -82,7 +82,7 @@ export const EFFETS = {
   "Bataille d'Homildon Hill": (D, g) => loy(g, "Écosse", -2),
   "Bataille de Shrewsbury": (D, g) => { legit(g, A, 1); if (g.statuts.owain) g.statuts.owain = false; },
   "Expédition de Clarence": (D, g) => { tresor(g, A, 3); tresor(g, F, -1); },
-  "Rançon du roi Jean": (D, g) => { tresor(g, A, 3); tresor(g, F, -2); },
+  "Rançon du roi Jean": (D, g) => { tresor(g, A, 3); tresor(g, F, -2); g.statuts.roiCaptif = false; },
   "Bataille de Brignais": (D, g) => { crise(g, 1); perd(D, g, F, 2, { p: ["Lyonnais", "Bourgogne"] }); },
   "Bataille de Launac": (D, g, c) => inf(D, g, c, 3, { l: ["Orthez", "Lectoure"] }),
   "Ordonnance sur le tir à l'arc": (D, g) => { g.statuts.arc = true; },
@@ -143,7 +143,7 @@ export const EFFETS = {
   "Bataille de Baugé": (D, g) => { loy(g, "Écosse", 1); perd(D, g, A, 2, { p: ["Maine", "Touraine"] }); },
   "Mort d'Henri V": (D, g) => { legit(g, A, -2); malusProchainTour(g, A); },
   "Mort de Charles VI": (D, g) => { if (g.joues["Traité de Troyes"]) legit(g, A, 1); else legit(g, F, 1); g.statuts.folieCharlesVI = false; },
-  "Le roi de Bourges": (D, g) => { if (g.inf.Bourges.F < 2) g.inf.Bourges.F = 2; },
+  "Le roi de Bourges": (D, g) => { if (g.inf.Bourges.F < 2) g.inf.Bourges.F = 2; g.statuts.roiBourges = true; },
   "Traité d'Amiens": (D, g) => { loy(g, "Bourgogne", -1); loy(g, "Bretagne", -1); },
   "Bataille de Cravant": (D, g) => { assautGratuit(D, g, A, 3, { r: "Bourgogne" }); },
   "Bataille de Verneuil": (D, g) => { loy(g, "Écosse", -3); vp(g, A, 1); perd(D, g, F, 2, { r: "Normandie" }); },

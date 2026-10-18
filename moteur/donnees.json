@@ -1384,7 +1384,7 @@
 "camp": "N",
 "ops": 4,
 "nom": "Traité de Brétigny",
-"prerequis": "Roi captif",
+"prerequis": "",
 "retiree": true
 },
 {
@@ -1465,7 +1465,7 @@
 "camp": "A",
 "ops": 3,
 "nom": "Rançon du roi Jean",
-"prerequis": "Traité de Brétigny",
+"prerequis": "",
 "retiree": true
 },
 {
@@ -2122,7 +2122,7 @@
 "camp": "F",
 "ops": 4,
 "nom": "Jeanne d'Arc",
-"prerequis": "Siège d'Orléans",
+"prerequis": "Siège d'Orléans ou Campagne de Salisbury",
 "retiree": true
 },
 {

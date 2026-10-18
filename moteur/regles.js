@@ -98,7 +98,7 @@ export function zone(D, z) {
   return l;
 }
 export const ajouter = (g, c, n, k = 1) => { g.inf[n][c] += k; };
-export const retirer = (g, c, n, k = 1) => { g.inf[n][c] = Math.max(0, g.inf[n][c] - k); };
+export const retirer = (g, c, n, k = 1) => { g.inf[n][c] = Math.max(c === F && n === "Bourges" && g.statuts?.roiBourges ? Math.min(2, g.inf[n][c]) : 0, g.inf[n][c] - k); }; // « Le roi de Bourges » : jamais sous 2
 export function forcerControle(D, g, c, n) {
   const besoin = defense(D, g, n) + g.inf[n][adv(c)] - g.inf[n][c];
   if (besoin > 0) ajouter(g, c, n, besoin);
@@ -235,6 +235,7 @@ export function assautsInterdits(D, g, n, c = null) {
   if (g.treve <= 3 && r === "Guyenne") return true;
   if (g.treve <= 2 && r === "Normandie") return true;
   if (n === "Calais" && g.statuts.calaisImprenable) return true;
+  if ((n === "Cherbourg" || n === "Brest") && g.statuts.cherbourgBrest) return true; // cession jusqu'à la fin de la phase II
   return false;
 }
 export function ciblesAssaut(D, g, c) { return D.noms.filter(n => g.inf[n][adv(c)] > 0 && !assautsInterdits(D, g, n, c)); }
@@ -319,7 +320,7 @@ export function bataille(D, g, c, ops, siVictoire) {
   if (c === A && g.statuts.jarretiere) { bd.push(["Ordre de la Jarretière", 1]); g.statuts.jarretiere = false; }
   if (c === F && g.statuts.jeanne) bd.push(["Jeanne d'Arc", 1]);
   if (c === F && g.statuts.dunois) { bd.push(["Dunois", 1]); g.statuts.dunois = false; }
-  if (c === A && g.tourFlags.aiguillon) bd.push(["Aiguillon", 1]);
+  if (c === A && g.tourFlags.aiguillon && g._ctx === "Évt Bataille de Crécy") bd.push(["Siège d'Aiguillon", 1]);
   const b = bd.length;
   const d = de(g), ok = d + b >= 4;
   log(g, `${c} bataille → ${ok ? "victoire" : "échec"}`);
@@ -359,12 +360,13 @@ export function decompter(D, g, r) {
 }
 
 // ---------------------------------------------------------------- jouer une carte
-import { EFFETS } from "./effets.js?v=ef8d3d6b";
+import { EFFETS } from "./effets.js?v=29f76231";
 export function prerequisOk(D, g, k) {
   if (!k.prerequis) return true;
   if (k.prerequis === "Roi captif") return !!g.statuts.roiCaptif;
+  if (k.nom === "Jeanne d'Arc" && g.inf["Orléans"]?.A > 0) return true; // Orléans menacée : Influence anglaise sur place
   // Variante « prérequis souple » : il suffit que la carte prérequise soit sortie (jouée pour son événement ou ses OPS)
-  return !!g.joues[k.prerequis] || (g.prerequisSouple && !!g.sortis[k.prerequis]);
+  return k.prerequis.split(" ou ").some(p => !!g.joues[p] || (g.prerequisSouple && !!g.sortis[p])); // « A ou B » : l'un des deux suffit
 }
 export function evenementPossible(D, g, c, id) {
   const k = carte(D, id);
@@ -379,7 +381,7 @@ const HORS_SIGNATURE = new Set(["graine", "journal", "stats", "_ctx", "joues", "
 export const signatureEtat = g => JSON.stringify(g, (k, v) => HORS_SIGNATURE.has(k) ? undefined : v);
 // cartes dont l'effet tient au seul fait d'avoir été jouées (règle lue ailleurs, ou prérequis d'une autre carte)
 const MARQUEURS = new Set([HERITAGE, "Grand Schisme d'Occident", "Concile de Constance", "Traité de Troyes", "Bataille de Mauron"]);
-export const effetMarqueur = (D, nom) => MARQUEURS.has(nom) || D.cartes.some(x => x.prerequis === nom);
+export const effetMarqueur = (D, nom) => MARQUEURS.has(nom) || D.cartes.some(x => x.prerequis && x.prerequis.split(" ou ").includes(nom));
 export function resoudreEvenement(D, g, joueur, id) {
   const k = carte(D, id);
   g._ctx = k.decompte ? `Décompte ${k.decompte}` : `Évt ${k.nom}`;
@@ -456,6 +458,7 @@ function piocher(D, g, c, taille) {
 export function jouerTour(D, g) {
   const p = g.tour <= 3 ? 1 : g.tour <= 7 ? 2 : 3;
   if (p !== g.phase) { g.phase = p; ajouterPhase(D, g, p); }
+  if (g.tour === 4 && g.statuts.roiCaptif) { g.statuts.roiCaptif = false; etape(g, { k: "info", camp: F, txt: "Jean II rentre en France contre rançon : fin du « Roi captif »." }); }
   if (g.tour === 8) { delete g.statuts.cherbourgBrest; delete g.statuts.owain; } // la révolte galloise s'éteint vers 1415
   g.tourFlags = {}; g.militaire = { A: 0, F: 0 }; g.diplo = { A: false, F: false }; g.legitTente = { A: false, F: false };
   treve(D, g, 1);
@@ -522,6 +525,7 @@ function finDeTour(D, g) {
     if (c === F && g.statuts.taille) rev += 2;
     if (c === F && g.statuts.jacquesCoeur) rev += 1;
     if (c === A && g.statuts.bedford) rev += 2;
+    if (c === A && g.statuts.artevelde) rev += 1; // laine flamande (Jacques van Artevelde)
     if (rallie(g, "Flandre") === c) rev += 2; else if (penche(g, "Flandre") === c) rev += 1; // laine flamande (Bourgogne après la fusion)
     if (penche(g, "Écosse") === adv(c)) rev -= 1; // frontière écossaise à garder
     g.stats.tresorPerdu[c] += Math.max(0, g.tresor[c] + Math.max(0, rev) - 12);
