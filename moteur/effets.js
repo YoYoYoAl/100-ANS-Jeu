@@ -3,13 +3,17 @@
 // ou le joueur qui l'a jouée pour une carte neutre). Textes de référence : cartes.md.
 import {
   A, F, adv, zone, ajouter, retirer, forcerControle, placerLibre, retirerChoisi, treve, crise, tresor,
-  vp, legit, loy, versCamp, assaut, bataille, controle, DECIDEURS, de,
-} from "./regles.js?v=fec60982";
+  vp, legit, loy, versCamp, assaut, bataille, controle, DECIDEURS, de, assautsInterdits, terminer,
+} from "./regles.js?v=ef8d3d6b";
 
 const inf = (D, g, c, n, z) => placerLibre(D, g, c, n, zone(D, z));
 const perd = (D, g, c, n, z) => retirerChoisi(D, g, c, n, zone(D, z));
+// Assaut gratuit d'événement : jamais en Angleterre, ni là où une carte l'interdit ce tour.
+// Une carte qui nomme sa zone passe outre la protection de la Trêve ; sans zone (La Hire), toutes les interdictions s'appliquent.
 const assautGratuit = (D, g, c, ops, z, sansTreve = true) => {
-  const cibles = zone(D, z).filter(n => g.inf[n][adv(c)] > 0);
+  const nommee = !!(z.r || z.p || z.l);
+  const cibles = zone(D, z).filter(n => g.inf[n][adv(c)] > 0 && D.lieux[n].region !== "Angleterre"
+    && (nommee ? !(assautsInterdits(D, { ...g, treve: 5 }, n, c)) : !assautsInterdits(D, g, n, c)));
   if (!cibles.length) return false;
   const n = DECIDEURS[c].cibleAssaut(D, g, c, ops, cibles);
   return assaut(D, g, c, ops, n, { gratuit: true, sansTreve });
@@ -39,7 +43,7 @@ export const EFFETS = {
   "Trêve d'Esplechin": (D, g, c) => { treve(D, g, 1); loy(g, "Papauté", versCamp(c, 1)); },
   "Gabelle du sel": (D, g) => { g.statuts.gabelle = true; crise(g, 1); },
   "Guerre de succession de Bretagne": (D, g, c) => { inf(D, g, c, 3, { r: "Bretagne" }); },
-  "Jeanne la Flamme": (D, g) => { inf(D, g, A, 3, { r: "Bretagne" }); g.tourFlags.aucunAssautBretagne = true; },
+  "Jeanne la Flamme": (D, g) => { inf(D, g, A, 3, { r: "Bretagne" }); g.tourFlags.aucunAssautBretagneF = true; },
   "Charles de Blois": (D, g) => { ajouter(g, F, "Rennes", 2); ajouter(g, F, "Nantes"); },
   "Trêve de Malestroit": (D, g) => { treve(D, g, 1); g.tourFlags.aucunAssautBretagne = true; },
   "Faillite des Bardi et des Peruzzi": (D, g) => tresor(g, A, -3),
@@ -91,11 +95,11 @@ export const EFFETS = {
   "Montiel": (D, g) => loy(g, "Castille", 3),
   "Appel des seigneurs gascons": (D, g) => inf(D, g, F, 4, { r: "Guyenne" }),
   "Confiscation de l'Aquitaine": (D, g) => { treve(D, g, -1); inf(D, g, F, 2, { p: ["Poitou", "Aunis", "Limousin"] }); },
-  "Fondation de la Bastille": () => {},
+  "Fondation de la Bastille": (D, g) => { inf(D, g, F, 1, { l: ["Paris"] }); g.statuts.bastille = true; },
   "Sac de Limoges": (D, g) => { legit(g, A, -1); inf(D, g, F, 2, { p: ["Limousin"] }); },
   "Du Guesclin connétable": (D, g) => { g.statuts.duGuesclin = true; },
   "Bataille de Pontvallain": (D, g) => { assautGratuit(D, g, F, 2, { p: ["Maine", "Touraine"] }); },
-  "Bataille de La Rochelle": (D, g) => { g.statuts.manche = null; inf(D, g, F, 2, { p: ["Poitou", "Aunis"] }); },
+  "Bataille de La Rochelle": (D, g) => { g.statuts.manche = null; if (g.statuts.mancheJusque) g.statuts.mancheAvant = null; inf(D, g, F, 2, { p: ["Poitou", "Aunis"] }); },
   "Grande chevauchée de Jean de Gand": (D, g) => { perd(D, g, F, 3, { sauf: [] }); tresor(g, A, -1); },
   "Trêve de Bruges": (D, g, c) => { treve(D, g, 1); loy(g, "Papauté", versCamp(c, 1)); },
   "Mort du Prince Noir": (D, g) => legit(g, A, -1),
@@ -122,7 +126,7 @@ export const EFFETS = {
   "Révolte cabochienne": (D, g) => { crise(g, 1); perd(D, g, F, 2, { r: "Île-de-France" }); },
   "Concile de Constance": (D, g, c) => loy(g, "Papauté", versCamp(c, 2)),
   // ------------------------------------------------ phase III
-  "Bataille de la Seine": (D, g) => { g.statuts.manche = A; },
+  "Bataille de la Seine": (D, g) => { if (!g.statuts.mancheJusque) g.statuts.mancheAvant = g.statuts.manche ?? null; g.statuts.manche = A; g.statuts.mancheJusque = g.tour + 1; },
   "Prise de Caen": (D, g) => { forcerControle(D, g, A, "Caen"); ajouter(g, A, "Évreux"); },
   "Henri V entre dans Paris": (D, g) => { ajouter(g, A, "Paris", 3); legit(g, A, 1); },
   "Prise du Mans": (D, g) => { forcerControle(D, g, A, "Le Mans"); inf(D, g, A, 1, { r: "Normandie" }); },
@@ -173,7 +177,7 @@ export const EFFETS = {
   "Révolte de Jack Cade": (D, g) => { tresor(g, A, -2); malusProchainTour(g, A); },
   "Prise de Bordeaux": (D, g) => { forcerControle(D, g, F, "Bordeaux"); forcerControle(D, g, F, "Bayonne"); },
   "Talbot à Bordeaux": (D, g) => { g.inf.Bordeaux.F = 0; forcerControle(D, g, A, "Bordeaux"); inf(D, g, A, 1, { r: "Guyenne" }); },
-  "Bataille de Castillon": (D, g) => bataille(D, g, F, 4, () => { toutRetirer(D, g, A, { r: "Guyenne" }); }),
+  "Bataille de Castillon": (D, g) => bataille(D, g, F, 4, () => { toutRetirer(D, g, A, { r: "Guyenne" }); if (["Bordeaux", "Rouen", "Paris"].every(n => controle(D, g, n) === F)) terminer(g, F, "Castillon : Bordeaux, Rouen et Paris"); }),
   "Folie d'Henri VI": (D, g) => legit(g, A, -2),
   "Procès de Jacques Cœur": (D, g) => { g.statuts.jacquesCoeur = false; tresor(g, F, -2); },
 };

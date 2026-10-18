@@ -211,7 +211,7 @@ select{font:inherit;padding:3px 6px;background:var(--velin);color:var(--encre);b
 .carte{display:grid;grid-template-rows:auto 1fr;background:var(--velin);border:2px solid var(--sepia);border-radius:6px;overflow:hidden;text-align:left;padding:0;color:var(--encre);scroll-snap-align:start;transition:transform .15s,box-shadow .15s}
 .carte.jouable:hover{transform:translateY(-3px);box-shadow:0 4px 10px var(--ombre)}
 .carte.A{border-color:var(--gueules)} .carte.F{border-color:var(--azur)} .carte.N{border-color:var(--sepia)} .carte.S{border-color:var(--or)}
-.carte .img{aspect-ratio:20/9;max-width:100%;background:var(--velin-2) center 30%/cover no-repeat;position:relative}
+.carte .img{aspect-ratio:16/9;max-width:100%;background:var(--velin-2) center 30%/cover no-repeat;position:relative}
 .carte .ops{position:absolute;top:4px;left:4px;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-family:var(--f-titre);font-size:1.1rem;color:var(--blanc);border:2px solid var(--or)}
 .carte.A .ops{background:var(--gueules)} .carte.F .ops{background:var(--azur)} .carte.N .ops{background:var(--sepia)} .carte.S .ops{background:var(--or);color:var(--encre)}
 .carte .badge{position:absolute;bottom:4px;right:4px;font-family:var(--f-label);font-size:.64rem;letter-spacing:.03em;padding:0 5px;border-radius:3px;background:var(--velin);border:1px solid var(--sepia);display:inline-flex;gap:3px;align-items:center}
@@ -244,8 +244,8 @@ select{font:inherit;padding:3px 6px;background:var(--velin);color:var(--encre);b
 .carte.jouable{cursor:pointer}
 .carte:not(.jouable){cursor:default}
 .carte .decompte{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:4px;font-family:var(--f-titre);font-size:1.05rem;line-height:1.05;background:repeating-linear-gradient(45deg,color-mix(in srgb,var(--rc) 25%,var(--velin)) 0 8px,var(--velin) 8px 16px);color:var(--encre)}
-.main.compacte .carte .img{aspect-ratio:auto;height:46px}
-.main.mini .carte .img{aspect-ratio:auto;height:28px}
+.main.compacte .carte .img{aspect-ratio:auto;height:84px}
+.main.mini .carte .img{aspect-ratio:auto;height:84px}
 .main.compacte .carte .decompte > *,.main.mini .carte .decompte > *{display:none}
 .main.mini .carte .ops{width:22px;height:22px;font-size:.95rem;top:2px;left:3px}
 .main.mini .carte .badge{bottom:3px}
@@ -494,7 +494,7 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 <tr>
 <td><strong>Reconquête</strong> (victoire française automatique)</td>
 <td>À la fin de chaque tour, juste après la double monarchie</td>
-<td>La France gagne si elle contrôle <strong>Bordeaux, Rouen et Paris</strong>. Calais peut rester anglaise.</td>
+<td>La France gagne si elle contrôle <strong>Bordeaux, Rouen et Paris</strong>. Calais peut rester anglaise. Exception : une « Bataille de Castillon » gagnée vérifie cette condition <strong>aussitôt</strong>, sans attendre la fin du tour.</td>
 </tr>
 <tr>
 <td><strong>Décompte final</strong></td>
@@ -804,7 +804,7 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 <p>Un camp a la maîtrise de la Manche :</p>
 <ul>
 <li>si la <strong>Castille lui est ralliée</strong> (+3 pour la France, −3 pour l'Angleterre) ;</li>
-<li>ou si un événement la lui donne. La victoire anglaise à la « Bataille de l'Écluse » et la « Bataille de la Seine » la donnent à l'Angleterre ; la « Bataille de La Rochelle » l'annule. Tant qu'un événement a fixé la maîtrise, il l'emporte sur la Castille.</li>
+<li>ou si un événement la lui donne. La victoire anglaise à la « Bataille de l'Écluse » et la « Bataille de la Seine » (jusqu'à la fin du tour suivant, puis la maîtrise revient à son état d'avant) la donnent à l'Angleterre ; la « Bataille de La Rochelle » l'annule. Tant qu'un événement a fixé la maîtrise, il l'emporte sur la Castille.</li>
 </ul>
 <hr />
 <h2 id="r-5-deroulement-d-un-tour">5. Déroulement d'un tour</h2>
@@ -986,8 +986,12 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 <td>−1 OPS sur chaque carte jouée par la France pour ses OPS.</td>
 </tr>
 <tr>
-<td>Écosse ralliée à l'adversaire, « Owain Glyndŵr » (contre l'Angleterre), « Flotte d'invasion de L'Écluse » (contre l'Angleterre)</td>
-<td>−1 OPS sur la prochaine carte jouée pour ses OPS. Ces malus ne se cumulent pas entre eux.</td>
+<td>Écosse ralliée à l'adversaire, « Owain Glyndŵr » (contre l'Angleterre)</td>
+<td>−1 OPS sur la <strong>première carte du tour</strong>. Si cette carte est jouée pour son événement, le malus est perdu.</td>
+</tr>
+<tr>
+<td>« Flotte d'invasion de L'Écluse » (contre l'Angleterre)</td>
+<td>−1 OPS sur la prochaine carte anglaise. Ces malus ne se cumulent pas entre eux.</td>
 </tr>
 <tr>
 <td>« Mort d'Édouard III », « Mort d'Henri V », « Révolte de Jack Cade »</td>
@@ -1053,8 +1057,8 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 <tr>
 <td>Révolte galloise</td>
 <td>Owain Glyndŵr</td>
-<td>−1 OPS sur la première carte anglaise jouée pour ses OPS, chaque tour</td>
-<td>« Bataille de Shrewsbury ».</td>
+<td>−1 OPS sur la première carte anglaise de chaque tour</td>
+<td>« Bataille de Shrewsbury », ou le début de la phase III (tour 8).</td>
 </tr>
 <tr>
 <td>Calais imprenable</td>
@@ -1065,13 +1069,25 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 <tr>
 <td>Bastille</td>
 <td>Fondation de la Bastille</td>
-<td>Paris a une défense d'au moins 4</td>
+<td>+1 Influence française à Paris, puis −1 aux Assauts anglais sur Paris</td>
 <td>Permanent.</td>
 </tr>
 <tr>
+<td>Manche anglaise</td>
+<td>Bataille de la Seine</td>
+<td>Maîtrise de la Manche pour l'Angleterre</td>
+<td>Fin du tour suivant.</td>
+</tr>
+<tr>
 <td>Bretagne protégée</td>
-<td>Jeanne la Flamme, Trêve de Malestroit</td>
+<td>Trêve de Malestroit</td>
 <td>Aucun Assaut en Bretagne</td>
+<td>Fin du tour.</td>
+</tr>
+<tr>
+<td>Hennebont</td>
+<td>Jeanne la Flamme</td>
+<td>Aucun Assaut <strong>français</strong> en Bretagne</td>
 <td>Fin du tour.</td>
 </tr>
 <tr>
@@ -1169,7 +1185,7 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 <li>La Trêve passe de 5 à 4. L'Angleterre a engagé 4 OPS militaires ce tour.</li>
 </ol>
 <p>Si la même attaque visait Évreux (lieu ouvert, défense 1), le coût ne serait que de 1 Trésor, la Trêve ne bougerait pas, mais tout surplus serait perdu : l'Assaut ne ferait que retirer de l'Influence française.</p>
-<p><strong>Assauts gratuits des événements.</strong> Certains événements donnent un Assaut gratuit (par exemple « Chevauchée du Cambrésis », « Derby en Gascogne », « Bataille de Pontvallain », « La Hire et Xaintrailles »). Il se résout avec la même formule, mais <strong>ne coûte pas de Trésor</strong>, <strong>ne fait pas baisser la Trêve</strong>, vise n'importe quel lieu de la zone indiquée par la carte où l'adversaire a de l'Influence, sans tenir compte des interdictions de l'Assaut ordinaire (régions protégées par la Trêve, trêves du tour), et compte pour les chevauchées.</p>
+<p><strong>Assauts gratuits des événements.</strong> Certains événements donnent un Assaut gratuit (par exemple « Chevauchée du Cambrésis », « Derby en Gascogne », « Bataille de Pontvallain », « La Hire et Xaintrailles »). Il se résout avec la même formule, mais <strong>ne coûte pas de Trésor</strong>, <strong>ne fait pas baisser la Trêve</strong>, et compte pour les chevauchées. Il ne peut jamais viser l'Angleterre, ni un lieu interdit ce tour par une carte (trêves, Jeanne la Flamme, Calais imprenable). Une carte qui <strong>nomme sa zone</strong> (Guyenne, Picardie…) passe outre la protection de la Trêve : la chevauchée va où la carte le dit. Une carte <strong>sans zone</strong> (« La Hire et Xaintrailles ») respecte aussi la Trêve.</p>
 <h3 id="r-7-4-siege">7.4 Siège</h3>
 <p>Le Siège est l'équivalent du réalignement de <em>Twilight Struggle</em> : une série de jets opposés.</p>
 <p><strong>Cible.</strong> Un lieu où l'adversaire a au moins 1 Influence, avec les mêmes interdictions que pour l'Assaut (Angleterre, régions protégées par la Trêve, Bretagne ou partout selon les trêves du tour, Calais imprenable).</p>
@@ -1305,7 +1321,7 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 </tr>
 </tbody>
 </table></div>
-<p>Si la Papauté est à ±2 ou plus de votre côté, le jet réussit sur 1 de plus (par exemple 5 ou moins pour les cases 1 à 4).</p>
+<p>Si la Papauté est à ±2 ou plus de votre côté, le jet réussit sur 1 de plus (par exemple 5 ou moins pour les cases 1 à 4). Pendant le Grand Schisme, il faut en plus que Rome soit à ±2 ou plus du même côté.</p>
 <p><strong>Exemple.</strong> La France est à 4 et vise la case 5 : il lui faut une carte d'au moins 3 OPS (une carte de 2 OPS avec levée ne suffit pas). Elle réussit sur 3 ou moins, soit 3 chances sur 6, ou 4 chances sur 6 si la Papauté est à +2 ou plus.</p>
 <hr />
 <h2 id="r-8-batailles">8. Batailles</h2>
@@ -1614,7 +1630,7 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 <p>L'effondrement a lieu avant la baisse de 1 de la Crise.</p>
 <h3 id="r-11-3-legitimite">11.3 Légitimité</h3>
 <p>La piste de Légitimité de chaque camp va de 0 à 8. Elle monte par l'action Légitimité (section <a href="#r-7-6-legitimite" data-sec>7.6</a>), par les événements, et par la Papauté ralliée ; elle baisse par les événements.</p>
-<p><strong>Paliers.</strong> Le premier camp à atteindre une case reçoit son bonus ; le second reçoit le bonus réduit quand il en existe un. Si une piste redescend sous une case puis l'atteint de nouveau, le camp reçoit encore le bonus réduit (+1 pour la case 2, +2 pour la case 8), même s'il avait été le premier.</p>
+<p><strong>Paliers.</strong> Le premier camp à atteindre une case reçoit son bonus ; le second reçoit le bonus réduit quand il en existe un. Chaque camp ne reçoit le bonus d'une case <strong>qu'une fois</strong> dans la partie : si sa piste redescend puis remonte, il ne marque rien de plus.</p>
 <div class="rg-table"><table>
 <thead>
 <tr>
@@ -1705,13 +1721,13 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 <tr>
 <td>Papauté</td>
 <td>+1</td>
-<td>Le jet de Légitimité réussit sur 1 de plus</td>
+<td>Le jet de Légitimité réussit sur 1 de plus (pendant le Grand Schisme, seulement si Rome est aussi à ±2 de ce côté)</td>
 <td>+1 Légitimité par tour ; Trêve +1 en fin de tour si elle est à 3 ou moins. Pendant le Grand Schisme, il faut aussi Rome ralliée au même camp</td>
 </tr>
 <tr>
 <td>Rome</td>
 <td>0 (inactive)</td>
-<td>Aucun effet propre</td>
+<td>Pendant le Grand Schisme, condition du bonus de Légitimité de la Papauté</td>
 <td>Pendant le Grand Schisme, condition pour que la Papauté ralliée agisse</td>
 </tr>
 </tbody>
@@ -1721,7 +1737,7 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 <ul>
 <li>La carte « <strong>Grand Schisme d'Occident</strong> » ouvre le Schisme : Rome devient une faction active, placée à <strong>−2</strong> (côté anglais). La Papauté (Avignon) monte d'un cran vers la France, puis d'un cran vers le joueur qui a joué la carte.</li>
 <li>Pendant le Schisme, on peut viser <strong>Rome</strong> par la Diplomatie comme les autres factions.</li>
-<li>La Papauté ralliée ne donne ses effets de fin de tour que si Rome est ralliée au <strong>même</strong> camp.</li>
+<li>La Papauté ralliée ne donne ses effets de fin de tour que si Rome est ralliée au <strong>même</strong> camp, et son bonus au jet de Légitimité (à ±2) demande Rome à ±2 du même côté.</li>
 <li>La carte « <strong>Concile de Constance</strong> » clôt le Schisme : la Papauté glisse de 2 crans vers le joueur qui l'a jouée, et Rome redevient inactive.</li>
 </ul>
 <h3 id="r-12-4-la-fusion-flandre-bourgogne-1384">12.4 La fusion Flandre-Bourgogne (1384)</h3>

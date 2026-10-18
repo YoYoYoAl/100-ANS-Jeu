@@ -153,6 +153,9 @@ export function legit(g, c, d) {
 function palier(g, c, k) {
   const premier = !g.paliers[k];
   if (premier) g.paliers[k] = c;
+  g.paliersCamp = g.paliersCamp || { A: {}, F: {} }; // un seul bonus par camp et par case, même si la piste redescend puis remonte
+  if (g.paliersCamp[c][k]) return;
+  g.paliersCamp[c][k] = true;
   if (k === 2) vp(g, c, premier ? 2 : 1);
   if (k === 8) vp(g, c, premier ? 4 : 2);
 }
@@ -175,6 +178,9 @@ export function lieuxFaction(D, g, f) {
   return [];
 }
 // factions qu'on peut courtiser : plus de Flandre après la fusion, Rome seulement pendant le Grand Schisme
+// Papauté à ±2 de son côté ; pendant le Grand Schisme, il faut aussi Rome à ±2 du même côté
+export const schismeEnCours = g => !!(g.joues["Grand Schisme d'Occident"] && !g.joues["Concile de Constance"]);
+export const papeFavorable = (g, c) => penche(g, "Papauté") === c && (!schismeEnCours(g) || penche(g, "Rome") === c);
 export const factionsActives = g => FACTIONS.filter(f => !(f === "Flandre" && fusionFlandre(g)) && (f !== "Rome" || (g.joues["Grand Schisme d'Occident"] && !g.joues["Concile de Constance"])));
 
 export function terminer(g, gagnant, raison) {
@@ -219,18 +225,19 @@ export function actionInfluence(D, g, c, ops, choix) {
   }
   return refus;
 }
-export function assautsInterdits(D, g, n) {
+export function assautsInterdits(D, g, n, c = null) {
   const r = D.lieux[n].region;
   if (r === "Angleterre") return true;
   if (g.tourFlags.aucunAssaut) return true;
   if (g.tourFlags.aucunAssautBretagne && r === "Bretagne") return true;
+  if (g.tourFlags.aucunAssautBretagneF && c === F && r === "Bretagne") return true; // Jeanne la Flamme
   if (g.treve <= 4 && r === "Île-de-France") return true;
   if (g.treve <= 3 && r === "Guyenne") return true;
   if (g.treve <= 2 && r === "Normandie") return true;
   if (n === "Calais" && g.statuts.calaisImprenable) return true;
   return false;
 }
-export function ciblesAssaut(D, g, c) { return D.noms.filter(n => g.inf[n][adv(c)] > 0 && !assautsInterdits(D, g, n)); }
+export function ciblesAssaut(D, g, c) { return D.noms.filter(n => g.inf[n][adv(c)] > 0 && !assautsInterdits(D, g, n, c)); }
 // détail des bonus d'Assaut : [libellé, valeur] (affiché par l'interface)
 export function bonusAssautDetail(D, g, c, n) {
   const b = [];
@@ -239,6 +246,7 @@ export function bonusAssautDetail(D, g, c, n) {
   if (c === F && g.statuts.duGuesclin) b.push(["Du Guesclin connétable", 1]);
   if (c === F && g.statuts.compagnies) b.push(["Compagnies d'ordonnance", 1]);
   if (c === F && g.statuts.bureau && D.lieux[n].pf) b.push(["Les frères Bureau (place forte)", 1]);
+  if (c === A && g.statuts.bastille && n === "Paris") b.push(["la Bastille", -1]);
   if (rallie(g, "Bretagne") === c && ["Bretagne", "Normandie"].includes(D.lieux[n].region)) b.push(["Bretagne ralliée", 1]);
   else if (penche(g, "Bretagne") === c && D.lieux[n].region === "Bretagne") b.push(["Bretagne favorable (±2)", 1]);
   if (penche(g, "Navarre") === c && ["Évreux", "Cherbourg"].includes(n)) b.push(["Navarre favorable", 1]);
@@ -249,6 +257,7 @@ export function bonusAssautDetail(D, g, c, n) {
 export function bonusAssaut(D, g, c, n) { return bonusAssautDetail(D, g, c, n).reduce((s, x) => s + x[1], 0); }
 export const coutAssaut = (D, g, n) => g.regles?.coutAssaut ? (D.lieux[n].pf ? 2 : 1) : 0; // règle Twilight : l'Assaut (coup d'État) ne coûte rien
 export function assaut(D, g, c, ops, n, { depense = 0, gratuit = false, sansTreve = false } = {}) {
+  if (!gratuit && assautsInterdits(D, g, n, c)) return false;
   if (!gratuit) { const k = coutAssaut(D, g, n); if (g.tresor[c] < k) return false; tresor(g, c, -k); }
   if (c === A && g.statuts.grandFerre) { // Le Grand Ferré annule le prochain Assaut anglais
     g.statuts.grandFerre = false; g.militaire[c] += ops; g.stats.assauts[c]++;
@@ -272,7 +281,7 @@ export function assaut(D, g, c, ops, n, { depense = 0, gratuit = false, sansTrev
 }
 export function siege(D, g, c, n, depense = 0) {
   const o = adv(c);
-  const dep = Math.min(depense, g.tresor[c]); tresor(g, c, -dep);
+  const dep = Math.min(depense, 4, g.tresor[c]); tresor(g, c, -dep);
   const vois = camp => D.lieux[n].voisins.filter(v => controle(D, g, v) === camp).length, sup = camp => (g.inf[n][camp] > g.inf[n][adv(camp)] ? 1 : 0);
   const fac = camp => ["Flandre", "Bretagne", "Bourgogne", "Navarre"].filter(f => !(f === "Flandre" && fusionFlandre(g)) && penche(g, f) === camp && lieuxFaction(D, g, f).includes(n));
   const mod = camp => vois(camp) + sup(camp) + fac(camp).length;
@@ -283,7 +292,7 @@ export function siege(D, g, c, n, depense = 0) {
   etape(g, { k: "siege", camp: c, lieu: n, da, ma, dep, ra, dd, md, rd, ...det });
 }
 export function diplomatie(D, g, c, ops, f, depense = 0) {
-  const dep = Math.min(depense, g.tresor[c]); tresor(g, c, -dep);
+  const dep = Math.min(depense, 4, g.tresor[c]); tresor(g, c, -dep);
   const d = de(g), bonus = (g.paliers[5] === c ? 1 : 0) + (Math.abs(g.loy[f]) === 2 && Math.sign(g.loy[f]) === (c === F ? 1 : -1) ? 1 : 0);
   let r = d + ops + Math.floor(dep / 2) + bonus;
   g.diplo[c] = true; g.stats.diplomatie[c]++;
@@ -295,10 +304,10 @@ export function tentativeLegit(D, g, c, id) {
   const cible = g.legit[c] + 1;
   if (cible > 8 || opsCarte(D, g, c, id) < REQ_LEGIT[cible]) return false;
   g.legitTente[c] = true; g.stats.legitimite[c]++;
-  const seuil = JET_LEGIT(cible) + (penche(g, "Papauté") === c ? 1 : 0); // Papauté favorable : le jet est plus facile
+  const seuil = JET_LEGIT(cible) + (papeFavorable(g, c) ? 1 : 0); // Papauté favorable : le jet est plus facile
   const d = de(g), ok = d <= seuil;
   if (ok) legit(g, c, 1);
-  etape(g, { k: "legit", camp: c, cible, d, seuil, ok, pape: penche(g, "Papauté") === c });
+  etape(g, { k: "legit", camp: c, cible, d, seuil, ok, pape: papeFavorable(g, c) });
   return true;
 }
 export function bataille(D, g, c, ops, siVictoire) {
@@ -350,7 +359,7 @@ export function decompter(D, g, r) {
 }
 
 // ---------------------------------------------------------------- jouer une carte
-import { EFFETS } from "./effets.js?v=fec60982";
+import { EFFETS } from "./effets.js?v=ef8d3d6b";
 export function prerequisOk(D, g, k) {
   if (!k.prerequis) return true;
   if (k.prerequis === "Roi captif") return !!g.statuts.roiCaptif;
@@ -369,7 +378,7 @@ export function evenementPossible(D, g, c, id) {
 const HORS_SIGNATURE = new Set(["graine", "journal", "stats", "_ctx", "joues", "sortis"]);
 export const signatureEtat = g => JSON.stringify(g, (k, v) => HORS_SIGNATURE.has(k) ? undefined : v);
 // cartes dont l'effet tient au seul fait d'avoir été jouées (règle lue ailleurs, ou prérequis d'une autre carte)
-const MARQUEURS = new Set(["Fondation de la Bastille", HERITAGE, "Grand Schisme d'Occident", "Concile de Constance", "Traité de Troyes", "Bataille de Mauron"]);
+const MARQUEURS = new Set([HERITAGE, "Grand Schisme d'Occident", "Concile de Constance", "Traité de Troyes", "Bataille de Mauron"]);
 export const effetMarqueur = (D, nom) => MARQUEURS.has(nom) || D.cartes.some(x => x.prerequis === nom);
 export function resoudreEvenement(D, g, joueur, id) {
   const k = carte(D, id);
@@ -400,6 +409,7 @@ export function jouer(D, g, c, action) {
   let evt = false;
   if (action.mode === "evenement") {
     etape(g, { k: "carte", camp: c, id, mode: "evenement" });
+    g.opsMalus[c] = 0; // le malus (Écosse ralliée, Owain) frappe la première carte du tour, même jouée pour son événement
     evt = resoudreEvenement(D, g, c, id);
   } else {
     // « différé » : carte adverse dont l'événement se joue d'abord ; le joueur choisit ensuite l'usage de ses OPS
@@ -415,6 +425,7 @@ export function jouer(D, g, c, action) {
       apresEvt = true;
     }
     let ops = opsCarte(D, g, c, id);
+    g.opsMalus[c] = 0; // consommé par cette carte ; un malus posé ensuite par l'événement vaut pour la carte suivante
     const levee = !!(action.levee && g.regles?.levee && g.tresor[c] >= 3 && action.mode !== "legitimite");
     if (levee) { tresor(g, c, -3); ops += 1; } // lever des compagnies
     const declenche = k.camp === adv(c) && action.mode !== "legitimite" && !apresEvt;
@@ -423,12 +434,11 @@ export function jouer(D, g, c, action) {
     if (!g.fin) {
       if (action.mode === "influence") { const refus = actionInfluence(D, g, c, ops, action.cibles); etape(g, { k: "influence", camp: c, ops, cibles: action.cibles, refus }); }
       else if (action.mode === "assaut") assaut(D, g, c, ops, action.cible, { depense: action.depense || 0 });
-      else if (action.mode === "siege") for (let i = 0; i < ops && !g.fin; i++) { const n = action.cibles[i] || action.cibles[0]; if (g.inf[n][adv(c)] > 0) siege(D, g, c, n, i === 0 ? action.depense || 0 : 0); }
+      else if (action.mode === "siege") for (let i = 0; i < ops && !g.fin; i++) { const n = action.cibles[i] || action.cibles[0]; if (g.inf[n][adv(c)] > 0 && !assautsInterdits(D, g, n, c)) siege(D, g, c, n, i === 0 ? action.depense || 0 : 0); }
       else if (action.mode === "diplomatie") diplomatie(D, g, c, ops, action.cible, action.depense || 0);
       else if (action.mode === "legitimite") tentativeLegit(D, g, c, id);
     }
     if (declenche && action.ordre === "apres" && !g.fin) evt = resoudreEvenement(D, g, adv(c), id);
-    g.opsMalus[c] = 0;
   }
   defausser(D, g, id, evt);
 }
@@ -446,7 +456,7 @@ function piocher(D, g, c, taille) {
 export function jouerTour(D, g) {
   const p = g.tour <= 3 ? 1 : g.tour <= 7 ? 2 : 3;
   if (p !== g.phase) { g.phase = p; ajouterPhase(D, g, p); }
-  if (g.tour === 8) { delete g.statuts.cherbourgBrest; }
+  if (g.tour === 8) { delete g.statuts.cherbourgBrest; delete g.statuts.owain; } // la révolte galloise s'éteint vers 1415
   g.tourFlags = {}; g.militaire = { A: 0, F: 0 }; g.diplo = { A: false, F: false }; g.legitTente = { A: false, F: false };
   treve(D, g, 1);
   const main = p === 1 ? 8 : 9, rounds = p === 1 ? 6 : 7;
@@ -541,6 +551,7 @@ function finDeTour(D, g) {
   if (controle(D, g, "Paris") === A && controle(D, g, "Reims") === A) { terminer(g, A, "Paris et Reims (double monarchie)"); return; }
   if (["Bordeaux", "Rouen", "Paris"].every(n => controle(D, g, n) === F)) { terminer(g, F, "Bordeaux, Rouen et Paris"); return; }
   g.opsMalusTour = g.prochainMalus || { A: 0, F: 0 }; g.prochainMalus = { A: 0, F: 0 };
+  if (g.statuts.mancheJusque && g.tour >= g.statuts.mancheJusque) { g.statuts.manche = g.statuts.mancheAvant ?? null; delete g.statuts.mancheJusque; delete g.statuts.mancheAvant; } // fin de « Bataille de la Seine »
   if (g.tour === 10) {
     g._ctx = "Décompte final";
     etape(g, { k: "info", txt: "Fin du dixième tour : décompte final de toutes les régions." });
