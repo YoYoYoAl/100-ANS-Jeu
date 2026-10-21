@@ -1,5 +1,5 @@
 {
- "g0": 9001,
+ "g0": 11001,
  "N": 1000,
  "variantes": [
   {
@@ -54,104 +54,7 @@
    }
   },
   {
-   "nom": "v246",
-   "options": {
-    "libreA": 7,
-    "valeursRegion": {
-     "Val de Loire": [
-      2,
-      4,
-      6
-     ]
-    }
-   }
-  },
-  {
-   "nom": "v246_papeA",
-   "options": {
-    "libreA": 7,
-    "papeDepart": "A",
-    "valeursRegion": {
-     "Val de Loire": [
-      2,
-      4,
-      6
-     ]
-    }
-   }
-  },
-  {
-   "nom": "v246_guy358",
-   "options": {
-    "libreA": 7,
-    "valeursRegion": {
-     "Val de Loire": [
-      2,
-      4,
-      6
-     ],
-     "Guyenne": [
-      3,
-      5,
-      8
-     ]
-    }
-   }
-  },
-  {
-   "nom": "v135_papeA",
-   "options": {
-    "libreA": 7,
-    "papeDepart": "A",
-    "valeursRegion": {
-     "Val de Loire": [
-      1,
-      3,
-      5
-     ]
-    }
-   }
-  },
-  {
-   "nom": "v246_papeA_guy358",
-   "options": {
-    "libreA": 7,
-    "papeDepart": "A",
-    "valeursRegion": {
-     "Val de Loire": [
-      2,
-      4,
-      6
-     ],
-     "Guyenne": [
-      3,
-      5,
-      8
-     ]
-    }
-   }
-  },
-  {
-   "nom": "v246_papeA_idf258",
-   "options": {
-    "libreA": 7,
-    "papeDepart": "A",
-    "valeursRegion": {
-     "Val de Loire": [
-      2,
-      4,
-      6
-     ],
-     "Île-de-France": [
-      2,
-      5,
-      8
-     ]
-    }
-   }
-  },
-  {
-   "nom": "vdl1_papeA",
+   "nom": "vdl2_papeA_paris3",
    "options": {
     "libreA": 7,
     "papeDepart": "A"
@@ -163,14 +66,78 @@
      },
      "Bourges": {
       "F": 1
+     },
+     "Angers": {
+      "F": 0
+     },
+     "Tours": {
+      "F": 0
+     },
+     "Paris": {
+      "F": 3
+     },
+     "Reims": {
+      "F": 2
      }
     }
    }
   },
   {
-   "nom": "vdl1_v246",
+   "nom": "vdl2_papeA_reims2",
    "options": {
     "libreA": 7,
+    "papeDepart": "A"
+   },
+   "patch": {
+    "inf": {
+     "Orléans": {
+      "F": 1
+     },
+     "Bourges": {
+      "F": 1
+     },
+     "Angers": {
+      "F": 0
+     },
+     "Tours": {
+      "F": 0
+     },
+     "Reims": {
+      "F": 2
+     }
+    }
+   }
+  },
+  {
+   "nom": "vdl2_reims2",
+   "options": {
+    "libreA": 7
+   },
+   "patch": {
+    "inf": {
+     "Orléans": {
+      "F": 1
+     },
+     "Bourges": {
+      "F": 1
+     },
+     "Angers": {
+      "F": 0
+     },
+     "Tours": {
+      "F": 0
+     },
+     "Reims": {
+      "F": 2
+     }
+    }
+   }
+  },
+  {
+   "nom": "vdl2_papeA_v246",
+   "options": {
+    "libreA": 7,
+    "papeDepart": "A",
     "valeursRegion": {
      "Val de Loire": [
       2,
@@ -186,6 +153,105 @@
      },
      "Bourges": {
       "F": 1
+     },
+     "Angers": {
+      "F": 0
+     },
+     "Tours": {
+      "F": 0
+     }
+    }
+   }
+  },
+  {
+   "nom": "vdl2b_papeA",
+   "options": {
+    "libreA": 7,
+    "papeDepart": "A"
+   },
+   "patch": {
+    "inf": {
+     "Orléans": {
+      "F": 1
+     },
+     "Bourges": {
+      "F": 1
+     },
+     "Tours": {
+      "F": 0
+     }
+    }
+   }
+  },
+  {
+   "nom": "vdl2_papeA_stdenis0",
+   "options": {
+    "libreA": 7,
+    "papeDepart": "A"
+   },
+   "patch": {
+    "inf": {
+     "Orléans": {
+      "F": 1
+     },
+     "Bourges": {
+      "F": 1
+     },
+     "Angers": {
+      "F": 0
+     },
+     "Tours": {
+      "F": 0
+     },
+     "Saint-Denis": {
+      "F": 0
+     }
+    }
+   }
+  },
+  {
+   "nom": "vdl2",
+   "options": {
+    "libreA": 7
+   },
+   "patch": {
+    "inf": {
+     "Orléans": {
+      "F": 1
+     },
+     "Bourges": {
+      "F": 1
+     },
+     "Angers": {
+      "F": 0
+     },
+     "Tours": {
+      "F": 0
+     }
+    }
+   }
+  },
+  {
+   "nom": "vdl2_paris3_seul",
+   "options": {
+    "libreA": 7
+   },
+   "patch": {
+    "inf": {
+     "Orléans": {
+      "F": 1
+     },
+     "Bourges": {
+      "F": 1
+     },
+     "Angers": {
+      "F": 0
+     },
+     "Tours": {
+      "F": 0
+     },
+     "Paris": {
+      "F": 3
      }
     }
    }
