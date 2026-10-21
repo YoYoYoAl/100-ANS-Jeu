@@ -56,7 +56,7 @@ header.tete h1{font-size:clamp(1.3rem,2.4vw,1.9rem);line-height:1}
 .sequence span.passe{background:color-mix(in srgb,var(--sepia) 14%,var(--velin))}
 .sequence span.ici{background:var(--encre);color:var(--velin);border-color:var(--encre)}
 .sequence .qui{border:0;background:none;padding:0 0 0 6px;color:var(--encre);font-size:.8rem}
-.frise{grid-column:1/-1;display:grid;grid-template-columns:3fr 4fr 3fr auto;gap:6px;min-width:0}
+.frise{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr 1fr 1fr auto;gap:6px;min-width:0}
 .phase{display:grid;grid-template-columns:44px minmax(0,1fr);gap:6px;align-items:center;border:1px solid color-mix(in srgb,var(--sepia) 45%,transparent);border-radius:4px;padding:3px 6px 3px 3px;background:color-mix(in srgb,var(--velin-2) 40%,var(--velin));min-width:0}
 .phase.ici{border-color:var(--or);box-shadow:0 0 0 2px color-mix(in srgb,var(--or) 50%,transparent)}
 .phase img{width:44px;height:44px;object-fit:cover;border-radius:3px;border:1px solid var(--sepia)}
@@ -361,6 +361,11 @@ select{font:inherit;padding:3px 6px;background:var(--velin);color:var(--encre);b
 .hall-tab th{font-family:var(--f-label);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--sepia)}
 .hall-tab .num{text-align:right}
 .hall-tab tr.neuf td{background:color-mix(in srgb,var(--halo) 28%,transparent);font-weight:600}
+/* diaporama de victoire : 13 enluminures en fondu enchaîné, lent zoom, pendant la musique du camp */
+.diapo{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;border:2px solid var(--or);border-radius:6px;background:#1b130c}
+.diapo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.02);transition:opacity 1.2s ease-in-out,transform 6s linear}
+.diapo img.actif{opacity:1;transform:scale(1.12) translate(var(--dx,0),var(--dy,0))}
+@media (prefers-reduced-motion:reduce){.diapo img{transition:opacity .4s}.diapo img.actif{transform:none}}
 @media (prefers-reduced-motion:reduce){.parade-svg *{animation:none!important}.parade-svg .cortege{transform:translateX(420px)}}
 .voile{position:fixed;inset:0;background:color-mix(in srgb,var(--encre) 60%,transparent);display:grid;place-items:center;padding:16px;z-index:20}
 .feuille{background:var(--velin);border:2px solid var(--or);border-radius:6px;max-width:780px;width:100%;max-height:calc(100vh - 32px);overflow:auto;padding:16px 18px;display:grid;gap:10px;box-sizing:border-box}

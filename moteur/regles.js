@@ -8,15 +8,26 @@ export const adv = c => (c === A ? F : A);
 
 const REQ_LEGIT = [0, 2, 2, 3, 3, 3, 4, 4, 4]; // OPS requis pour viser la case n
 const JET_LEGIT = n => (n <= 4 ? 4 : n <= 7 ? 3 : 2);
-const FACTIONS = ["Flandre", "Bretagne", "Bourgogne", "Écosse", "Castille", "Navarre", "Papauté", "Rome"];
+const FACTIONS = ["Flandre", "Bretagne", "Bourgogne", "Écosse", "Castille", "Navarre"];
+// structure de la partie : 4 phases de 3 tours
+export const NB_TOURS = 12;
+export const phaseDe = t => Math.min(4, Math.ceil(t / 3));
+export const PREMIER_TOUR = { 1: 1, 2: 4, 3: 7, 4: 10 };
+// cartes du pape (hors paquet)
+export const PAPE = "Faveur du pape", PAPE_AVIGNON = "Pape d'Avignon", PAPE_ROME = "Pape de Rome";
 
 // ---------------------------------------------------------------- données
+// grandes batailles soumises à la « Fortune des armes » (règle d'AlwwAl du 21/10 : quelques événements seulement)
+export const FORTUNE = new Set(["Bataille de Crécy", "Bataille de Poitiers", "Bataille d'Azincourt", "Bataille de Cocherel", "Bataille de Pontvallain",
+  "Bataille de La Rochelle", "Bataille de Roosebeke", "Bataille de Baugé", "Bataille de Patay", "Bataille de Formigny", "Bataille de Castillon"]);
 export function preparerDonnees(brut) {
   const lieux = {};
   for (const l of brut.lieux) lieux[l.nom] = l;
-  const cartes = brut.cartes.map(c => ({ ...c, decompte: c.camp === "S" ? c.nom.replace("Décompte : ", "") : null }));
+  const cartes = brut.cartes.map(c => ({ ...c, decompte: c.camp === "S" ? c.nom.replace("Décompte : ", "") : null, interdit: c.interdit || [], fin: c.fin ?? 4, statut: c.statut || "obligatoire",
+    militaire: FORTUNE.has(c.nom) }));
   const parNom = Object.fromEntries(cartes.map(c => [c.nom, c]));
-  return { lieux, noms: Object.keys(lieux), cartes, parNom, regions: brut.regions };
+  const idPape = parNom[PAPE]?.id ?? null;
+  return { lieux, noms: Object.keys(lieux), cartes, parNom, regions: brut.regions, idPape };
 }
 
 // ---------------------------------------------------------------- hasard reproductible
@@ -42,25 +53,59 @@ export function nouvellePartie(D, graine = 1, options = {}) {
     tresor: { A: options.tresorA ?? 7, F: options.tresorF ?? 5 },
     legit: { A: options.legitA ?? 0, F: options.legitF ?? 0 },
     paliers: {},
-    loy: { Flandre: -1, Bretagne: 0, Bourgogne: 2, "Écosse": 2, Castille: 1, Navarre: 0, "Papauté": 1, Rome: 0, ...options.loyDepart },
-    mains: { A: [], F: [] }, pioche: [], defausse: [], retirees: [],
-    joues: {}, sortis: {}, prerequisSouple: options.prerequisSouple ?? false, seuil: options.seuilScore ?? 25, regles: { pillage: options.pillage ?? true, revenuReduit: options.revenuReduit ?? true, coutAssaut: options.coutAssaut ?? true, levee: options.levee ?? true, decomptesPhase: options.decomptesPhase ?? null, decomptesGarantis: options.decomptesGarantis ?? true, factions2: options.factions2 ?? true, valeurs: options.valeursRegion ?? null }, statuts: {}, tourFlags: {}, opsMalus: { A: 0, F: 0 }, opsMalusTour: { A: 0, F: 0 },
+    loy: { Flandre: -1, Bretagne: 0, Bourgogne: 2, "Écosse": 2, Castille: 1, Navarre: 0, ...options.loyDepart },
+    mains: { A: [], F: [] }, pioche: [], defausse: [], retirees: [], ecartees: [],
+    pape: { attente: null, bonus: { A: 0, F: 0 } }, // Faveur du pape : camp qui la recevra au tour suivant ; bonus d'OPS en attente
+    paquet: { tirage: options.tirageFacultatives ?? { 1: 33, 2: 34, 3: 30, 4: 18 }, dessus: options.nouvellesDessus ?? 0.4, equilibre: options.tirageEquilibre ?? false, main: options.mains ?? [9, 10], rounds: options.rounds ?? [7, 8] },
+    joues: {}, sortis: {}, prerequisSouple: options.prerequisSouple ?? false, seuil: options.seuilScore ?? 25, regles: { pillage: options.pillage ?? true, revenuReduit: options.revenuReduit ?? true, coutAssaut: options.coutAssaut ?? true, levee: options.levee ?? true, decomptesPhase: options.decomptesPhase ?? null, decomptesGarantis: options.decomptesGarantis ?? true, purge: options.purge ?? false, opsAjust: options.opsAjust ?? null, fortune: options.fortune ?? 1, fortuneCartes: options.fortuneCartes ?? null, uchronie: options.uchronie ?? 5, factions2: options.factions2 ?? true, valeurs: options.valeursRegion ?? null }, statuts: {}, tourFlags: {}, opsMalus: { A: 0, F: 0 }, opsMalusTour: { A: 0, F: 0 },
     militaire: { A: 0, F: 0 }, diplo: { A: false, F: false }, legitTente: { A: false, F: false },
     fin: null, journal: options.journal ? [] : null,
     stats: { evenements: {}, assauts: { A: 0, F: 0 }, sieges: { A: 0, F: 0 }, diplomatie: { A: 0, F: 0 }, legitimite: { A: 0, F: 0 }, influence: { A: 0, F: 0 }, penalitesMil: { A: 0, F: 0 }, decomptes: [], vp: {}, ciblesAssaut: {}, tresorPerdu: { A: 0, F: 0 }, tresorFinTour: [] },
   };
+  g.miseEnPlace = { F: options.libreF ?? 2, A: options.libreA ?? 7 }; // Influence libre de départ, affichée à l'écran
   etape(g, { k: "debut" });
   // Influence libre de la mise en place (Interprétation : placée par le décideur, France d'abord)
   for (const [n, k] of Object.entries(options.infSupF ?? {})) ajouter(g, F, n, k);
-  placerLibre(D, g, F, options.libreF ?? 2, D.noms.filter(n => (options.franceGuyenne || D.lieux[n].region !== "Guyenne") && D.lieux[n].region !== "Angleterre"));
-  placerLibre(D, g, A, options.libreA ?? 9, D.noms.filter(n => (options.libreAGuyenne === false ? ["Flandre", "Bretagne"] : ["Guyenne", "Flandre", "Bretagne"]).includes(D.lieux[n].region) || (D.lieux[n].port && D.lieux[n].region !== "Angleterre")));
+  placerLibre(D, g, F, g.miseEnPlace.F, D.noms.filter(n => (options.franceGuyenne || D.lieux[n].region !== "Guyenne") && D.lieux[n].region !== "Angleterre"));
+  placerLibre(D, g, A, g.miseEnPlace.A, D.noms.filter(n => (options.libreAGuyenne === false ? ["Flandre", "Bretagne"] : ["Guyenne", "Flandre", "Bretagne"]).includes(D.lieux[n].region) || (D.lieux[n].port && D.lieux[n].region !== "Angleterre")));
   ajouterPhase(D, g, 1);
+  if (D.idPape) g.mains[options.papeDepart ?? F].push(D.idPape); // la Faveur du pape commence en main française
   return g;
 }
 
-function ajouterPhase(D, g, p) {
-  const ids = D.cartes.filter(c => (g.regles?.decomptesPhase?.[c.decompte] ?? c.phase) === p).map(c => c.id);
-  g.pioche = melanger(g, g.pioche.concat(ids));
+// Mise en place d'une phase : toutes ses cartes obligatoires et une partie de ses facultatives, tirées camp par camp
+// au prorata (pour ne pas déséquilibrer les OPS) ; les autres sont écartées pour la partie.
+function cartesDePhase(D, g, p) {
+  const dela = D.cartes.filter(c => (g.regles?.decomptesPhase?.[c.decompte] ?? c.phase) === p);
+  const ids = dela.filter(c => c.statut === "obligatoire").map(c => c.id);
+  const fac = dela.filter(c => c.statut === "facultative");
+  const n = Math.min(fac.length, g.paquet?.tirage?.[p] ?? fac.length);
+  const camps = ["A", "F", "N"].map(k => fac.filter(c => c.camp === k));
+  let quotas = camps.map(l => Math.floor(n * l.length / (fac.length || 1)));
+  // option : tirage équilibré, autant de cartes anglaises que françaises (dans la limite des cartes disponibles)
+  if (g.paquet?.equilibre) {
+    const nN = quotas[2], m = n - nN, qA = Math.min(camps[0].length, Math.max(Math.ceil(m / 2), m - camps[1].length));
+    quotas = [qA, Math.min(camps[1].length, m - qA), nN];
+  }
+  let reste = n - quotas.reduce((a, b) => a + b, 0);
+  const frac = camps.map((l, i) => [n * l.length / (fac.length || 1) - quotas[i], i]).sort((a, b) => b[0] - a[0]);
+  for (const [, i] of frac) if (reste > 0 && quotas[i] < camps[i].length) { quotas[i]++; reste--; }
+  camps.forEach((l, i) => { const m = melanger(g, l.map(c => c.id)); ids.push(...m.slice(0, quotas[i])); g.ecartees.push(...m.slice(quotas[i])); });
+  return ids;
+}
+export function ajouterPhase(D, g, p) {
+  const ids = cartesDePhase(D, g, p);
+  // cartes périmées : un événement unique dont la période est passée quitte la pioche et la défausse (pas les mains)
+  if (p > 1 && g.regles?.purge) {
+    const perime = x => { const k = carte(D, x); return !k.decompte && k.retiree && k.fin < p; };
+    g.perimees = (g.perimees || []).concat(g.pioche.filter(perime), g.defausse.filter(perime));
+    g.pioche = g.pioche.filter(x => !perime(x)); g.defausse = g.defausse.filter(x => !perime(x));
+  }
+  // une part des nouvelles cartes (40 % par défaut) va sur le dessus de la pioche ; le reste est mélangé avec les cartes restantes
+  const part = g.paquet?.dessus === true ? 1 : +(g.paquet?.dessus || 0);
+  const nouv = melanger(g, ids.slice()), nDessus = Math.round(part * nouv.length);
+  const dessus = nouv.slice(0, nDessus), dessous = nouv.slice(nDessus);
+  g.pioche = melanger(g, g.pioche.concat(dessous)).concat(dessus); // la fin du tableau est piochée en premier
   // les décomptes d'une nouvelle phase sont glissés parmi les 12 cartes du dessus : ils sortent au plus tard au tour suivant
   if (p > 1 && g.regles?.decomptesGarantis) for (const id of ids.filter(id => carte(D, id).decompte)) {
     g.pioche.splice(g.pioche.indexOf(id), 1);
@@ -113,7 +158,9 @@ export function maitriseManche(D, g) {
 // Placement et retrait choisis par le décideur du camp concerné
 export function placerLibre(D, g, c, n, candidats) {
   for (let k = 0; k < n; k++) {
+    g.placement = { camp: c, fait: k, total: n }; // lu par l'écran : « Influence k + 1 sur n »
     const l = DECIDEURS[c].placement(D, g, c, candidats);
+    delete g.placement;
     if (!l) return;
     ajouter(g, c, l);
     etape(g, { k: "place", camp: c, lieu: l });
@@ -139,7 +186,8 @@ export const crise = (g, d) => { g.crise = Math.max(0, Math.min(6, g.crise + d))
 export const tresor = (g, c, d) => { g.tresor[c] = Math.max(0, Math.min(12, g.tresor[c] + d)); };
 export function score(g, d) { // d > 0 favorise la France
   const s = g.seuil ?? 25;
-  if (g.stats) { const k = `${g.tour <= 3 ? "I" : g.tour <= 7 ? "II" : "III"}|${g._ctx || "?"}`; g.stats.vp[k] = (g.stats.vp[k] || 0) + d; }
+  if (g.stats) { const k = `${["", "I", "II", "III", "IV"][phaseDe(g.tour)]}|${g._ctx || "?"}`; g.stats.vp[k] = (g.stats.vp[k] || 0) + d; }
+  if (!g.fin) g.scoreBrut = g.score + d; // total réel, au-delà de ±25 : affiché seulement au tableau d'honneur
   g.score = Math.max(-s, Math.min(s, g.score + d));
   if (g.score >= s && !g.fin) terminer(g, F, `Score de ${s}`);
   if (g.score <= -s && !g.fin) terminer(g, A, `Score de ${s}`);
@@ -177,14 +225,23 @@ export function lieuxFaction(D, g, f) {
   if (["Flandre", "Bretagne", "Bourgogne"].includes(f)) return zone(D, { r: f });
   return [];
 }
-// factions qu'on peut courtiser : plus de Flandre après la fusion, Rome seulement pendant le Grand Schisme
-// Papauté à ±2 de son côté ; pendant le Grand Schisme, il faut aussi Rome à ±2 du même côté
+// factions qu'on peut courtiser : plus de Flandre après la fusion
 export const schismeEnCours = g => !!(g.joues["Grand Schisme d'Occident"] && !g.joues["Concile de Constance"]);
-export const papeFavorable = (g, c) => penche(g, "Papauté") === c && (!schismeEnCours(g) || penche(g, "Rome") === c);
-export const factionsActives = g => FACTIONS.filter(f => !(f === "Flandre" && fusionFlandre(g)) && (f !== "Rome" || (g.joues["Grand Schisme d'Occident"] && !g.joues["Concile de Constance"])));
+export const factionsActives = g => FACTIONS.filter(f => !(f === "Flandre" && fusionFlandre(g)));
+// ---------------------------------------------------------------- Faveur du pape (façon carte Chine)
+export const detenteurPape = (D, g) => D.idPape == null ? null : g.mains.A.includes(D.idPape) ? A : g.mains.F.includes(D.idPape) ? F : g.pape?.attente ?? null;
+// « le joueur courant reçoit la Faveur du pape » : elle quitte la main adverse et arrive au tour suivant ; rien pendant le Schisme
+export function faveurPape(D, g, c) {
+  if (D.idPape == null || schismeEnCours(g)) return false;
+  if (g.mains[c].includes(D.idPape) || g.pape.attente === c) return false;
+  g.mains[adv(c)] = g.mains[adv(c)].filter(x => x !== D.idPape);
+  g.pape.attente = c;
+  etape(g, { k: "info", camp: c, txt: `La « Faveur du pape » passe ${c === A ? "à l'Angleterre" : "à la France"} (jouable au tour suivant).` });
+  return true;
+}
 
 export function terminer(g, gagnant, raison) {
-  g.fin = { gagnant, raison, tour: g.tour };
+  g.fin = { gagnant, raison, tour: g.tour, cause: g._ctx || null, scoreBrut: g.scoreBrut ?? g.score }; // cause : carte ou phase qui donne la victoire
   log(g, `FIN : ${gagnant} gagne (${raison})`);
   etape(g, { k: "fin", gagnant, raison });
 }
@@ -192,10 +249,11 @@ export function terminer(g, gagnant, raison) {
 // ---------------------------------------------------------------- OPS d'une carte
 export function opsCarte(D, g, c, id) {
   const k = carte(D, id);
-  let o = k.ops + (g.opsMalus[c] ? -1 : 0) + (g.opsMalusTour[c] ? -1 : 0);
+  const base = id === D.idPape && g.joues["Concile de Constance"] ? 1 : Math.max(k.ops ? 1 : 0, Math.min(4, k.ops + (g.regles?.opsAjust?.[k.camp]?.[k.phase] ?? 0))); // opsAjust : essai d'équilibrage // après le Schisme, la Faveur ne vaut plus que 1 OPS (+1 à la carte suivante)
+  let o = base + (g.opsMalus[c] ? -1 : 0) + (g.opsMalusTour[c] ? -1 : 0) + (id !== D.idPape && g.pape?.bonus?.[c] ? 1 : 0);
   if (c === F && g.statuts.roiCaptif) o -= 1;
-  if (g.crise >= 4 && k.ops === 1) return 0;
-  return Math.max(k.ops > 0 ? 1 : 0, o);
+  if (g.crise >= 4 && base === 1) return 0; // la Faveur à 1 OPS (après Constance) suit la règle des cartes de 1 OPS
+  return Math.max(base > 0 ? 1 : 0, o);
 }
 
 // ---------------------------------------------------------------- actions
@@ -235,6 +293,7 @@ export function assautsInterdits(D, g, n, c = null) {
   if (g.treve <= 3 && r === "Guyenne") return true;
   if (g.treve <= 2 && r === "Normandie") return true;
   if (n === "Calais" && g.statuts.calaisImprenable) return true;
+  if (n === "Mont-Saint-Michel" && c === A && g.statuts.montImprenable) return true; // Défense du Mont-Saint-Michel
   if ((n === "Cherbourg" || n === "Brest") && g.statuts.cherbourgBrest) return true; // cession jusqu'à la fin de la phase II
   return false;
 }
@@ -260,7 +319,7 @@ export const coutAssaut = (D, g, n) => g.regles?.coutAssaut ? (D.lieux[n].pf ? 2
 export function assaut(D, g, c, ops, n, { depense = 0, gratuit = false, sansTreve = false } = {}) {
   if (!gratuit && assautsInterdits(D, g, n, c)) return false;
   if (!gratuit) { const k = coutAssaut(D, g, n); if (g.tresor[c] < k) return false; tresor(g, c, -k); }
-  if (c === A && g.statuts.grandFerre) { // Le Grand Ferré annule le prochain Assaut anglais
+  if (c === A && g.statuts.grandFerre && ["Picardie", "Valois"].includes(D.lieux[n].pays)) { // Le Grand Ferré annule le prochain Assaut anglais en Picardie ou en Valois (rééquilibrage 21/10)
     g.statuts.grandFerre = false; g.militaire[c] += ops; g.stats.assauts[c]++;
     etape(g, { k: "assaut", camp: c, lieu: n, annule: "Le Grand Ferré", d: 0, ops, def: defense(D, g, n), bonus: 0, bd: [], dep: 0, r: 0, avant: g.inf[n][adv(c)], retire: 0, occupe: 0, gratuit, pf: !!D.lieux[n].pf, treve: false });
     return false;
@@ -305,10 +364,10 @@ export function tentativeLegit(D, g, c, id) {
   const cible = g.legit[c] + 1;
   if (cible > 8 || opsCarte(D, g, c, id) < REQ_LEGIT[cible]) return false;
   g.legitTente[c] = true; g.stats.legitimite[c]++;
-  const seuil = JET_LEGIT(cible) + (papeFavorable(g, c) ? 1 : 0); // Papauté favorable : le jet est plus facile
+  const seuil = JET_LEGIT(cible);
   const d = de(g), ok = d <= seuil;
   if (ok) legit(g, c, 1);
-  etape(g, { k: "legit", camp: c, cible, d, seuil, ok, pape: papeFavorable(g, c) });
+  etape(g, { k: "legit", camp: c, cible, d, seuil, ok });
   return true;
 }
 export function bataille(D, g, c, ops, siVictoire) {
@@ -360,7 +419,7 @@ export function decompter(D, g, r) {
 }
 
 // ---------------------------------------------------------------- jouer une carte
-import { EFFETS } from "./effets.js?v=f8c5e456";
+import { EFFETS, UCHRONIES } from "./effets.js?v=b9561d48";
 export function prerequisOk(D, g, k) {
   if (!k.prerequis) return true;
   if (k.prerequis === "Roi captif") return !!g.statuts.roiCaptif;
@@ -368,10 +427,18 @@ export function prerequisOk(D, g, k) {
   // Variante « prérequis souple » : il suffit que la carte prérequise soit sortie (jouée pour son événement ou ses OPS)
   return k.prerequis.split(" ou ").some(p => !!g.joues[p] || (g.prerequisSouple && !!g.sortis[p])); // « A ou B » : l'un des deux suffit
 }
+// l'événement est-il encore historiquement possible ? (carte de sa période, aucune carte qui l'exclut déjà jouée)
+export const raisonInterdit = (D, g, k) => {
+  if (k.decompte) return null;
+  if (phaseDe(g.tour) > k.fin) return `plus jouable après la phase ${["", "I", "II", "III", "IV"][k.fin]}`;
+  const x = k.interdit.find(n => g.joues[n]);
+  return x ? `plus jouable après « ${x} »` : null;
+};
+export const evenementAutorise = (D, g, k) => !!k.decompte || (prerequisOk(D, g, k) && !raisonInterdit(D, g, k));
 export function evenementPossible(D, g, c, id) {
   const k = carte(D, id);
   if (k.decompte) return true;
-  if (!prerequisOk(D, g, k)) return false;
+  if (!evenementAutorise(D, g, k)) return false;
   if (!EFFETS[k.nom]) return false;
   if (c === F && k.camp === F && k.ops === 1 && g.statuts.folieCharlesVI) return false;
   return true;
@@ -386,10 +453,34 @@ export function resoudreEvenement(D, g, joueur, id) {
   const k = carte(D, id);
   g._ctx = k.decompte ? `Décompte ${k.decompte}` : `Évt ${k.nom}`;
   if (k.decompte) { etape(g, { k: "evenement", id, camp: joueur, joueur }); decompter(D, g, k.decompte); return true; }
-  if (!prerequisOk(D, g, k)) { etape(g, { k: "sansEffet", id, camp: joueur }); return false; }
+  if (!evenementAutorise(D, g, k)) { etape(g, { k: "sansEffet", id, camp: joueur, raison: raisonInterdit(D, g, k) }); return false; }
   const benef = k.camp === "N" ? joueur : k.camp;
   etape(g, { k: "evenement", id, camp: benef, joueur });
+  // Fortune des armes : une grande bataille échoue sur un dé ≤ seuil ; il n'a pas lieu et l'adversaire marque 1 point
+  if (g.regles.fortune && (g.regles.fortuneCartes ? g.regles.fortuneCartes.includes(k.nom) : k.militaire)) {
+    const d = de(g);
+    if (d <= g.regles.fortune) {
+      g._ctx = "Fortune des armes"; vp(g, adv(benef), 1);
+      etape(g, { k: "info", titre: "Fortune des armes", camp: adv(benef), txt: `Fortune des armes : dé ${d}, « ${k.nom} » échoue ; ${adv(benef) === F ? "la France" : "l'Angleterre"} marque 1 point.` });
+      g.stats.fortune = (g.stats.fortune || 0) + 1;
+      log(g, `Fortune des armes : ${k.nom} échoue (${benef})`);
+      return true;
+    }
+  }
   const avant = RECIT && g.journal ? signatureEtat(g) : null;
+  // « Et si… » : sur 1d6 ≥ seuil, l'issue uchronique remplace l'issue historique (uchronie 0 : règle coupée)
+  const u = g.regles.uchronie ? UCHRONIES[k.nom] : null;
+  const du = u ? de(g) : 0;
+  if (u && du >= (u.seuil ?? g.regles.uchronie)) {
+    etape(g, { k: "info", titre: "Et si…", camp: benef, txt: `Et si… (dé ${du}) : ${u.si}` });
+    u.f(D, g, benef);
+    (g.uchronies ||= {})[k.nom] = true; g.stats.uchronies = (g.stats.uchronies || 0) + 1;
+    log(g, `Et si… ${k.nom} (dé ${du})`);
+    etape(g, { k: "effets", id, camp: benef, vide: false });
+    if (u.joue !== false) g.joues[k.nom] = true;
+    g.stats.evenements[k.nom] = (g.stats.evenements[k.nom] || 0) + 1;
+    return true;
+  }
   EFFETS[k.nom](D, g, benef);
   etape(g, { k: "effets", id, camp: benef, vide: avant !== null && avant === signatureEtat(g) && !effetMarqueur(D, k.nom) }); // vide : condition non réunie, rien n'a changé
   g.joues[k.nom] = true;
@@ -399,6 +490,7 @@ export function resoudreEvenement(D, g, joueur, id) {
 }
 function defausser(D, g, id, evenementJoue) {
   const k = carte(D, id);
+  if (id === D.idPape) { g.pape.attente = adv(g.actif); etape(g, { k: "info", camp: adv(g.actif), txt: "La « Faveur du pape » passe à l'adversaire, jouable au tour suivant." }); return; }
   g.sortis[k.nom] = true;
   if (evenementJoue && k.retiree) g.retirees.push(id); else g.defausse.push(id);
 }
@@ -417,9 +509,12 @@ export function jouer(D, g, c, action) {
     // « différé » : carte adverse dont l'événement se joue d'abord ; le joueur choisit ensuite l'usage de ses OPS
     // (Influence, Assaut, Siège ou Diplomatie ; la Légitimité, qui ne déclenche pas l'événement, n'est plus possible)
     let apresEvt = false;
+    let malusEvt = 0; // malus d'OPS posé par l'événement déclenché : il vaut pour la carte suivante, pas pour celle-ci
     if (action.mode === "differe") {
       etape(g, { k: "carte", camp: c, id, mode: "differe", ops: opsCarte(D, g, c, id), declenche: true, ordre: "avant" });
+      const malusAvant = g.opsMalus[c];
       evt = resoudreEvenement(D, g, adv(c), id);
+      if (g.opsMalus[c] && !malusAvant) { malusEvt = g.opsMalus[c]; g.opsMalus[c] = 0; }
       if (g.fin) { g.opsMalus[c] = 0; defausser(D, g, id, evt); return; }
       const suite = DECIDEURS[c].apresEvenement ? DECIDEURS[c].apresEvenement(D, g, c, id) : null;
       action = { ...(suite || { mode: "influence", cibles: [] }), id, ordre: "avant" };
@@ -427,13 +522,16 @@ export function jouer(D, g, c, action) {
       apresEvt = true;
     }
     let ops = opsCarte(D, g, c, id);
-    g.opsMalus[c] = 0; // consommé par cette carte ; un malus posé ensuite par l'événement vaut pour la carte suivante
+    g.opsMalus[c] = malusEvt; // consommé par cette carte ; un malus posé par l'événement vaut pour la carte suivante
+    if (id !== D.idPape && g.pape?.bonus?.[c]) g.pape.bonus[c] = 0; // bonus du pape consommé par cette carte
+    else if (id === D.idPape) g.pape.bonus[c] = 1; // la Faveur du pape donne +1 OPS à la carte suivante
     const levee = !!(action.levee && g.regles?.levee && g.tresor[c] >= 3 && action.mode !== "legitimite");
     if (levee) { tresor(g, c, -3); ops += 1; } // lever des compagnies
     const declenche = k.camp === adv(c) && action.mode !== "legitimite" && !apresEvt;
     etape(g, { k: "carte", camp: c, id, mode: action.mode, ops, levee, declenche, apresEvt, ordre: action.ordre || "avant", cibles: action.cibles, cible: action.cible, depense: action.depense || 0 });
     if (declenche && action.ordre !== "apres") evt = resoudreEvenement(D, g, adv(c), id);
     if (!g.fin) {
+      g._ctx = `OPS ${k.nom}`;
       if (action.mode === "influence") { const refus = actionInfluence(D, g, c, ops, action.cibles); etape(g, { k: "influence", camp: c, ops, cibles: action.cibles, refus }); }
       else if (action.mode === "assaut") assaut(D, g, c, ops, action.cible, { depense: action.depense || 0 });
       else if (action.mode === "siege") for (let i = 0; i < ops && !g.fin; i++) { const n = action.cibles[i] || action.cibles[0]; if (g.inf[n][adv(c)] > 0 && !assautsInterdits(D, g, n, c)) siege(D, g, c, n, i === 0 ? action.depense || 0 : 0); }
@@ -450,21 +548,26 @@ export const DECIDEURS = { A: null, F: null };
 export function definirDecideurs(da, df) { DECIDEURS.A = da; DECIDEURS.F = df; }
 
 function piocher(D, g, c, taille) {
-  while (g.mains[c].length < taille) {
+  while (g.mains[c].filter(x => x !== D.idPape).length < taille) {
     if (!g.pioche.length) { if (!g.defausse.length) return; g.pioche = melanger(g, g.defausse); g.defausse = []; }
     g.mains[c].push(g.pioche.pop());
   }
 }
 export function jouerTour(D, g) {
-  const p = g.tour <= 3 ? 1 : g.tour <= 7 ? 2 : 3;
+  const p = phaseDe(g.tour);
   if (p !== g.phase) { g.phase = p; ajouterPhase(D, g, p); }
-  if (g.tour === 6 && g.statuts.roiCaptif) { g.statuts.roiCaptif = false; etape(g, { k: "info", camp: F, txt: "Jean II rentre en France contre rançon : fin du « Roi captif »." }); } // milieu de la phase II (tours 4 à 7)
-  if (g.tour === 8) { delete g.statuts.cherbourgBrest; delete g.statuts.owain; } // la révolte galloise s'éteint vers 1415
+  if (g.tour === PREMIER_TOUR[3]) delete g.statuts.cherbourgBrest; // Cherbourg et Brest rendus (1393-1397)
+  if (g.tour === PREMIER_TOUR[4] && g.statuts.owain) { delete g.statuts.owain; etape(g, { k: "info", camp: A, txt: "La révolte galloise s'est éteinte : fin d'« Owain Glyndŵr »." }); }
+  // Faveur du pape : arrive au tour suivant chez son nouveau détenteur ; pendant le Schisme, chaque pape donne +1 OPS à la première carte du tour
+  if (g.pape) {
+    if (schismeEnCours(g)) { g.mains.A = g.mains.A.filter(x => x !== D.idPape); g.mains.F = g.mains.F.filter(x => x !== D.idPape); g.pape.attente = null; g.pape.bonus = { A: 1, F: 1 }; }
+    else if (g.pape.attente && D.idPape != null) { g.mains[g.pape.attente].push(D.idPape); g.pape.attente = null; }
+  }
   g.tourFlags = {}; g.militaire = { A: 0, F: 0 }; g.diplo = { A: false, F: false }; g.legitTente = { A: false, F: false };
   treve(D, g, 1);
-  const main = p === 1 ? 8 : 9, rounds = p === 1 ? 6 : 7;
+  const main = g.paquet.main[p === 1 ? 0 : 1], rounds = g.paquet.rounds[p === 1 ? 0 : 1];
   piocher(D, g, A, main); piocher(D, g, F, main);
-  etape(g, { k: "tour", phase: p, rounds, main, nouvellePhase: g.tour === 4 || g.tour === 8 });
+  etape(g, { k: "tour", phase: p, rounds, main, nouvellePhase: g.tour > 1 && g.tour === PREMIER_TOUR[p] });
   // bonus des factions ralliées en début de tour
   for (const c of [A, F]) {
     const fl = fusionFlandre(g) ? ["Flandre"] : [], et = fusionFlandre(g) ? ", Flandre" : "";
@@ -475,7 +578,8 @@ export function jouerTour(D, g) {
   }
   if (g.statuts.owain) g.opsMalus.A = 1;
   // ouverture (headline)
-  const hA = DECIDEURS.A.ouverture(D, g, A), hF = DECIDEURS.F.ouverture(D, g, F);
+  const sansPape = id => (id === D.idPape ? null : id); // la Faveur du pape ne se joue jamais en ouverture
+  const hA = sansPape(DECIDEURS.A.ouverture(D, g, A)), hF = sansPape(DECIDEURS.F.ouverture(D, g, F));
   const ordre = [[A, hA], [F, hF]].filter(x => x[1]).sort((x, y) => carte(D, y[1]).ops - carte(D, x[1]).ops);
   etape(g, { k: "ouverture", cartes: ordre.map(([c, id]) => ({ camp: c, id })) });
   for (const [c, id] of ordre) {
@@ -484,7 +588,7 @@ export function jouerTour(D, g) {
     const k = carte(D, id);
     let evt = false;
     if (evenementPossible(D, g, k.camp === "N" ? c : k.camp, id)) evt = resoudreEvenement(D, g, c, id);
-    else etape(g, { k: "sansEffet", id, camp: c });
+    else etape(g, { k: "sansEffet", id, camp: c, raison: raisonInterdit(D, g, k) });
     defausser(D, g, id, evt);
   }
   // rounds d'action
@@ -540,14 +644,11 @@ function finDeTour(D, g) {
   crise(g, -1);
   etape(g, { k: "crise", peste });
   // légitimité et papauté
-  g._ctx = "Légitimité/Papauté (fin de tour)";
+  g._ctx = "Légitimité (fin de tour)";
   const tete = g.legit.F > g.legit.A ? F : g.legit.A > g.legit.F ? A : null, p8 = g.paliers[8] || null;
   if (g.legit.F !== g.legit.A) vp(g, g.legit.F > g.legit.A ? F : A, 1);
   if (g.paliers[8]) vp(g, g.paliers[8], 1);
-  const schisme = g.joues["Grand Schisme d'Occident"] && !g.joues["Concile de Constance"];
-  const pape = rallie(g, "Papauté");
-  if (pape && (!schisme || rallie(g, "Rome") === pape)) { legit(g, pape, 1); if (g.treve <= 3) g.treve += 1; }
-  etape(g, { k: "finLegit", tete, p8, pape: pape && (!schisme || rallie(g, "Rome") === pape) ? pape : null });
+  etape(g, { k: "finLegit", tete, p8 });
   if (g.fin) return;
   // cartes de décompte gardées en main
   for (const c of [A, F]) if (g.mains[c].some(id => carte(D, id).decompte)) { terminer(g, adv(c), "Carte de décompte gardée en main"); return; }
@@ -556,9 +657,9 @@ function finDeTour(D, g) {
   if (["Bordeaux", "Rouen", "Paris"].every(n => controle(D, g, n) === F)) { terminer(g, F, "Bordeaux, Rouen et Paris"); return; }
   g.opsMalusTour = g.prochainMalus || { A: 0, F: 0 }; g.prochainMalus = { A: 0, F: 0 };
   if (g.statuts.mancheJusque && g.tour >= g.statuts.mancheJusque) { g.statuts.manche = g.statuts.mancheAvant ?? null; delete g.statuts.mancheJusque; delete g.statuts.mancheAvant; } // fin de « Bataille de la Seine »
-  if (g.tour === 10) {
+  if (g.tour === NB_TOURS) {
     g._ctx = "Décompte final";
-    etape(g, { k: "info", txt: "Fin du dixième tour : décompte final de toutes les régions." });
+    etape(g, { k: "info", txt: "Fin du dernier tour : décompte final de toutes les régions." });
     for (const r of Object.keys(D.regions)) decompter(D, g, r);
     if (!g.fin) terminer(g, g.score > 0 ? F : g.score < 0 ? A : controle(D, g, "Paris") === A ? A : F, "Décompte final");
     return;

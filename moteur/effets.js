@@ -1,10 +1,10 @@
-// Effets des 145 cartes d'événement (les 7 cartes de décompte sont gérées par le moteur).
+// Effets des cartes d'événement (les 8 cartes de décompte sont gérées par le moteur, la Faveur du pape aussi).
 // Chaque effet reçoit (D, g, c) : c est le camp bénéficiaire (le propriétaire de la carte,
 // ou le joueur qui l'a jouée pour une carte neutre). Textes de référence : cartes.md.
 import {
   A, F, adv, zone, ajouter, retirer, forcerControle, placerLibre, retirerChoisi, treve, crise, tresor,
-  vp, legit, loy, versCamp, assaut, bataille, controle, DECIDEURS, de, assautsInterdits, terminer,
-} from "./regles.js?v=f8c5e456";
+  vp, legit, loy, versCamp, assaut, bataille, controle, DECIDEURS, de, assautsInterdits, terminer, faveurPape,
+} from "./regles.js?v=b9561d48";
 
 const inf = (D, g, c, n, z) => placerLibre(D, g, c, n, zone(D, z));
 const perd = (D, g, c, n, z) => retirerChoisi(D, g, c, n, zone(D, z));
@@ -35,12 +35,12 @@ export const EFFETS = {
   "Embargo sur la laine": (D, g) => { loy(g, "Flandre", -2); tresor(g, F, -1); },
   "Jacques van Artevelde": (D, g) => { ajouter(g, A, "Gand", 2); ajouter(g, A, "Bruges"); g.statuts.artevelde = true; },
   "Alliance avec Louis de Bavière": (D, g) => { inf(D, g, A, 2, { r: "Flandre" }); tresor(g, A, -1); },
-  "Raid sur Southampton": (D, g) => { tresor(g, A, -2); perd(D, g, A, 1, { l: ["Southampton", "Portsmouth", "Plymouth", "Douvres"] }); },
+  "Raids sur les côtes anglaises": (D, g) => { tresor(g, A, -1); perd(D, g, A, 1, { l: ["Southampton", "Portsmouth", "Plymouth", "Douvres"] }); }, // rééquilibrage 21/10 (2e passe) : Trésor A -2 → -1
   "Chevauchée du Cambrésis": (D, g) => { assautGratuit(D, g, A, 2, { p: ["Picardie", "Ponthieu", "Artois", "Tournaisis"] }); },
   "Édouard III, roi de France": (D, g) => legit(g, A, 2),
-  "Bataille de l'Écluse": (D, g, c, ops = 4) => bataille(D, g, A, ops, () => { g.statuts.manche = A; }),
+  "Bataille de l'Écluse": (D, g) => { g.statuts.manche = A; g.militaire[A] += 4; }, // rééquilibrage 21/10 : victoire écrasante, sans jet (la Fortune des armes reste)
   "Siège de Tournai": (D, g) => { inf(D, g, F, 2, { l: ["Tournai", "Lille", "Arras"] }); tresor(g, A, -1); },
-  "Trêve d'Esplechin": (D, g, c) => { treve(D, g, 1); loy(g, "Papauté", versCamp(c, 1)); },
+  "Trêve d'Esplechin": (D, g, c) => { treve(D, g, 1); faveurPape(D, g, c); },
   "Gabelle du sel": (D, g) => { g.statuts.gabelle = true; crise(g, 1); },
   "Guerre de succession de Bretagne": (D, g, c) => { inf(D, g, c, 3, { r: "Bretagne" }); },
   "Jeanne la Flamme": (D, g) => { inf(D, g, A, 3, { r: "Bretagne" }); g.tourFlags.aucunAssautBretagneF = true; },
@@ -54,13 +54,13 @@ export const EFFETS = {
   "Bataille de Neville's Cross": (D, g) => { loy(g, "Écosse", -2); tresor(g, A, 1); },
   "Siège de Calais": (D, g) => forcerControle(D, g, A, "Calais"),
   "Peste noire": (D, g) => { crise(g, 2); for (const n of D.noms) for (const c of [A, F]) if (g.inf[n][c] > 2) retirer(g, c, n); },
-  "Clément VI achète Avignon": (D, g, c) => { loy(g, "Papauté", versCamp(c, 1)); tresor(g, c, 1); },
+  "Clément VI achète Avignon": (D, g, c) => { faveurPape(D, g, c); tresor(g, c, 1); },
   "Ordre de la Jarretière": (D, g) => { legit(g, A, 1); g.statuts.jarretiere = true; },
-  "Transport du Dauphiné": (D, g) => { tresor(g, F, 1); legit(g, F, 1); },
+  "Transport du Dauphiné": (D, g) => { tresor(g, F, 1); }, // rééquilibrage 21/10 : sans Légitimité
   "Avènement de Jean le Bon": (D, g) => legit(g, F, 1),
   "Combat des Trente": (D, g, c) => { if (de(g) >= 4) { inf(D, g, c, 1, { r: "Bretagne" }); vp(g, c, 1); } },
   "Ordre de l'Étoile": (D, g) => { if (!g.joues["Bataille de Mauron"]) legit(g, F, 1); },
-  "Bataille de Mauron": (D, g) => { perd(D, g, F, 3, { r: "Bretagne" }); loy(g, "Bretagne", -1); },
+  "Bataille de Mauron": (D, g) => { perd(D, g, F, 3, { r: "Bretagne" }); loy(g, "Bretagne", -1); if (g.joues["Ordre de l'Étoile"]) legit(g, F, -1); }, // l'Ordre de l'Étoile est dissous
   "Charles le Mauvais": (D, g) => { loy(g, "Navarre", -2); ajouter(g, A, "Évreux", 2); },
   "Arrestation de Charles le Mauvais": (D, g) => loy(g, "Navarre", 1),
   "Chevauchée du Prince Noir": (D, g) => { perd(D, g, F, 3, { r: "Languedoc" }); tresor(g, A, 2); crise(g, 1); },
@@ -71,7 +71,7 @@ export const EFFETS = {
   "Le Grand Ferré": (D, g) => { inf(D, g, F, 1, { p: ["Picardie", "Valois"] }); g.statuts.grandFerre = true; },
   "David II à Château-Gaillard": (D, g) => loy(g, "Écosse", 2),
   "Campagne de Reims": (D, g) => { if (controle(D, g, "Reims") === A) legit(g, A, 3); else legit(g, A, 1); },
-  "Lundi noir": (D, g) => { g.statuts.lundiNoir = true; treve(D, g, 1); },
+  "Lundi noir": (D, g) => { tresor(g, A, -1); treve(D, g, 1); }, // rééquilibrage 21/10 : chevaux et bagages perdus, plus d'annulation de Bataille
   "Traité de Brétigny": (D, g) => {
     g.treve = 5; inf(D, g, A, 3, { l: zone(D, { r: "Guyenne" }).concat(["Poitiers", "La Rochelle", "Limoges"]) }); legit(g, A, -2);
     if (g.statuts.roiCaptif) { g.statuts.roiCaptif = false; tresor(g, A, 2); }
@@ -86,7 +86,7 @@ export const EFFETS = {
   "Bataille de Brignais": (D, g) => { crise(g, 1); perd(D, g, F, 2, { p: ["Lyonnais", "Bourgogne"] }); },
   "Bataille de Launac": (D, g, c) => inf(D, g, c, 3, { l: ["Orthez", "Lectoure"] }),
   "Ordonnance sur le tir à l'arc": (D, g) => { g.statuts.arc = true; },
-  "Avènement de Charles V": (D, g) => { legit(g, F, 2); g.statuts.roiCaptif = false; },
+  "Avènement de Charles V": (D, g) => { legit(g, F, 1); g.statuts.roiCaptif = false; }, // rééquilibrage 21/10 : +2 → +1
   "Bataille de Cocherel": (D, g) => { loy(g, "Navarre", 2); inf(D, g, F, 2, { r: "Normandie" }); },
   "Bataille d'Auray": (D, g) => { tresor(g, F, -1); inf(D, g, A, 3, { r: "Bretagne" }); },
   "Traité de Guérande": (D, g) => { g.loy.Bretagne = 0; },
@@ -101,10 +101,11 @@ export const EFFETS = {
   "Bataille de Pontvallain": (D, g) => { assautGratuit(D, g, F, 2, { p: ["Maine", "Touraine"] }); },
   "Bataille de La Rochelle": (D, g) => { g.statuts.manche = null; if (g.statuts.mancheJusque) g.statuts.mancheAvant = null; inf(D, g, F, 2, { p: ["Poitou", "Aunis"] }); },
   "Grande chevauchée de Jean de Gand": (D, g) => { perd(D, g, F, 3, { sauf: [] }); tresor(g, A, -1); },
-  "Trêve de Bruges": (D, g, c) => { treve(D, g, 1); loy(g, "Papauté", versCamp(c, 1)); },
+  "Trêve de Bruges": (D, g, c) => { treve(D, g, 1); faveurPape(D, g, c); },
   "Mort du Prince Noir": (D, g) => legit(g, A, -1),
-  "Mort d'Édouard III": (D, g) => { legit(g, A, -2); malusProchainTour(g, A); },
-  "Grand Schisme d'Occident": (D, g, c) => { g.loy.Rome = -2; loy(g, "Papauté", 1); loy(g, "Papauté", versCamp(c, 1)); }, // Avignon soutenu par la France, Rome par l'Angleterre
+  "Mort d'Édouard III": (D, g) => { legit(g, A, -1); }, // rééquilibrage 21/10 : -2 → -1, sans malus d'OPS (le conseil de régence gouverne)
+  "Grand Schisme d'Occident": (D, g) => { // la Faveur du pape disparaît : Pape d'Avignon (France) et Pape de Rome (Angleterre) dès le tour suivant
+    g.mains.A = g.mains.A.filter(x => x !== D.idPape); g.mains.F = g.mains.F.filter(x => x !== D.idPape); g.pape.attente = null; },
   "Mort de du Guesclin": (D, g) => { g.statuts.duGuesclin = false; },
   "Mort de Charles V": (D, g) => { tresor(g, F, -3); legit(g, F, -1); },
   "Révolte des paysans anglais": (D, g) => { crise(g, 1); tresor(g, A, -2); },
@@ -124,7 +125,7 @@ export const EFFETS = {
   "Assassinat de Louis d'Orléans": (D, g) => { loy(g, "Bourgogne", -3); crise(g, 1); },
   "Ligue de Gien": (D, g, c) => inf(D, g, c, 3, { r: "Languedoc" }),
   "Révolte cabochienne": (D, g) => { crise(g, 1); perd(D, g, F, 2, { r: "Île-de-France" }); },
-  "Concile de Constance": (D, g, c) => loy(g, "Papauté", versCamp(c, 2)),
+  "Concile de Constance": (D, g, c) => { g.pape.attente = c; g.pape.bonus = { A: 0, F: 0 }; }, // la Faveur du pape revient au joueur courant (tour suivant)
   // ------------------------------------------------ phase III
   "Bataille de la Seine": (D, g) => { if (!g.statuts.mancheJusque) g.statuts.mancheAvant = g.statuts.manche ?? null; g.statuts.manche = A; g.statuts.mancheJusque = g.tour + 1; },
   "Prise de Caen": (D, g) => { forcerControle(D, g, A, "Caen"); ajouter(g, A, "Évreux"); },
@@ -141,7 +142,7 @@ export const EFFETS = {
   "Traité de Troyes": (D, g) => { legit(g, A, 3); legit(g, F, -2); },
   "Siège de Meaux": (D, g) => { forcerControle(D, g, A, "Meaux"); inf(D, g, A, 1, { r: "Île-de-France" }); },
   "Bataille de Baugé": (D, g) => { loy(g, "Écosse", 1); perd(D, g, A, 2, { p: ["Maine", "Touraine"] }); },
-  "Mort d'Henri V": (D, g) => { legit(g, A, -2); malusProchainTour(g, A); },
+  "Mort d'Henri V": (D, g) => { legit(g, A, -1); malusProchainTour(g, A); }, // rééquilibrage 21/10 : -2 → -1 (régence efficace de Bedford)
   "Mort de Charles VI": (D, g) => { if (g.joues["Traité de Troyes"]) legit(g, A, 1); else legit(g, F, 1); g.statuts.folieCharlesVI = false; },
   "Le roi de Bourges": (D, g) => { if (g.inf.Bourges.F < 2) g.inf.Bourges.F = 2; g.statuts.roiBourges = true; },
   "Traité d'Amiens": (D, g) => { loy(g, "Bourgogne", -1); loy(g, "Bretagne", -1); },
@@ -156,7 +157,7 @@ export const EFFETS = {
   "La Hire et Xaintrailles": (D, g) => { assautGratuit(D, g, F, 2, {}); },
   "Jeanne d'Arc": (D, g) => { g.inf["Orléans"].A = 0; ajouter(g, F, "Orléans", 3); g.statuts.jeanne = true; legit(g, F, 1); },
   "Bataille de Patay": (D, g) => { perd(D, g, A, 3, { p: ["Beauce", "Orléanais"] }); vp(g, F, 2); },
-  "Sacre de Charles VII à Reims": (D, g) => { legit(g, F, 3); forcerControle(D, g, F, "Reims"); },
+  "Sacre de Charles VII à Reims": (D, g) => { legit(g, F, 3); forcerControle(D, g, F, "Reims"); delete g.statuts.roiBourges; }, // fin du « roi de Bourges »
   "Capture à Compiègne": (D, g) => { g.statuts.jeanne = false; },
   "Procès de Rouen": (D, g) => { legit(g, A, -1); legit(g, F, -1); },
   "Henri VI couronné à Paris": (D, g) => legit(g, A, controle(D, g, "Reims") === F ? 1 : 2),
@@ -164,7 +165,7 @@ export const EFFETS = {
   "Congrès d'Arras": (D, g) => loy(g, "Bourgogne", 4),
   "Reprise de Paris": (D, g) => { forcerControle(D, g, F, "Paris"); inf(D, g, F, 3, { r: "Île-de-France" }); },
   "Écorcheurs": (D, g, c) => { crise(g, 1); perd(D, g, adv(c), 2, {}); },
-  "Pragmatique Sanction de Bourges": (D, g) => { g.statuts.pragmatique = true; loy(g, "Papauté", 1); },
+  "Pragmatique Sanction de Bourges": (D, g) => { g.statuts.pragmatique = true; },
   "Taille royale permanente": (D, g) => { g.statuts.taille = true; },
   "Praguerie": (D, g) => perd(D, g, F, 3, {}),
   "Jacques Cœur, argentier": (D, g) => { tresor(g, F, 3); g.statuts.jacquesCoeur = true; },
@@ -174,10 +175,133 @@ export const EFFETS = {
   "Sac de Fougères": (D, g) => { treve(D, g, -1); loy(g, "Bretagne", 2); },
   "Prise de Rouen": (D, g) => forcerControle(D, g, F, "Rouen"),
   "Bataille de Formigny": (D, g) => bataille(D, g, F, 4, () => { toutRetirer(D, g, A, { r: "Normandie", sauf: ["Cherbourg"] }); vp(g, F, 3); }),
-  "Révolte de Jack Cade": (D, g) => { tresor(g, A, -2); malusProchainTour(g, A); },
+  "Révolte de Jack Cade": (D, g) => tresor(g, A, -2),   // rééquilibrage : sans malus d'OPS
   "Prise de Bordeaux": (D, g) => { forcerControle(D, g, F, "Bordeaux"); forcerControle(D, g, F, "Bayonne"); },
   "Talbot à Bordeaux": (D, g) => { g.inf.Bordeaux.F = 0; forcerControle(D, g, A, "Bordeaux"); inf(D, g, A, 1, { r: "Guyenne" }); },
   "Bataille de Castillon": (D, g) => bataille(D, g, F, 4, () => { toutRetirer(D, g, A, { r: "Guyenne" }); if (["Bordeaux", "Rouen", "Paris"].every(n => controle(D, g, n) === F)) terminer(g, F, "Castillon : Bordeaux, Rouen et Paris"); }),
   "Folie d'Henri VI": (D, g) => legit(g, A, -2),
   "Procès de Jacques Cœur": (D, g) => { g.statuts.jacquesCoeur = false; tresor(g, F, -2); },
+  // ------------------------------------------------ cartes nouvelles v27 : phase I
+  "Subside du Parlement": (D, g) => tresor(g, A, 2),
+  "Renouvellement de l'Auld Alliance": (D, g) => { loy(g, "Écosse", 1); tresor(g, F, -1); },
+  "Bataille de Saint-Omer": (D, g) => perd(D, g, A, 2, { r: "Flandre" }),
+  "Bataille de Morlaix": (D, g) => inf(D, g, A, 2, { r: "Bretagne" }),
+  "Sac de Caen": (D, g) => { tresor(g, A, 2); perd(D, g, F, 1, { r: "Normandie" }); },
+  "Bataille de La Roche-Derrien": (D, g) => { perd(D, g, F, 2, { r: "Bretagne" }); loy(g, "Bretagne", -1); },
+  "Les Espagnols sur mer": (D, g) => loy(g, "Castille", -1),
+  "Prise de Guînes": (D, g) => inf(D, g, A, 2, { l: ["Calais", ...D.lieux.Calais.voisins.filter(n => D.lieux[n].region !== "Angleterre")] }),
+  "Traité de Mantes": (D, g, c) => { g.loy.Navarre = 0; tresor(g, c, 1); },
+  "États généraux de 1355": (D, g) => { tresor(g, F, 2); crise(g, 1); },
+  "Traité de Londres rejeté": (D, g) => { legit(g, F, 1); legit(g, A, -1); },
+  "Prise de Bergerac": (D, g) => inf(D, g, A, 2, { l: ["Bergerac", "Périgueux"] }),
+  // ------------------------------------------------ phase II
+  "Grandes Compagnies": (D, g, c) => { crise(g, 1); perd(D, g, adv(c), 1, { l: D.noms.filter(n => !D.lieux[n].pf && D.lieux[n].region !== "Angleterre") }); },
+  "Retour de la peste": (D, g) => { crise(g, 1); tresor(g, A, -1); tresor(g, F, -1); },
+  "Aides et fouages": (D, g) => tresor(g, F, 2),
+  "Bataille de Soubise": (D, g) => perd(D, g, A, 2, { l: [...zone(D, { r: "Guyenne" }), "La Rochelle"] }),
+  "Prise de Poitiers": (D, g) => forcerControle(D, g, F, "Poitiers"),
+  "Bataille de Chizé": (D, g) => perd(D, g, A, 2, { p: ["Poitou", "Aunis"] }),
+  "Siège de Saint-Sauveur-le-Vicomte": (D, g) => inf(D, g, F, 2, { r: "Normandie" }),
+  "Jean de Vienne en Écosse": (D, g) => { loy(g, "Écosse", 2); tresor(g, F, -1); },
+  "Le Bon Parlement": (D, g) => legit(g, A, -1),
+  "Couronnement de Richard II": (D, g) => legit(g, A, 1),
+  "Reprise de Bergerac": (D, g) => forcerControle(D, g, F, "Bergerac"),
+  "Révolte de Gand": (D, g) => { crise(g, 1); loy(g, "Flandre", -1); },
+  "Visite de l'empereur Charles IV": (D, g) => tresor(g, F, 1),   // rééquilibrage : Trésor plutôt que Légitimité
+  "Échec devant Saint-Malo": (D, g) => { tresor(g, A, -1); loy(g, "Bretagne", 1); },
+  "Mort de Charles le Mauvais": (D, g) => { g.loy.Navarre = 0; },
+  "Louis d'Anjou en Languedoc": (D, g) => inf(D, g, F, 1, { r: "Languedoc" }),   // rééquilibrage : +1 au lieu de +2
+  "Révolte des Tuchins": (D, g) => { crise(g, 1); perd(D, g, F, 1, { r: "Languedoc" }); perd(D, g, A, 1, { r: "Languedoc" }); },
+  "Confiscation des terres navarraises": (D, g) => inf(D, g, F, 2, { l: ["Évreux", "Cherbourg"] }),
+  "Retour de Grégoire XI à Rome": (D, g) => { if (g.mains.F.includes(D.idPape) || g.pape.attente === F) faveurPape(D, g, A); },
+  "Urbain V contre les Compagnies": (D, g, c) => { crise(g, -1); faveurPape(D, g, c); },
+  "Exil de Jean IV de Bretagne": (D, g) => { loy(g, "Bretagne", 1); perd(D, g, A, 1, { r: "Bretagne" }); },
+  "Retour de Jean IV": (D, g) => loy(g, "Bretagne", -2),
+  // ------------------------------------------------ phase III
+  "Échec devant Bourg": (D, g) => { tresor(g, F, -1); legit(g, F, -1); },
+  "Paix de Chartres": (D, g) => { crise(g, -1); g.loy.Bourgogne -= Math.sign(g.loy.Bourgogne); },
+  "Paix d'Auxerre": (D, g) => { crise(g, -1); treve(D, g, 1); },
+  "Traité de Bourges": (D, g) => { inf(D, g, A, 2, { r: "Guyenne" }); legit(g, F, -1); },
+  "Avènement d'Henri V": (D, g) => legit(g, A, 2),
+  "Complot de Southampton": (D, g) => { g.opsMalus.A = 1; },
+  "Prise de Pontoise": (D, g) => inf(D, g, A, 2, { r: "Île-de-France" }),
+  "Siège de Melun": (D, g) => { inf(D, g, A, 2, { l: ["Montereau", "Meaux"] }); perd(D, g, F, 1, { r: "Île-de-France" }); },
+  "Mariage d'Henri V et de Catherine": (D, g) => legit(g, A, 1),
+  "Bataille de La Brossinière": (D, g) => perd(D, g, A, 2, { p: ["Maine", "Anjou"] }),
+  "Siège du Crotoy": (D, g) => inf(D, g, A, 2, { p: ["Ponthieu", "Picardie"] }),
+  "Défense du Mont-Saint-Michel": (D, g) => { ajouter(g, F, "Mont-Saint-Michel"); g.statuts.montImprenable = true; },
+  "Isabeau rejoint Jean sans Peur": (D, g) => { loy(g, "Bourgogne", -1); legit(g, F, -1); },
+  "Guerre des Armagnacs et des Bourguignons": (D, g, c) => { crise(g, 1); perd(D, g, adv(c), 2, { r: ["Île-de-France", "Val de Loire"] }); },
+  "Armée d'Écosse": (D, g) => { loy(g, "Écosse", 1); inf(D, g, F, 2, { r: "Val de Loire" }); },
+  "Bataille de Montargis": (D, g) => perd(D, g, A, 2, { l: [...zone(D, { p: ["Orléanais"] }), ...zone(D, { r: "Île-de-France" })] }),
+  "Concile de Pise": (D, g, c) => legit(g, c, 1),
+  "Charles d'Orléans prisonnier": (D, g) => legit(g, F, -1),
+  "Bataille d'Othée": (D, g, c) => loy(g, "Bourgogne", versCamp(c, 1)),
+  "Bataille de Blackpool": (D, g) => { loy(g, "Bretagne", -1); tresor(g, F, -1); },
+  "Débarquement français au pays de Galles": (D, g) => { retirer(g, A, "Pays de Galles"); g.opsMalus.A = 1; },
+  "Siège d'Arras": (D, g) => { loy(g, "Bourgogne", 1); tresor(g, F, -1); },
+  // ------------------------------------------------ phase IV
+  "Mort de Salisbury": (D, g) => perd(D, g, A, 2, { l: ["Orléans", ...D.lieux["Orléans"].voisins] }),
+  "Campagne de la Loire": (D, g) => perd(D, g, A, 3, { r: "Val de Loire" }),
+  "Échec devant Paris": (D, g) => { legit(g, F, -1); perd(D, g, F, 1, { r: "Île-de-France" }); },
+  "Bataille de Gerberoy": (D, g) => perd(D, g, A, 2, { l: [...zone(D, { p: ["Picardie"] }), ...zone(D, { r: "Normandie" })] }),
+  "Libération de Charles d'Orléans": (D, g) => { legit(g, F, 1); loy(g, "Bourgogne", 1); },
+  "Reprise de Pontoise": (D, g) => { perd(D, g, A, 2, { r: "Île-de-France" }); inf(D, g, F, 1, { r: "Île-de-France" }); },
+  "Journée de Tartas": (D, g) => inf(D, g, F, 2, { r: "Guyenne" }),
+  "Reddition du Mans": (D, g) => forcerControle(D, g, F, "Le Mans"),
+  "Prise de Cherbourg": (D, g) => forcerControle(D, g, F, "Cherbourg"),
+  "Reprise de Caen": (D, g) => forcerControle(D, g, F, "Caen"),
+  "Richard d'York lieutenant en France": (D, g) => { inf(D, g, A, 2, { r: "Normandie" }); tresor(g, A, -1); },
+  "Siège de Dieppe": (D, g) => perd(D, g, A, 2, { r: "Normandie" }),
+  "Concile de Bâle": (D, g, c) => faveurPape(D, g, c),
+  "Médiation du cardinal Albergati": (D, g) => { treve(D, g, 1); loy(g, "Bourgogne", 1); },
+  "Francs-archers": (D, g) => inf(D, g, F, 2, { l: D.noms.filter(n => D.lieux[n].region !== "Angleterre") }),
+  "Guerre de Gand": (D, g) => { g.loy.Bourgogne -= Math.sign(g.loy.Bourgogne); crise(g, 1); },
+  "Bataille de Bulgnéville": (D, g, c) => loy(g, "Bourgogne", versCamp(c, 1)),
+};
+
+// ---------------------------------------------------------------- « Et si… » : issues uchroniques (demande d'AlwwAl du 21/10)
+// Quand l'événement est joué, 1d6 ≥ seuil (5 par défaut) : l'issue uchronique remplace l'issue historique.
+// joue: false = l'événement n'a pas eu lieu (les cartes qui en dépendent restent impossibles, celles qu'il exclut restent jouables).
+export const UCHRONIES = {
+  "Charles le Mauvais": { si: "le partage du royaume négocié avec Lancastre en 1354 est scellé : Navarre 3 crans vers l'Angleterre, Angleterre +3 Inf. en Normandie.",
+    f: (D, g) => { loy(g, "Navarre", -3); inf(D, g, A, 3, { r: "Normandie" }); } },
+  "Jacques van Artevelde": { si: "les Flamands reconnaissent le prince de Galles comme comte de Flandre (projet de 1345) : effet historique, et Flandre 2 crans vers l'Angleterre.",
+    f: (D, g, c) => { EFFETS["Jacques van Artevelde"](D, g, c); loy(g, "Flandre", -2); } },
+  "Bataille de Poitiers": { si: "Jean II accepte l'offre du Prince Noir (rendre son butin et une trêve de sept ans) : pas de bataille, Trésor F +2.",
+    f: (D, g) => { tresor(g, F, 2); } },
+  "Montiel": { si: "Pierre le Cruel l'emporte sur Henri de Trastamare : Castille 1 cran vers l'Angleterre.", joue: false,
+    f: (D, g) => loy(g, "Castille", -1) },
+  "Bataille de La Rochelle": { si: "Pembroke force le passage : la maîtrise anglaise de la Manche continue, Angleterre +1 Inf. en Poitou ou en Aunis.",
+    f: (D, g) => inf(D, g, A, 1, { p: ["Poitou", "Aunis"] }) },
+  "Mort du Prince Noir": { si: "le Prince Noir guérit de sa dysenterie : Légitimité A +1.", joue: false,
+    f: (D, g) => legit(g, A, 1) },
+  "Bataille de Roosebeke": { si: "Philippe van Artevelde l'emporte : Flandre 1 cran vers l'Angleterre.", joue: false,
+    f: (D, g) => loy(g, "Flandre", -1) },
+  "Assassinat de Montereau": { si: "Jean sans Peur se méfie au pont de Montereau et survit : Bourgogne 1 cran vers l'Angleterre.", joue: false,
+    f: (D, g) => loy(g, "Bourgogne", -1) },
+  "Traité de Troyes": { si: "le Parlement et l'Université refusent le traité : Légitimité A +1 seulement.",
+    f: (D, g) => legit(g, A, 1) },
+  "Bataille de Baugé": { si: "Clarence attend ses archers : Écosse 1 cran vers l'Angleterre, la France perd 2 Inf. dans le Maine ou en Touraine.",
+    f: (D, g) => { loy(g, "Écosse", -1); perd(D, g, F, 2, { p: ["Maine", "Touraine"] }); } },
+  "Mort d'Henri V": { si: "Henri V guérit au château de Vincennes : Légitimité A +1, Trésor A +1.", joue: false,
+    f: (D, g) => { legit(g, A, 1); tresor(g, A, 1); } },
+  "Siège d'Orléans": { si: "Salisbury échappe au boulet des Tourelles : Orléans tombe, l'Angleterre contrôle Orléans.",
+    f: (D, g, c) => { EFFETS["Siège d'Orléans"](D, g, c); forcerControle(D, g, A, "Orléans"); } },
+  "Jeanne d'Arc": { si: "Jeanne est renvoyée de Chinon : Légitimité F -1, Angleterre +2 Inf. à Orléans.", joue: false, seuil: 6,
+    f: (D, g) => { legit(g, F, -1); ajouter(g, A, "Orléans", 2); } },
+  "Bataille de Patay": { si: "Fastolf obtient la retraite : l'Angleterre perd 1 Inf. dans la Beauce ou l'Orléanais.",
+    f: (D, g) => perd(D, g, A, 1, { p: ["Beauce", "Orléanais"] }) },
+  "Sacre de Charles VII à Reims": { si: "Bedford devance le dauphin : Henri VI est sacré à Reims, Légitimité A +2, Angleterre +2 Inf. à Reims.", joue: false,
+    f: (D, g) => { legit(g, A, 2); ajouter(g, A, "Reims", 2); } },
+  "Mort de Bedford": { si: "Bedford survit à sa maladie de 1435 : la régence continue, Légitimité A -1 seulement.", joue: false,
+    f: (D, g) => legit(g, A, -1) },
+  "Congrès d'Arras": { si: "Philippe le Bon reste fidèle à l'alliance anglaise : Bourgogne 1 cran vers la France seulement.",
+    f: (D, g) => loy(g, "Bourgogne", 1) },
+  "Reprise de Paris": { si: "les Parisiens restent fidèles à Henri VI : Angleterre +2 Inf. à Paris.", joue: false,
+    f: (D, g) => ajouter(g, A, "Paris", 2) },
+  "Compagnies d'ordonnance": { si: "la Praguerie retarde la réforme : Crise -1 seulement, sans bonus d'Assaut.",
+    f: (D, g) => { g.statuts.arc = false; crise(g, -1); } },
+  "Prise de Bordeaux": { si: "Bordeaux tient : la France contrôle Bayonne seulement.",
+    f: (D, g) => forcerControle(D, g, F, "Bayonne") },
 };
