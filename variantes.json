@@ -1,257 +1,237 @@
 {
- "g0": 11001,
+ "g0": 13001,
  "N": 1000,
  "variantes": [
   {
-   "nom": "vdl2_papeA",
-   "options": {
-    "libreA": 7,
-    "papeDepart": "A"
-   },
-   "patch": {
-    "inf": {
-     "Orléans": {
-      "F": 1
-     },
-     "Bourges": {
-      "F": 1
-     },
-     "Angers": {
-      "F": 0
-     },
-     "Tours": {
-      "F": 0
-     }
-    }
-   }
-  },
-  {
-   "nom": "vdl2_paris3",
+   "nom": "H1_guyenne",
    "options": {
     "libreA": 7
    },
    "patch": {
     "inf": {
-     "Orléans": {
-      "F": 1
+     "Bordeaux": {
+      "A": 4
      },
-     "Bourges": {
-      "F": 1
+     "Bayonne": {
+      "A": 3
      },
-     "Angers": {
-      "F": 0
-     },
-     "Tours": {
-      "F": 0
-     },
-     "Paris": {
-      "F": 3
-     },
-     "Reims": {
-      "F": 2
+     "Dax": {
+      "A": 2
      }
     }
    }
   },
   {
-   "nom": "vdl2_papeA_paris3",
-   "options": {
-    "libreA": 7,
-    "papeDepart": "A"
-   },
-   "patch": {
-    "inf": {
-     "Orléans": {
-      "F": 1
-     },
-     "Bourges": {
-      "F": 1
-     },
-     "Angers": {
-      "F": 0
-     },
-     "Tours": {
-      "F": 0
-     },
-     "Paris": {
-      "F": 3
-     },
-     "Reims": {
-      "F": 2
-     }
-    }
-   }
-  },
-  {
-   "nom": "vdl2_papeA_reims2",
-   "options": {
-    "libreA": 7,
-    "papeDepart": "A"
-   },
-   "patch": {
-    "inf": {
-     "Orléans": {
-      "F": 1
-     },
-     "Bourges": {
-      "F": 1
-     },
-     "Angers": {
-      "F": 0
-     },
-     "Tours": {
-      "F": 0
-     },
-     "Reims": {
-      "F": 2
-     }
-    }
-   }
-  },
-  {
-   "nom": "vdl2_reims2",
+   "nom": "H3_guy_fla",
    "options": {
     "libreA": 7
    },
    "patch": {
     "inf": {
-     "Orléans": {
-      "F": 1
+     "Bordeaux": {
+      "A": 4
      },
-     "Bourges": {
-      "F": 1
+     "Bayonne": {
+      "A": 3
      },
-     "Angers": {
-      "F": 0
+     "Dax": {
+      "A": 2
      },
-     "Tours": {
-      "F": 0
+     "Gand": {
+      "A": 1
      },
-     "Reims": {
-      "F": 2
+     "Bruges": {
+      "A": 1
+     },
+     "Ypres": {
+      "A": 1
      }
     }
    }
   },
   {
-   "nom": "vdl2_papeA_v246",
-   "options": {
-    "libreA": 7,
-    "papeDepart": "A",
-    "valeursRegion": {
-     "Val de Loire": [
-      2,
-      4,
-      6
-     ]
-    }
-   },
-   "patch": {
-    "inf": {
-     "Orléans": {
-      "F": 1
-     },
-     "Bourges": {
-      "F": 1
-     },
-     "Angers": {
-      "F": 0
-     },
-     "Tours": {
-      "F": 0
-     }
-    }
-   }
-  },
-  {
-   "nom": "vdl2b_papeA",
-   "options": {
-    "libreA": 7,
-    "papeDepart": "A"
-   },
-   "patch": {
-    "inf": {
-     "Orléans": {
-      "F": 1
-     },
-     "Bourges": {
-      "F": 1
-     },
-     "Tours": {
-      "F": 0
-     }
-    }
-   }
-  },
-  {
-   "nom": "vdl2_papeA_stdenis0",
-   "options": {
-    "libreA": 7,
-    "papeDepart": "A"
-   },
-   "patch": {
-    "inf": {
-     "Orléans": {
-      "F": 1
-     },
-     "Bourges": {
-      "F": 1
-     },
-     "Angers": {
-      "F": 0
-     },
-     "Tours": {
-      "F": 0
-     },
-     "Saint-Denis": {
-      "F": 0
-     }
-    }
-   }
-  },
-  {
-   "nom": "vdl2",
+   "nom": "H5_guy_fla2",
    "options": {
     "libreA": 7
    },
    "patch": {
     "inf": {
-     "Orléans": {
-      "F": 1
+     "Bordeaux": {
+      "A": 4
      },
-     "Bourges": {
-      "F": 1
+     "Bayonne": {
+      "A": 3
      },
-     "Angers": {
-      "F": 0
+     "Dax": {
+      "A": 2
      },
-     "Tours": {
-      "F": 0
+     "Gand": {
+      "A": 2
+     },
+     "Bruges": {
+      "A": 1
+     },
+     "Ypres": {
+      "A": 1
      }
     }
    }
   },
   {
-   "nom": "vdl2_paris3_seul",
+   "nom": "fort1",
    "options": {
-    "libreA": 7
+    "libreA": 7,
+    "fortune": 1
+   }
+  },
+  {
+   "nom": "fort2",
+   "options": {
+    "libreA": 7,
+    "fortune": 2
+   }
+  },
+  {
+   "nom": "H3_fort1",
+   "options": {
+    "libreA": 7,
+    "fortune": 1
    },
    "patch": {
     "inf": {
-     "Orléans": {
-      "F": 1
+     "Bordeaux": {
+      "A": 4
      },
-     "Bourges": {
-      "F": 1
+     "Bayonne": {
+      "A": 3
      },
-     "Angers": {
-      "F": 0
+     "Dax": {
+      "A": 2
      },
-     "Tours": {
-      "F": 0
+     "Gand": {
+      "A": 1
      },
-     "Paris": {
-      "F": 3
+     "Bruges": {
+      "A": 1
+     },
+     "Ypres": {
+      "A": 1
+     }
+    }
+   }
+  },
+  {
+   "nom": "H3_fort2",
+   "options": {
+    "libreA": 7,
+    "fortune": 2
+   },
+   "patch": {
+    "inf": {
+     "Bordeaux": {
+      "A": 4
+     },
+     "Bayonne": {
+      "A": 3
+     },
+     "Dax": {
+      "A": 2
+     },
+     "Gand": {
+      "A": 1
+     },
+     "Bruges": {
+      "A": 1
+     },
+     "Ypres": {
+      "A": 1
+     }
+    }
+   }
+  },
+  {
+   "nom": "H5_fort1",
+   "options": {
+    "libreA": 7,
+    "fortune": 1
+   },
+   "patch": {
+    "inf": {
+     "Bordeaux": {
+      "A": 4
+     },
+     "Bayonne": {
+      "A": 3
+     },
+     "Dax": {
+      "A": 2
+     },
+     "Gand": {
+      "A": 2
+     },
+     "Bruges": {
+      "A": 1
+     },
+     "Ypres": {
+      "A": 1
+     }
+    }
+   }
+  },
+  {
+   "nom": "H5_fort2",
+   "options": {
+    "libreA": 7,
+    "fortune": 2
+   },
+   "patch": {
+    "inf": {
+     "Bordeaux": {
+      "A": 4
+     },
+     "Bayonne": {
+      "A": 3
+     },
+     "Dax": {
+      "A": 2
+     },
+     "Gand": {
+      "A": 2
+     },
+     "Bruges": {
+      "A": 1
+     },
+     "Ypres": {
+      "A": 1
+     }
+    }
+   }
+  },
+  {
+   "nom": "H3_fort3",
+   "options": {
+    "libreA": 7,
+    "fortune": 3
+   },
+   "patch": {
+    "inf": {
+     "Bordeaux": {
+      "A": 4
+     },
+     "Bayonne": {
+      "A": 3
+     },
+     "Dax": {
+      "A": 2
+     },
+     "Gand": {
+      "A": 1
+     },
+     "Bruges": {
+      "A": 1
+     },
+     "Ypres": {
+      "A": 1
      }
     }
    }

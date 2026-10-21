@@ -17,10 +17,13 @@ export const PREMIER_TOUR = { 1: 1, 2: 4, 3: 7, 4: 10 };
 export const PAPE = "Faveur du pape", PAPE_AVIGNON = "Pape d'Avignon", PAPE_ROME = "Pape de Rome";
 
 // ---------------------------------------------------------------- données
+// événements militaires (batailles, sièges, prises…) soumis à la « Fortune des armes »
+export const MILITAIRE = /Bataille|Siège|Prise|Reprise|Sac |Chevauchée|Campagne|Combat|Journée|Échec|Reddition|Capture|Défense/;
 export function preparerDonnees(brut) {
   const lieux = {};
   for (const l of brut.lieux) lieux[l.nom] = l;
-  const cartes = brut.cartes.map(c => ({ ...c, decompte: c.camp === "S" ? c.nom.replace("Décompte : ", "") : null, interdit: c.interdit || [], fin: c.fin ?? 4, statut: c.statut || "obligatoire" }));
+  const cartes = brut.cartes.map(c => ({ ...c, decompte: c.camp === "S" ? c.nom.replace("Décompte : ", "") : null, interdit: c.interdit || [], fin: c.fin ?? 4, statut: c.statut || "obligatoire",
+    militaire: c.camp !== "S" && c.camp !== "N" && MILITAIRE.test(c.nom) }));
   const parNom = Object.fromEntries(cartes.map(c => [c.nom, c]));
   const idPape = parNom[PAPE]?.id ?? null;
   return { lieux, noms: Object.keys(lieux), cartes, parNom, regions: brut.regions, idPape };
@@ -53,7 +56,7 @@ export function nouvellePartie(D, graine = 1, options = {}) {
     mains: { A: [], F: [] }, pioche: [], defausse: [], retirees: [], ecartees: [],
     pape: { attente: null, bonus: { A: 0, F: 0 } }, // Faveur du pape : camp qui la recevra au tour suivant ; bonus d'OPS en attente
     paquet: { tirage: options.tirageFacultatives ?? { 1: 33, 2: 34, 3: 30, 4: 18 }, dessus: options.nouvellesDessus ?? 0.4, equilibre: options.tirageEquilibre ?? false, main: options.mains ?? [9, 10], rounds: options.rounds ?? [7, 8] },
-    joues: {}, sortis: {}, prerequisSouple: options.prerequisSouple ?? false, seuil: options.seuilScore ?? 25, regles: { pillage: options.pillage ?? true, revenuReduit: options.revenuReduit ?? true, coutAssaut: options.coutAssaut ?? true, levee: options.levee ?? true, decomptesPhase: options.decomptesPhase ?? null, decomptesGarantis: options.decomptesGarantis ?? true, purge: options.purge ?? false, opsAjust: options.opsAjust ?? null, factions2: options.factions2 ?? true, valeurs: options.valeursRegion ?? null }, statuts: {}, tourFlags: {}, opsMalus: { A: 0, F: 0 }, opsMalusTour: { A: 0, F: 0 },
+    joues: {}, sortis: {}, prerequisSouple: options.prerequisSouple ?? false, seuil: options.seuilScore ?? 25, regles: { pillage: options.pillage ?? true, revenuReduit: options.revenuReduit ?? true, coutAssaut: options.coutAssaut ?? true, levee: options.levee ?? true, decomptesPhase: options.decomptesPhase ?? null, decomptesGarantis: options.decomptesGarantis ?? true, purge: options.purge ?? false, opsAjust: options.opsAjust ?? null, fortune: options.fortune ?? 0, factions2: options.factions2 ?? true, valeurs: options.valeursRegion ?? null }, statuts: {}, tourFlags: {}, opsMalus: { A: 0, F: 0 }, opsMalusTour: { A: 0, F: 0 },
     militaire: { A: 0, F: 0 }, diplo: { A: false, F: false }, legitTente: { A: false, F: false },
     fin: null, journal: options.journal ? [] : null,
     stats: { evenements: {}, assauts: { A: 0, F: 0 }, sieges: { A: 0, F: 0 }, diplomatie: { A: 0, F: 0 }, legitimite: { A: 0, F: 0 }, influence: { A: 0, F: 0 }, penalitesMil: { A: 0, F: 0 }, decomptes: [], vp: {}, ciblesAssaut: {}, tresorPerdu: { A: 0, F: 0 }, tresorFinTour: [] },
@@ -451,6 +454,17 @@ export function resoudreEvenement(D, g, joueur, id) {
   if (!evenementAutorise(D, g, k)) { etape(g, { k: "sansEffet", id, camp: joueur, raison: raisonInterdit(D, g, k) }); return false; }
   const benef = k.camp === "N" ? joueur : k.camp;
   etape(g, { k: "evenement", id, camp: benef, joueur });
+  // Fortune des armes : un événement militaire échoue sur un dé ≤ seuil ; il n'a pas lieu et l'adversaire marque 1 point
+  if (k.militaire && g.regles.fortune) {
+    const d = de(g);
+    if (d <= g.regles.fortune) {
+      g._ctx = "Fortune des armes"; vp(g, adv(benef), 1);
+      etape(g, { k: "info", camp: adv(benef), txt: `Fortune des armes : dé ${d}, « ${k.nom} » échoue ; ${adv(benef) === F ? "la France" : "l'Angleterre"} marque 1 point.` });
+      g.stats.fortune = (g.stats.fortune || 0) + 1;
+      log(g, `Fortune des armes : ${k.nom} échoue (${benef})`);
+      return true;
+    }
+  }
   const avant = RECIT && g.journal ? signatureEtat(g) : null;
   EFFETS[k.nom](D, g, benef);
   etape(g, { k: "effets", id, camp: benef, vide: avant !== null && avant === signatureEtat(g) && !effetMarqueur(D, k.nom) }); // vide : condition non réunie, rien n'a changé
