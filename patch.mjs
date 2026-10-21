@@ -12,6 +12,13 @@ export function appliquerPatch(D, P) {
   if (P.r2) { const f = EFFETS["Le Grand Ferré"]; EFFETS["Le Grand Ferré"] = (D, g, c) => { f(D, g, c); g.statuts.grandFerre = true; }; }
   if (P.r3) EFFETS["Bataille de Soubise"] = (D, g) => RG.retirerChoisi(D, g, A, 2, [...RG.zone(D, { r: "Guyenne" }), "La Rochelle"]);
   if (P.r4) { const f = EFFETS["Raids sur les côtes anglaises"]; EFFETS["Raids sur les côtes anglaises"] = (D, g, c) => { f(D, g, c); RG.tresor(g, A, -1); }; }
+  // affaiblissements français légers et répartis (lot 12)
+  const infZ = (c, n, z) => (D, g) => RG.placerLibre(D, g, c, n, RG.zone(D, z));
+  if (P.w1) EFFETS["Louis d'Anjou en Languedoc"] = infZ(F, 1, { r: "Languedoc" });
+  if (P.w2) EFFETS["Visite de l'empereur Charles IV"] = (D, g) => RG.tresor(g, F, 1);
+  if (P.w3) EFFETS["Révolte de Jack Cade"] = (D, g) => RG.tresor(g, A, -2);
+  if (P.w4) EFFETS["Siège de Saint-Sauveur-le-Vicomte"] = infZ(F, 1, { r: "Normandie" });
+  if (P.w5) EFFETS["Sac de Limoges"] = (D, g) => { RG.legit(g, A, -1); RG.placerLibre(D, g, F, 1, RG.zone(D, { p: ["Limousin"] })); };
   for (const [n, inf] of Object.entries(P.inf || {})) D.lieux[n].inf = { ...D.lieux[n].inf, ...inf };   // influence de départ d'un lieu
   for (const [n, o] of Object.entries(P.ops || {})) D.parNom[n].ops = o;                                 // OPS d'une carte
   for (const [n, s] of Object.entries(P.statut || {})) D.parNom[n].statut = s;                           // obligatoire / facultative
