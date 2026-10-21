@@ -35,7 +35,7 @@ export const EFFETS = {
   "Embargo sur la laine": (D, g) => { loy(g, "Flandre", -2); tresor(g, F, -1); },
   "Jacques van Artevelde": (D, g) => { ajouter(g, A, "Gand", 2); ajouter(g, A, "Bruges"); g.statuts.artevelde = true; },
   "Alliance avec Louis de Bavière": (D, g) => { inf(D, g, A, 2, { r: "Flandre" }); tresor(g, A, -1); },
-  "Raids sur les côtes anglaises": (D, g) => { tresor(g, A, -2); perd(D, g, A, 1, { l: ["Southampton", "Portsmouth", "Plymouth", "Douvres"] }); },
+  "Raids sur les côtes anglaises": (D, g) => { tresor(g, A, -1); perd(D, g, A, 1, { l: ["Southampton", "Portsmouth", "Plymouth", "Douvres"] }); }, // rééquilibrage 21/10 (2e passe) : Trésor A -2 → -1
   "Chevauchée du Cambrésis": (D, g) => { assautGratuit(D, g, A, 2, { p: ["Picardie", "Ponthieu", "Artois", "Tournaisis"] }); },
   "Édouard III, roi de France": (D, g) => legit(g, A, 2),
   "Bataille de l'Écluse": (D, g) => { g.statuts.manche = A; g.militaire[A] += 4; }, // rééquilibrage 21/10 : victoire écrasante, sans jet (la Fortune des armes reste)
@@ -68,7 +68,7 @@ export const EFFETS = {
   "Du Guesclin au siège de Rennes": (D, g) => ajouter(g, F, "Rennes", 3),
   "Étienne Marcel": (D, g) => { perd(D, g, F, 2, { r: "Île-de-France" }); crise(g, 1); legit(g, F, -1); },
   "Grande Jacquerie": (D, g) => { const l = [...zone(D, { r: "Île-de-France" }), ...zone(D, { p: ["Picardie"] })]; crise(g, 2); perd(D, g, F, 2, { l }); perd(D, g, A, 2, { l }); },
-  "Le Grand Ferré": (D, g) => { inf(D, g, F, 1, { p: ["Picardie", "Valois"] }); g.statuts.grandFerre = true; },
+  "Le Grand Ferré": (D, g) => { inf(D, g, F, 1, { p: ["Picardie", "Valois"] }); }, // rééquilibrage 21/10 (2e passe) : plus d'annulation d'Assaut
   "David II à Château-Gaillard": (D, g) => loy(g, "Écosse", 2),
   "Campagne de Reims": (D, g) => { if (controle(D, g, "Reims") === A) legit(g, A, 3); else legit(g, A, 1); },
   "Lundi noir": (D, g) => { tresor(g, A, -1); treve(D, g, 1); }, // rééquilibrage 21/10 : chevaux et bagages perdus, plus d'annulation de Bataille
@@ -103,7 +103,7 @@ export const EFFETS = {
   "Grande chevauchée de Jean de Gand": (D, g) => { perd(D, g, F, 3, { sauf: [] }); tresor(g, A, -1); },
   "Trêve de Bruges": (D, g, c) => { treve(D, g, 1); faveurPape(D, g, c); },
   "Mort du Prince Noir": (D, g) => legit(g, A, -1),
-  "Mort d'Édouard III": (D, g) => { legit(g, A, -1); malusProchainTour(g, A); }, // rééquilibrage 21/10 : -2 → -1 (le conseil de régence gouverne)
+  "Mort d'Édouard III": (D, g) => { legit(g, A, -1); }, // rééquilibrage 21/10 : -2 → -1, sans malus d'OPS (le conseil de régence gouverne)
   "Grand Schisme d'Occident": (D, g) => { // la Faveur du pape disparaît : Pape d'Avignon (France) et Pape de Rome (Angleterre) dès le tour suivant
     g.mains.A = g.mains.A.filter(x => x !== D.idPape); g.mains.F = g.mains.F.filter(x => x !== D.idPape); g.pape.attente = null; },
   "Mort de du Guesclin": (D, g) => { g.statuts.duGuesclin = false; },
@@ -198,7 +198,7 @@ export const EFFETS = {
   "Grandes Compagnies": (D, g, c) => { crise(g, 1); perd(D, g, adv(c), 1, { l: D.noms.filter(n => !D.lieux[n].pf && D.lieux[n].region !== "Angleterre") }); },
   "Retour de la peste": (D, g) => { crise(g, 1); tresor(g, A, -1); tresor(g, F, -1); },
   "Aides et fouages": (D, g) => tresor(g, F, 2),
-  "Bataille de Soubise": (D, g) => perd(D, g, A, 2, { l: [...zone(D, { r: "Guyenne" }), "La Rochelle"] }),
+  "Bataille de Soubise": (D, g) => perd(D, g, A, 1, { l: [...zone(D, { r: "Guyenne" }), "La Rochelle"] }), // rééquilibrage 21/10 (2e passe) : 2 → 1
   "Prise de Poitiers": (D, g) => forcerControle(D, g, F, "Poitiers"),
   "Bataille de Chizé": (D, g) => perd(D, g, A, 2, { p: ["Poitou", "Aunis"] }),
   "Siège de Saint-Sauveur-le-Vicomte": (D, g) => inf(D, g, F, 2, { r: "Normandie" }),

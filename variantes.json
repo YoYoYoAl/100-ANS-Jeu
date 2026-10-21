@@ -1,6 +1,6 @@
 {
- "g0": 50001,
- "N": 4000,
+ "g0": 60001,
+ "N": 2000,
  "variantes": [
   {
    "nom": "u5_H5_fFR",
@@ -64,6 +64,35 @@
      "Bataille de La Rochelle",
      "Bataille de Roosebeke"
     ]
+   },
+   "patch": {
+    "inf": {
+     "Bordeaux": {
+      "A": 4
+     },
+     "Bayonne": {
+      "A": 3
+     },
+     "Dax": {
+      "A": 2
+     },
+     "Gand": {
+      "A": 2
+     },
+     "Bruges": {
+      "A": 1
+     },
+     "Ypres": {
+      "A": 1
+     }
+    }
+   }
+  },
+  {
+   "nom": "u5_H5",
+   "options": {
+    "libreA": 7,
+    "uchronie": 5
    },
    "patch": {
     "inf": {
