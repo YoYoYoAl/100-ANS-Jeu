@@ -1,0 +1,4232 @@
+{
+"lieux": [
+{
+"nom": "Calais",
+"region": "Flandre",
+"pays": "Calaisis",
+"defense": 3,
+"pf": true,
+"port": true,
+"inf": {
+"A": 0,
+"F": 0
+},
+"voisins": [
+"Abbeville",
+"Arras",
+"Douvres",
+"Saint-Omer",
+"Ypres"
+]
+},
+{
+"nom": "Bruges",
+"region": "Flandre",
+"pays": "Flandre",
+"defense": 2,
+"pf": true,
+"port": true,
+"inf": {
+"A": 0,
+"F": 0
+},
+"voisins": [
+"Gand",
+"Ypres"
+]
+},
+{
+"nom": "Gand",
+"region": "Flandre",
+"pays": "Flandre",
+"defense": 2,
+"pf": true,
+"port": false,
+"inf": {
+"A": 0,
+"F": 0
+},
+"voisins": [
+"Bruges",
+"Tournai"
+]
+},
+{
+"nom": "Ypres",
+"region": "Flandre",
+"pays": "Flandre",
+"defense": 2,
+"pf": false,
+"port": false,
+"inf": {
+"A": 0,
+"F": 0
+},
+"voisins": [
+"Bruges",
+"Calais",
+"Lille",
+"Saint-Omer"
+]
+},
+{
+"nom": "Tournai",
+"region": "Flandre",
+"pays": "Tournaisis",
+"defense": 2,
+"pf": false,
+"port": false,
+"inf": {
+"A": 0,
+"F": 1
+},
+"voisins": [
+"Gand",
+"Lille"
+]
+},
+{
+"nom": "Lille",
+"region": "Flandre",
+"pays": "Flandre",
+"defense": 2,
+"pf": false,
+"port": false,
+"inf": {
+"A": 0,
+"F": 0
+},
+"voisins": [
+"Arras",
+"Tournai",
+"Ypres"
+]
+},
+{
+"nom": "Arras",
+"region": "Flandre",
+"pays": "Artois",
+"defense": 2,
+"pf": false,
+"port": false,
+"inf": {
+"A": 0,
+"F": 1
+},
+"voisins": [
+"Amiens",
+"Calais",
+"Lille",
+"Reims",
+"Saint-Omer"
+]
+},
+{
+"nom": "Abbeville",
+"region": "Flandre",
+"pays": "Ponthieu",
+"defense": 1,
+"pf": false,
+"port": true,
+"inf": {
+"A": 1,
+"F": 0
+},
+"voisins": [
+"Amiens",
+"Calais",
+"Rouen"
+]
+},
+{
+"nom": "Saint-Omer",
+"region": "Flandre",
+"pays": "Artois",
+"defense": 2,
+"pf": false,
+"port": false,
+"inf": {
+"A": 0,
+"F": 0
+},
+"voisins": [
+"Arras",
+"Calais",
+"Ypres"
+]
+},
+{
+"nom": "Amiens",
+"region": "Flandre",
+"pays": "Picardie",
+"defense": 2,
+"pf": true,
+"port": false,
+"inf": {
+"A": 0,
+"F": 1
+},
+"voisins": [
+"Abbeville",
+"Arras",
+"Compiègne",
+"Rouen"
+]
+},
+{
+"nom": "Rouen",
+"region": "Normandie",
+"pays": "Normandie",
+"defense": 3,
+"pf": true,
+"port": true,
+"inf": {
+"A": 0,
+"F": 3
+},
+"voisins": [
+"Abbeville",
+"Amiens",
+"Caen",
+"Harfleur",
+"Honfleur",
+"Paris",
+"Évreux"
+]
+},
+{
+"nom": "Caen",
+"region": "Normandie",
+"pays": "Normandie",
+"defense": 2,
+"pf": true,
+"port": true,
+"inf": {
+"A": 0,
+"F": 0
+},
+"voisins": [
+"Cherbourg",
+"Honfleur",
+"Le Mans",
+"Rouen"
+]
+},
+{
+"nom": "Harfleur",
+"region": "Normandie",
+"pays": "Normandie",
+"defense": 2,
+"pf": false,
+"port": true,
+"inf": {
+"A": 0,
+"F": 0
+},
+"voisins": [
+"Honfleur",
+"Portsmouth",
+"Rouen",
+"Southampton"
+]
+},
+{
+"nom": "Cherbourg",
+"region": "Normandie",
+"pays": "Cotentin",
+"defense": 2,
+"pf": true,
+"port": true,
+"inf": {
+"A": 0,
+"F": 0
+},
+"voisins": [
+"Caen",
+"Mont-Saint-Michel",
+"Southampton"
+]
+},
+{
+"nom": "Évreux",
+"region": "Normandie",
+"pays": "Normandie",
+"defense": 1,
+"pf": false,
+"port": false,
+"inf": {
+"A": 0,
+"F": 0
+},
+"voisins": [
+"Chartres",
+"Le Mans",
+"Rouen"
+]
+},
+{
+"nom": "Le Mans",
+"region": "Normandie",
+"pays": "Maine",
+"defense": 2,
+"pf": false,
+"port": false,
+"inf": {
+"A": 0,
+"F": 0
+},
+"voisins": [
+"Angers",
+"Caen",
+"Chartres",
+"Fougères",
+"Tours",
+"Évreux"
+]
+},
+{
+"nom": "Honfleur",
+"region": "Normandie",
+"pays": "Normandie",
+"defense": 2,
+"pf": false,
+"port": true,
+"inf": {
+"A": 0,
+"F": 0
+},
+"voisins": [
+"Caen",
+"Harfleur",
+"Rouen"
+]
+},
+{
+"nom": "Mont-Saint-Michel",
+"region": "Normandie",
+"pays": "Normandie",
+"defense": 4,
+"pf": true,
+"port": true,
+"inf": {
+"A": 0,
+"F": 2
+},
+"voisins": [
+"Cherbourg",
+"Fougères"
+]
+},
+{
+"nom": "Rennes",
+"region": "Bretagne",
+"pays": "Bretagne",
+"defense": 3,
+"pf": true,
+"port": false,
+"inf": {
+"A": 0,
+"F": 0
+},
+"voisins": [
+"Brest",
+"Fougères",
+"Nantes"
+]
+},
+{
+"nom": "Nantes",
+"region": "Bretagne",
+"pays": "Bretagne",
+"defense": 2,
+"pf": true,
+"port": true,
+"inf": {
+"A": 0,
+"F": 0
+},
+"voisins": [
+"Angers",
+"La Rochelle",
+"Rennes",
+"Tours",
+"Vannes"
+]
+},
+{
+"nom": "Brest",
+"region": "Bretagne",
+"pays": "Bretagne",
+"defense": 3,
+"pf": true,
+"port": true,
+"inf": {
+"A": 0,
+"F": 0
+},
+"voisins": [
+"Hennebont",
+"Plymouth",
+"Rennes",
+"Vannes"
+]
+},
+{
+"nom": "Vannes",
+"region": "Bretagne",
+"pays": "Bretagne",
+"defense": 2,
+"pf": false,
+"port": true,
+"inf": {
+"A": 0,
+"F": 0
+},
+"voisins": [
+"Brest",
+"Hennebont",
+"Nantes"
+]
+},
+{
+"nom": "Hennebont",
+"region": "Bretagne",
+"pays": "Bretagne",
+"defense": 2,
+"pf": true,
+"port": true,
+"inf": {
+"A": 0,
+"F": 0
+},
+"voisins": [
+"Brest",
+"Vannes"
+]
+},
+{
+"nom": "Fougères",
+"region": "Bretagne",
+"pays": "Bretagne",
+"defense": 2,
+"pf": true,
+"port": false,
+"inf": {
+"A": 0,
+"F": 0
+},
+"voisins": [
+"Le Mans",
+"Mont-Saint-Michel",
+"Rennes"
+]
+},
+{
+"nom": "Paris",
+"region": "Île-de-France",
+"pays": "Île-de-France",
+"defense": 4,
+"pf": true,
+"port": false,
+"inf": {
+"A": 0,
+"F": 4
+},
+"voisins": [
+"Chartres",
+"Meaux",
+"Montereau",
+"Orléans",
+"Rouen",
+"Saint-Denis"
+]
+},
+{
+"nom": "Saint-Denis",
+"region": "Île-de-France",
+"pays": "Île-de-France",
+"defense": 2,
+"pf": false,
+"port": false,
+"inf": {
+"A": 0,
+"F": 1
+},
+"voisins": [
+"Compiègne",
+"Paris"
+]
+},
+{
+"nom": "Meaux",
+"region": "Île-de-France",
+"pays": "Brie",
+"defense": 2,
+"pf": true,
+"port": false,
+"inf": {
+"A": 0,
+"F": 0
+},
+"voisins": [
+"Paris",
+"Reims",
+"Troyes"
+]
+},
+{
+"nom": "Chartres",
+"region": "Île-de-France",
+"pays": "Beauce",
+"defense": 2,
+"pf": false,
+"port": false,
+"inf": {
+"A": 0,
+"F": 0
+},
+"voisins": [
+"Le Mans",
+"Orléans",
+"Paris",
+"Évreux"
+]
+},
+{
+"nom": "Compiègne",
+"region": "Île-de-France",
+"pays": "Valois",
+"defense": 2,
+"pf": false,
+"port": false,
+"inf": {
+"A": 0,
+"F": 0
+},
+"voisins": [
+"Amiens",
+"Reims",
+"Saint-Denis"
+]
+},
+{
+"nom": "Reims",
+"region": "Île-de-France",
+"pays": "Champagne",
+"defense": 3,
+"pf": true,
+"port": false,
+"inf": {
+"A": 0,
+"F": 3
+},
+"voisins": [
+"Arras",
+"Compiègne",
+"Meaux",
+"Nancy",
+"Troyes"
+]
+},
+{
+"nom": "Montereau",
+"region": "Île-de-France",
+"pays": "Gâtinais",
+"defense": 1,
+"pf": false,
+"port": false,
+"inf": {
+"A": 0,
+"F": 0
+},
+"voisins": [
+"Auxerre",
+"Paris",
+"Troyes"
+]
+},
+{
+"nom": "Troyes",
+"region": "Île-de-France",
+"pays": "Champagne",
+"defense": 2,
+"pf": false,
+"port": false,
+"inf": {
+"A": 0,
+"F": 0
+},
+"voisins": [
+"Auxerre",
+"Dijon",
+"Meaux",
+"Montereau",
+"Nancy",
+"Reims"
+]
+},
+{
+"nom": "Dijon",
+"region": "Bourgogne",
+"pays": "Bourgogne",
+"defense": 3,
+"pf": true,
+"port": false,
+"inf": {
+"A": 0,
+"F": 0
+},
+"voisins": [
+"Auxerre",
+"Lyon",
+"Mâcon",
+"Nancy",
+"Troyes"
+]
+},
+{
+"nom": "Auxerre",
+"region": "Bourgogne",
+"pays": "Bourgogne",
+"defense": 1,
+"pf": false,
+"port": false,
+"inf": {
+"A": 0,
+"F": 0
+},
+"voisins": [
+"Dijon",
+"Montereau",
+"Nevers",
+"Troyes"
+]
+},
+{
+"nom": "Nevers",
+"region": "Bourgogne",
+"pays": "Nivernais",
+"defense": 1,
+"pf": false,
+"port": false,
+"inf": {
+"A": 0,
+"F": 0
+},
+"voisins": [
+"Auxerre",
+"Bourges"
+]
+},
+{
+"nom": "Lyon",
+"region": "Bourgogne",
+"pays": "Lyonnais",
+"defense": 2,
+"pf": true,
+"port": false,
+"inf": {
+"A": 0,
+"F": 1
+},
+"voisins": [
+"Bourges",
+"Dijon",
+"Montpellier",
+"Mâcon"
+]
+},
+{
+"nom": "Mâcon",
+"region": "Bourgogne",
+"pays": "Mâconnais",
+"defense": 2,
+"pf": false,
+"port": false,
+"inf": {
+"A": 0,
+"F": 0
+},
+"voisins": [
+"Dijon",
+"Lyon"
+]
+},
+{
+"nom": "Nancy",
+"region": "Bourgogne",
+"pays": "Lorraine",
+"defense": 2,
+"pf": false,
+"port": false,
+"inf": {
+"A": 0,
+"F": 0
+},
+"voisins": [
+"Dijon",
+"Reims",
+"Troyes"
+]
+},
+{
+"nom": "Bordeaux",
+"region": "Guyenne",
+"pays": "Bordelais",
+"defense": 3,
+"pf": true,
+"port": true,
+"inf": {
+"A": 3,
+"F": 0
+},
+"voisins": [
+"Castillon",
+"Dax",
+"La Rochelle",
+"Plymouth"
+]
+},
+{
+"nom": "Bayonne",
+"region": "Guyenne",
+"pays": "Gascogne",
+"defense": 2,
+"pf": true,
+"port": true,
+"inf": {
+"A": 2,
+"F": 0
+},
+"voisins": [
+"Dax",
+"Orthez"
+]
+},
+{
+"nom": "Dax",
+"region": "Guyenne",
+"pays": "Gascogne",
+"defense": 1,
+"pf": false,
+"port": false,
+"inf": {
+"A": 1,
+"F": 0
+},
+"voisins": [
+"Bayonne",
+"Bordeaux"
+]
+},
+{
+"nom": "Castillon",
+"region": "Guyenne",
+"pays": "Bordelais",
+"defense": 1,
+"pf": false,
+"port": false,
+"inf": {
+"A": 0,
+"F": 0
+},
+"voisins": [
+"Aiguillon",
+"Bergerac",
+"Bordeaux",
+"Périgueux"
+]
+},
+{
+"nom": "Périgueux",
+"region": "Guyenne",
+"pays": "Périgord",
+"defense": 1,
+"pf": false,
+"port": false,
+"inf": {
+"A": 0,
+"F": 1
+},
+"voisins": [
+"Aiguillon",
+"Bergerac",
+"Castillon",
+"Limoges"
+]
+},
+{
+"nom": "Bergerac",
+"region": "Guyenne",
+"pays": "Périgord",
+"defense": 1,
+"pf": false,
+"port": false,
+"inf": {
+"A": 0,
+"F": 0
+},
+"voisins": [
+"Aiguillon",
+"Castillon",
+"Périgueux"
+]
+},
+{
+"nom": "Aiguillon",
+"region": "Guyenne",
+"pays": "Agenais",
+"defense": 1,
+"pf": false,
+"port": false,
+"inf": {
+"A": 0,
+"F": 1
+},
+"voisins": [
+"Bergerac",
+"Castillon",
+"Lectoure",
+"Périgueux",
+"Toulouse"
+]
+},
+{
+"nom": "Toulouse",
+"region": "Languedoc",
+"pays": "Toulousain",
+"defense": 3,
+"pf": true,
+"port": false,
+"inf": {
+"A": 0,
+"F": 3
+},
+"voisins": [
+"Aiguillon",
+"Carcassonne",
+"Lectoure"
+]
+},
+{
+"nom": "Carcassonne",
+"region": "Languedoc",
+"pays": "Languedoc",
+"defense": 3,
+"pf": true,
+"port": false,
+"inf": {
+"A": 0,
+"F": 1
+},
+"voisins": [
+"Montpellier",
+"Narbonne",
+"Toulouse"
+]
+},
+{
+"nom": "Montpellier",
+"region": "Languedoc",
+"pays": "Languedoc",
+"defense": 2,
+"pf": false,
+"port": true,
+"inf": {
+"A": 0,
+"F": 0
+},
+"voisins": [
+"Carcassonne",
+"Lyon",
+"Narbonne"
+]
+},
+{
+"nom": "Lectoure",
+"region": "Languedoc",
+"pays": "Armagnac",
+"defense": 1,
+"pf": false,
+"port": false,
+"inf": {
+"A": 0,
+"F": 0
+},
+"voisins": [
+"Aiguillon",
+"Orthez",
+"Toulouse"
+]
+},
+{
+"nom": "Narbonne",
+"region": "Languedoc",
+"pays": "Languedoc",
+"defense": 2,
+"pf": false,
+"port": true,
+"inf": {
+"A": 0,
+"F": 0
+},
+"voisins": [
+"Carcassonne",
+"Montpellier"
+]
+},
+{
+"nom": "Orthez",
+"region": "Languedoc",
+"pays": "Béarn-Foix",
+"defense": 2,
+"pf": false,
+"port": false,
+"inf": {
+"A": 0,
+"F": 0
+},
+"voisins": [
+"Bayonne",
+"Lectoure"
+]
+},
+{
+"nom": "Orléans",
+"region": "Val de Loire",
+"pays": "Orléanais",
+"defense": 3,
+"pf": true,
+"port": false,
+"inf": {
+"A": 0,
+"F": 2
+},
+"voisins": [
+"Bourges",
+"Chartres",
+"Paris",
+"Tours"
+]
+},
+{
+"nom": "Tours",
+"region": "Val de Loire",
+"pays": "Touraine",
+"defense": 2,
+"pf": false,
+"port": false,
+"inf": {
+"A": 0,
+"F": 1
+},
+"voisins": [
+"Angers",
+"Chinon",
+"Le Mans",
+"Nantes",
+"Orléans"
+]
+},
+{
+"nom": "Chinon",
+"region": "Val de Loire",
+"pays": "Touraine",
+"defense": 2,
+"pf": true,
+"port": false,
+"inf": {
+"A": 0,
+"F": 0
+},
+"voisins": [
+"Angers",
+"Poitiers",
+"Tours"
+]
+},
+{
+"nom": "Bourges",
+"region": "Val de Loire",
+"pays": "Berry",
+"defense": 3,
+"pf": true,
+"port": false,
+"inf": {
+"A": 0,
+"F": 2
+},
+"voisins": [
+"Limoges",
+"Lyon",
+"Nevers",
+"Orléans"
+]
+},
+{
+"nom": "Poitiers",
+"region": "Val de Loire",
+"pays": "Poitou",
+"defense": 2,
+"pf": false,
+"port": false,
+"inf": {
+"A": 0,
+"F": 0
+},
+"voisins": [
+"Chinon",
+"La Rochelle",
+"Limoges"
+]
+},
+{
+"nom": "La Rochelle",
+"region": "Val de Loire",
+"pays": "Aunis",
+"defense": 2,
+"pf": true,
+"port": true,
+"inf": {
+"A": 0,
+"F": 0
+},
+"voisins": [
+"Bordeaux",
+"Nantes",
+"Poitiers"
+]
+},
+{
+"nom": "Angers",
+"region": "Val de Loire",
+"pays": "Anjou",
+"defense": 3,
+"pf": true,
+"port": false,
+"inf": {
+"A": 0,
+"F": 1
+},
+"voisins": [
+"Chinon",
+"Le Mans",
+"Nantes",
+"Tours"
+]
+},
+{
+"nom": "Limoges",
+"region": "Val de Loire",
+"pays": "Limousin",
+"defense": 2,
+"pf": false,
+"port": false,
+"inf": {
+"A": 0,
+"F": 0
+},
+"voisins": [
+"Bourges",
+"Poitiers",
+"Périgueux"
+]
+},
+{
+"nom": "Londres",
+"region": "Angleterre",
+"pays": "Middlesex",
+"defense": 4,
+"pf": true,
+"port": true,
+"inf": {
+"A": 4,
+"F": 0
+},
+"voisins": [
+"Douvres",
+"Pays de Galles",
+"Southampton"
+]
+},
+{
+"nom": "Portsmouth",
+"region": "Angleterre",
+"pays": "Hampshire",
+"defense": 2,
+"pf": false,
+"port": true,
+"inf": {
+"A": 1,
+"F": 0
+},
+"voisins": [
+"Harfleur",
+"Southampton"
+]
+},
+{
+"nom": "Plymouth",
+"region": "Angleterre",
+"pays": "Devon",
+"defense": 2,
+"pf": false,
+"port": true,
+"inf": {
+"A": 1,
+"F": 0
+},
+"voisins": [
+"Bordeaux",
+"Brest",
+"Pays de Galles",
+"Southampton"
+]
+},
+{
+"nom": "Southampton",
+"region": "Angleterre",
+"pays": "Hampshire",
+"defense": 2,
+"pf": false,
+"port": true,
+"inf": {
+"A": 2,
+"F": 0
+},
+"voisins": [
+"Cherbourg",
+"Douvres",
+"Harfleur",
+"Londres",
+"Plymouth",
+"Portsmouth"
+]
+},
+{
+"nom": "Douvres",
+"region": "Angleterre",
+"pays": "Kent",
+"defense": 3,
+"pf": true,
+"port": true,
+"inf": {
+"A": 3,
+"F": 0
+},
+"voisins": [
+"Calais",
+"Londres",
+"Southampton"
+]
+},
+{
+"nom": "Pays de Galles",
+"region": "Angleterre",
+"pays": "Galles",
+"defense": 2,
+"pf": false,
+"port": false,
+"inf": {
+"A": 2,
+"F": 0
+},
+"voisins": [
+"Londres",
+"Plymouth"
+]
+}
+],
+"cartes": [
+{
+"id": 1,
+"phase": 1,
+"camp": "S",
+"ops": 0,
+"nom": "Décompte : Guyenne",
+"prerequis": "",
+"retiree": false,
+"interdit": [],
+"fin": 4,
+"statut": "obligatoire"
+},
+{
+"id": 2,
+"phase": 1,
+"camp": "S",
+"ops": 0,
+"nom": "Décompte : Flandre",
+"prerequis": "",
+"retiree": false,
+"interdit": [],
+"fin": 4,
+"statut": "obligatoire"
+},
+{
+"id": 3,
+"phase": 2,
+"camp": "S",
+"ops": 0,
+"nom": "Décompte : Bretagne",
+"prerequis": "",
+"retiree": false,
+"interdit": [],
+"fin": 4,
+"statut": "obligatoire"
+},
+{
+"id": 4,
+"phase": 1,
+"camp": "F",
+"ops": 3,
+"nom": "Confiscation de la Guyenne",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 2,
+"statut": "obligatoire"
+},
+{
+"id": 5,
+"phase": 1,
+"camp": "A",
+"ops": 2,
+"nom": "Embargo sur la laine",
+"prerequis": "",
+"retiree": false,
+"interdit": [],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 6,
+"phase": 1,
+"camp": "A",
+"ops": 2,
+"nom": "Jacques van Artevelde",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Bataille de Roosebeke"
+],
+"fin": 2,
+"statut": "facultative"
+},
+{
+"id": 7,
+"phase": 1,
+"camp": "A",
+"ops": 2,
+"nom": "Alliance avec Louis de Bavière",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 1,
+"statut": "facultative"
+},
+{
+"id": 8,
+"phase": 1,
+"camp": "F",
+"ops": 2,
+"nom": "Raids sur les côtes anglaises",
+"prerequis": "",
+"retiree": false,
+"interdit": [],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 9,
+"phase": 1,
+"camp": "A",
+"ops": 2,
+"nom": "Chevauchée du Cambrésis",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Mort d'Édouard III"
+],
+"fin": 2,
+"statut": "facultative"
+},
+{
+"id": 10,
+"phase": 1,
+"camp": "A",
+"ops": 3,
+"nom": "Édouard III, roi de France",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Mort d'Édouard III"
+],
+"fin": 2,
+"statut": "obligatoire"
+},
+{
+"id": 11,
+"phase": 1,
+"camp": "A",
+"ops": 4,
+"nom": "Bataille de l'Écluse",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 2,
+"statut": "obligatoire"
+},
+{
+"id": 12,
+"phase": 1,
+"camp": "F",
+"ops": 2,
+"nom": "Siège de Tournai",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 1,
+"statut": "facultative"
+},
+{
+"id": 13,
+"phase": 1,
+"camp": "N",
+"ops": 1,
+"nom": "Trêve d'Esplechin",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 1,
+"statut": "facultative"
+},
+{
+"id": 14,
+"phase": 1,
+"camp": "F",
+"ops": 2,
+"nom": "Gabelle du sel",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 2,
+"statut": "facultative"
+},
+{
+"id": 15,
+"phase": 1,
+"camp": "N",
+"ops": 3,
+"nom": "Guerre de succession de Bretagne",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Traité de Guérande"
+],
+"fin": 2,
+"statut": "obligatoire"
+},
+{
+"id": 16,
+"phase": 1,
+"camp": "A",
+"ops": 2,
+"nom": "Jeanne la Flamme",
+"prerequis": "Guerre de succession de Bretagne",
+"retiree": true,
+"interdit": [
+"Traité de Guérande"
+],
+"fin": 2,
+"statut": "facultative"
+},
+{
+"id": 17,
+"phase": 1,
+"camp": "F",
+"ops": 2,
+"nom": "Charles de Blois",
+"prerequis": "Guerre de succession de Bretagne",
+"retiree": false,
+"interdit": [
+"Traité de Guérande",
+"Bataille d'Auray"
+],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 18,
+"phase": 1,
+"camp": "N",
+"ops": 1,
+"nom": "Trêve de Malestroit",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 1,
+"statut": "facultative"
+},
+{
+"id": 19,
+"phase": 1,
+"camp": "F",
+"ops": 2,
+"nom": "Faillite des Bardi et des Peruzzi",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 1,
+"statut": "facultative"
+},
+{
+"id": 20,
+"phase": 1,
+"camp": "A",
+"ops": 3,
+"nom": "Derby en Gascogne",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 2,
+"statut": "facultative"
+},
+{
+"id": 21,
+"phase": 1,
+"camp": "F",
+"ops": 2,
+"nom": "Siège d'Aiguillon",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 2,
+"statut": "facultative"
+},
+{
+"id": 22,
+"phase": 1,
+"camp": "A",
+"ops": 2,
+"nom": "Godefroy d'Harcourt",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 1,
+"statut": "facultative"
+},
+{
+"id": 23,
+"phase": 1,
+"camp": "A",
+"ops": 4,
+"nom": "Bataille de Crécy",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Mort d'Édouard III"
+],
+"fin": 2,
+"statut": "obligatoire"
+},
+{
+"id": 24,
+"phase": 1,
+"camp": "A",
+"ops": 2,
+"nom": "Bataille de Neville's Cross",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 2,
+"statut": "facultative"
+},
+{
+"id": 25,
+"phase": 1,
+"camp": "A",
+"ops": 3,
+"nom": "Siège de Calais",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Mort d'Édouard III"
+],
+"fin": 2,
+"statut": "obligatoire"
+},
+{
+"id": 26,
+"phase": 1,
+"camp": "N",
+"ops": 3,
+"nom": "Peste noire",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 1,
+"statut": "obligatoire"
+},
+{
+"id": 27,
+"phase": 1,
+"camp": "N",
+"ops": 1,
+"nom": "Clément VI achète Avignon",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Grand Schisme d'Occident"
+],
+"fin": 2,
+"statut": "facultative"
+},
+{
+"id": 28,
+"phase": 1,
+"camp": "A",
+"ops": 2,
+"nom": "Ordre de la Jarretière",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 2,
+"statut": "facultative"
+},
+{
+"id": 29,
+"phase": 1,
+"camp": "F",
+"ops": 2,
+"nom": "Transport du Dauphiné",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 1,
+"statut": "facultative"
+},
+{
+"id": 30,
+"phase": 1,
+"camp": "F",
+"ops": 1,
+"nom": "Avènement de Jean le Bon",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Avènement de Charles V",
+"Bataille de Poitiers"
+],
+"fin": 2,
+"statut": "facultative"
+},
+{
+"id": 31,
+"phase": 1,
+"camp": "N",
+"ops": 1,
+"nom": "Combat des Trente",
+"prerequis": "Guerre de succession de Bretagne",
+"retiree": true,
+"interdit": [
+"Traité de Guérande"
+],
+"fin": 2,
+"statut": "facultative"
+},
+{
+"id": 32,
+"phase": 1,
+"camp": "F",
+"ops": 2,
+"nom": "Ordre de l'Étoile",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Avènement de Charles V",
+"Bataille de Mauron"
+],
+"fin": 2,
+"statut": "facultative"
+},
+{
+"id": 33,
+"phase": 1,
+"camp": "A",
+"ops": 2,
+"nom": "Bataille de Mauron",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Traité de Guérande"
+],
+"fin": 2,
+"statut": "facultative"
+},
+{
+"id": 34,
+"phase": 1,
+"camp": "A",
+"ops": 3,
+"nom": "Charles le Mauvais",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Mort de Charles le Mauvais"
+],
+"fin": 2,
+"statut": "obligatoire"
+},
+{
+"id": 35,
+"phase": 1,
+"camp": "F",
+"ops": 2,
+"nom": "Arrestation de Charles le Mauvais",
+"prerequis": "Charles le Mauvais",
+"retiree": true,
+"interdit": [
+"Mort de Charles le Mauvais"
+],
+"fin": 2,
+"statut": "facultative"
+},
+{
+"id": 36,
+"phase": 1,
+"camp": "A",
+"ops": 3,
+"nom": "Chevauchée du Prince Noir",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Mort du Prince Noir"
+],
+"fin": 2,
+"statut": "facultative"
+},
+{
+"id": 37,
+"phase": 1,
+"camp": "A",
+"ops": 4,
+"nom": "Bataille de Poitiers",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Mort du Prince Noir",
+"Avènement de Charles V"
+],
+"fin": 2,
+"statut": "obligatoire"
+},
+{
+"id": 38,
+"phase": 1,
+"camp": "F",
+"ops": 2,
+"nom": "Du Guesclin au siège de Rennes",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Mort de du Guesclin"
+],
+"fin": 2,
+"statut": "obligatoire"
+},
+{
+"id": 39,
+"phase": 1,
+"camp": "A",
+"ops": 3,
+"nom": "Étienne Marcel",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 1,
+"statut": "obligatoire"
+},
+{
+"id": 40,
+"phase": 1,
+"camp": "N",
+"ops": 2,
+"nom": "Grande Jacquerie",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 1,
+"statut": "obligatoire"
+},
+{
+"id": 41,
+"phase": 1,
+"camp": "F",
+"ops": 1,
+"nom": "Le Grand Ferré",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 1,
+"statut": "facultative"
+},
+{
+"id": 42,
+"phase": 1,
+"camp": "F",
+"ops": 2,
+"nom": "David II à Château-Gaillard",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Bataille de Neville's Cross"
+],
+"fin": 2,
+"statut": "facultative"
+},
+{
+"id": 43,
+"phase": 1,
+"camp": "A",
+"ops": 3,
+"nom": "Campagne de Reims",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Mort d'Édouard III",
+"Traité de Brétigny"
+],
+"fin": 2,
+"statut": "facultative"
+},
+{
+"id": 44,
+"phase": 1,
+"camp": "F",
+"ops": 2,
+"nom": "Lundi noir",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Traité de Brétigny"
+],
+"fin": 2,
+"statut": "facultative"
+},
+{
+"id": 45,
+"phase": 1,
+"camp": "N",
+"ops": 4,
+"nom": "Traité de Brétigny",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Confiscation de l'Aquitaine"
+],
+"fin": 2,
+"statut": "obligatoire"
+},
+{
+"id": 46,
+"phase": 2,
+"camp": "S",
+"ops": 0,
+"nom": "Décompte : Normandie",
+"prerequis": "",
+"retiree": false,
+"interdit": [],
+"fin": 4,
+"statut": "obligatoire"
+},
+{
+"id": 47,
+"phase": 3,
+"camp": "S",
+"ops": 0,
+"nom": "Décompte : Languedoc",
+"prerequis": "",
+"retiree": false,
+"interdit": [],
+"fin": 4,
+"statut": "obligatoire"
+},
+{
+"id": 48,
+"phase": 1,
+"camp": "S",
+"ops": 0,
+"nom": "Décompte : Val de Loire",
+"prerequis": "",
+"retiree": false,
+"interdit": [],
+"fin": 4,
+"statut": "obligatoire"
+},
+{
+"id": 49,
+"phase": 2,
+"camp": "A",
+"ops": 2,
+"nom": "Chevauchée de Robert Knolles",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 3,
+"statut": "facultative"
+},
+{
+"id": 50,
+"phase": 2,
+"camp": "A",
+"ops": 3,
+"nom": "Cherbourg et Brest cédés à l'Angleterre",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 2,
+"statut": "facultative"
+},
+{
+"id": 51,
+"phase": 3,
+"camp": "A",
+"ops": 2,
+"nom": "Bataille d'Homildon Hill",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Avènement d'Henri V"
+],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 52,
+"phase": 3,
+"camp": "A",
+"ops": 2,
+"nom": "Bataille de Shrewsbury",
+"prerequis": "Usurpation d'Henri IV",
+"retiree": true,
+"interdit": [
+"Avènement d'Henri V"
+],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 53,
+"phase": 3,
+"camp": "A",
+"ops": 3,
+"nom": "Expédition de Clarence",
+"prerequis": "Assassinat de Louis d'Orléans",
+"retiree": true,
+"interdit": [
+"Avènement d'Henri V"
+],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 54,
+"phase": 2,
+"camp": "A",
+"ops": 3,
+"nom": "Rançon du roi Jean",
+"prerequis": "Roi captif",
+"retiree": true,
+"interdit": [],
+"fin": 3,
+"statut": "obligatoire"
+},
+{
+"id": 55,
+"phase": 2,
+"camp": "N",
+"ops": 2,
+"nom": "Bataille de Brignais",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 3,
+"statut": "facultative"
+},
+{
+"id": 56,
+"phase": 2,
+"camp": "N",
+"ops": 2,
+"nom": "Bataille de Launac",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 3,
+"statut": "facultative"
+},
+{
+"id": 57,
+"phase": 2,
+"camp": "A",
+"ops": 2,
+"nom": "Ordonnance sur le tir à l'arc",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 3,
+"statut": "facultative"
+},
+{
+"id": 58,
+"phase": 2,
+"camp": "F",
+"ops": 3,
+"nom": "Avènement de Charles V",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Mort de Charles V"
+],
+"fin": 3,
+"statut": "obligatoire"
+},
+{
+"id": 59,
+"phase": 2,
+"camp": "F",
+"ops": 3,
+"nom": "Bataille de Cocherel",
+"prerequis": "Du Guesclin au siège de Rennes",
+"retiree": true,
+"interdit": [
+"Mort de du Guesclin",
+"Mort de Charles le Mauvais"
+],
+"fin": 3,
+"statut": "facultative"
+},
+{
+"id": 60,
+"phase": 2,
+"camp": "A",
+"ops": 3,
+"nom": "Bataille d'Auray",
+"prerequis": "Guerre de succession de Bretagne",
+"retiree": true,
+"interdit": [
+"Traité de Guérande"
+],
+"fin": 3,
+"statut": "facultative"
+},
+{
+"id": 61,
+"phase": 2,
+"camp": "N",
+"ops": 2,
+"nom": "Traité de Guérande",
+"prerequis": "Guerre de succession de Bretagne",
+"retiree": true,
+"interdit": [],
+"fin": 3,
+"statut": "facultative"
+},
+{
+"id": 62,
+"phase": 2,
+"camp": "F",
+"ops": 3,
+"nom": "Du Guesclin en Castille",
+"prerequis": "Du Guesclin au siège de Rennes",
+"retiree": true,
+"interdit": [
+"Mort de du Guesclin"
+],
+"fin": 3,
+"statut": "facultative"
+},
+{
+"id": 63,
+"phase": 2,
+"camp": "A",
+"ops": 3,
+"nom": "Bataille de Nájera",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Mort du Prince Noir",
+"Montiel"
+],
+"fin": 3,
+"statut": "facultative"
+},
+{
+"id": 64,
+"phase": 2,
+"camp": "F",
+"ops": 2,
+"nom": "Montiel",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 3,
+"statut": "obligatoire"
+},
+{
+"id": 65,
+"phase": 2,
+"camp": "F",
+"ops": 3,
+"nom": "Appel des seigneurs gascons",
+"prerequis": "Traité de Brétigny",
+"retiree": true,
+"interdit": [],
+"fin": 3,
+"statut": "facultative"
+},
+{
+"id": 66,
+"phase": 2,
+"camp": "F",
+"ops": 3,
+"nom": "Confiscation de l'Aquitaine",
+"prerequis": "Traité de Brétigny",
+"retiree": true,
+"interdit": [
+"Mort de Charles V"
+],
+"fin": 3,
+"statut": "obligatoire"
+},
+{
+"id": 67,
+"phase": 2,
+"camp": "F",
+"ops": 2,
+"nom": "Fondation de la Bastille",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Mort de Charles V"
+],
+"fin": 3,
+"statut": "facultative"
+},
+{
+"id": 68,
+"phase": 2,
+"camp": "F",
+"ops": 2,
+"nom": "Sac de Limoges",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Mort du Prince Noir"
+],
+"fin": 3,
+"statut": "facultative"
+},
+{
+"id": 69,
+"phase": 2,
+"camp": "F",
+"ops": 4,
+"nom": "Du Guesclin connétable",
+"prerequis": "Du Guesclin au siège de Rennes",
+"retiree": true,
+"interdit": [
+"Mort de du Guesclin"
+],
+"fin": 3,
+"statut": "obligatoire"
+},
+{
+"id": 70,
+"phase": 2,
+"camp": "F",
+"ops": 2,
+"nom": "Bataille de Pontvallain",
+"prerequis": "Du Guesclin au siège de Rennes",
+"retiree": true,
+"interdit": [
+"Mort de du Guesclin"
+],
+"fin": 3,
+"statut": "facultative"
+},
+{
+"id": 71,
+"phase": 2,
+"camp": "F",
+"ops": 3,
+"nom": "Bataille de La Rochelle",
+"prerequis": "Montiel",
+"retiree": true,
+"interdit": [],
+"fin": 3,
+"statut": "obligatoire"
+},
+{
+"id": 72,
+"phase": 2,
+"camp": "A",
+"ops": 3,
+"nom": "Grande chevauchée de Jean de Gand",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Usurpation d'Henri IV"
+],
+"fin": 3,
+"statut": "facultative"
+},
+{
+"id": 73,
+"phase": 2,
+"camp": "N",
+"ops": 1,
+"nom": "Trêve de Bruges",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 3,
+"statut": "facultative"
+},
+{
+"id": 74,
+"phase": 2,
+"camp": "F",
+"ops": 2,
+"nom": "Mort du Prince Noir",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 3,
+"statut": "obligatoire"
+},
+{
+"id": 75,
+"phase": 2,
+"camp": "F",
+"ops": 3,
+"nom": "Mort d'Édouard III",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 3,
+"statut": "obligatoire"
+},
+{
+"id": 76,
+"phase": 2,
+"camp": "N",
+"ops": 3,
+"nom": "Grand Schisme d'Occident",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 3,
+"statut": "obligatoire"
+},
+{
+"id": 77,
+"phase": 2,
+"camp": "A",
+"ops": 2,
+"nom": "Mort de du Guesclin",
+"prerequis": "Du Guesclin au siège de Rennes",
+"retiree": true,
+"interdit": [],
+"fin": 3,
+"statut": "obligatoire"
+},
+{
+"id": 78,
+"phase": 2,
+"camp": "A",
+"ops": 3,
+"nom": "Mort de Charles V",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 3,
+"statut": "obligatoire"
+},
+{
+"id": 79,
+"phase": 2,
+"camp": "N",
+"ops": 2,
+"nom": "Révolte des paysans anglais",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 3,
+"statut": "obligatoire"
+},
+{
+"id": 80,
+"phase": 2,
+"camp": "N",
+"ops": 2,
+"nom": "Harelle et Maillotins",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 3,
+"statut": "facultative"
+},
+{
+"id": 81,
+"phase": 2,
+"camp": "F",
+"ops": 3,
+"nom": "Bataille de Roosebeke",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 3,
+"statut": "facultative"
+},
+{
+"id": 82,
+"phase": 2,
+"camp": "A",
+"ops": 2,
+"nom": "Croisade de Despenser",
+"prerequis": "Grand Schisme d'Occident",
+"retiree": true,
+"interdit": [],
+"fin": 3,
+"statut": "facultative"
+},
+{
+"id": 83,
+"phase": 2,
+"camp": "N",
+"ops": 3,
+"nom": "Héritage flamand de Philippe le Hardi",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 3,
+"statut": "facultative"
+},
+{
+"id": 84,
+"phase": 2,
+"camp": "F",
+"ops": 2,
+"nom": "Flotte d'invasion de L'Écluse",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 3,
+"statut": "facultative"
+},
+{
+"id": 85,
+"phase": 2,
+"camp": "F",
+"ops": 2,
+"nom": "Bataille d'Otterburn",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 3,
+"statut": "facultative"
+},
+{
+"id": 86,
+"phase": 3,
+"camp": "N",
+"ops": 2,
+"nom": "Trêve de Leulinghem",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 87,
+"phase": 3,
+"camp": "A",
+"ops": 4,
+"nom": "Folie de Charles VI",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 4,
+"statut": "obligatoire"
+},
+{
+"id": 88,
+"phase": 3,
+"camp": "A",
+"ops": 1,
+"nom": "Bal des Ardents",
+"prerequis": "Folie de Charles VI",
+"retiree": true,
+"interdit": [
+"Mort de Charles VI"
+],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 89,
+"phase": 3,
+"camp": "N",
+"ops": 2,
+"nom": "Trêve de vingt-huit ans",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Usurpation d'Henri IV"
+],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 90,
+"phase": 3,
+"camp": "N",
+"ops": 2,
+"nom": "Croisade de Nicopolis",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Assassinat de Montereau"
+],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 91,
+"phase": 3,
+"camp": "F",
+"ops": 3,
+"nom": "Usurpation d'Henri IV",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 4,
+"statut": "obligatoire"
+},
+{
+"id": 92,
+"phase": 3,
+"camp": "F",
+"ops": 3,
+"nom": "Owain Glyndŵr",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Avènement d'Henri V"
+],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 93,
+"phase": 3,
+"camp": "A",
+"ops": 4,
+"nom": "Assassinat de Louis d'Orléans",
+"prerequis": "Folie de Charles VI",
+"retiree": true,
+"interdit": [],
+"fin": 4,
+"statut": "obligatoire"
+},
+{
+"id": 94,
+"phase": 3,
+"camp": "N",
+"ops": 2,
+"nom": "Ligue de Gien",
+"prerequis": "Assassinat de Louis d'Orléans",
+"retiree": true,
+"interdit": [],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 95,
+"phase": 3,
+"camp": "N",
+"ops": 2,
+"nom": "Révolte cabochienne",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Assassinat de Montereau"
+],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 96,
+"phase": 3,
+"camp": "N",
+"ops": 2,
+"nom": "Concile de Constance",
+"prerequis": "Grand Schisme d'Occident",
+"retiree": true,
+"interdit": [],
+"fin": 4,
+"statut": "obligatoire"
+},
+{
+"id": 97,
+"phase": 4,
+"camp": "S",
+"ops": 0,
+"nom": "Décompte : Île-de-France",
+"prerequis": "",
+"retiree": false,
+"interdit": [],
+"fin": 4,
+"statut": "obligatoire"
+},
+{
+"id": 98,
+"phase": 3,
+"camp": "S",
+"ops": 0,
+"nom": "Décompte : Bourgogne",
+"prerequis": "",
+"retiree": false,
+"interdit": [],
+"fin": 4,
+"statut": "obligatoire"
+},
+{
+"id": 99,
+"phase": 3,
+"camp": "A",
+"ops": 2,
+"nom": "Bataille de la Seine",
+"prerequis": "Siège d'Harfleur",
+"retiree": true,
+"interdit": [
+"Mort d'Henri V"
+],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 100,
+"phase": 3,
+"camp": "A",
+"ops": 3,
+"nom": "Prise de Caen",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Mort d'Henri V"
+],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 101,
+"phase": 3,
+"camp": "A",
+"ops": 3,
+"nom": "Henri V entre dans Paris",
+"prerequis": "Traité de Troyes",
+"retiree": true,
+"interdit": [
+"Mort d'Henri V"
+],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 102,
+"phase": 3,
+"camp": "A",
+"ops": 2,
+"nom": "Prise du Mans",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Mort de Salisbury"
+],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 103,
+"phase": 4,
+"camp": "A",
+"ops": 3,
+"nom": "Campagne de Salisbury",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Mort de Salisbury",
+"Jeanne d'Arc"
+],
+"fin": 4,
+"statut": "obligatoire"
+},
+{
+"id": 104,
+"phase": 4,
+"camp": "A",
+"ops": 3,
+"nom": "Échec bourguignon devant Calais",
+"prerequis": "Congrès d'Arras",
+"retiree": true,
+"interdit": [],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 105,
+"phase": 4,
+"camp": "A",
+"ops": 2,
+"nom": "Reprise d'Harfleur",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 106,
+"phase": 3,
+"camp": "A",
+"ops": 3,
+"nom": "Siège d'Harfleur",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Mort d'Henri V"
+],
+"fin": 4,
+"statut": "obligatoire"
+},
+{
+"id": 107,
+"phase": 3,
+"camp": "A",
+"ops": 4,
+"nom": "Bataille d'Azincourt",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Mort d'Henri V"
+],
+"fin": 4,
+"statut": "obligatoire"
+},
+{
+"id": 108,
+"phase": 3,
+"camp": "N",
+"ops": 3,
+"nom": "Les Bourguignons prennent Paris",
+"prerequis": "Assassinat de Louis d'Orléans",
+"retiree": true,
+"interdit": [
+"Assassinat de Montereau"
+],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 109,
+"phase": 3,
+"camp": "A",
+"ops": 4,
+"nom": "Siège de Rouen",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Mort d'Henri V"
+],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 110,
+"phase": 3,
+"camp": "A",
+"ops": 4,
+"nom": "Assassinat de Montereau",
+"prerequis": "Assassinat de Louis d'Orléans",
+"retiree": true,
+"interdit": [],
+"fin": 4,
+"statut": "obligatoire"
+},
+{
+"id": 111,
+"phase": 3,
+"camp": "A",
+"ops": 4,
+"nom": "Traité de Troyes",
+"prerequis": "Assassinat de Montereau",
+"retiree": true,
+"interdit": [
+"Mort de Charles VI",
+"Mort d'Henri V"
+],
+"fin": 4,
+"statut": "obligatoire"
+},
+{
+"id": 112,
+"phase": 3,
+"camp": "A",
+"ops": 2,
+"nom": "Siège de Meaux",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Mort d'Henri V"
+],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 113,
+"phase": 3,
+"camp": "F",
+"ops": 3,
+"nom": "Bataille de Baugé",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 114,
+"phase": 3,
+"camp": "F",
+"ops": 3,
+"nom": "Mort d'Henri V",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 4,
+"statut": "obligatoire"
+},
+{
+"id": 115,
+"phase": 3,
+"camp": "N",
+"ops": 3,
+"nom": "Mort de Charles VI",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 4,
+"statut": "obligatoire"
+},
+{
+"id": 116,
+"phase": 3,
+"camp": "F",
+"ops": 2,
+"nom": "Le roi de Bourges",
+"prerequis": "",
+"retiree": false,
+"interdit": [
+"Sacre de Charles VII à Reims"
+],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 117,
+"phase": 3,
+"camp": "A",
+"ops": 3,
+"nom": "Traité d'Amiens",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Mort de Bedford",
+"Congrès d'Arras"
+],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 118,
+"phase": 3,
+"camp": "A",
+"ops": 2,
+"nom": "Bataille de Cravant",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 119,
+"phase": 3,
+"camp": "A",
+"ops": 3,
+"nom": "Bataille de Verneuil",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Mort de Bedford"
+],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 120,
+"phase": 3,
+"camp": "A",
+"ops": 3,
+"nom": "Bedford régent",
+"prerequis": "Mort d'Henri V",
+"retiree": true,
+"interdit": [
+"Mort de Bedford"
+],
+"fin": 4,
+"statut": "obligatoire"
+},
+{
+"id": 121,
+"phase": 3,
+"camp": "F",
+"ops": 2,
+"nom": "Gloucester en Hainaut",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Congrès d'Arras"
+],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 122,
+"phase": 3,
+"camp": "F",
+"ops": 3,
+"nom": "Richemont connétable",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 123,
+"phase": 4,
+"camp": "A",
+"ops": 3,
+"nom": "Siège d'Orléans",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Jeanne d'Arc"
+],
+"fin": 4,
+"statut": "obligatoire"
+},
+{
+"id": 124,
+"phase": 4,
+"camp": "A",
+"ops": 2,
+"nom": "Journée des Harengs",
+"prerequis": "Siège d'Orléans",
+"retiree": true,
+"interdit": [
+"Jeanne d'Arc"
+],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 125,
+"phase": 4,
+"camp": "F",
+"ops": 3,
+"nom": "Dunois, Bâtard d'Orléans",
+"prerequis": "",
+"retiree": false,
+"interdit": [],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 126,
+"phase": 4,
+"camp": "F",
+"ops": 2,
+"nom": "La Hire et Xaintrailles",
+"prerequis": "",
+"retiree": false,
+"interdit": [],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 127,
+"phase": 4,
+"camp": "F",
+"ops": 4,
+"nom": "Jeanne d'Arc",
+"prerequis": "Siège d'Orléans ou Campagne de Salisbury",
+"retiree": true,
+"interdit": [
+"Capture à Compiègne"
+],
+"fin": 4,
+"statut": "obligatoire"
+},
+{
+"id": 128,
+"phase": 4,
+"camp": "F",
+"ops": 3,
+"nom": "Bataille de Patay",
+"prerequis": "Jeanne d'Arc",
+"retiree": true,
+"interdit": [
+"Capture à Compiègne"
+],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 129,
+"phase": 4,
+"camp": "F",
+"ops": 4,
+"nom": "Sacre de Charles VII à Reims",
+"prerequis": "Jeanne d'Arc",
+"retiree": true,
+"interdit": [
+"Capture à Compiègne"
+],
+"fin": 4,
+"statut": "obligatoire"
+},
+{
+"id": 130,
+"phase": 4,
+"camp": "A",
+"ops": 2,
+"nom": "Capture à Compiègne",
+"prerequis": "Jeanne d'Arc",
+"retiree": true,
+"interdit": [],
+"fin": 4,
+"statut": "obligatoire"
+},
+{
+"id": 131,
+"phase": 4,
+"camp": "N",
+"ops": 2,
+"nom": "Procès de Rouen",
+"prerequis": "Capture à Compiègne",
+"retiree": true,
+"interdit": [],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 132,
+"phase": 4,
+"camp": "A",
+"ops": 3,
+"nom": "Henri VI couronné à Paris",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Reprise de Paris"
+],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 133,
+"phase": 4,
+"camp": "F",
+"ops": 3,
+"nom": "Mort de Bedford",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 4,
+"statut": "obligatoire"
+},
+{
+"id": 134,
+"phase": 4,
+"camp": "F",
+"ops": 4,
+"nom": "Congrès d'Arras",
+"prerequis": "Assassinat de Montereau",
+"retiree": true,
+"interdit": [],
+"fin": 4,
+"statut": "obligatoire"
+},
+{
+"id": 135,
+"phase": 4,
+"camp": "F",
+"ops": 4,
+"nom": "Reprise de Paris",
+"prerequis": "Congrès d'Arras",
+"retiree": true,
+"interdit": [],
+"fin": 4,
+"statut": "obligatoire"
+},
+{
+"id": 136,
+"phase": 4,
+"camp": "N",
+"ops": 2,
+"nom": "Écorcheurs",
+"prerequis": "",
+"retiree": false,
+"interdit": [
+"Compagnies d'ordonnance"
+],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 137,
+"phase": 4,
+"camp": "F",
+"ops": 2,
+"nom": "Pragmatique Sanction de Bourges",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 138,
+"phase": 4,
+"camp": "F",
+"ops": 3,
+"nom": "Taille royale permanente",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 139,
+"phase": 4,
+"camp": "A",
+"ops": 2,
+"nom": "Praguerie",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 140,
+"phase": 4,
+"camp": "F",
+"ops": 3,
+"nom": "Jacques Cœur, argentier",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 4,
+"statut": "obligatoire"
+},
+{
+"id": 141,
+"phase": 4,
+"camp": "N",
+"ops": 3,
+"nom": "Trêve de Tours",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 4,
+"statut": "obligatoire"
+},
+{
+"id": 142,
+"phase": 4,
+"camp": "F",
+"ops": 4,
+"nom": "Compagnies d'ordonnance",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 4,
+"statut": "obligatoire"
+},
+{
+"id": 143,
+"phase": 4,
+"camp": "F",
+"ops": 3,
+"nom": "Les frères Bureau",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 144,
+"phase": 4,
+"camp": "F",
+"ops": 3,
+"nom": "Sac de Fougères",
+"prerequis": "Trêve de Tours",
+"retiree": true,
+"interdit": [],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 145,
+"phase": 4,
+"camp": "F",
+"ops": 3,
+"nom": "Prise de Rouen",
+"prerequis": "Compagnies d'ordonnance",
+"retiree": true,
+"interdit": [],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 146,
+"phase": 4,
+"camp": "F",
+"ops": 4,
+"nom": "Bataille de Formigny",
+"prerequis": "Compagnies d'ordonnance",
+"retiree": true,
+"interdit": [],
+"fin": 4,
+"statut": "obligatoire"
+},
+{
+"id": 147,
+"phase": 4,
+"camp": "F",
+"ops": 2,
+"nom": "Révolte de Jack Cade",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 148,
+"phase": 4,
+"camp": "F",
+"ops": 3,
+"nom": "Prise de Bordeaux",
+"prerequis": "Compagnies d'ordonnance",
+"retiree": true,
+"interdit": [],
+"fin": 4,
+"statut": "obligatoire"
+},
+{
+"id": 149,
+"phase": 4,
+"camp": "A",
+"ops": 3,
+"nom": "Talbot à Bordeaux",
+"prerequis": "Prise de Bordeaux",
+"retiree": true,
+"interdit": [
+"Bataille de Castillon"
+],
+"fin": 4,
+"statut": "obligatoire"
+},
+{
+"id": 150,
+"phase": 4,
+"camp": "F",
+"ops": 4,
+"nom": "Bataille de Castillon",
+"prerequis": "Talbot à Bordeaux",
+"retiree": true,
+"interdit": [],
+"fin": 4,
+"statut": "obligatoire"
+},
+{
+"id": 151,
+"phase": 4,
+"camp": "F",
+"ops": 2,
+"nom": "Folie d'Henri VI",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 152,
+"phase": 4,
+"camp": "A",
+"ops": 2,
+"nom": "Procès de Jacques Cœur",
+"prerequis": "Jacques Cœur, argentier",
+"retiree": true,
+"interdit": [],
+"fin": 4,
+"statut": "obligatoire"
+},
+{
+"id": 153,
+"phase": 1,
+"camp": "A",
+"ops": 3,
+"nom": "Édouard Balliol",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Traité de Berwick"
+],
+"fin": 2,
+"statut": "facultative"
+},
+{
+"id": 154,
+"phase": 1,
+"camp": "A",
+"ops": 2,
+"nom": "Hommage de Jean de Montfort",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Traité de Guérande"
+],
+"fin": 2,
+"statut": "facultative"
+},
+{
+"id": 155,
+"phase": 1,
+"camp": "A",
+"ops": 2,
+"nom": "Traité de Berwick",
+"prerequis": "Bataille de Neville's Cross",
+"retiree": true,
+"interdit": [],
+"fin": 2,
+"statut": "facultative"
+},
+{
+"id": 156,
+"phase": 2,
+"camp": "A",
+"ops": 3,
+"nom": "Traité de Westminster",
+"prerequis": "Traité de Guérande",
+"retiree": true,
+"interdit": [],
+"fin": 3,
+"statut": "facultative"
+},
+{
+"id": 157,
+"phase": 3,
+"camp": "A",
+"ops": 2,
+"nom": "Jacques Ier d'Écosse en France",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 158,
+"phase": 2,
+"camp": "A",
+"ops": 3,
+"nom": "Le captal de Buch",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Bataille de Soubise"
+],
+"fin": 3,
+"statut": "facultative"
+},
+{
+"id": 159,
+"phase": 2,
+"camp": "A",
+"ops": 3,
+"nom": "Chevauchée de Buckingham",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 3,
+"statut": "facultative"
+},
+{
+"id": 160,
+"phase": 1,
+"camp": "A",
+"ops": 2,
+"nom": "Subside du Parlement",
+"prerequis": "",
+"retiree": false,
+"interdit": [],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 161,
+"phase": 1,
+"camp": "F",
+"ops": 2,
+"nom": "Renouvellement de l'Auld Alliance",
+"prerequis": "",
+"retiree": false,
+"interdit": [],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 162,
+"phase": 1,
+"camp": "F",
+"ops": 2,
+"nom": "Bataille de Saint-Omer",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 1,
+"statut": "facultative"
+},
+{
+"id": 163,
+"phase": 1,
+"camp": "A",
+"ops": 2,
+"nom": "Bataille de Morlaix",
+"prerequis": "Guerre de succession de Bretagne",
+"retiree": true,
+"interdit": [
+"Traité de Guérande"
+],
+"fin": 2,
+"statut": "facultative"
+},
+{
+"id": 164,
+"phase": 1,
+"camp": "A",
+"ops": 3,
+"nom": "Sac de Caen",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Mort d'Édouard III"
+],
+"fin": 2,
+"statut": "facultative"
+},
+{
+"id": 165,
+"phase": 1,
+"camp": "A",
+"ops": 2,
+"nom": "Bataille de La Roche-Derrien",
+"prerequis": "Guerre de succession de Bretagne",
+"retiree": true,
+"interdit": [
+"Traité de Guérande",
+"Bataille d'Auray"
+],
+"fin": 2,
+"statut": "facultative"
+},
+{
+"id": 166,
+"phase": 1,
+"camp": "A",
+"ops": 2,
+"nom": "Les Espagnols sur mer",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Mort d'Édouard III"
+],
+"fin": 2,
+"statut": "facultative"
+},
+{
+"id": 167,
+"phase": 1,
+"camp": "A",
+"ops": 2,
+"nom": "Prise de Guînes",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 2,
+"statut": "facultative"
+},
+{
+"id": 168,
+"phase": 1,
+"camp": "N",
+"ops": 1,
+"nom": "Traité de Mantes",
+"prerequis": "Charles le Mauvais",
+"retiree": true,
+"interdit": [
+"Avènement de Charles V",
+"Mort de Charles le Mauvais"
+],
+"fin": 2,
+"statut": "facultative"
+},
+{
+"id": 169,
+"phase": 1,
+"camp": "F",
+"ops": 2,
+"nom": "États généraux de 1355",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 1,
+"statut": "facultative"
+},
+{
+"id": 170,
+"phase": 1,
+"camp": "F",
+"ops": 2,
+"nom": "Traité de Londres rejeté",
+"prerequis": "Roi captif",
+"retiree": true,
+"interdit": [
+"Traité de Brétigny"
+],
+"fin": 2,
+"statut": "facultative"
+},
+{
+"id": 171,
+"phase": 1,
+"camp": "A",
+"ops": 2,
+"nom": "Prise de Bergerac",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 1,
+"statut": "facultative"
+},
+{
+"id": 172,
+"phase": 2,
+"camp": "N",
+"ops": 2,
+"nom": "Grandes Compagnies",
+"prerequis": "",
+"retiree": false,
+"interdit": [
+"Compagnies d'ordonnance"
+],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 173,
+"phase": 2,
+"camp": "N",
+"ops": 2,
+"nom": "Retour de la peste",
+"prerequis": "",
+"retiree": false,
+"interdit": [],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 174,
+"phase": 2,
+"camp": "F",
+"ops": 2,
+"nom": "Aides et fouages",
+"prerequis": "",
+"retiree": false,
+"interdit": [],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 175,
+"phase": 2,
+"camp": "F",
+"ops": 2,
+"nom": "Bataille de Soubise",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 3,
+"statut": "facultative"
+},
+{
+"id": 176,
+"phase": 2,
+"camp": "F",
+"ops": 3,
+"nom": "Prise de Poitiers",
+"prerequis": "Du Guesclin au siège de Rennes",
+"retiree": true,
+"interdit": [
+"Mort de du Guesclin"
+],
+"fin": 3,
+"statut": "facultative"
+},
+{
+"id": 177,
+"phase": 2,
+"camp": "F",
+"ops": 2,
+"nom": "Bataille de Chizé",
+"prerequis": "Du Guesclin au siège de Rennes",
+"retiree": true,
+"interdit": [
+"Mort de du Guesclin"
+],
+"fin": 3,
+"statut": "facultative"
+},
+{
+"id": 178,
+"phase": 2,
+"camp": "F",
+"ops": 2,
+"nom": "Siège de Saint-Sauveur-le-Vicomte",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 3,
+"statut": "facultative"
+},
+{
+"id": 179,
+"phase": 2,
+"camp": "F",
+"ops": 2,
+"nom": "Jean de Vienne en Écosse",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 3,
+"statut": "facultative"
+},
+{
+"id": 180,
+"phase": 2,
+"camp": "F",
+"ops": 1,
+"nom": "Le Bon Parlement",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Mort d'Édouard III"
+],
+"fin": 3,
+"statut": "facultative"
+},
+{
+"id": 181,
+"phase": 2,
+"camp": "A",
+"ops": 2,
+"nom": "Couronnement de Richard II",
+"prerequis": "Mort d'Édouard III",
+"retiree": true,
+"interdit": [
+"Usurpation d'Henri IV"
+],
+"fin": 3,
+"statut": "facultative"
+},
+{
+"id": 182,
+"phase": 2,
+"camp": "F",
+"ops": 2,
+"nom": "Reprise de Bergerac",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 3,
+"statut": "facultative"
+},
+{
+"id": 183,
+"phase": 2,
+"camp": "N",
+"ops": 2,
+"nom": "Révolte de Gand",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Bataille de Roosebeke"
+],
+"fin": 3,
+"statut": "facultative"
+},
+{
+"id": 184,
+"phase": 2,
+"camp": "F",
+"ops": 1,
+"nom": "Visite de l'empereur Charles IV",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Mort de Charles V"
+],
+"fin": 3,
+"statut": "facultative"
+},
+{
+"id": 185,
+"phase": 2,
+"camp": "F",
+"ops": 2,
+"nom": "Échec devant Saint-Malo",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Usurpation d'Henri IV"
+],
+"fin": 3,
+"statut": "facultative"
+},
+{
+"id": 186,
+"phase": 2,
+"camp": "F",
+"ops": 1,
+"nom": "Mort de Charles le Mauvais",
+"prerequis": "Charles le Mauvais",
+"retiree": true,
+"interdit": [],
+"fin": 3,
+"statut": "facultative"
+},
+{
+"id": 187,
+"phase": 2,
+"camp": "F",
+"ops": 2,
+"nom": "Louis d'Anjou en Languedoc",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 3,
+"statut": "facultative"
+},
+{
+"id": 188,
+"phase": 2,
+"camp": "N",
+"ops": 2,
+"nom": "Révolte des Tuchins",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 3,
+"statut": "facultative"
+},
+{
+"id": 189,
+"phase": 2,
+"camp": "F",
+"ops": 2,
+"nom": "Confiscation des terres navarraises",
+"prerequis": "Charles le Mauvais",
+"retiree": true,
+"interdit": [
+"Mort de Charles V",
+"Mort de Charles le Mauvais"
+],
+"fin": 3,
+"statut": "facultative"
+},
+{
+"id": 190,
+"phase": 2,
+"camp": "N",
+"ops": 1,
+"nom": "Retour de Grégoire XI à Rome",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Grand Schisme d'Occident"
+],
+"fin": 3,
+"statut": "facultative"
+},
+{
+"id": 191,
+"phase": 2,
+"camp": "N",
+"ops": 1,
+"nom": "Urbain V contre les Compagnies",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Grand Schisme d'Occident"
+],
+"fin": 3,
+"statut": "facultative"
+},
+{
+"id": 192,
+"phase": 2,
+"camp": "F",
+"ops": 2,
+"nom": "Exil de Jean IV de Bretagne",
+"prerequis": "Traité de Guérande",
+"retiree": true,
+"interdit": [
+"Retour de Jean IV"
+],
+"fin": 3,
+"statut": "facultative"
+},
+{
+"id": 193,
+"phase": 2,
+"camp": "A",
+"ops": 2,
+"nom": "Retour de Jean IV",
+"prerequis": "Exil de Jean IV de Bretagne",
+"retiree": true,
+"interdit": [],
+"fin": 3,
+"statut": "facultative"
+},
+{
+"id": 194,
+"phase": 3,
+"camp": "A",
+"ops": 2,
+"nom": "Échec devant Bourg",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Assassinat de Louis d'Orléans"
+],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 195,
+"phase": 3,
+"camp": "N",
+"ops": 1,
+"nom": "Paix de Chartres",
+"prerequis": "Assassinat de Louis d'Orléans",
+"retiree": true,
+"interdit": [
+"Assassinat de Montereau"
+],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 196,
+"phase": 3,
+"camp": "N",
+"ops": 1,
+"nom": "Paix d'Auxerre",
+"prerequis": "Assassinat de Louis d'Orléans",
+"retiree": true,
+"interdit": [
+"Assassinat de Montereau"
+],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 197,
+"phase": 3,
+"camp": "A",
+"ops": 3,
+"nom": "Traité de Bourges",
+"prerequis": "Assassinat de Louis d'Orléans",
+"retiree": true,
+"interdit": [
+"Avènement d'Henri V"
+],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 198,
+"phase": 3,
+"camp": "A",
+"ops": 3,
+"nom": "Avènement d'Henri V",
+"prerequis": "Usurpation d'Henri IV",
+"retiree": true,
+"interdit": [
+"Mort d'Henri V"
+],
+"fin": 4,
+"statut": "obligatoire"
+},
+{
+"id": 199,
+"phase": 3,
+"camp": "F",
+"ops": 2,
+"nom": "Complot de Southampton",
+"prerequis": "Avènement d'Henri V",
+"retiree": true,
+"interdit": [
+"Mort d'Henri V"
+],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 200,
+"phase": 3,
+"camp": "A",
+"ops": 2,
+"nom": "Prise de Pontoise",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Mort d'Henri V"
+],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 201,
+"phase": 3,
+"camp": "A",
+"ops": 3,
+"nom": "Siège de Melun",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Mort d'Henri V"
+],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 202,
+"phase": 3,
+"camp": "A",
+"ops": 2,
+"nom": "Mariage d'Henri V et de Catherine",
+"prerequis": "Traité de Troyes",
+"retiree": true,
+"interdit": [
+"Mort d'Henri V"
+],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 203,
+"phase": 3,
+"camp": "F",
+"ops": 2,
+"nom": "Bataille de La Brossinière",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 204,
+"phase": 3,
+"camp": "A",
+"ops": 2,
+"nom": "Siège du Crotoy",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 205,
+"phase": 3,
+"camp": "F",
+"ops": 2,
+"nom": "Défense du Mont-Saint-Michel",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 206,
+"phase": 3,
+"camp": "A",
+"ops": 2,
+"nom": "Isabeau rejoint Jean sans Peur",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Mort de Charles VI",
+"Assassinat de Montereau"
+],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 207,
+"phase": 3,
+"camp": "N",
+"ops": 2,
+"nom": "Guerre des Armagnacs et des Bourguignons",
+"prerequis": "Assassinat de Louis d'Orléans",
+"retiree": true,
+"interdit": [],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 208,
+"phase": 3,
+"camp": "F",
+"ops": 2,
+"nom": "Armée d'Écosse",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Bataille de Verneuil"
+],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 209,
+"phase": 3,
+"camp": "F",
+"ops": 2,
+"nom": "Bataille de Montargis",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 210,
+"phase": 3,
+"camp": "N",
+"ops": 1,
+"nom": "Concile de Pise",
+"prerequis": "Grand Schisme d'Occident",
+"retiree": true,
+"interdit": [
+"Concile de Constance"
+],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 211,
+"phase": 3,
+"camp": "A",
+"ops": 1,
+"nom": "Charles d'Orléans prisonnier",
+"prerequis": "Bataille d'Azincourt",
+"retiree": true,
+"interdit": [
+"Libération de Charles d'Orléans"
+],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 212,
+"phase": 3,
+"camp": "N",
+"ops": 2,
+"nom": "Bataille d'Othée",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Assassinat de Montereau"
+],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 213,
+"phase": 3,
+"camp": "A",
+"ops": 2,
+"nom": "Bataille de Blackpool",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Avènement d'Henri V"
+],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 214,
+"phase": 3,
+"camp": "F",
+"ops": 2,
+"nom": "Débarquement français au pays de Galles",
+"prerequis": "Owain Glyndŵr",
+"retiree": true,
+"interdit": [
+"Avènement d'Henri V"
+],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 215,
+"phase": 3,
+"camp": "F",
+"ops": 2,
+"nom": "Siège d'Arras",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Mort de Charles VI",
+"Assassinat de Montereau"
+],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 216,
+"phase": 4,
+"camp": "F",
+"ops": 2,
+"nom": "Mort de Salisbury",
+"prerequis": "Siège d'Orléans",
+"retiree": true,
+"interdit": [],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 217,
+"phase": 4,
+"camp": "F",
+"ops": 3,
+"nom": "Campagne de la Loire",
+"prerequis": "Jeanne d'Arc",
+"retiree": true,
+"interdit": [
+"Capture à Compiègne"
+],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 218,
+"phase": 4,
+"camp": "A",
+"ops": 2,
+"nom": "Échec devant Paris",
+"prerequis": "Jeanne d'Arc",
+"retiree": true,
+"interdit": [
+"Capture à Compiègne",
+"Reprise de Paris"
+],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 219,
+"phase": 4,
+"camp": "F",
+"ops": 2,
+"nom": "Bataille de Gerberoy",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 220,
+"phase": 4,
+"camp": "F",
+"ops": 2,
+"nom": "Libération de Charles d'Orléans",
+"prerequis": "Charles d'Orléans prisonnier ou Bataille d'Azincourt",
+"retiree": true,
+"interdit": [],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 221,
+"phase": 4,
+"camp": "F",
+"ops": 3,
+"nom": "Reprise de Pontoise",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 222,
+"phase": 4,
+"camp": "F",
+"ops": 2,
+"nom": "Journée de Tartas",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 223,
+"phase": 4,
+"camp": "F",
+"ops": 2,
+"nom": "Reddition du Mans",
+"prerequis": "Trêve de Tours",
+"retiree": true,
+"interdit": [],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 224,
+"phase": 4,
+"camp": "F",
+"ops": 3,
+"nom": "Prise de Cherbourg",
+"prerequis": "Bataille de Formigny",
+"retiree": true,
+"interdit": [],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 225,
+"phase": 4,
+"camp": "F",
+"ops": 2,
+"nom": "Reprise de Caen",
+"prerequis": "Compagnies d'ordonnance",
+"retiree": true,
+"interdit": [],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 226,
+"phase": 4,
+"camp": "A",
+"ops": 2,
+"nom": "Richard d'York lieutenant en France",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 227,
+"phase": 4,
+"camp": "F",
+"ops": 2,
+"nom": "Siège de Dieppe",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 228,
+"phase": 4,
+"camp": "N",
+"ops": 1,
+"nom": "Concile de Bâle",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 229,
+"phase": 4,
+"camp": "N",
+"ops": 1,
+"nom": "Médiation du cardinal Albergati",
+"prerequis": "",
+"retiree": true,
+"interdit": [
+"Congrès d'Arras"
+],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 230,
+"phase": 4,
+"camp": "F",
+"ops": 2,
+"nom": "Francs-archers",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 231,
+"phase": 4,
+"camp": "N",
+"ops": 2,
+"nom": "Guerre de Gand",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 232,
+"phase": 4,
+"camp": "N",
+"ops": 2,
+"nom": "Bataille de Bulgnéville",
+"prerequis": "",
+"retiree": true,
+"interdit": [],
+"fin": 4,
+"statut": "facultative"
+},
+{
+"id": 233,
+"phase": 0,
+"camp": "N",
+"ops": 2,
+"nom": "Faveur du pape",
+"prerequis": "",
+"retiree": false,
+"interdit": [],
+"fin": 4,
+"statut": "hors paquet"
+},
+{
+"id": 234,
+"phase": 0,
+"camp": "F",
+"ops": 0,
+"nom": "Pape d'Avignon",
+"prerequis": "",
+"retiree": false,
+"interdit": [],
+"fin": 4,
+"statut": "hors paquet"
+},
+{
+"id": 235,
+"phase": 0,
+"camp": "A",
+"ops": 0,
+"nom": "Pape de Rome",
+"prerequis": "",
+"retiree": false,
+"interdit": [],
+"fin": 4,
+"statut": "hors paquet"
+}
+],
+"regions": {
+"Guyenne": [
+2,
+5,
+7
+],
+"Flandre": [
+2,
+4,
+6
+],
+"Bretagne": [
+2,
+4,
+6
+],
+"Normandie": [
+3,
+6,
+8
+],
+"Languedoc": [
+2,
+4,
+6
+],
+"Île-de-France": [
+3,
+6,
+9
+],
+"Bourgogne": [
+2,
+5,
+7
+],
+"Val de Loire": [
+3,
+6,
+8
+]
+}
+}
