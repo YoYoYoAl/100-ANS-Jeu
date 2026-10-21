@@ -1,9 +1,9 @@
 {
- "g0": 60001,
+ "g0": 70001,
  "N": 2000,
  "variantes": [
   {
-   "nom": "u5_H5_fFR",
+   "nom": "p2",
    "options": {
     "libreA": 7,
     "uchronie": 5,
@@ -46,10 +46,10 @@
    }
   },
   {
-   "nom": "u4_H5_fFR",
+   "nom": "r1",
    "options": {
     "libreA": 7,
-    "uchronie": 4,
+    "uchronie": 5,
     "fortune": 1,
     "fortuneCartes": [
      "Bataille de Crécy",
@@ -85,14 +85,29 @@
      "Ypres": {
       "A": 1
      }
-    }
+    },
+    "r1": 1
    }
   },
   {
-   "nom": "u5_H5",
+   "nom": "r2",
    "options": {
     "libreA": 7,
-    "uchronie": 5
+    "uchronie": 5,
+    "fortune": 1,
+    "fortuneCartes": [
+     "Bataille de Crécy",
+     "Bataille de Poitiers",
+     "Bataille d'Azincourt",
+     "Bataille de Cocherel",
+     "Bataille de Baugé",
+     "Bataille de Patay",
+     "Bataille de Formigny",
+     "Bataille de Castillon",
+     "Bataille de Pontvallain",
+     "Bataille de La Rochelle",
+     "Bataille de Roosebeke"
+    ]
    },
    "patch": {
     "inf": {
@@ -114,7 +129,143 @@
      "Ypres": {
       "A": 1
      }
-    }
+    },
+    "r2": 1
+   }
+  },
+  {
+   "nom": "r1r3",
+   "options": {
+    "libreA": 7,
+    "uchronie": 5,
+    "fortune": 1,
+    "fortuneCartes": [
+     "Bataille de Crécy",
+     "Bataille de Poitiers",
+     "Bataille d'Azincourt",
+     "Bataille de Cocherel",
+     "Bataille de Baugé",
+     "Bataille de Patay",
+     "Bataille de Formigny",
+     "Bataille de Castillon",
+     "Bataille de Pontvallain",
+     "Bataille de La Rochelle",
+     "Bataille de Roosebeke"
+    ]
+   },
+   "patch": {
+    "inf": {
+     "Bordeaux": {
+      "A": 4
+     },
+     "Bayonne": {
+      "A": 3
+     },
+     "Dax": {
+      "A": 2
+     },
+     "Gand": {
+      "A": 2
+     },
+     "Bruges": {
+      "A": 1
+     },
+     "Ypres": {
+      "A": 1
+     }
+    },
+    "r1": 1,
+    "r3": 1
+   }
+  },
+  {
+   "nom": "r1r4",
+   "options": {
+    "libreA": 7,
+    "uchronie": 5,
+    "fortune": 1,
+    "fortuneCartes": [
+     "Bataille de Crécy",
+     "Bataille de Poitiers",
+     "Bataille d'Azincourt",
+     "Bataille de Cocherel",
+     "Bataille de Baugé",
+     "Bataille de Patay",
+     "Bataille de Formigny",
+     "Bataille de Castillon",
+     "Bataille de Pontvallain",
+     "Bataille de La Rochelle",
+     "Bataille de Roosebeke"
+    ]
+   },
+   "patch": {
+    "inf": {
+     "Bordeaux": {
+      "A": 4
+     },
+     "Bayonne": {
+      "A": 3
+     },
+     "Dax": {
+      "A": 2
+     },
+     "Gand": {
+      "A": 2
+     },
+     "Bruges": {
+      "A": 1
+     },
+     "Ypres": {
+      "A": 1
+     }
+    },
+    "r1": 1,
+    "r4": 1
+   }
+  },
+  {
+   "nom": "r2r3",
+   "options": {
+    "libreA": 7,
+    "uchronie": 5,
+    "fortune": 1,
+    "fortuneCartes": [
+     "Bataille de Crécy",
+     "Bataille de Poitiers",
+     "Bataille d'Azincourt",
+     "Bataille de Cocherel",
+     "Bataille de Baugé",
+     "Bataille de Patay",
+     "Bataille de Formigny",
+     "Bataille de Castillon",
+     "Bataille de Pontvallain",
+     "Bataille de La Rochelle",
+     "Bataille de Roosebeke"
+    ]
+   },
+   "patch": {
+    "inf": {
+     "Bordeaux": {
+      "A": 4
+     },
+     "Bayonne": {
+      "A": 3
+     },
+     "Dax": {
+      "A": 2
+     },
+     "Gand": {
+      "A": 2
+     },
+     "Bruges": {
+      "A": 1
+     },
+     "Ypres": {
+      "A": 1
+     }
+    },
+    "r2": 1,
+    "r3": 1
    }
   }
  ]
