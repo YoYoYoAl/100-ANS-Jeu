@@ -175,7 +175,7 @@ export const EFFETS = {
   "Sac de Fougères": (D, g) => { treve(D, g, -1); loy(g, "Bretagne", 2); },
   "Prise de Rouen": (D, g) => forcerControle(D, g, F, "Rouen"),
   "Bataille de Formigny": (D, g) => bataille(D, g, F, 4, () => { toutRetirer(D, g, A, { r: "Normandie", sauf: ["Cherbourg"] }); vp(g, F, 3); }),
-  "Révolte de Jack Cade": (D, g) => { tresor(g, A, -2); malusProchainTour(g, A); },
+  "Révolte de Jack Cade": (D, g) => tresor(g, A, -2),   // rééquilibrage : sans malus d'OPS
   "Prise de Bordeaux": (D, g) => { forcerControle(D, g, F, "Bordeaux"); forcerControle(D, g, F, "Bayonne"); },
   "Talbot à Bordeaux": (D, g) => { g.inf.Bordeaux.F = 0; forcerControle(D, g, A, "Bordeaux"); inf(D, g, A, 1, { r: "Guyenne" }); },
   "Bataille de Castillon": (D, g) => bataille(D, g, F, 4, () => { toutRetirer(D, g, A, { r: "Guyenne" }); if (["Bordeaux", "Rouen", "Paris"].every(n => controle(D, g, n) === F)) terminer(g, F, "Castillon : Bordeaux, Rouen et Paris"); }),
@@ -207,10 +207,10 @@ export const EFFETS = {
   "Couronnement de Richard II": (D, g) => legit(g, A, 1),
   "Reprise de Bergerac": (D, g) => forcerControle(D, g, F, "Bergerac"),
   "Révolte de Gand": (D, g) => { crise(g, 1); loy(g, "Flandre", -1); },
-  "Visite de l'empereur Charles IV": (D, g) => legit(g, F, 1),
+  "Visite de l'empereur Charles IV": (D, g) => tresor(g, F, 1),   // rééquilibrage : Trésor plutôt que Légitimité
   "Échec devant Saint-Malo": (D, g) => { tresor(g, A, -1); loy(g, "Bretagne", 1); },
   "Mort de Charles le Mauvais": (D, g) => { g.loy.Navarre = 0; },
-  "Louis d'Anjou en Languedoc": (D, g) => inf(D, g, F, 2, { r: "Languedoc" }),
+  "Louis d'Anjou en Languedoc": (D, g) => inf(D, g, F, 1, { r: "Languedoc" }),   // rééquilibrage : +1 au lieu de +2
   "Révolte des Tuchins": (D, g) => { crise(g, 1); perd(D, g, F, 1, { r: "Languedoc" }); perd(D, g, A, 1, { r: "Languedoc" }); },
   "Confiscation des terres navarraises": (D, g) => inf(D, g, F, 2, { l: ["Évreux", "Cherbourg"] }),
   "Retour de Grégoire XI à Rome": (D, g) => { if (g.mains.F.includes(D.idPape) || g.pape.attente === F) faveurPape(D, g, A); },

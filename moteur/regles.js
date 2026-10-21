@@ -461,7 +461,7 @@ export function resoudreEvenement(D, g, joueur, id) {
     const d = de(g);
     if (d <= g.regles.fortune) {
       g._ctx = "Fortune des armes"; vp(g, adv(benef), 1);
-      etape(g, { k: "info", camp: adv(benef), txt: `Fortune des armes : dé ${d}, « ${k.nom} » échoue ; ${adv(benef) === F ? "la France" : "l'Angleterre"} marque 1 point.` });
+      etape(g, { k: "info", titre: "Fortune des armes", camp: adv(benef), txt: `Fortune des armes : dé ${d}, « ${k.nom} » échoue ; ${adv(benef) === F ? "la France" : "l'Angleterre"} marque 1 point.` });
       g.stats.fortune = (g.stats.fortune || 0) + 1;
       log(g, `Fortune des armes : ${k.nom} échoue (${benef})`);
       return true;
@@ -472,7 +472,7 @@ export function resoudreEvenement(D, g, joueur, id) {
   const u = g.regles.uchronie ? UCHRONIES[k.nom] : null;
   const du = u ? de(g) : 0;
   if (u && du >= (u.seuil ?? g.regles.uchronie)) {
-    etape(g, { k: "info", camp: benef, txt: `Et si… (dé ${du}) : ${u.si}` });
+    etape(g, { k: "info", titre: "Et si…", camp: benef, txt: `Et si… (dé ${du}) : ${u.si}` });
     u.f(D, g, benef);
     (g.uchronies ||= {})[k.nom] = true; g.stats.uchronies = (g.stats.uchronies || 0) + 1;
     log(g, `Et si… ${k.nom} (dé ${du})`);

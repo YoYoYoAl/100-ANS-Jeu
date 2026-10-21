@@ -1,1 +1,1 @@
-{"g0": 90001, "N": 3000, "variantes": [{"nom": "w12", "options": {}, "patch": {"w1": true, "w2": true}}, {"nom": "w123", "options": {}, "patch": {"w1": true, "w2": true, "w3": true}}, {"nom": "w1234", "options": {}, "patch": {"w1": true, "w2": true, "w3": true, "w4": true}}, {"nom": "w12345", "options": {}, "patch": {"w1": true, "w2": true, "w3": true, "w4": true, "w5": true}}, {"nom": "w34", "options": {}, "patch": {"w3": true, "w4": true}}]}
+{"g0":120001,"N":6000,"variantes":[{"nom":"final12","options":{}}]}
