@@ -17,13 +17,14 @@ export const PREMIER_TOUR = { 1: 1, 2: 4, 3: 7, 4: 10 };
 export const PAPE = "Faveur du pape", PAPE_AVIGNON = "Pape d'Avignon", PAPE_ROME = "Pape de Rome";
 
 // ---------------------------------------------------------------- données
-// événements militaires (batailles, sièges, prises…) soumis à la « Fortune des armes »
-export const MILITAIRE = /Bataille|Siège|Prise|Reprise|Sac |Chevauchée|Campagne|Combat|Journée|Échec|Reddition|Capture|Défense/;
+// grandes batailles soumises à la « Fortune des armes » (règle d'AlwwAl du 21/10 : quelques événements seulement)
+export const FORTUNE = new Set(["Bataille de l'Écluse", "Bataille de Crécy", "Bataille de Poitiers", "Bataille d'Auray", "Bataille de Cocherel",
+  "Bataille d'Azincourt", "Bataille de Baugé", "Bataille de Verneuil", "Bataille de Patay", "Bataille de Formigny", "Bataille de Castillon"]);
 export function preparerDonnees(brut) {
   const lieux = {};
   for (const l of brut.lieux) lieux[l.nom] = l;
   const cartes = brut.cartes.map(c => ({ ...c, decompte: c.camp === "S" ? c.nom.replace("Décompte : ", "") : null, interdit: c.interdit || [], fin: c.fin ?? 4, statut: c.statut || "obligatoire",
-    militaire: c.camp !== "S" && c.camp !== "N" && MILITAIRE.test(c.nom) }));
+    militaire: FORTUNE.has(c.nom) }));
   const parNom = Object.fromEntries(cartes.map(c => [c.nom, c]));
   const idPape = parNom[PAPE]?.id ?? null;
   return { lieux, noms: Object.keys(lieux), cartes, parNom, regions: brut.regions, idPape };
@@ -56,7 +57,7 @@ export function nouvellePartie(D, graine = 1, options = {}) {
     mains: { A: [], F: [] }, pioche: [], defausse: [], retirees: [], ecartees: [],
     pape: { attente: null, bonus: { A: 0, F: 0 } }, // Faveur du pape : camp qui la recevra au tour suivant ; bonus d'OPS en attente
     paquet: { tirage: options.tirageFacultatives ?? { 1: 33, 2: 34, 3: 30, 4: 18 }, dessus: options.nouvellesDessus ?? 0.4, equilibre: options.tirageEquilibre ?? false, main: options.mains ?? [9, 10], rounds: options.rounds ?? [7, 8] },
-    joues: {}, sortis: {}, prerequisSouple: options.prerequisSouple ?? false, seuil: options.seuilScore ?? 25, regles: { pillage: options.pillage ?? true, revenuReduit: options.revenuReduit ?? true, coutAssaut: options.coutAssaut ?? true, levee: options.levee ?? true, decomptesPhase: options.decomptesPhase ?? null, decomptesGarantis: options.decomptesGarantis ?? true, purge: options.purge ?? false, opsAjust: options.opsAjust ?? null, fortune: options.fortune ?? 0, factions2: options.factions2 ?? true, valeurs: options.valeursRegion ?? null }, statuts: {}, tourFlags: {}, opsMalus: { A: 0, F: 0 }, opsMalusTour: { A: 0, F: 0 },
+    joues: {}, sortis: {}, prerequisSouple: options.prerequisSouple ?? false, seuil: options.seuilScore ?? 25, regles: { pillage: options.pillage ?? true, revenuReduit: options.revenuReduit ?? true, coutAssaut: options.coutAssaut ?? true, levee: options.levee ?? true, decomptesPhase: options.decomptesPhase ?? null, decomptesGarantis: options.decomptesGarantis ?? true, purge: options.purge ?? false, opsAjust: options.opsAjust ?? null, fortune: options.fortune ?? 0, uchronie: options.uchronie ?? 5, factions2: options.factions2 ?? true, valeurs: options.valeursRegion ?? null }, statuts: {}, tourFlags: {}, opsMalus: { A: 0, F: 0 }, opsMalusTour: { A: 0, F: 0 },
     militaire: { A: 0, F: 0 }, diplo: { A: false, F: false }, legitTente: { A: false, F: false },
     fin: null, journal: options.journal ? [] : null,
     stats: { evenements: {}, assauts: { A: 0, F: 0 }, sieges: { A: 0, F: 0 }, diplomatie: { A: 0, F: 0 }, legitimite: { A: 0, F: 0 }, influence: { A: 0, F: 0 }, penalitesMil: { A: 0, F: 0 }, decomptes: [], vp: {}, ciblesAssaut: {}, tresorPerdu: { A: 0, F: 0 }, tresorFinTour: [] },
@@ -317,7 +318,7 @@ export const coutAssaut = (D, g, n) => g.regles?.coutAssaut ? (D.lieux[n].pf ? 2
 export function assaut(D, g, c, ops, n, { depense = 0, gratuit = false, sansTreve = false } = {}) {
   if (!gratuit && assautsInterdits(D, g, n, c)) return false;
   if (!gratuit) { const k = coutAssaut(D, g, n); if (g.tresor[c] < k) return false; tresor(g, c, -k); }
-  if (c === A && g.statuts.grandFerre) { // Le Grand Ferré annule le prochain Assaut anglais
+  if (c === A && g.statuts.grandFerre && ["Picardie", "Valois"].includes(D.lieux[n].pays)) { // Le Grand Ferré annule le prochain Assaut anglais en Picardie ou en Valois (rééquilibrage 21/10)
     g.statuts.grandFerre = false; g.militaire[c] += ops; g.stats.assauts[c]++;
     etape(g, { k: "assaut", camp: c, lieu: n, annule: "Le Grand Ferré", d: 0, ops, def: defense(D, g, n), bonus: 0, bd: [], dep: 0, r: 0, avant: g.inf[n][adv(c)], retire: 0, occupe: 0, gratuit, pf: !!D.lieux[n].pf, treve: false });
     return false;
@@ -417,7 +418,7 @@ export function decompter(D, g, r) {
 }
 
 // ---------------------------------------------------------------- jouer une carte
-import { EFFETS } from "./effets.js";
+import { EFFETS, UCHRONIES } from "./effets.js";
 export function prerequisOk(D, g, k) {
   if (!k.prerequis) return true;
   if (k.prerequis === "Roi captif") return !!g.statuts.roiCaptif;
@@ -454,7 +455,7 @@ export function resoudreEvenement(D, g, joueur, id) {
   if (!evenementAutorise(D, g, k)) { etape(g, { k: "sansEffet", id, camp: joueur, raison: raisonInterdit(D, g, k) }); return false; }
   const benef = k.camp === "N" ? joueur : k.camp;
   etape(g, { k: "evenement", id, camp: benef, joueur });
-  // Fortune des armes : un événement militaire échoue sur un dé ≤ seuil ; il n'a pas lieu et l'adversaire marque 1 point
+  // Fortune des armes : une grande bataille échoue sur un dé ≤ seuil ; il n'a pas lieu et l'adversaire marque 1 point
   if (k.militaire && g.regles.fortune) {
     const d = de(g);
     if (d <= g.regles.fortune) {
@@ -466,6 +467,19 @@ export function resoudreEvenement(D, g, joueur, id) {
     }
   }
   const avant = RECIT && g.journal ? signatureEtat(g) : null;
+  // « Et si… » : sur 1d6 ≥ seuil, l'issue uchronique remplace l'issue historique (uchronie 0 : règle coupée)
+  const u = g.regles.uchronie ? UCHRONIES[k.nom] : null;
+  const du = u ? de(g) : 0;
+  if (u && du >= (u.seuil ?? g.regles.uchronie)) {
+    etape(g, { k: "info", camp: benef, txt: `Et si… (dé ${du}) : ${u.si}` });
+    u.f(D, g, benef);
+    (g.uchronies ||= {})[k.nom] = true; g.stats.uchronies = (g.stats.uchronies || 0) + 1;
+    log(g, `Et si… ${k.nom} (dé ${du})`);
+    etape(g, { k: "effets", id, camp: benef, vide: false });
+    if (u.joue !== false) g.joues[k.nom] = true;
+    g.stats.evenements[k.nom] = (g.stats.evenements[k.nom] || 0) + 1;
+    return true;
+  }
   EFFETS[k.nom](D, g, benef);
   etape(g, { k: "effets", id, camp: benef, vide: avant !== null && avant === signatureEtat(g) && !effetMarqueur(D, k.nom) }); // vide : condition non réunie, rien n'a changé
   g.joues[k.nom] = true;
