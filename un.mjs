@@ -10,6 +10,6 @@ const R = [];
 for (let i = 0; i < a.N; i++) {
   if (i % a.K !== a.k || Math.floor(i / a.K) % a.nc !== a.c) continue;
   const g = jouerPartie(D, nouvellePartie(D, a.g0 + i, a.options || {}));
-  R.push({ i, w: g.fin.gagnant, r: g.fin.raison, t: g.fin.tour, s: g.score, vp: g.stats.vp, d: g.stats.decomptes });
+  R.push({ i, w: g.fin.gagnant, r: g.fin.raison, t: g.fin.tour, s: g.score, vp: g.stats.vp, d: g.stats.decomptes, e: Object.keys(g.stats.evenements) });
 }
 fs.writeFileSync(out, JSON.stringify(R));
