@@ -27,7 +27,7 @@
 "pf": true,
 "port": true,
 "inf": {
-"A": 0,
+"A": 1,
 "F": 0
 },
 "voisins": [
@@ -43,7 +43,7 @@
 "pf": true,
 "port": false,
 "inf": {
-"A": 0,
+"A": 2,
 "F": 0
 },
 "voisins": [
@@ -59,7 +59,7 @@
 "pf": false,
 "port": false,
 "inf": {
-"A": 0,
+"A": 1,
 "F": 0
 },
 "voisins": [
@@ -677,7 +677,7 @@
 "pf": true,
 "port": true,
 "inf": {
-"A": 3,
+"A": 4,
 "F": 0
 },
 "voisins": [
@@ -695,7 +695,7 @@
 "pf": true,
 "port": true,
 "inf": {
-"A": 2,
+"A": 3,
 "F": 0
 },
 "voisins": [
@@ -711,7 +711,7 @@
 "pf": false,
 "port": false,
 "inf": {
-"A": 1,
+"A": 2,
 "F": 0
 },
 "voisins": [

@@ -18,8 +18,8 @@ export const PAPE = "Faveur du pape", PAPE_AVIGNON = "Pape d'Avignon", PAPE_ROME
 
 // ---------------------------------------------------------------- données
 // grandes batailles soumises à la « Fortune des armes » (règle d'AlwwAl du 21/10 : quelques événements seulement)
-export const FORTUNE = new Set(["Bataille de l'Écluse", "Bataille de Crécy", "Bataille de Poitiers", "Bataille d'Auray", "Bataille de Cocherel",
-  "Bataille d'Azincourt", "Bataille de Baugé", "Bataille de Verneuil", "Bataille de Patay", "Bataille de Formigny", "Bataille de Castillon"]);
+export const FORTUNE = new Set(["Bataille de Crécy", "Bataille de Poitiers", "Bataille d'Azincourt", "Bataille de Cocherel", "Bataille de Pontvallain",
+  "Bataille de La Rochelle", "Bataille de Roosebeke", "Bataille de Baugé", "Bataille de Patay", "Bataille de Formigny", "Bataille de Castillon"]);
 export function preparerDonnees(brut) {
   const lieux = {};
   for (const l of brut.lieux) lieux[l.nom] = l;
@@ -57,12 +57,12 @@ export function nouvellePartie(D, graine = 1, options = {}) {
     mains: { A: [], F: [] }, pioche: [], defausse: [], retirees: [], ecartees: [],
     pape: { attente: null, bonus: { A: 0, F: 0 } }, // Faveur du pape : camp qui la recevra au tour suivant ; bonus d'OPS en attente
     paquet: { tirage: options.tirageFacultatives ?? { 1: 33, 2: 34, 3: 30, 4: 18 }, dessus: options.nouvellesDessus ?? 0.4, equilibre: options.tirageEquilibre ?? false, main: options.mains ?? [9, 10], rounds: options.rounds ?? [7, 8] },
-    joues: {}, sortis: {}, prerequisSouple: options.prerequisSouple ?? false, seuil: options.seuilScore ?? 25, regles: { pillage: options.pillage ?? true, revenuReduit: options.revenuReduit ?? true, coutAssaut: options.coutAssaut ?? true, levee: options.levee ?? true, decomptesPhase: options.decomptesPhase ?? null, decomptesGarantis: options.decomptesGarantis ?? true, purge: options.purge ?? false, opsAjust: options.opsAjust ?? null, fortune: options.fortune ?? 0, fortuneCartes: options.fortuneCartes ?? null, uchronie: options.uchronie ?? 5, factions2: options.factions2 ?? true, valeurs: options.valeursRegion ?? null }, statuts: {}, tourFlags: {}, opsMalus: { A: 0, F: 0 }, opsMalusTour: { A: 0, F: 0 },
+    joues: {}, sortis: {}, prerequisSouple: options.prerequisSouple ?? false, seuil: options.seuilScore ?? 25, regles: { pillage: options.pillage ?? true, revenuReduit: options.revenuReduit ?? true, coutAssaut: options.coutAssaut ?? true, levee: options.levee ?? true, decomptesPhase: options.decomptesPhase ?? null, decomptesGarantis: options.decomptesGarantis ?? true, purge: options.purge ?? false, opsAjust: options.opsAjust ?? null, fortune: options.fortune ?? 1, fortuneCartes: options.fortuneCartes ?? null, uchronie: options.uchronie ?? 5, factions2: options.factions2 ?? true, valeurs: options.valeursRegion ?? null }, statuts: {}, tourFlags: {}, opsMalus: { A: 0, F: 0 }, opsMalusTour: { A: 0, F: 0 },
     militaire: { A: 0, F: 0 }, diplo: { A: false, F: false }, legitTente: { A: false, F: false },
     fin: null, journal: options.journal ? [] : null,
     stats: { evenements: {}, assauts: { A: 0, F: 0 }, sieges: { A: 0, F: 0 }, diplomatie: { A: 0, F: 0 }, legitimite: { A: 0, F: 0 }, influence: { A: 0, F: 0 }, penalitesMil: { A: 0, F: 0 }, decomptes: [], vp: {}, ciblesAssaut: {}, tresorPerdu: { A: 0, F: 0 }, tresorFinTour: [] },
   };
-  g.miseEnPlace = { F: options.libreF ?? 2, A: options.libreA ?? 9 }; // Influence libre de départ, affichée à l'écran
+  g.miseEnPlace = { F: options.libreF ?? 2, A: options.libreA ?? 7 }; // Influence libre de départ, affichée à l'écran
   etape(g, { k: "debut" });
   // Influence libre de la mise en place (Interprétation : placée par le décideur, France d'abord)
   for (const [n, k] of Object.entries(options.infSupF ?? {})) ajouter(g, F, n, k);
@@ -187,6 +187,7 @@ export const tresor = (g, c, d) => { g.tresor[c] = Math.max(0, Math.min(12, g.tr
 export function score(g, d) { // d > 0 favorise la France
   const s = g.seuil ?? 25;
   if (g.stats) { const k = `${["", "I", "II", "III", "IV"][phaseDe(g.tour)]}|${g._ctx || "?"}`; g.stats.vp[k] = (g.stats.vp[k] || 0) + d; }
+  if (!g.fin) g.scoreBrut = g.score + d; // total réel, au-delà de ±25 : affiché seulement au tableau d'honneur
   g.score = Math.max(-s, Math.min(s, g.score + d));
   if (g.score >= s && !g.fin) terminer(g, F, `Score de ${s}`);
   if (g.score <= -s && !g.fin) terminer(g, A, `Score de ${s}`);
@@ -240,7 +241,7 @@ export function faveurPape(D, g, c) {
 }
 
 export function terminer(g, gagnant, raison) {
-  g.fin = { gagnant, raison, tour: g.tour };
+  g.fin = { gagnant, raison, tour: g.tour, cause: g._ctx || null, scoreBrut: g.scoreBrut ?? g.score }; // cause : carte ou phase qui donne la victoire
   log(g, `FIN : ${gagnant} gagne (${raison})`);
   etape(g, { k: "fin", gagnant, raison });
 }
@@ -530,6 +531,7 @@ export function jouer(D, g, c, action) {
     etape(g, { k: "carte", camp: c, id, mode: action.mode, ops, levee, declenche, apresEvt, ordre: action.ordre || "avant", cibles: action.cibles, cible: action.cible, depense: action.depense || 0 });
     if (declenche && action.ordre !== "apres") evt = resoudreEvenement(D, g, adv(c), id);
     if (!g.fin) {
+      g._ctx = `OPS ${k.nom}`;
       if (action.mode === "influence") { const refus = actionInfluence(D, g, c, ops, action.cibles); etape(g, { k: "influence", camp: c, ops, cibles: action.cibles, refus }); }
       else if (action.mode === "assaut") assaut(D, g, c, ops, action.cible, { depense: action.depense || 0 });
       else if (action.mode === "siege") for (let i = 0; i < ops && !g.fin; i++) { const n = action.cibles[i] || action.cibles[0]; if (g.inf[n][adv(c)] > 0 && !assautsInterdits(D, g, n, c)) siege(D, g, c, n, i === 0 ? action.depense || 0 : 0); }

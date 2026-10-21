@@ -68,7 +68,7 @@ export const EFFETS = {
   "Du Guesclin au siège de Rennes": (D, g) => ajouter(g, F, "Rennes", 3),
   "Étienne Marcel": (D, g) => { perd(D, g, F, 2, { r: "Île-de-France" }); crise(g, 1); legit(g, F, -1); },
   "Grande Jacquerie": (D, g) => { const l = [...zone(D, { r: "Île-de-France" }), ...zone(D, { p: ["Picardie"] })]; crise(g, 2); perd(D, g, F, 2, { l }); perd(D, g, A, 2, { l }); },
-  "Le Grand Ferré": (D, g) => { inf(D, g, F, 1, { p: ["Picardie", "Valois"] }); }, // rééquilibrage 21/10 (2e passe) : plus d'annulation d'Assaut
+  "Le Grand Ferré": (D, g) => { inf(D, g, F, 1, { p: ["Picardie", "Valois"] }); g.statuts.grandFerre = true; },
   "David II à Château-Gaillard": (D, g) => loy(g, "Écosse", 2),
   "Campagne de Reims": (D, g) => { if (controle(D, g, "Reims") === A) legit(g, A, 3); else legit(g, A, 1); },
   "Lundi noir": (D, g) => { tresor(g, A, -1); treve(D, g, 1); }, // rééquilibrage 21/10 : chevaux et bagages perdus, plus d'annulation de Bataille
@@ -198,7 +198,7 @@ export const EFFETS = {
   "Grandes Compagnies": (D, g, c) => { crise(g, 1); perd(D, g, adv(c), 1, { l: D.noms.filter(n => !D.lieux[n].pf && D.lieux[n].region !== "Angleterre") }); },
   "Retour de la peste": (D, g) => { crise(g, 1); tresor(g, A, -1); tresor(g, F, -1); },
   "Aides et fouages": (D, g) => tresor(g, F, 2),
-  "Bataille de Soubise": (D, g) => perd(D, g, A, 1, { l: [...zone(D, { r: "Guyenne" }), "La Rochelle"] }), // rééquilibrage 21/10 (2e passe) : 2 → 1
+  "Bataille de Soubise": (D, g) => perd(D, g, A, 2, { l: [...zone(D, { r: "Guyenne" }), "La Rochelle"] }),
   "Prise de Poitiers": (D, g) => forcerControle(D, g, F, "Poitiers"),
   "Bataille de Chizé": (D, g) => perd(D, g, A, 2, { p: ["Poitou", "Aunis"] }),
   "Siège de Saint-Sauveur-le-Vicomte": (D, g) => inf(D, g, F, 2, { r: "Normandie" }),
