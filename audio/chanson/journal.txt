@@ -1,320 +1,107 @@
 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
-boutez_le_feu_a.mp3
-   0.64    9.68  Oyez, les roués, Philippe met en sa main la duchée de Guéne, car l'idus d'Englétère
-   9.68   15.46  et de Vassal fait long. Sans lène d'Englétère, noz métiers sont tout coués, mieux vaut
-  15.46   21.40  tenir au roué Édouard qu'à Philippe. Bonne Jean de Gan, se nouz tenon ensamble
-  21.40   27.22  avèc lèz Englès, notre païs sera riche et noz métiers tissèron. A Couvelence
-  27.22   29.56  sur le rein, L'empereur fit le rouet,
-  29.86   32.88  Édouard son vicaire, Mais ce moule coûta c'est l'alliance,
-  33.48   37.62  Boutez le feu, compagnons ! Que ceux d'Antonne
-  37.62   40.88  Sachent que la mer n'est nette, Mise leur muraille !
-  40.88   44.40  Édouard, par la grâce de Dieu Roué de France et d'Angleterre,
-  44.76   47.02  Portrait les fleurs de l'île avec mêlée et pas,
-  47.48   50.84  Tant que nous aurons peint et mûr, Tournée ne sera jamais anglaise,
-  51.12   53.22  L'anglaise s'en iront sans argent.
-  53.22   58.50  Puis aux frères et puis aux filles, Pour Dieu, les siers éterneuses guerres,
-  58.64   61.00  Trop de bons gens nous ont déjà perdu la vie,
-  61.20   63.88  De part le rouet, nu, nu ne vendra selle force
-  63.88   67.84  Au grenier qui murmure s'il paye la gâbelle.
-  68.14   72.38  Ha ha ha ha, dames, défaîtes les chaussiers
-  72.38   76.10  Et portez les pierres aux crénos, De part notre saint Père,
-  76.32   80.64  Que les armes se reposent en Bretagne Et que nu n'y fasse sa sceau jusqu'au
-  80.64   81.02  terme.
-  81.02   85.68  Ils sont à table, elles me se gardent, Ferait sur eux, et au Béroche sera délivré
-  85.68   86.28  à la nuit.
-  87.02   92.02  Par Saint-Denis ne partiraient des guillons Tant que les chatiours me souhaitent rendu.
-  93.22   98.70  Sire, Normandie est de grâce et sans garde, Je vous meurais par le Cotentin jusqu'à
-  98.70  103.08  Caen, Yerouet des Cossettes pris, Navret de Deux s'achète, et sa rançon empire
- 103.08  108.00  à les coffres d'Angleterre, Les popes clémenaches, Avignon, la Rouenne-Jeanne,
- 108.00  114.50  Et la cour de Rome s'y assit pour longtemps, Lirou et Félipette mort, vive Lirou et Jean,
- 114.98  120.58  Qui sera sacré à Reims par la grâce de Dieu, Chevalier de l'Étoile, juré que
- 120.58  125.22  Je ne fuirai de bataille plus de quatre harpins, Amouron de Mouraire, mormin,
- 125.46  129.28  Chevalier de l'Étoile, qui a voué être juré de non fuir,
- 132.10  135.60  De Bourdieu jusqu'à Nerbonne, toute tête à répiller,
- 135.60  140.74  Jamais ne veille-moi si riche paille, Je suis Bertrand du Guéclin, tant qu'on
- 140.74  143.82  j'aurai vie, Les Anglais n'entreront en reine.
- 144.08  148.96  Otez-vous, compagnons, à cette hache, Je ferai vouer parmi ces Anglais.
- 149.52  152.50  Chassier suis de mon royaume, Messly roué de France,
- 152.98  155.04  Me garde à Châtel-Gaillard comme son ami,
- 155.76  159.62  A Reims serai couronné roué de France, Où je mourrai devant ses murs,
- 159.76  162.04  Dieu nous fier de grêle et de ton roya,
- 162.50  165.42  Chevaux et gens chier morts, Il est temps de faire pesse,
- 165.80  170.00  A Bretigny fout la peste faite, Les Roués doit renonçant à la couronne,
- 170.26  174.28  À Quela-lis-de-Moura toute franche, Nous chevauchons jusqu'aux portes de Paris,
- 174.68  176.90  Et chacun village nous paie rançon !
- 176.90  178.52  Ha ha ha ha ha ha ha ha ha !
- 178.52  183.60  Sans lance nos épées, nos sageettes, On a battu les Écoses comme blés en nous,
- 184.14  187.52  Trois millions d'écues d'or pour la rançon Du Roué-Johin,
- 187.72  191.32  En canglettaire nos six riches prises !
- 192.14  195.30  J'en ai de mort à Londres, Charles, ses aînés-fils,
- 195.46  199.22  Aide sacré à Rhin, sage Rouet, et bien lettré,
- 199.40  204.10  Messire Bertrand, rendez-vous, La journée est notre, et messire
- 204.10  205.78  Charles de Boué, j'ai mort.
- 207.88  208.68  À Guérande.
- 209.06  212.44  J'en de mon fort, j'en de mon fort, De mon ratugé, fit d'hommage au Rouet
- 212.44  213.06  de France.
- 213.48  216.66  Compagnons, laissez France en peste, En Espagne à bon pilage, et bonne guerre
- 216.66  218.08  contre le Rouet-Pietre.
- 218.08  223.08  Faites une bastide à la porte Saint-Antoine, Si forte que Paris n'est qu'à des empaisses.
- 226.06  229.48  Chevauchons toute la nuit sous la pluie, Et au matin nous se ferrons sur la queue des
- 229.48  230.16  empaisses.
- 230.70  231.74  Boutez le feu, N.F.
- 232.02  237.16  Englèche, les comptes à notre prisonnière, De Calais à Bourdieu, nous chevauchons,
- 237.38  239.80  Et nous françois nos sires de ces fortes hérèses.
- 240.62  243.08  À la ville de Bruges, par la main de notre madame,
- 243.58  245.92  Souhaites-les, trièves jurées d'une part et d'autre,
- 245.92  255.66  Et bon rouet, et toi, arrête de trépasser, Et Richard, un soft et disant, porte la couronne d'Angleterre !
-boutez_le_feu_b.mp3
-   0.00    8.56  Oyez, oyez, li roué, Félip met en sa main la duchée de Guienne, car l'idus d'Englétère et de Vassal fait long.
-   9.38   15.96  Sans lène d'Englétère, noz métiers sont tout coués, mieux vaut tenir au roué Édouard qu'à Félip.
-  16.26   22.36  Bonnes gens de Gan, se nouz tenon ensamble avèc les Englès, notre païs sera riche et noz métiers tissèron.
-  23.48   26.40  Accouvelant sur l'orain, L'y emporaire fit le rouet,
-  26.72   29.52  Édouard son vitaire, Mais ce moule coute assez l'alliance.
-  30.16   33.52  Boutez le feu, compagnons, Que ceux d'Antonne sachent
-  33.52   35.20  Que la mer n'est ni leur muraille.
-  36.28   38.04  Je, Édouard, Par la grâce de deux dieux,
-  38.18   40.00  De Drouet, de France et d'Angleterre,
-  40.26   42.40  Porterai les fleurs de l'îse avec milliers parts,
-  43.08   44.40  Tant que nous aurons peint les murs,
-  44.70   48.00  Tournai ne sera j'anglais, Ni anglais, sans n'irons, sans argent.
-  48.78   50.02  Biaux frères et biaux filles,
-  50.02   54.42  Pour Dieu, laissiers et terveuses guerres, Trop de bonnes gens y ont déjà perdu la vie.
-  55.04   60.62  De par le rouet, nu ne vendra celle force au grenier, Et qui murmure s'il paye la gabelle.
-  61.62   64.72  Dame, défaites les chaussiers, portez les pierres aux screnos.
-  65.40   68.30  De par notre Saint-Père, que les armes se reposent en Bretagne,
-  68.64   70.60  Et que nu n'y fasse assaut jusqu'au terme.
-  71.20   76.02  Ils sont à table et ne se gardent ferré sur eux, Et au béroche sera délivré un la nuit.
-  76.56   81.94  Par Saint-Denis, je ne partirai des guillons, Tant que les châteaux me souhaitent rendu.
-  82.68   87.72  Sire Normand dit être grâce et sans garde, Je vous meursai par le Cotentin jusqu'à Ca.
-  88.60   91.02  L'hirouet d'Écosse est pris, Navré de deux Sajettes,
-  91.78   94.30  Et sa rançon remplira les coffres d'Angleterre.
-  94.58   97.44  Le pape Clémain achète un vignon de la Rouenne Jeanne,
-  97.82  100.12  Et la cour de Rome s'y assit pour longtemps.
- 101.64  104.02  L'hirouet Félipette mort, vive l'hirouet Johan,
- 104.22  107.78  Qui sera sacré à Reims par la grâce de Dieu.
- 108.22  110.52  Chevalier de l'Étoile, jurer que je ne fuirai
- 110.52  112.64  De batailles plus de quatre arpents.
- 113.12  116.08  Amorron de Mouraire, mormin chevalier de l'Étoile
- 116.08  118.24  Qui a voué être juré de non fuir.
- 119.00  121.96  De Bourdieu jusqu'à Nerbonne, tout est à répiller
- 121.96  124.54  Jamais s'neveille une si riche paille.
- 125.04  127.60  Je suis Bertrand du Guéclin, tant qu'on j'aurai vie
- 127.60  130.16  L'Inglesse n'entreront en reine.
- 131.02  133.32  Otez-vous, compagnons, à cette hache
- 133.32  135.74  Je ferai vous être parmi ses anglaises.
- 135.98  137.60  Chassier, celui de mon royaume,
- 137.78  138.68  Maître, hiroué de France,
- 138.78  141.12  Me garde à Châtel Gaïa, là, comme son ami.
- 141.76  143.90  Arrince, serai couronné, hiroué de France,
- 144.24  145.78  Où je mourrai devant ses murs.
- 146.20  148.56  Dieu nous fier de grêle et de taunouère.
- 149.14  150.40  Chevaux et gens chiés morts,
- 150.62  151.90  Il est temps de faire pesse.
- 152.18  153.66  A Bretigny fut la pesse faite,
- 153.90  155.92  L'hiroué Édouard renonça à la couronne,
- 156.22  158.02  Et à Quittegne il démourra toute franche.
- 158.40  160.46  Nous chevauchons jusqu'aux portes de Paris,
- 160.46  166.50  Et chacun village nous paye rançon Sans serre et paix, n'on s'en jette
- 166.50  169.86  On a battu les échos comme aux blés en ondes
- 169.86  173.28  Troués millions des culs d'or Pour la rançon du rouet Joran
- 173.28  176.10  On canque les terres nos si riches de prises
- 176.10  178.54  Ni rouet Joran est mort à l'ombre
- 178.54  181.18  Charles XVI et Néphi est sacré arain
- 181.18  184.20  Sage rouet et bien laitré
- 184.20  186.64  Messire Bertrand rendez-vous
- 186.64  188.50  La journée est notre émessure
- 188.50  192.54  Charles de Blouet, j'y mors, à Guérante fut la peste
- 192.54  196.86  Joan de Montfort, de Mouravieux, et fit hommage au Roi de France
- 196.86  199.30  Compagnons, laissiez France en peste
- 199.30  203.32  En Espagne à bon pillage et bonne guerre contre le Rouais-Pietre
- 203.32  206.14  Faites une bastide à la porte de Saint-Antoine
- 206.14  209.72  Si forte que Barinet garde des anglaises
- 209.72  212.48  Chevauchons toute la nuit sous la pluie
- 212.48  215.44  Et au matin nous se ferrons sous la queue des anglaises
- 215.44  220.74  Bouté le feu et neuf anglaises Et Comte de Pennebrot sera notre prisonnier
- 220.74  226.34  De Calais à Bourdieu, nous chevauchons Et nous François, nos Isires de ses fortesses
- 226.34  230.48  En la ville de Bruges, par la main de notre Saint-Père
- 230.48  233.50  Zouette la triève jurée d'une part et d'autre
- 233.50  239.68  Du bon roi et doit être très passé Et Richard, un an plus de dix ans
- 239.68  241.64  Porte la couronne d'Angleterre
- 245.98  246.36  Sous-titres réalisés para la communauté d'Amara.org
-bretagne_et_miene.mp3
-   3.22    9.74  Oyez, Oyez, li roué ! Félipe met en sa main la duchée de Guienne, car l'idu d'Englétère
-   9.74   14.98  est de vassal félon. Sans lène d'Englétère, noz métiers sont tout coués, mieux vaut
-  14.98   20.56  tenir au roué Édouard qu'à Félipe. Bonne Jean de Gans, se nouz tenon ensamble
-  20.56   26.00  avèc les Englès, notre païs sera riche et noz métiers tissèron. A Couvelence
-  26.00   27.90  Sur l'orain, l'empereur fit le rouet,
-  28.04   30.84  Édouard, son vicaire, messmoult tout à c'est l'Alliance.
-  32.02   33.62  Boutez le feu, compagnons,
-  33.86   36.74  Que ceux d'Antonne sachent que la mernette nie leur muraille.
-  37.10   39.10  Nous ardons le Cambraisier à notre plaisir,
-  39.46   41.84  Et l'irouet Félix ne nous osse combattre à Buron-Fosse.
-  42.58   46.32  Je, Édouard, par la gratteuse de Dieu roué de France et d'Angleterre,
-  46.46   48.74  Porterai les fleurs de l'île avec milliers parts.
-  49.44   52.08  Tant que nous aurons peint et mur tourné, nous seras janglèches,
-  52.38   54.12  L'Ianglaise sans irons, sans argent.
-  54.60   58.76  Biaux frères et biaux filles, pour Dieu, Laissiez éter vosse guerre,
-  59.00   64.40  Trop de bonnes gens y ont j'a perdu la vie, De part le rouer, nul ne vendra selle force
-  64.40   67.74  Au grenier, et qui murmure s'y paye la gabelle,
-  68.26   70.52  Lui du jeûne l'ait trépassé sans voir de son corps,
-  70.96   73.84  Or veule blouet, et mon fort, chacun à voir Bretagne,
-  74.46   78.26  Dame, défaites les chaussiers, et portez les pierres aux scrénaux,
-  78.48   80.86  Et le bon temps rond, tant que l'Inglès vendront,
-  81.30   83.76  Bretagne et de mienne ne partouettent pas Madame ma femme,
-  83.76   92.26  Dieu et Lirouet, mes oncles, me souhaitent en aide De part notre Saint-Père, que les armes se reposent en Bretagne Et que Nul n'y fasse assaut jusqu'au terme.
-  93.54  104.12  Lirouet d'Angleterre nous douette plus que tout notre avoir, Nos banques sont cheux et Florence en pleurs, Ils sont à table et nous se gardent, Ferré sur eux et au Béroche sera délivré à la nuit.
- 105.86  110.12  Par Saint-Denis, je ne partirai des guillons Tant que Lichatius me souhaite rendu.
- 111.16  116.02  Sire, Normandie, aide-grâce et sans garde, Je vous mourrai par le cotentin jusqu'à quand.
- 116.60  119.26  Les rouées d'Ecosse, cette prie, n'avraient de deux sajettes,
- 119.48  121.78  Et sa rançon plira les coffres d'Angleterre.
- 122.26  124.64  Le pape Clément achète un vignon de la Rouenne-Jeanne,
- 124.86  126.88  Et la cour de Rome s'y assit pour longtemps.
- 128.06  131.38  Je, Humber, donne le Delfiné aux filles du Roué de France,
- 131.38  134.18  Et que l'hien n'est déroué en porte-le-nom
- 134.18  135.54  Lirou et Félipette mort
- 135.54  136.98  Vive Lirou et Jean
- 136.98  141.28  Qui sera sacré à Rhin par la grâce de Dieu
- 141.28  142.98  Chevalier de l'Étoile
- 142.98  144.88  Juré que je ne fuirai de bataille
- 144.88  146.50  Plus de quatre harpins
- 146.50  147.62  Amouron de Mourel
- 147.62  149.44  Mormin chevalier de l'Étoile
- 149.44  152.24  Qui avouait juré de nous fuir
- 152.24  154.52  Ce fuge qui fise au cir Charles d'Espagne
- 154.52  156.20  Que Lirou et Jean le sachent
- 156.20  157.60  Je ne le crains ni
- 157.60  159.80  Que nul ne se meuve
- 159.80  161.26  Traître Navarrois
- 161.26  163.68  Tu ne mangeras plus à la table, mon fille
- 163.68  166.90  De Bourdieu jusqu'à Narbonne, tout est à répiller
- 166.90  169.60  Jamais ce ne vaine, si riche pas, eh
- 169.60  171.60  Je suis Bertrand du Gaiclin
- 171.60  172.92  Tacoum, j'aurai vie
- 172.92  174.90  Ynglesse n'entreront en Rennes
- 175.56  177.14  Oudez-vous, compagnons
- 177.14  179.12  À cette tâche, je ferai voir
- 179.12  181.00  Parmi ces Anglesse
- 181.00  183.10  Châssis, essuie de mon royaume
- 183.10  185.50  L'assilier roi de France me garde à Châtel-Gaïa
- 185.50  187.46  Comme son ami
- 187.46  189.72  Harynx serait couronné, roi de France
- 189.72  194.72  Où je mourrai devant ces murs, Dieu nous fier de grès et de ton oeuvre.
- 195.94  198.72  Chevaux, gens chiés, morts, il y a tant de faire-passer,
- 199.44  203.74  A Bretigny il fout la passe-fête, les rouets, les doigts renoncent à la fouronne,
- 203.94  206.12  Et à Quittag il demourra de tous roches.
- 206.60  211.20  Nous chevauchons jusqu'aux portes de Paris, et chacun village nous baie-rançon.
- 212.36  215.72  Les rouets de Navarre baillent à Cherbourg, et les bus de Bretagne restent,
- 215.92  218.92  Aux anglaises qui émirent bonnes garnisons,
- 220.34  221.68  Sans lance n'est pas,
- 222.02  223.16  On s'ajette, on a battu,
- 223.20  225.30  L'attention d'offrir un blé en or.
- 226.20  227.92  Devant Crouse-Bérif, voici Henri-Percy,
- 228.88  230.16  Que l'enclamouette haute-sper,
- 230.74  232.92  L'héroïne arrêtienne sa couronne.
- 234.22  236.52  Payez bien, signeur d'Armignac,
- 236.80  239.90  Je mourirai, sinon toute la terre s'arrasse.
- 240.28  240.92  Troués millions d'écudores,
- 241.66  243.20  On leur en sonne du rouet jaune,
- 243.20  249.54  On tente l'éternum, chérie, je prise, De par le rouet, et chacun au jour, de fête très de l'arc,
- 249.86  255.82  Et laisse la pelote, et l'édés, L'écoïne, Jérôme, mort à Londres,
- 256.14  258.16  Jarmes, Sèvres, et les fillettes sacrées à Rhin,
- 258.42  263.46  Sage rouet, et bien-êtrée, Notre dame d'éclat,
- 264.20  268.70  Sèvres et sûres, l'un à la fois, Hélicopes tous, sera notre prisonnier,
- 269.72  272.04  Messire d'Artrans, rendez-vous,
- 272.26  273.80  À jour n'est notre émissure,
- 274.06  275.44  Charles de Blouèges est mort.
- 277.20  278.08  Adhirante Flapeste,
- 278.64  279.96  Je rentre de mon fort de Mauradieu,
- 279.96  281.64  C'est fait dommage au roi de France.
- 282.88  284.80  Compagnie, laissez France en peste,
- 285.00  287.06  On ne supagne à bon pillage et bon bière,
- 287.16  288.22  Boutre l'euro et piètre.
- 289.28  290.34  Arteinte de Métia,
- 290.66  292.10  Envie aussi l'euro et piètre,
- 292.16  295.14  Son frère est assis et fume à l'agent de France.
- 296.36  300.54  Les foiges du prince nous dépris, Nous en appelons, roues de France,
- 301.08  303.30  Notre sauverain signeur.
- 303.62  307.38  Puisque les princes ne voient qu'une paroire, Nous venaient tous dans notre main,
- 307.70  312.22  La duchie et la titaine, Faites une bastide à la porte sur nos poènes,
- 312.52  315.48  C'est forte que Paris n'est qu'un des anglaises.
- 316.18  318.54  Inertie dure, de bonjour à l'appétit,
- 318.84  321.54  N'a-t-on souhait d'aller m'achanger à nos femmes et à nos enfants,
- 321.54  324.28  J'ai vos chevaux, que vous faintenez sous la couille
- 324.28  327.54  Et au matin nous serons sur la queue des emblèches
- 328.22  330.96  Boutez le feu, et c'est n'avant plâche
- 330.96  333.86  Ils comptent nos pannes brosser à notre prisonnier
- 333.86  336.52  Peut-il aller à nos violes, nous ces chevaux chelous
- 336.52  339.92  Et nous faire fouer nos écyles de ces voies terrestres
- 339.92  343.04  La vie approche par un arbre trop sympa
- 343.04  345.58  Sous la quatrième, les cheveux et des mots partout
- 347.18  350.54  Les rouées, droits, la puissance et les chars
- 350.54  355.24  Afin de te dire, porte la couronne dans le critère
-je_tien_ma_terre.mp3
-   1.02   12.28  N'oubliez jamais qu'en quelque lieu que vous fassiez la guerre, les ecclésiastiques, les femmes, les enfants et les pauvres gens ne sont point vos ennemis.
-  13.48   26.02  Il n'y a si pauvres fileuses en France ki ne fila pour payé ma rançon. Si je douais mourir, je veux mourir roué de France et l'épée a la main.
-  28.00   31.64  Sire, descendez à pied et marchez droué à eux.
-  33.80   38.44  Il n'y a pas de si belle épée qui ne doit chôner, ni de si vaillant homme qui ne puisse
-  38.44   39.46  être lassé.
-  41.08   45.96  Dieu, je te prie que tu fasses aujourd'hui pour laire autant que tu voudrais que la
-  45.96   50.70  hire fie pour toi, s'il est toi Dieu et que tu fasses laire.
-  52.48   55.58  Je pense qu'on me saurait pèdre son plus joyeusement.
-  56.44   61.16  En avant, su au traître, ils veulent me livrer à mes ennemis.
-  62.30   64.76  J'ai moins qu'il ait fait faire par l'instigation du diable.
-  65.50   68.54  Je l'ennuie, je le tiens.
-  70.80   74.02  Ce que vous avez fait pour moi, je vous en remercie.
-  74.50   78.26  Ce que vous m'avez ôté, je ne m'en soucie pour moi.
-  79.38   83.58  Les hommes d'armes batailleront, et Dieu donnera la victoire.
-  84.94   86.62  Vous dites que vous êtes mon juge.
-  87.44   91.52  Prenez garde de ne pas mal juger, car vous vous maîtriez en grand danger.
-  93.66   98.22  J'aimerais mieux filer auprès de ma pauvre mère, car ce n'est pas mon état de batailler.
- 101.26  106.24  Nous te déclarons excommunier et hérétique, et nous t'abandonnons aux bras sécuillés.
- 107.00  111.10  Avant sa venue, deux Saint-Anglais faisaient fuir Saint-Saint-François.
- 111.58  115.08  Après elle, deux Saint-François chassaient mille Anglais.
- 116.40  120.16  Levez le pont, fermez les portes, que nul n'entre plus.
- 123.16  126.58  Allons, mes amis, l'heure est venue.
- 127.76  130.94  Que chacun fasse son devoir avec ses bombardes.
- 132.04  133.74  Je n'ai jamais se tourner le dos aux François.
- 134.40  138.76  Et je ne commencerai pas, aujourd'hui, Avancer les bannières.
- 139.48  145.28  Ces joyeuses choses que la guerre, On sème tant en armes qu'on en pleure de tendresse,
- 147.00  148.66  Availlant que rien n'imposible.
- 150.06  156.18  Si vous ne recouvrez votre willum, Je m'en irai trouver le rouet d'Angleterre,
- 157.06  160.50  Inassibie au jour, Qui nous mène à sa fin.
- 162.54  167.84  Prenez ces couleurs, rouges et bleues, pour la sauvergarde de la ville et du peuple.
- 169.94  176.38  Jeanne, je vous ai promis de vous suivre, mais cela s'aut est trop périlleux.
- 178.38  183.64  La territoire retournée à l'état sauvage, ouverte de ronces et d'épines, sans vaboureurs
- 183.64  184.84  ni paysans.
- 186.32  188.66  Les nombres ne défendaient plus le peuple,
- 189.18  191.16  Mais supliaient et rançonnaient,
- 191.66  193.02  Comme faisaient les ennemis.
- 195.90  198.08  Vous fuyez le fer de l'ennemi,
- 199.12  201.68  Et vous voudrez s'étuer par la famille et la misère.
- 204.08  206.78  Je tiens ma terre de Dieu et de mon épée,
- 207.80  209.90  Nom de France, ni d'Angleterre.
- 211.54  220.06  Je me fers ni francois ni anglais Je garde ma place pour moi-même
- 221.84  224.24  Il vaut mieux perdre ses biens que sa vie
-le_roue_du_ciel.mp3
-   1.48    7.34  les roués d'Angleterre et Lyciens, qui s'envenouèdent tous un gland.
-   8.78   13.36  Regardez-vous être devers les Clues, si grand quantité de Vessio.
-  18.32   23.50  Ouvrez, ouvrez, Chatelain, c'est l'infortuné roué de France,
-  24.30   28.14  grand pitié et grand méchef ce roué de laisser mourir un tèl peuple.
-  29.24   34.22  Père, gardez-vous à droite, Père, gardez-vous à gauche,
-  35.10   40.12  Bois ton sang, beaux manoirs, La soueif te passera.
-  42.14   47.48  Je suis si envoyé de part Dieu Le rouer du ciel,
-  48.04   52.14  Corps pour corps pour vous bouter Hors de toute France,
-  52.98   58.14  Clas d'as, clas d'as, renti, renti au rouet des cieux
-  58.76   62.76  Au niz, souhait qui mal y pense
-  63.92   68.58  Tiel comme tu es, j'où Tiel fût
-  68.58   71.14  Sera Tiel comme je suis
-  72.08   75.84  Bonne chance, l'Ecosse ne pointe bien d'y aller en piletière
-  75.84   79.26  En regardant vers le Pays de France
-  79.26   83.88  Un jour, ma vingt, à Douvres sur la mer.
-  87.74   90.44  Chantirouet, or est exécuté le plaisir de Dieu.
-  91.76   96.46  Il avouait été la peine, c'est toi de bien raison qu'il fût à l'honneur.
-  97.02   99.92  Ce je n'y suis, Dieu m'y veuille mettre.
- 102.12  106.08  Et ce j'y suis, Dieu m'y veuille tenir.
- 128.82  134.82  Je suis si envoyé de part Dieu le Roux et du Ciel
- 134.82  140.12  corps pour corps, pour vous bouter hors de toute France
- 140.12  145.40  Clas d'as, clas d'as, renti, renti aux rouées des cieux
- 145.40  153.22  Eh, quel honneur au féminin sexe que Dieu l'aime, il l'a paire
- 153.22  156.90  Tant de grosses bombardes, de gros canons
- 156.90  169.12  de Veugler, de Serpentine, de Crapaudine, de Ribotkin, et de Coulevrine.
+la_pucele.mp3
+   0.00   12.00  Nous, Écosoènes, somme venu de par delà la mèr pour servir mon seigneur, le dauphin contre notre ancien ennemi d'Angléterre.
+  13.24   21.78  Fèron sur les Anglouètans, qu'ils sont départis par la rivière. Montargis sera délivré en levespre.
+  22.70   27.78  Le concil de Pise a déposé les deux papes et le Alexandre.
+  29.10   32.78  Or en avons troué et nul ne veut céder.
+  33.94   35.78  Prisonnier suis en Angleterre.
+  37.26   41.50  Je regarde vers le Pays de France et fait balade pour passer le temps.
+  43.34   45.62  Les Liégeois sont des confis à ôter.
+  46.52   49.26  Mon beau frère de Bavière sera rendu à son évêché.
+  51.02   56.76  Les bretons sont venus à Blackpool, mais les gens de Dertemulais ont rechassé en la
+  56.76   57.24  mer.
+  58.92   60.54  Et leur capitaine gite mort.
+  62.80   68.26  Nous avons pris terre à Milford, et avec Prince Wen nous chevaucherons jusque devant
+  68.26   69.00  Wooster.
+  71.06   76.62  Le roué Charles mit le siège devant Hara contre le duc de Bourgogne, mais la maladie
+  76.68   80.68  Le divin t'enloste, et fut faite la paix.
+  82.18   86.94  Mon seigneur de Salisbury regard d'où est Orléans par une fenêtre des tourelles,
+  87.38   90.82  Quand un canon lui emporta la moitié du visage.
+  91.98   96.18  Beaux ducs avant, Jarjo, Meun et Beaujancy,
+  96.84  100.58  Seront aux gentils dauphins avant que la semaine soit passée.
+ 101.72  105.50  La pucelle est navrée d'un trait d'arbalète devant la porte si non orée.
+ 106.68  108.68  Et les Arminiens s'en retournent.
+ 110.70  113.76  Le comte d'Arondel gite navré d'une couleverine,
+ 114.30  116.32  Laïre et Mouet tenons gerberoués,
+ 117.88  120.08  Et les Anglouais sont des confis.
+ 121.66  123.98  Après vingt et six ans je revois France,
+ 124.70  126.14  Beau cousin de Bourgogne,
+ 126.74  128.38  Qui m'aidat à payer ma rançon,
+ 128.82  130.98  Je prends à femme votre nièce.
+ 132.48  134.50  À l'assaut, mes gens,
+ 135.26  141.02  Les canons de maître Jean Burot ont fait brèche, et le rouet y entre avec vous.
+ 143.02  149.60  Le rouet de France est venu devant Tartase au jour à signer, que la place lui soit rendue
+ 149.60  151.20  comme il fût promis.
+ 153.08  159.06  Le rouet Henri avouait promis de rendre le mène pour son mariage, mais les Anglouais
+ 159.06  161.84  du Minde ne s'en allèrent que devant l'os du rouet Charles.
+ 163.78  168.88  Nos bombardes tirent depuis la grève, Et la mer ne les noie point.
+ 170.62  174.08  Cherbourg est la dernière Place des Anglais en Normandie.
+ 176.34  180.56  Nous rendons qu'un haut roué Charles, Pourvu que nous puissions nous en aller
+ 180.56  182.36  Sauvement en Angleterre avec nos biens.
+ 184.58  189.88  Je suis lieutenant du roué en France, Nous reprendrons les places du paille de
+ 191.18  199.44  Mais il faut que l'Angleterre paye ses gens, Avant, compagnon, à l'assaut de la Bastille,
+ 201.12  205.78  Talbot la fête devant Dieppe, Et nous la prendrons avant la nuit.
+ 207.70  212.10  Le concil de Baal est au-dessus du pape, Nous déposons Eugène,
+ 212.86  215.84  Et élisons le duc de Savoie qui sera Félix.
+ 217.06  224.14  De par notre saint Père Eugène, je vous prie, beau seigneur, que la paix soit faite
+ 224.14  226.32  entre France et Bourgogne comme frère.
+ 228.60  235.32  De par le Rouet, chacune parouesse aura un archié armé, franc de teille, prêt à
+ 235.32  236.76  servir qu'un il sera mandé.
+ 238.72  242.40  Ceux de Gains refusent la gabelle et prennent les armes contre leur seigneur.
+ 243.42  246.66  Par si non Dieu, ils s'en repentiront.
+ 248.62  254.66  À Boulniéville, le maréchal de Bourgogne déconfie René de Barre, qui fut mené prisonnier
+ 254.66  261.22  à Dijon en la Tour, qui, à la grâce de notre saint Père, allait décimer la triève
+ 261.22  262.26  et la bénédiction.
+ 263.64  267.28  Qui la perde, il la perd pour son adversaire.
+ 269.06  277.24  Clément Navignon est vrai pape, France, Écosse et Castille le tiennent et l'Ianti-pape de
+ 277.24  284.20  Rome souhaite maudit, Urbain est vrai pape à Rome, Angleterre et l'Empire le tiennent
+ 285.80  290.96  et Clément Navignon n'est que l'Ipapdèse françoise.
+vive_anri_le_kint.mp3
+   0.84    4.94  L'héroïne me baille terre en cotentin, pour avouer apès.
+   6.76    9.04  Ainsi vaut mieux être son gendre que son ennemi.
+  11.04   14.70  Nous eut rouéon l'aide au roué pour son host, mès l'êt roué étale à lèvron
+  14.70   20.04  et garderon par leur jan. Cèt trètié n'èt passable ne fèzable, mieus nouz
+  20.04   23.26  vaut endurer la guère que livrer la mouétié du rouéyaume.
+  23.64   28.92  La guère èt faillie, mès non notre métier, chacune ville nouz paiera pati, ou nouz
+  28.92   35.24  arderont. Cette mortalité prend nos petits enfants, qui ne viront que la première. Dieu
+  35.24   40.96  aide merci de nous. De par le rouet, chacun feu paiera le foige et les aides sur les
+  40.96   46.92  denrées pour la défense du royaume. Me signo le connaitable, Poitiers-vous ouvre
+  46.92   52.82  ses portes. Nous sommes François de Cœur et à toujours rouer Charles. Devant
+  52.82   56.72  Chizet furent les Anglaises des confis par Messire Bertrand, et ainsi fut tout
+  56.72   61.08  à tout recouvrir. Nos camons jettent grosses pierres
+  61.08   64.56  nuit et jour, ceux de Saint Sauveur traitent j'adorande le châtel.
+  66.42   70.04  Nous sommes venus d'outre-mer pour guérouer les anglaises,
+  70.40   73.16  mais sans les cosses, n'un ne vint, ne faire, ne bon chevaux.
+  75.00   79.60  Je, Pierre de la Marre, pour les communes, accuse le Signeur de la Timère,
+  79.84   82.36  et Richard Lyon d'avoir robé le rouet et le royaume.
+  83.94   90.20  Richard fut du noble prince de Gat-Gat, Être couronné à Westmoutier, Dieu gare notre jeune
+  90.76   91.20  rouet.
+  93.26   97.52  Très chioncle, ouillez le droître que j'ai contre le rouet d'Angleterre qui a enfreint
+  97.52   98.48  la peste de Bretigny.
+ 101.04  105.32  Les papes Grégoire laissent Avignon, et son Varane, dame Catherine de Siennes,
+ 105.36  106.60  le prian ne revenit.
+ 108.74  112.18  Nous écommenions tous ceux des compagnies Qui pillent le peuple chrétien,
+ 113.16  114.44  S'ils ne s'en vont hors du royaume.
+ 117.86  120.54  Monseigneur d'Orléans, le siège de Vambourg tout l'hiver,
+ 121.18  123.56  Mais la pluie et la faim, le fil, retournaient sans rien faire.
+ 125.26  128.68  En l'église de Chartres, les enfants d'Orléans pardonnaient
+ 128.68  131.24  Au tube de Bourgogne, mais on disait que c'est tout épéphoré.
+ 133.26  139.74  Que nul ne crie plus arminiaque du bourgoyne, Par la paix d'Ossère, les seigneurs du sang
+ 139.74  140.60  son amour.
+ 142.32  145.42  Vive le rouet Henri le Quinte, Celui qui fut l'avré à Crouse-Béry,
+ 145.64  147.50  Demandra son droie sur la couronne de France.
+ 149.20  152.10  Je pars pas en, Tendrai même un temps que nous aurons du pain,
+ 152.78  156.10  Et quand il faudra, ils m'encheront mon cheveu.
+ 157.72  162.76  Mon Père m'a donné, roué en riant l'église de Troyes, Dieu fasse ce qu'il nous donnaisse
+ 162.76  163.78  à paix des Troyeux.
+ 166.64  172.70  Les anglois s'en retournent, chargés de Troyes, feront churer à Brocinia et après
+ 172.70  173.98  se rendent.
+ 176.76  182.80  Mon Seigneur Saint-Michel, garde sur nous, jamais en bruit, ni en traitant que nous
+ 182.80  183.52  serons vivantes.
+ 185.28  188.72  Le femme à poids, envoyée et cuisonnée à tout,
+ 189.58  192.96  Partient, tue le gouvernement du royaume avec mon cousin pour que
+ 194.60  199.40  Arménie, l'épliquier, l'épée drogue,
+ 199.94  207.26  N'énonce plus après que Dieu nous garde des uns et des autres.
+ 218.90  219.02  Je vous remercie d'avoir regardé cette vidéo.
+ 219.02  219.06  Je vous remercie d'avoir regardé cette vidéo.
+ 219.42  219.50  Je vous remercie.
