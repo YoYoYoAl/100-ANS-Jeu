@@ -360,7 +360,7 @@ export function decompter(D, g, r) {
 }
 
 // ---------------------------------------------------------------- jouer une carte
-import { EFFETS } from "./effets.js?v=29f76231";
+import { EFFETS } from "./effets.js?v=f8c5e456";
 export function prerequisOk(D, g, k) {
   if (!k.prerequis) return true;
   if (k.prerequis === "Roi captif") return !!g.statuts.roiCaptif;
@@ -458,7 +458,7 @@ function piocher(D, g, c, taille) {
 export function jouerTour(D, g) {
   const p = g.tour <= 3 ? 1 : g.tour <= 7 ? 2 : 3;
   if (p !== g.phase) { g.phase = p; ajouterPhase(D, g, p); }
-  if (g.tour === 4 && g.statuts.roiCaptif) { g.statuts.roiCaptif = false; etape(g, { k: "info", camp: F, txt: "Jean II rentre en France contre rançon : fin du « Roi captif »." }); }
+  if (g.tour === 6 && g.statuts.roiCaptif) { g.statuts.roiCaptif = false; etape(g, { k: "info", camp: F, txt: "Jean II rentre en France contre rançon : fin du « Roi captif »." }); } // milieu de la phase II (tours 4 à 7)
   if (g.tour === 8) { delete g.statuts.cherbourgBrest; delete g.statuts.owain; } // la révolte galloise s'éteint vers 1415
   g.tourFlags = {}; g.militaire = { A: 0, F: 0 }; g.diplo = { A: false, F: false }; g.legitTente = { A: false, F: false };
   treve(D, g, 1);
