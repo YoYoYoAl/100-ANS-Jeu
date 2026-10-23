@@ -7,7 +7,7 @@ import {
   A, F, adv, carte, controle, defense, lieuxAccessibles, coutInfluence, ciblesAssaut, bonusAssaut, coutAssaut,
   evenementPossible, opsCarte, jouer, resoudreEvenement, etatRegion, FACTIONS, factionsActives, alea, de,
   penche, lieuxFaction, fusionFlandre, signatureEtat, effetMarqueur, NB_TOURS, detenteurPape,
-} from "./regles.js?v=b9561d48";
+} from "./regles.js?v=8e4ae569";
 
 const CAPITALES = { Paris: 4, Reims: 2.5, Rouen: 2, Bordeaux: 3, Londres: 3, Calais: 1.5, "Orléans": 1.5, Bourges: 1 };
 const REQ_LEGIT = [0, 2, 2, 3, 3, 3, 4, 4, 4]; // miroir de regles.js : OPS requis pour viser la case n
@@ -43,7 +43,8 @@ function gainUnPoint(D, g, c, n) {
 // actions encore à jouer ce tour par le camp cc (la taille des mains est publique)
 function actionsRestantes(g, cc) {
   const rounds = g.paquet ? g.paquet.rounds[g.tour <= 3 ? 0 : 1] : (g.phase === 1 ? 6 : 7);
-  const r = g.round === 0 ? rounds : rounds - g.round + (cc === F && g.actif === A ? 1 : 0);
+  const p = g.tour % 2 === 1 ? A : F; // premier joueur du tour (alternance)
+  const r = g.round === 0 ? rounds : rounds - g.round + (cc !== p && g.actif === p ? 1 : 0);
   return Math.max(0, Math.min(r, g.mains[cc].length));
 }
 // valeur d'une carte gardée en main (pour son détenteur) : une carte adverse finira par servir l'adversaire
@@ -320,12 +321,13 @@ function suiteDuTour(D, g, c, action, seed, P) {
   h.mains[o] = pool.slice(0, n); h.pioche = pool.slice(n);
   jouer(D, h, c, action);
   const rounds = h.paquet ? h.paquet.rounds[h.tour <= 3 ? 0 : 1] : (h.phase === 1 ? 6 : 7);
-  let r = h.round, s = c === A ? F : A, coups = 0;
-  if (c === F) r++;
+  const p = h.tour % 2 === 1 ? A : F; // premier joueur du tour (alternance)
+  let r = h.round, s = adv(c), coups = 0;
+  if (c !== p) r++;
   while (!h.fin && r <= rounds && coups < P.horizon) {
     h.round = r; h.actif = s;
     if (h.mains[s].length) { const a = rapide(D, h, s, rounds - r, P); if (a) { jouer(D, h, s, a); coups++; } }
-    if (s === F) r++;
+    if (s !== p) r++;
     s = adv(s);
   }
   return pourCamp(c, evaluer(D, h, c, P));
@@ -428,7 +430,7 @@ export function creerIA(opts = {}) {
       return best;
     },
     ouverture(D, g, c) {
-      let ids = g.mains[c].filter(id => !carte(D, id).decompte && id !== D.idPape);
+      let ids = g.mains[c].filter(id => !carte(D, id).decompte && !D.idsPape?.has(id));
       if (!ids.length) return null;
       const utiles = ids.filter(id => { const k = carte(D, id); return k.camp === adv(c) || !evenementPossible(D, g, k.camp === "N" ? c : k.camp, id) || !evenementVide(D, g, c, id); });
       if (N.candidats > 0 && utiles.length) ids = utiles; // ouverture : pas d'événement propre qui ne change rien

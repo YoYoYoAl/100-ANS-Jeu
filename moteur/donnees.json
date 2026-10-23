@@ -1183,8 +1183,11 @@
 "prerequis": "",
 "retiree": true,
 "interdit": [],
-"fin": 2,
-"statut": "obligatoire"
+"fin": 4,
+"statut": "obligatoire",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 5,
@@ -1209,8 +1212,11 @@
 "interdit": [
 "Bataille de Roosebeke"
 ],
-"fin": 2,
-"statut": "facultative"
+"fin": 4,
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 7,
@@ -1221,7 +1227,7 @@
 "prerequis": "",
 "retiree": true,
 "interdit": [],
-"fin": 1,
+"fin": 4,
 "statut": "facultative"
 },
 {
@@ -1234,7 +1240,10 @@
 "retiree": false,
 "interdit": [],
 "fin": 4,
-"statut": "facultative"
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 9,
@@ -1247,7 +1256,7 @@
 "interdit": [
 "Mort d'Édouard III"
 ],
-"fin": 2,
+"fin": 4,
 "statut": "facultative"
 },
 {
@@ -1261,7 +1270,7 @@
 "interdit": [
 "Mort d'Édouard III"
 ],
-"fin": 2,
+"fin": 4,
 "statut": "obligatoire"
 },
 {
@@ -1273,8 +1282,11 @@
 "prerequis": "",
 "retiree": true,
 "interdit": [],
-"fin": 2,
-"statut": "obligatoire"
+"fin": 4,
+"statut": "obligatoire",
+"renfort": {
+"inf": 2
+}
 },
 {
 "id": 12,
@@ -1285,8 +1297,11 @@
 "prerequis": "",
 "retiree": true,
 "interdit": [],
-"fin": 1,
-"statut": "facultative"
+"fin": 4,
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 13,
@@ -1297,8 +1312,11 @@
 "prerequis": "",
 "retiree": true,
 "interdit": [],
-"fin": 1,
-"statut": "facultative"
+"fin": 4,
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 14,
@@ -1309,7 +1327,7 @@
 "prerequis": "",
 "retiree": true,
 "interdit": [],
-"fin": 2,
+"fin": 4,
 "statut": "facultative"
 },
 {
@@ -1323,7 +1341,7 @@
 "interdit": [
 "Traité de Guérande"
 ],
-"fin": 2,
+"fin": 4,
 "statut": "obligatoire"
 },
 {
@@ -1337,7 +1355,7 @@
 "interdit": [
 "Traité de Guérande"
 ],
-"fin": 2,
+"fin": 4,
 "statut": "facultative"
 },
 {
@@ -1353,7 +1371,10 @@
 "Bataille d'Auray"
 ],
 "fin": 4,
-"statut": "facultative"
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 18,
@@ -1364,8 +1385,11 @@
 "prerequis": "",
 "retiree": true,
 "interdit": [],
-"fin": 1,
-"statut": "facultative"
+"fin": 4,
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 19,
@@ -1376,8 +1400,11 @@
 "prerequis": "",
 "retiree": true,
 "interdit": [],
-"fin": 1,
-"statut": "facultative"
+"fin": 4,
+"statut": "facultative",
+"renfort": {
+"tresor": 1
+}
 },
 {
 "id": 20,
@@ -1388,8 +1415,11 @@
 "prerequis": "",
 "retiree": true,
 "interdit": [],
-"fin": 2,
-"statut": "facultative"
+"fin": 4,
+"statut": "facultative",
+"renfort": {
+"inf": 2
+}
 },
 {
 "id": 21,
@@ -1400,7 +1430,7 @@
 "prerequis": "",
 "retiree": true,
 "interdit": [],
-"fin": 2,
+"fin": 4,
 "statut": "facultative"
 },
 {
@@ -1412,7 +1442,7 @@
 "prerequis": "",
 "retiree": true,
 "interdit": [],
-"fin": 1,
+"fin": 4,
 "statut": "facultative"
 },
 {
@@ -1426,7 +1456,7 @@
 "interdit": [
 "Mort d'Édouard III"
 ],
-"fin": 2,
+"fin": 4,
 "statut": "obligatoire"
 },
 {
@@ -1438,7 +1468,7 @@
 "prerequis": "",
 "retiree": true,
 "interdit": [],
-"fin": 2,
+"fin": 4,
 "statut": "facultative"
 },
 {
@@ -1452,8 +1482,11 @@
 "interdit": [
 "Mort d'Édouard III"
 ],
-"fin": 2,
-"statut": "obligatoire"
+"fin": 4,
+"statut": "obligatoire",
+"renfort": {
+"inf": 2
+}
 },
 {
 "id": 26,
@@ -1464,8 +1497,11 @@
 "prerequis": "",
 "retiree": true,
 "interdit": [],
-"fin": 1,
-"statut": "obligatoire"
+"fin": 4,
+"statut": "obligatoire",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 27,
@@ -1478,8 +1514,11 @@
 "interdit": [
 "Grand Schisme d'Occident"
 ],
-"fin": 2,
-"statut": "facultative"
+"fin": 4,
+"statut": "facultative",
+"renfort": {
+"tresor": 1
+}
 },
 {
 "id": 28,
@@ -1490,7 +1529,7 @@
 "prerequis": "",
 "retiree": true,
 "interdit": [],
-"fin": 2,
+"fin": 4,
 "statut": "facultative"
 },
 {
@@ -1502,8 +1541,11 @@
 "prerequis": "",
 "retiree": true,
 "interdit": [],
-"fin": 1,
-"statut": "facultative"
+"fin": 4,
+"statut": "facultative",
+"renfort": {
+"tresor": 1
+}
 },
 {
 "id": 30,
@@ -1517,7 +1559,7 @@
 "Avènement de Charles V",
 "Bataille de Poitiers"
 ],
-"fin": 2,
+"fin": 4,
 "statut": "facultative"
 },
 {
@@ -1531,8 +1573,11 @@
 "interdit": [
 "Traité de Guérande"
 ],
-"fin": 2,
-"statut": "facultative"
+"fin": 4,
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 32,
@@ -1542,12 +1587,12 @@
 "nom": "Ordre de l'Étoile",
 "prerequis": "",
 "retiree": true,
-"interdit": [
-"Avènement de Charles V",
-"Bataille de Mauron"
-],
-"fin": 2,
-"statut": "facultative"
+"interdit": [],
+"fin": 4,
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 33,
@@ -1560,7 +1605,7 @@
 "interdit": [
 "Traité de Guérande"
 ],
-"fin": 2,
+"fin": 4,
 "statut": "facultative"
 },
 {
@@ -1574,7 +1619,7 @@
 "interdit": [
 "Mort de Charles le Mauvais"
 ],
-"fin": 2,
+"fin": 4,
 "statut": "obligatoire"
 },
 {
@@ -1588,8 +1633,11 @@
 "interdit": [
 "Mort de Charles le Mauvais"
 ],
-"fin": 2,
-"statut": "facultative"
+"fin": 4,
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 36,
@@ -1602,8 +1650,11 @@
 "interdit": [
 "Mort du Prince Noir"
 ],
-"fin": 2,
-"statut": "facultative"
+"fin": 4,
+"statut": "facultative",
+"renfort": {
+"inf": 2
+}
 },
 {
 "id": 37,
@@ -1617,7 +1668,7 @@
 "Mort du Prince Noir",
 "Avènement de Charles V"
 ],
-"fin": 2,
+"fin": 4,
 "statut": "obligatoire"
 },
 {
@@ -1631,7 +1682,7 @@
 "interdit": [
 "Mort de du Guesclin"
 ],
-"fin": 2,
+"fin": 4,
 "statut": "obligatoire"
 },
 {
@@ -1643,7 +1694,7 @@
 "prerequis": "",
 "retiree": true,
 "interdit": [],
-"fin": 1,
+"fin": 4,
 "statut": "obligatoire"
 },
 {
@@ -1655,8 +1706,11 @@
 "prerequis": "",
 "retiree": true,
 "interdit": [],
-"fin": 1,
-"statut": "obligatoire"
+"fin": 4,
+"statut": "obligatoire",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 41,
@@ -1667,7 +1721,7 @@
 "prerequis": "",
 "retiree": true,
 "interdit": [],
-"fin": 1,
+"fin": 4,
 "statut": "facultative"
 },
 {
@@ -1678,10 +1732,8 @@
 "nom": "David II à Château-Gaillard",
 "prerequis": "",
 "retiree": true,
-"interdit": [
-"Bataille de Neville's Cross"
-],
-"fin": 2,
+"interdit": [],
+"fin": 4,
 "statut": "facultative"
 },
 {
@@ -1696,8 +1748,11 @@
 "Mort d'Édouard III",
 "Traité de Brétigny"
 ],
-"fin": 2,
-"statut": "facultative"
+"fin": 4,
+"statut": "facultative",
+"renfort": {
+"inf": 2
+}
 },
 {
 "id": 44,
@@ -1710,8 +1765,11 @@
 "interdit": [
 "Traité de Brétigny"
 ],
-"fin": 2,
-"statut": "facultative"
+"fin": 4,
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 45,
@@ -1724,8 +1782,11 @@
 "interdit": [
 "Confiscation de l'Aquitaine"
 ],
-"fin": 2,
-"statut": "obligatoire"
+"fin": 4,
+"statut": "obligatoire",
+"renfort": {
+"inf": 2
+}
 },
 {
 "id": 46,
@@ -1772,7 +1833,7 @@
 "prerequis": "",
 "retiree": true,
 "interdit": [],
-"fin": 3,
+"fin": 4,
 "statut": "facultative"
 },
 {
@@ -1784,7 +1845,7 @@
 "prerequis": "",
 "retiree": true,
 "interdit": [],
-"fin": 2,
+"fin": 4,
 "statut": "facultative"
 },
 {
@@ -1827,7 +1888,10 @@
 "Avènement d'Henri V"
 ],
 "fin": 4,
-"statut": "facultative"
+"statut": "facultative",
+"renfort": {
+"tresor": 2
+}
 },
 {
 "id": 54,
@@ -1838,8 +1902,11 @@
 "prerequis": "Roi captif",
 "retiree": true,
 "interdit": [],
-"fin": 3,
-"statut": "obligatoire"
+"fin": 4,
+"statut": "obligatoire",
+"renfort": {
+"tresor": 2
+}
 },
 {
 "id": 55,
@@ -1850,8 +1917,11 @@
 "prerequis": "",
 "retiree": true,
 "interdit": [],
-"fin": 3,
-"statut": "facultative"
+"fin": 4,
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 56,
@@ -1862,8 +1932,11 @@
 "prerequis": "",
 "retiree": true,
 "interdit": [],
-"fin": 3,
-"statut": "facultative"
+"fin": 4,
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 57,
@@ -1874,7 +1947,7 @@
 "prerequis": "",
 "retiree": true,
 "interdit": [],
-"fin": 3,
+"fin": 4,
 "statut": "facultative"
 },
 {
@@ -1888,8 +1961,11 @@
 "interdit": [
 "Mort de Charles V"
 ],
-"fin": 3,
-"statut": "obligatoire"
+"fin": 4,
+"statut": "obligatoire",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 59,
@@ -1903,7 +1979,7 @@
 "Mort de du Guesclin",
 "Mort de Charles le Mauvais"
 ],
-"fin": 3,
+"fin": 4,
 "statut": "facultative"
 },
 {
@@ -1917,8 +1993,11 @@
 "interdit": [
 "Traité de Guérande"
 ],
-"fin": 3,
-"statut": "facultative"
+"fin": 4,
+"statut": "facultative",
+"renfort": {
+"inf": 2
+}
 },
 {
 "id": 61,
@@ -1929,8 +2008,11 @@
 "prerequis": "Guerre de succession de Bretagne",
 "retiree": true,
 "interdit": [],
-"fin": 3,
-"statut": "facultative"
+"fin": 4,
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 62,
@@ -1943,8 +2025,11 @@
 "interdit": [
 "Mort de du Guesclin"
 ],
-"fin": 3,
-"statut": "facultative"
+"fin": 4,
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 63,
@@ -1958,8 +2043,11 @@
 "Mort du Prince Noir",
 "Montiel"
 ],
-"fin": 3,
-"statut": "facultative"
+"fin": 4,
+"statut": "facultative",
+"renfort": {
+"tresor": 2
+}
 },
 {
 "id": 64,
@@ -1970,7 +2058,7 @@
 "prerequis": "",
 "retiree": true,
 "interdit": [],
-"fin": 3,
+"fin": 4,
 "statut": "obligatoire"
 },
 {
@@ -1982,7 +2070,7 @@
 "prerequis": "Traité de Brétigny",
 "retiree": true,
 "interdit": [],
-"fin": 3,
+"fin": 4,
 "statut": "facultative"
 },
 {
@@ -1996,8 +2084,11 @@
 "interdit": [
 "Mort de Charles V"
 ],
-"fin": 3,
-"statut": "obligatoire"
+"fin": 4,
+"statut": "obligatoire",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 67,
@@ -2007,11 +2098,12 @@
 "nom": "Fondation de la Bastille",
 "prerequis": "",
 "retiree": true,
-"interdit": [
-"Mort de Charles V"
-],
-"fin": 3,
-"statut": "facultative"
+"interdit": [],
+"fin": 4,
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 68,
@@ -2024,7 +2116,7 @@
 "interdit": [
 "Mort du Prince Noir"
 ],
-"fin": 3,
+"fin": 4,
 "statut": "facultative"
 },
 {
@@ -2038,8 +2130,11 @@
 "interdit": [
 "Mort de du Guesclin"
 ],
-"fin": 3,
-"statut": "obligatoire"
+"fin": 4,
+"statut": "obligatoire",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 70,
@@ -2052,8 +2147,11 @@
 "interdit": [
 "Mort de du Guesclin"
 ],
-"fin": 3,
-"statut": "facultative"
+"fin": 4,
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 71,
@@ -2064,8 +2162,11 @@
 "prerequis": "Montiel",
 "retiree": true,
 "interdit": [],
-"fin": 3,
-"statut": "obligatoire"
+"fin": 4,
+"statut": "obligatoire",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 72,
@@ -2078,7 +2179,7 @@
 "interdit": [
 "Usurpation d'Henri IV"
 ],
-"fin": 3,
+"fin": 4,
 "statut": "facultative"
 },
 {
@@ -2090,8 +2191,11 @@
 "prerequis": "",
 "retiree": true,
 "interdit": [],
-"fin": 3,
-"statut": "facultative"
+"fin": 4,
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 74,
@@ -2102,7 +2206,7 @@
 "prerequis": "",
 "retiree": true,
 "interdit": [],
-"fin": 3,
+"fin": 4,
 "statut": "obligatoire"
 },
 {
@@ -2114,8 +2218,11 @@
 "prerequis": "",
 "retiree": true,
 "interdit": [],
-"fin": 3,
-"statut": "obligatoire"
+"fin": 4,
+"statut": "obligatoire",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 76,
@@ -2126,8 +2233,11 @@
 "prerequis": "",
 "retiree": true,
 "interdit": [],
-"fin": 3,
-"statut": "obligatoire"
+"fin": 4,
+"statut": "obligatoire",
+"renfort": {
+"inf": 2
+}
 },
 {
 "id": 77,
@@ -2138,8 +2248,11 @@
 "prerequis": "Du Guesclin au siège de Rennes",
 "retiree": true,
 "interdit": [],
-"fin": 3,
-"statut": "obligatoire"
+"fin": 4,
+"statut": "obligatoire",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 78,
@@ -2147,10 +2260,10 @@
 "camp": "A",
 "ops": 3,
 "nom": "Mort de Charles V",
-"prerequis": "",
+"prerequis": "Avènement de Charles V",
 "retiree": true,
 "interdit": [],
-"fin": 3,
+"fin": 4,
 "statut": "obligatoire"
 },
 {
@@ -2162,8 +2275,11 @@
 "prerequis": "",
 "retiree": true,
 "interdit": [],
-"fin": 3,
-"statut": "obligatoire"
+"fin": 4,
+"statut": "obligatoire",
+"renfort": {
+"tresor": 1
+}
 },
 {
 "id": 80,
@@ -2174,8 +2290,11 @@
 "prerequis": "",
 "retiree": true,
 "interdit": [],
-"fin": 3,
-"statut": "facultative"
+"fin": 4,
+"statut": "facultative",
+"renfort": {
+"tresor": 1
+}
 },
 {
 "id": 81,
@@ -2186,8 +2305,11 @@
 "prerequis": "",
 "retiree": true,
 "interdit": [],
-"fin": 3,
-"statut": "facultative"
+"fin": 4,
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 82,
@@ -2198,7 +2320,7 @@
 "prerequis": "Grand Schisme d'Occident",
 "retiree": true,
 "interdit": [],
-"fin": 3,
+"fin": 4,
 "statut": "facultative"
 },
 {
@@ -2210,8 +2332,11 @@
 "prerequis": "",
 "retiree": true,
 "interdit": [],
-"fin": 3,
-"statut": "facultative"
+"fin": 4,
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 84,
@@ -2222,8 +2347,11 @@
 "prerequis": "",
 "retiree": true,
 "interdit": [],
-"fin": 3,
-"statut": "facultative"
+"fin": 4,
+"statut": "facultative",
+"renfort": {
+"tresor": 1
+}
 },
 {
 "id": 85,
@@ -2234,8 +2362,11 @@
 "prerequis": "",
 "retiree": true,
 "interdit": [],
-"fin": 3,
-"statut": "facultative"
+"fin": 4,
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 86,
@@ -2247,7 +2378,10 @@
 "retiree": true,
 "interdit": [],
 "fin": 4,
-"statut": "facultative"
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 87,
@@ -2255,11 +2389,14 @@
 "camp": "A",
 "ops": 4,
 "nom": "Folie de Charles VI",
-"prerequis": "",
+"prerequis": "Mort de Charles V",
 "retiree": true,
 "interdit": [],
 "fin": 4,
-"statut": "obligatoire"
+"statut": "obligatoire",
+"renfort": {
+"inf": 2
+}
 },
 {
 "id": 88,
@@ -2273,7 +2410,10 @@
 "Mort de Charles VI"
 ],
 "fin": 4,
-"statut": "facultative"
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 89,
@@ -2287,7 +2427,10 @@
 "Usurpation d'Henri IV"
 ],
 "fin": 4,
-"statut": "facultative"
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 90,
@@ -2301,7 +2444,10 @@
 "Assassinat de Montereau"
 ],
 "fin": 4,
-"statut": "facultative"
+"statut": "facultative",
+"renfort": {
+"tresor": 1
+}
 },
 {
 "id": 91,
@@ -2313,7 +2459,10 @@
 "retiree": true,
 "interdit": [],
 "fin": 4,
-"statut": "obligatoire"
+"statut": "obligatoire",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 92,
@@ -2365,7 +2514,10 @@
 "Assassinat de Montereau"
 ],
 "fin": 4,
-"statut": "facultative"
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 96,
@@ -2415,7 +2567,10 @@
 "Mort d'Henri V"
 ],
 "fin": 4,
-"statut": "facultative"
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 100,
@@ -2429,7 +2584,10 @@
 "Mort d'Henri V"
 ],
 "fin": 4,
-"statut": "facultative"
+"statut": "facultative",
+"renfort": {
+"inf": 2
+}
 },
 {
 "id": 101,
@@ -2443,7 +2601,10 @@
 "Mort d'Henri V"
 ],
 "fin": 4,
-"statut": "facultative"
+"statut": "facultative",
+"renfort": {
+"inf": 2
+}
 },
 {
 "id": 102,
@@ -2484,7 +2645,10 @@
 "retiree": true,
 "interdit": [],
 "fin": 4,
-"statut": "facultative"
+"statut": "facultative",
+"renfort": {
+"inf": 2
+}
 },
 {
 "id": 105,
@@ -2496,7 +2660,10 @@
 "retiree": true,
 "interdit": [],
 "fin": 4,
-"statut": "facultative"
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 106,
@@ -2605,7 +2772,10 @@
 "retiree": true,
 "interdit": [],
 "fin": 4,
-"statut": "facultative"
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 114,
@@ -2613,7 +2783,7 @@
 "camp": "F",
 "ops": 3,
 "nom": "Mort d'Henri V",
-"prerequis": "",
+"prerequis": "Avènement d'Henri V",
 "retiree": true,
 "interdit": [],
 "fin": 4,
@@ -2625,11 +2795,14 @@
 "camp": "N",
 "ops": 3,
 "nom": "Mort de Charles VI",
-"prerequis": "",
+"prerequis": "Mort de Charles V",
 "retiree": true,
 "interdit": [],
 "fin": 4,
-"statut": "obligatoire"
+"statut": "obligatoire",
+"renfort": {
+"inf": 2
+}
 },
 {
 "id": 116,
@@ -2643,7 +2816,10 @@
 "Sacre de Charles VII à Reims"
 ],
 "fin": 4,
-"statut": "facultative"
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 117,
@@ -2658,7 +2834,10 @@
 "Congrès d'Arras"
 ],
 "fin": 4,
-"statut": "facultative"
+"statut": "facultative",
+"renfort": {
+"inf": 2
+}
 },
 {
 "id": 118,
@@ -2738,7 +2917,10 @@
 "Jeanne d'Arc"
 ],
 "fin": 4,
-"statut": "obligatoire"
+"statut": "obligatoire",
+"renfort": {
+"inf": 2
+}
 },
 {
 "id": 124,
@@ -2752,7 +2934,10 @@
 "Jeanne d'Arc"
 ],
 "fin": 4,
-"statut": "facultative"
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 125,
@@ -2764,7 +2949,10 @@
 "retiree": false,
 "interdit": [],
 "fin": 4,
-"statut": "facultative"
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 126,
@@ -2790,7 +2978,10 @@
 "Capture à Compiègne"
 ],
 "fin": 4,
-"statut": "obligatoire"
+"statut": "obligatoire",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 128,
@@ -2804,7 +2995,10 @@
 "Capture à Compiègne"
 ],
 "fin": 4,
-"statut": "facultative"
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 129,
@@ -2818,7 +3012,10 @@
 "Capture à Compiègne"
 ],
 "fin": 4,
-"statut": "obligatoire"
+"statut": "obligatoire",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 130,
@@ -2830,7 +3027,10 @@
 "retiree": true,
 "interdit": [],
 "fin": 4,
-"statut": "obligatoire"
+"statut": "obligatoire",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 131,
@@ -2856,7 +3056,10 @@
 "Reprise de Paris"
 ],
 "fin": 4,
-"statut": "facultative"
+"statut": "facultative",
+"renfort": {
+"inf": 2
+}
 },
 {
 "id": 133,
@@ -2864,7 +3067,7 @@
 "camp": "F",
 "ops": 3,
 "nom": "Mort de Bedford",
-"prerequis": "",
+"prerequis": "Bedford régent",
 "retiree": true,
 "interdit": [],
 "fin": 4,
@@ -2918,7 +3121,10 @@
 "retiree": true,
 "interdit": [],
 "fin": 4,
-"statut": "facultative"
+"statut": "facultative",
+"renfort": {
+"tresor": 1
+}
 },
 {
 "id": 138,
@@ -2930,7 +3136,10 @@
 "retiree": true,
 "interdit": [],
 "fin": 4,
-"statut": "facultative"
+"statut": "facultative",
+"renfort": {
+"tresor": 1
+}
 },
 {
 "id": 139,
@@ -2954,7 +3163,10 @@
 "retiree": true,
 "interdit": [],
 "fin": 4,
-"statut": "obligatoire"
+"statut": "obligatoire",
+"renfort": {
+"tresor": 1
+}
 },
 {
 "id": 141,
@@ -2966,7 +3178,10 @@
 "retiree": true,
 "interdit": [],
 "fin": 4,
-"statut": "obligatoire"
+"statut": "obligatoire",
+"renfort": {
+"inf": 2
+}
 },
 {
 "id": 142,
@@ -2978,7 +3193,10 @@
 "retiree": true,
 "interdit": [],
 "fin": 4,
-"statut": "obligatoire"
+"statut": "obligatoire",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 143,
@@ -2990,7 +3208,10 @@
 "retiree": true,
 "interdit": [],
 "fin": 4,
-"statut": "facultative"
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 144,
@@ -3038,7 +3259,10 @@
 "retiree": true,
 "interdit": [],
 "fin": 4,
-"statut": "facultative"
+"statut": "facultative",
+"renfort": {
+"tresor": 1
+}
 },
 {
 "id": 148,
@@ -3064,7 +3288,10 @@
 "Bataille de Castillon"
 ],
 "fin": 4,
-"statut": "obligatoire"
+"statut": "obligatoire",
+"renfort": {
+"inf": 2
+}
 },
 {
 "id": 150,
@@ -3100,7 +3327,10 @@
 "retiree": true,
 "interdit": [],
 "fin": 4,
-"statut": "obligatoire"
+"statut": "obligatoire",
+"renfort": {
+"tresor": 1
+}
 },
 {
 "id": 153,
@@ -3113,8 +3343,11 @@
 "interdit": [
 "Traité de Berwick"
 ],
-"fin": 2,
-"statut": "facultative"
+"fin": 4,
+"statut": "facultative",
+"renfort": {
+"inf": 2
+}
 },
 {
 "id": 154,
@@ -3127,7 +3360,7 @@
 "interdit": [
 "Traité de Guérande"
 ],
-"fin": 2,
+"fin": 4,
 "statut": "facultative"
 },
 {
@@ -3139,7 +3372,7 @@
 "prerequis": "Bataille de Neville's Cross",
 "retiree": true,
 "interdit": [],
-"fin": 2,
+"fin": 4,
 "statut": "facultative"
 },
 {
@@ -3151,7 +3384,7 @@
 "prerequis": "Traité de Guérande",
 "retiree": true,
 "interdit": [],
-"fin": 3,
+"fin": 4,
 "statut": "facultative"
 },
 {
@@ -3177,7 +3410,7 @@
 "interdit": [
 "Bataille de Soubise"
 ],
-"fin": 3,
+"fin": 4,
 "statut": "facultative"
 },
 {
@@ -3189,8 +3422,11 @@
 "prerequis": "",
 "retiree": true,
 "interdit": [],
-"fin": 3,
-"statut": "facultative"
+"fin": 4,
+"statut": "facultative",
+"renfort": {
+"inf": 2
+}
 },
 {
 "id": 160,
@@ -3202,7 +3438,10 @@
 "retiree": false,
 "interdit": [],
 "fin": 4,
-"statut": "facultative"
+"statut": "facultative",
+"renfort": {
+"tresor": 1
+}
 },
 {
 "id": 161,
@@ -3214,7 +3453,10 @@
 "retiree": false,
 "interdit": [],
 "fin": 4,
-"statut": "facultative"
+"statut": "facultative",
+"renfort": {
+"tresor": 1
+}
 },
 {
 "id": 162,
@@ -3225,7 +3467,7 @@
 "prerequis": "",
 "retiree": true,
 "interdit": [],
-"fin": 1,
+"fin": 4,
 "statut": "facultative"
 },
 {
@@ -3239,7 +3481,7 @@
 "interdit": [
 "Traité de Guérande"
 ],
-"fin": 2,
+"fin": 4,
 "statut": "facultative"
 },
 {
@@ -3253,7 +3495,7 @@
 "interdit": [
 "Mort d'Édouard III"
 ],
-"fin": 2,
+"fin": 4,
 "statut": "facultative"
 },
 {
@@ -3268,7 +3510,7 @@
 "Traité de Guérande",
 "Bataille d'Auray"
 ],
-"fin": 2,
+"fin": 4,
 "statut": "facultative"
 },
 {
@@ -3279,11 +3521,12 @@
 "nom": "Les Espagnols sur mer",
 "prerequis": "",
 "retiree": true,
-"interdit": [
-"Mort d'Édouard III"
-],
-"fin": 2,
-"statut": "facultative"
+"interdit": [],
+"fin": 4,
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 167,
@@ -3294,8 +3537,11 @@
 "prerequis": "",
 "retiree": true,
 "interdit": [],
-"fin": 2,
-"statut": "facultative"
+"fin": 4,
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 168,
@@ -3306,11 +3552,13 @@
 "prerequis": "Charles le Mauvais",
 "retiree": true,
 "interdit": [
-"Avènement de Charles V",
 "Mort de Charles le Mauvais"
 ],
-"fin": 2,
-"statut": "facultative"
+"fin": 4,
+"statut": "facultative",
+"renfort": {
+"tresor": 1
+}
 },
 {
 "id": 169,
@@ -3321,8 +3569,11 @@
 "prerequis": "",
 "retiree": true,
 "interdit": [],
-"fin": 1,
-"statut": "facultative"
+"fin": 4,
+"statut": "facultative",
+"renfort": {
+"tresor": 1
+}
 },
 {
 "id": 170,
@@ -3335,7 +3586,7 @@
 "interdit": [
 "Traité de Brétigny"
 ],
-"fin": 2,
+"fin": 4,
 "statut": "facultative"
 },
 {
@@ -3347,8 +3598,11 @@
 "prerequis": "",
 "retiree": true,
 "interdit": [],
-"fin": 1,
-"statut": "facultative"
+"fin": 4,
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 172,
@@ -3362,7 +3616,10 @@
 "Compagnies d'ordonnance"
 ],
 "fin": 4,
-"statut": "facultative"
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 173,
@@ -3374,7 +3631,10 @@
 "retiree": false,
 "interdit": [],
 "fin": 4,
-"statut": "facultative"
+"statut": "facultative",
+"renfort": {
+"tresor": 1
+}
 },
 {
 "id": 174,
@@ -3386,7 +3646,10 @@
 "retiree": false,
 "interdit": [],
 "fin": 4,
-"statut": "facultative"
+"statut": "facultative",
+"renfort": {
+"tresor": 1
+}
 },
 {
 "id": 175,
@@ -3397,7 +3660,7 @@
 "prerequis": "",
 "retiree": true,
 "interdit": [],
-"fin": 3,
+"fin": 4,
 "statut": "facultative"
 },
 {
@@ -3411,8 +3674,11 @@
 "interdit": [
 "Mort de du Guesclin"
 ],
-"fin": 3,
-"statut": "facultative"
+"fin": 4,
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 177,
@@ -3425,8 +3691,11 @@
 "interdit": [
 "Mort de du Guesclin"
 ],
-"fin": 3,
-"statut": "facultative"
+"fin": 4,
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 178,
@@ -3437,7 +3706,7 @@
 "prerequis": "",
 "retiree": true,
 "interdit": [],
-"fin": 3,
+"fin": 4,
 "statut": "facultative"
 },
 {
@@ -3449,8 +3718,11 @@
 "prerequis": "",
 "retiree": true,
 "interdit": [],
-"fin": 3,
-"statut": "facultative"
+"fin": 4,
+"statut": "facultative",
+"renfort": {
+"tresor": 1
+}
 },
 {
 "id": 180,
@@ -3460,10 +3732,8 @@
 "nom": "Le Bon Parlement",
 "prerequis": "",
 "retiree": true,
-"interdit": [
-"Mort d'Édouard III"
-],
-"fin": 3,
+"interdit": [],
+"fin": 4,
 "statut": "facultative"
 },
 {
@@ -3477,7 +3747,7 @@
 "interdit": [
 "Usurpation d'Henri IV"
 ],
-"fin": 3,
+"fin": 4,
 "statut": "facultative"
 },
 {
@@ -3489,8 +3759,11 @@
 "prerequis": "",
 "retiree": true,
 "interdit": [],
-"fin": 3,
-"statut": "facultative"
+"fin": 4,
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 183,
@@ -3500,11 +3773,12 @@
 "nom": "Révolte de Gand",
 "prerequis": "",
 "retiree": true,
-"interdit": [
-"Bataille de Roosebeke"
-],
-"fin": 3,
-"statut": "facultative"
+"interdit": [],
+"fin": 4,
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 184,
@@ -3517,8 +3791,11 @@
 "interdit": [
 "Mort de Charles V"
 ],
-"fin": 3,
-"statut": "facultative"
+"fin": 4,
+"statut": "facultative",
+"renfort": {
+"tresor": 1
+}
 },
 {
 "id": 185,
@@ -3531,7 +3808,7 @@
 "interdit": [
 "Usurpation d'Henri IV"
 ],
-"fin": 3,
+"fin": 4,
 "statut": "facultative"
 },
 {
@@ -3543,8 +3820,11 @@
 "prerequis": "Charles le Mauvais",
 "retiree": true,
 "interdit": [],
-"fin": 3,
-"statut": "facultative"
+"fin": 4,
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 187,
@@ -3555,8 +3835,11 @@
 "prerequis": "",
 "retiree": true,
 "interdit": [],
-"fin": 3,
-"statut": "facultative"
+"fin": 4,
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 188,
@@ -3567,8 +3850,11 @@
 "prerequis": "",
 "retiree": true,
 "interdit": [],
-"fin": 3,
-"statut": "facultative"
+"fin": 4,
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 189,
@@ -3578,11 +3864,8 @@
 "nom": "Confiscation des terres navarraises",
 "prerequis": "Charles le Mauvais",
 "retiree": true,
-"interdit": [
-"Mort de Charles V",
-"Mort de Charles le Mauvais"
-],
-"fin": 3,
+"interdit": [],
+"fin": 4,
 "statut": "facultative"
 },
 {
@@ -3596,8 +3879,11 @@
 "interdit": [
 "Grand Schisme d'Occident"
 ],
-"fin": 3,
-"statut": "facultative"
+"fin": 4,
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 191,
@@ -3610,8 +3896,11 @@
 "interdit": [
 "Grand Schisme d'Occident"
 ],
-"fin": 3,
-"statut": "facultative"
+"fin": 4,
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 192,
@@ -3624,7 +3913,7 @@
 "interdit": [
 "Retour de Jean IV"
 ],
-"fin": 3,
+"fin": 4,
 "statut": "facultative"
 },
 {
@@ -3636,7 +3925,7 @@
 "prerequis": "Exil de Jean IV de Bretagne",
 "retiree": true,
 "interdit": [],
-"fin": 3,
+"fin": 4,
 "statut": "facultative"
 },
 {
@@ -3651,7 +3940,10 @@
 "Assassinat de Louis d'Orléans"
 ],
 "fin": 4,
-"statut": "facultative"
+"statut": "facultative",
+"renfort": {
+"tresor": 1
+}
 },
 {
 "id": 195,
@@ -3665,7 +3957,10 @@
 "Assassinat de Montereau"
 ],
 "fin": 4,
-"statut": "facultative"
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 196,
@@ -3679,7 +3974,10 @@
 "Assassinat de Montereau"
 ],
 "fin": 4,
-"statut": "facultative"
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 197,
@@ -3707,7 +4005,10 @@
 "Mort d'Henri V"
 ],
 "fin": 4,
-"statut": "obligatoire"
+"statut": "obligatoire",
+"renfort": {
+"inf": 2
+}
 },
 {
 "id": 199,
@@ -3721,7 +4022,10 @@
 "Mort d'Henri V"
 ],
 "fin": 4,
-"statut": "facultative"
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 200,
@@ -3763,7 +4067,10 @@
 "Mort d'Henri V"
 ],
 "fin": 4,
-"statut": "facultative"
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 203,
@@ -3775,7 +4082,10 @@
 "retiree": true,
 "interdit": [],
 "fin": 4,
-"statut": "facultative"
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 204,
@@ -3787,7 +4097,10 @@
 "retiree": true,
 "interdit": [],
 "fin": 4,
-"statut": "facultative"
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 205,
@@ -3799,7 +4112,10 @@
 "retiree": true,
 "interdit": [],
 "fin": 4,
-"statut": "facultative"
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 206,
@@ -3826,7 +4142,10 @@
 "retiree": true,
 "interdit": [],
 "fin": 4,
-"statut": "facultative"
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 208,
@@ -3840,7 +4159,10 @@
 "Bataille de Verneuil"
 ],
 "fin": 4,
-"statut": "facultative"
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 209,
@@ -3894,7 +4216,10 @@
 "Assassinat de Montereau"
 ],
 "fin": 4,
-"statut": "facultative"
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 213,
@@ -3922,7 +4247,10 @@
 "Avènement d'Henri V"
 ],
 "fin": 4,
-"statut": "facultative"
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 215,
@@ -3937,7 +4265,10 @@
 "Assassinat de Montereau"
 ],
 "fin": 4,
-"statut": "facultative"
+"statut": "facultative",
+"renfort": {
+"tresor": 1
+}
 },
 {
 "id": 216,
@@ -3949,7 +4280,10 @@
 "retiree": true,
 "interdit": [],
 "fin": 4,
-"statut": "facultative"
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 217,
@@ -3990,7 +4324,10 @@
 "retiree": true,
 "interdit": [],
 "fin": 4,
-"statut": "facultative"
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 220,
@@ -4026,7 +4363,10 @@
 "retiree": true,
 "interdit": [],
 "fin": 4,
-"statut": "facultative"
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 223,
@@ -4038,7 +4378,10 @@
 "retiree": true,
 "interdit": [],
 "fin": 4,
-"statut": "facultative"
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 224,
@@ -4050,7 +4393,10 @@
 "retiree": true,
 "interdit": [],
 "fin": 4,
-"statut": "facultative"
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 225,
@@ -4086,7 +4432,10 @@
 "retiree": true,
 "interdit": [],
 "fin": 4,
-"statut": "facultative"
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 228,
@@ -4098,7 +4447,10 @@
 "retiree": true,
 "interdit": [],
 "fin": 4,
-"statut": "facultative"
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 229,
@@ -4112,7 +4464,10 @@
 "Congrès d'Arras"
 ],
 "fin": 4,
-"statut": "facultative"
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 230,
@@ -4136,7 +4491,10 @@
 "retiree": true,
 "interdit": [],
 "fin": 4,
-"statut": "facultative"
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 232,
@@ -4148,7 +4506,10 @@
 "retiree": true,
 "interdit": [],
 "fin": 4,
-"statut": "facultative"
+"statut": "facultative",
+"renfort": {
+"inf": 1
+}
 },
 {
 "id": 233,
@@ -4166,7 +4527,7 @@
 "id": 234,
 "phase": 0,
 "camp": "F",
-"ops": 0,
+"ops": 1,
 "nom": "Pape d'Avignon",
 "prerequis": "",
 "retiree": false,
@@ -4178,7 +4539,7 @@
 "id": 235,
 "phase": 0,
 "camp": "A",
-"ops": 0,
+"ops": 1,
 "nom": "Pape de Rome",
 "prerequis": "",
 "retiree": false,
