@@ -87,7 +87,8 @@ header.tete h1{font-size:clamp(1.3rem,2.4vw,1.9rem);line-height:1}
   .plan{grid-column:1;grid-row:2/5;height:calc(100vh - var(--hh) - 32px)}
   .plan svg{height:100%;width:auto;max-width:100%;margin-inline:auto}
   /* Événement en haut, main au milieu, score en bas ; factions et chronique à droite */
-  .centre{grid-column:2;grid-row:2;min-height:0;max-height:42vh;overflow:auto}
+  .centre{grid-column:2;grid-row:2;min-height:0;height:42vh;overflow:auto;display:flex;flex-direction:column}
+  #consigne{flex:1 0 auto;display:flex;flex-direction:column} #consigne > .lecture-nav,#consigne > .choix.pied{margin-top:auto;margin-bottom:-13px}
   .main-zone{grid-column:2;grid-row:3;min-height:0;display:grid;grid-template-rows:auto minmax(0,1fr);overflow:hidden}
   .main{min-height:0;overflow:hidden;align-content:start;grid-auto-rows:max-content}
   .main.defile{overflow:auto}
@@ -102,6 +103,7 @@ header.tete h1{font-size:clamp(1.3rem,2.4vw,1.9rem);line-height:1}
   .bloc.chron{min-height:0;grid-template-rows:auto minmax(0,1fr)}
 }
 @media (max-width:1099px),(max-height:699px){.plan svg{max-height:85vh}}
+@media (max-width:1099px),(max-height:699px){#jeu{padding-bottom:76px}#jeu .centre .lecture-nav,#jeu .centre .choix.pied{position:fixed;left:0;right:0;bottom:0;justify-content:center;padding:8px 16px calc(8px + env(safe-area-inset-bottom));border-top:1px solid color-mix(in srgb,var(--sepia) 40%,transparent)}}
 @media (min-width:1100px) and (min-height:700px) and (max-height:859px){.phase{grid-template-columns:minmax(0,1fr);padding-left:6px}.phase > :first-child:not(div){display:none}}
 /* ---------- pistes */
 .score{position:relative;height:26px;border-radius:3px;background:linear-gradient(90deg,var(--gueules) 0 50%,var(--azur) 50% 100%);opacity:.92}
@@ -158,50 +160,18 @@ select{font:inherit;padding:3px 6px;background:var(--velin);color:var(--encre);b
 .de.v4{background-image:url(pieces/de_4.png)} .de.v5{background-image:url(pieces/de_5.png)} .de.v6{background-image:url(pieces/de_6.png)}
 .de.A,.de.F{box-shadow:0 3px 0 -1px var(--c)} .de.A{--c:var(--gueules)} .de.F{--c:var(--azur)}
 .de.roule{animation:roule .5s ease-out}
-.scene{width:min(540px,100%);margin:0 auto 6px}
-.scene svg{display:block;width:100%;height:auto;border:1px solid var(--sepia);border-radius:4px;overflow:hidden}
-.scene .hj{stroke:#2b1d12;stroke-width:1.1;stroke-linecap:round}
-.scene .avance{animation:approche 2.1s cubic-bezier(.3,.1,.4,1) both}
-.scene.perd .avance{animation:approche 2.1s cubic-bezier(.3,.1,.4,1) both,reflux .9s ease-in 2.3s forwards}
-.scene.siege .avance{animation:approcheS 2.4s ease-out both}
-.scene .h .hc{transform-box:fill-box;transform-origin:50% 100%;animation:marcheH .3s ease-in-out var(--t) 8 alternate}
-.scene .h .harme{transform-box:fill-box;transform-origin:0% 100%;animation:frappeH .3s ease-in-out calc(1.4s + var(--t)) 4 alternate}
-.scene .fl{fill:none;stroke:#2b1d12;stroke-width:.9;stroke-linecap:round;stroke-dasharray:5 100;stroke-dashoffset:100;animation:volF .85s linear var(--f) 2 both}
-.scene .gis{opacity:0;animation:gisApp .5s ease-out var(--g) forwards}
-.scene .meurt{animation:meurt .45s ease-in var(--g) forwards}.scene .monte{animation:meurt .4s ease-in 2.2s forwards}
-@keyframes meurt{to{opacity:0}}
-.scene .boulet{opacity:0;offset-path:path("M150 128 Q232 0 318 120");offset-rotate:0deg;animation:tirB 1.05s cubic-bezier(.35,0,.7,1) var(--p) both}
-.scene .bras{transform-box:fill-box;transform-origin:60% 50%;animation:bascule .5s ease-in .45s 3 alternate}
-.scene .bombarde .fumee{opacity:0;transform-box:fill-box;transform-origin:center;animation:fumee 1s ease-out .55s 3}
-.scene .fissure{stroke-dasharray:40;stroke-dashoffset:40;opacity:0}
-.scene.gagne.pf .fissure{opacity:1;animation:fend .5s ease-out 1.6s forwards}.scene.gagne.pf .fissure.f2{animation-delay:2.2s}
-.scene .feu{opacity:0;transform-box:fill-box;transform-origin:50% 100%}
-.scene .brule .feu{animation:flamme .35s ease-in-out var(--b) 12 alternate both}
-.scene .vainq{opacity:0;animation:hisse .8s ease-out 2.5s forwards}
-.scene .surmur{opacity:0;animation:hisse .6s ease-out 2.3s forwards}
-.scene.gagne .def-ban{transform-box:fill-box;transform-origin:0% 100%;animation:abat .7s ease-in 2.2s forwards}
-.scene .poussiere circle{fill:#d9cdb0;opacity:0}
-.scene.gagne.pf .poussiere circle{animation:poussiere 1.2s ease-out 1.7s both}
-.scene.gagne .def{animation:fuite 1s ease-in 2.2s forwards}
+.scene.peinte{width:min(560px,100%,calc(24vh * 7 / 4));margin:0 auto 6px}
+.scene.peinte .toile{position:relative;aspect-ratio:7/4;overflow:hidden;border:1px solid var(--sepia);border-radius:4px;background:#2b1d12;box-shadow:inset 0 0 40px rgba(0,0,0,.45)}
+.scene.peinte .toile::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 55%,rgba(20,12,4,.45));pointer-events:none}
+.scene.peinte img{display:block;width:100%;height:100%;object-fit:cover;transform-origin:62% 45%;animation:tableau 7s cubic-bezier(.2,.6,.3,1) both}
+.scene.peinte.perd img{transform-origin:40% 60%;animation-name:tableauRecul}
+.scene.peinte.siege .toile{animation:impacts 2.9s linear both} /* trois tirs à 0,7 s, 1,6 s et 2,5 s, comme les bruitages */
+@keyframes tableau{from{opacity:0;transform:scale(1.18) translate(-2%,1%)}12%{opacity:1}to{opacity:1;transform:scale(1.04) translate(0,0)}}
+@keyframes tableauRecul{from{opacity:0;transform:scale(1.04)}12%{opacity:1}to{opacity:1;transform:scale(1.16) translate(1%,-1%)}}
+@keyframes impacts{0%,23%,30%,54%,61%,85%,92%,100%{transform:none}24%,55%,86%{transform:translate(2px,-3px)}26%,57%,88%{transform:translate(-3px,2px)}}
 .effectifs{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 14px;font-size:.86rem;margin-top:4px}
 .effectifs .pertes{color:var(--gueules)}
 .effectifs-note{margin:2px 0 0;font-size:.72rem}
-@keyframes approche{from{transform:translateX(-70px)}to{transform:translateX(56px)}}
-@keyframes approcheS{from{transform:translateX(-40px)}to{transform:translateX(0)}}
-@keyframes reflux{to{transform:translateX(-30px);opacity:.6}}
-@keyframes marcheH{to{transform:translateY(-1.5px) rotate(4deg)}}
-@keyframes frappeH{to{transform:rotate(-34deg)}}
-@keyframes volF{to{stroke-dashoffset:-5}}
-@keyframes gisApp{from{opacity:0;transform:translateY(-6px)}to{opacity:1}}
-@keyframes tirB{0%{offset-distance:0%;opacity:1}92%{opacity:1}100%{offset-distance:100%;opacity:0}}
-@keyframes bascule{to{transform:rotate(-38deg)}}
-@keyframes fumee{0%{opacity:.9;transform:scale(.3)}100%{opacity:0;transform:scale(2.2) translate(6px,-6px)}}
-@keyframes fend{to{stroke-dashoffset:0}}
-@keyframes flamme{from{opacity:.75;transform:scaleY(.8)}to{opacity:1;transform:scaleY(1.25)}}
-@keyframes hisse{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
-@keyframes abat{to{transform:rotate(80deg);opacity:.25}}
-@keyframes poussiere{0%{opacity:0;transform:scale(.3)}30%{opacity:.85}100%{opacity:0;transform:scale(2.2) translateY(-8px)}}
-@keyframes fuite{to{transform:translateX(70px);opacity:0}}
 .melee{max-width:100%;margin:0 auto 4px;width:min(420px,100%)}
 .melee svg{display:block;width:100%;height:auto;overflow:visible}
 .melee .jambe{stroke:var(--encre);stroke-width:2;stroke-linecap:round}
@@ -221,6 +191,8 @@ select{font:inherit;padding:3px 6px;background:var(--velin);color:var(--encre);b
 .verdict{font-family:var(--f-titre);font-size:1.2rem}
 .verdict.ok{color:var(--sinople)} .verdict.ko{color:var(--gueules)}
 .effets{margin:0;padding-left:18px;display:grid;gap:2px;font-size:.95rem}
+/* boutons Suivant / Jouer toujours au même endroit : collés en bas du panneau central, même quand son contenu défile (AlwwAl, 24/10) */
+.centre .lecture-nav,.centre .choix.pied{position:sticky;bottom:0;z-index:3;background:var(--velin);box-shadow:0 -6px 8px -6px rgba(43,29,18,.35);padding-block:8px 4px}
 .lecture-nav{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;border-top:1px solid color-mix(in srgb,var(--sepia) 30%,transparent);padding-top:8px}
 .modes{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px}
 .mode{display:grid;grid-template-columns:auto 1fr;column-gap:6px;text-align:left;border:1px solid var(--encre);background:var(--velin);color:var(--encre);border-radius:4px;padding:6px 8px}
@@ -317,7 +289,7 @@ select{font:inherit;padding:3px 6px;background:var(--velin);color:var(--encre);b
 .nomreg.focus{opacity:1;font-weight:700}
 .valreg{font-family:var(--f-label);font-size:10px;opacity:.8;pointer-events:none}
 @keyframes pulse{50%{stroke-width:5;opacity:.45}}
-@media (prefers-reduced-motion:reduce){.lieu .halo,.de.roule,.melee *,.scene *{animation:none!important}.scene .gis,.scene .vainq,.scene .surmur{opacity:1}.scene .meurt,.scene .monte{opacity:0}.score .marq{transition:none}}
+@media (prefers-reduced-motion:reduce){.lieu .halo,.de.roule,.melee *,.scene *{animation:none!important}.scene.peinte img{opacity:1}.score .marq{transition:none}}
 .lieu text,.noms{pointer-events:none}
 .pinf circle{fill:transparent;stroke:none}
 .pinf image,.lieu image.piece{pointer-events:none}
@@ -1084,7 +1056,7 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 <p><strong>Interdits.</strong> Certains événements rendent d'autres cartes injouables comme événement, parce que l'histoire ne les permet plus : la mort d'un personnage, une succession, une paix ou une rupture. Par exemple, après « Mort de du Guesclin », « Du Guesclin connétable » et les autres cartes de du Guesclin ne jouent plus leur événement ; après « Traité de Guérande », les cartes de la guerre de succession de Bretagne non plus ; après « Grand Schisme d'Occident », « Clément VI achète Avignon » non plus. La liste figure sur chaque carte (« Plus jouable après »).</p>
 <p><strong>Pas de péremption.</strong> Un événement ne devient jamais impossible parce que sa période est passée : une carte de la phase I tirée en phase III peut encore jouer son événement.</p>
 <p>Une carte <strong>adverse</strong> dont l'événement est impossible ne déclenche rien quand vous la jouez pour ses OPS : elle va à la défausse et pourra revenir. Si son prérequis est rempli entre-temps, son événement redeviendra possible ; un interdit, lui, est définitif.</p>
-<p><strong>Influence « là où il en a déjà ».</strong> Quand un événement donne de l'Influence « dans un lieu où » son bénéficiaire « en a déjà », celui-ci la place dans des lieux où il a déjà au moins 1 Influence. Cette partie de l'effet, comme un gain de Trésor écrit sur la carte, s'applique même si le reste de l'événement ne change rien, et même quand c'est l'adversaire qui déclenche l'événement en jouant la carte pour ses OPS. Pour un événement neutre, le bénéficiaire est le joueur qui le déclenche.</p>
+<p><strong>Influence « là où il en a déjà ».</strong> Quand un événement donne de l'Influence « dans un lieu où » son bénéficiaire « en a déjà », celui-ci la place dans des lieux où il a déjà au moins 1 Influence. Ce gain, comme un gain de Trésor écrit à la fin de la carte, ne s'applique que si l'événement agit vraiment : un événement resté sans effet (condition non réunie) ne donne rien. Il s'applique aussi quand c'est l'adversaire qui déclenche l'événement en jouant la carte pour ses OPS. Pour un événement neutre, le bénéficiaire est le joueur qui le déclenche.</p>
 <h3 id="r-6-4-evenements-sans-effet">6.4 Événements sans effet</h3>
 <p>Le jeu simule l'événement de chaque carte de votre main. Si l'événement ne changerait rien sur le plateau (par exemple un Assaut gratuit dans une région où l'adversaire n'a aucune Influence), la carte porte le badge <strong>« Évt sans effet »</strong>. Vous pouvez quand même jouer l'événement, mais il ne se passera rien, et la carte sera retirée si elle est marquée ainsi. Les cartes dont l'effet est d'avoir été jouées (prérequis d'une autre carte, ou règle lue ailleurs comme « Héritage flamand de Philippe le Hardi » ou « Grand Schisme d'Occident ») ne portent jamais ce badge.</p>
 <h3 id="r-6-5-valeur-en-ops-d-une-carte">6.5 Valeur en OPS d'une carte</h3>

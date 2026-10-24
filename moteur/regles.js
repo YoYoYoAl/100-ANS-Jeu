@@ -424,7 +424,7 @@ export function decompter(D, g, r) {
 }
 
 // ---------------------------------------------------------------- jouer une carte
-import { EFFETS } from "./effets.js?v=be9c7c84";
+import { EFFETS } from "./effets.js?v=0edd25ae";
 // prérequis stricts : la carte requise doit avoir été jouée pour son événement (règnes, Jeanne d'Arc, Schisme) ; pour les autres, il suffit qu'elle soit sortie
 export const PREREQ_STRICTS = new Set(["Mort de Charles V", "Folie de Charles VI", "Mort de Charles VI", "Mort d'Henri V", "Mort de Bedford", "Bedford régent",
   "Bataille de Patay", "Sacre de Charles VII à Reims", "Capture à Compiègne", "Campagne de la Loire", "Échec devant Paris", "Procès de Rouen",
@@ -477,9 +477,10 @@ export function resoudreEvenement(D, g, joueur, id) {
       return true;
     }
   }
-  const avant = RECIT && g.journal ? signatureEtat(g) : null;
+  const avant = (RECIT && g.journal) || k.renfort ? signatureEtat(g) : null;
   EFFETS[k.nom](D, g, benef);
-  if (k.renfort) { // renfort d'événement (23/10) : Influence là où le bénéficiaire en a déjà, ou Trésor
+  // gain écrit sur la carte (23/10) : seulement si l'événement a vraiment agi (AlwwAl : pas de gain quand la carte reste sans effet)
+  if (k.renfort && (avant !== signatureEtat(g) || effetMarqueur(D, k.nom))) {
     if (k.renfort.tresor) tresor(g, benef, k.renfort.tresor);
     if (k.renfort.inf) { const ou = D.noms.filter(n => g.inf[n][benef] > 0); if (ou.length) placerLibre(D, g, benef, k.renfort.inf, ou); }
   }
