@@ -4,7 +4,7 @@
 import {
   A, F, adv, zone, ajouter, retirer, forcerControle, placerLibre, retirerChoisi, treve, crise, tresor,
   vp, legit, loy, versCamp, assaut, bataille, controle, DECIDEURS, de, assautsInterdits, terminer, faveurPape,
-} from "./regles.js?v=f5a3e93c";
+} from "./regles.js?v=5be4ca1c";
 
 const inf = (D, g, c, n, z) => placerLibre(D, g, c, n, zone(D, z));
 const perd = (D, g, c, n, z) => retirerChoisi(D, g, c, n, zone(D, z));
@@ -54,7 +54,7 @@ export const EFFETS = {
   "Bataille de Neville's Cross": (D, g) => { loy(g, "Écosse", -2); tresor(g, A, 1); },
   "Siège de Calais": (D, g) => forcerControle(D, g, A, "Calais"),
   "Peste noire": (D, g) => { crise(g, 2); for (const n of D.noms) for (const c of [A, F]) if (g.inf[n][c] > 2) retirer(g, c, n); },
-  "Clément VI achète Avignon": (D, g, c) => { faveurPape(D, g, c); tresor(g, c, 1); },
+  "Clément VI achète Avignon": (D, g, c) => { faveurPape(D, g, c, true); tresor(g, c, 1); },
   "Ordre de la Jarretière": (D, g) => { legit(g, A, 1); g.statuts.jarretiere = true; },
   "Transport du Dauphiné": (D, g) => { tresor(g, F, 1); }, // rééquilibrage 21/10 : sans Légitimité
   "Avènement de Jean le Bon": (D, g) => legit(g, F, 1),

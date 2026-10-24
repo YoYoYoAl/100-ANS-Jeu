@@ -234,13 +234,15 @@ export const schismeEnCours = g => !!(g.joues["Grand Schisme d'Occident"] && !g.
 export const factionsActives = g => FACTIONS.filter(f => !(f === "Flandre" && fusionFlandre(g)));
 // ---------------------------------------------------------------- Faveur du pape (façon carte Chine)
 export const detenteurPape = (D, g) => D.idPape == null ? null : g.mains.A.includes(D.idPape) ? A : g.mains.F.includes(D.idPape) ? F : g.pape?.attente ?? null;
-// « le joueur courant reçoit la Faveur du pape » : elle quitte la main adverse et arrive au tour suivant ; rien pendant le Schisme
-export function faveurPape(D, g, c) {
+// « le joueur courant reçoit la Faveur du pape » : elle quitte la main adverse et arrive au tour suivant ; rien pendant le Schisme.
+// immediat : elle arrive tout de suite en main, jouable dès le round suivant (« Clément VI achète Avignon », AlwwAl 24/10)
+export function faveurPape(D, g, c, immediat = false) {
   if (D.idPape == null || schismeEnCours(g)) return false;
-  if (g.mains[c].includes(D.idPape) || g.pape.attente === c) return false;
+  if (g.mains[c].includes(D.idPape) || (g.pape.attente === c && !immediat)) return false;
   g.mains[adv(c)] = g.mains[adv(c)].filter(x => x !== D.idPape);
-  g.pape.attente = c;
-  etape(g, { k: "info", camp: c, txt: `La « Faveur du pape » passe ${c === A ? "à l'Angleterre" : "à la France"} (jouable au tour suivant).` });
+  if (immediat) { g.pape.attente = null; g.mains[c].push(D.idPape); }
+  else g.pape.attente = c;
+  etape(g, { k: "info", camp: c, txt: `La « Faveur du pape » passe ${c === A ? "à l'Angleterre" : "à la France"} (jouable ${immediat ? "dès le round suivant" : "au tour suivant"}).` });
   return true;
 }
 
@@ -378,7 +380,7 @@ export function tentativeLegit(D, g, c, id) {
 export function bataille(D, g, c, ops, siVictoire) {
   // Interprétation (à valider) : 1d6 + bonus ≥ 4 ; une Bataille compte ses OPS comme chevauchée.
   g.militaire[c] += ops;
-  if (c === A && g.statuts.lundiNoir) { g.statuts.lundiNoir = false; etape(g, { k: "bataille", camp: c, lundiNoir: true, ok: false }); return false; }
+  if (c === A && g.statuts.lundiNoir) { g.statuts.lundiNoir = false; etape(g, { k: "bataille", camp: c, nom: (g._ctx || "").replace(/^Évt /, ""), lundiNoir: true, ok: false }); return false; }
   const bd = [];
   if (c === A && g.statuts.arc) bd.push(["archers (Ordonnance sur le tir à l'arc)", 1]);
   if (c === A && g.statuts.jarretiere) { bd.push(["Ordre de la Jarretière", 1]); g.statuts.jarretiere = false; }
@@ -388,7 +390,7 @@ export function bataille(D, g, c, ops, siVictoire) {
   const b = bd.length;
   const d = de(g), ok = d + b >= 4;
   log(g, `${c} bataille → ${ok ? "victoire" : "échec"}`);
-  etape(g, { k: "bataille", camp: c, d, bonus: b, bd, ok });
+  etape(g, { k: "bataille", camp: c, nom: (g._ctx || "").replace(/^Évt /, ""), d, bonus: b, bd, ok });
   if (ok) siVictoire();
   return ok;
 }
@@ -424,7 +426,7 @@ export function decompter(D, g, r) {
 }
 
 // ---------------------------------------------------------------- jouer une carte
-import { EFFETS } from "./effets.js?v=f5a3e93c";
+import { EFFETS } from "./effets.js?v=5be4ca1c";
 // prérequis stricts : la carte requise doit avoir été jouée pour son événement (règnes, Jeanne d'Arc, Schisme) ; pour les autres, il suffit qu'elle soit sortie
 export const PREREQ_STRICTS = new Set(["Mort de Charles V", "Folie de Charles VI", "Mort de Charles VI", "Mort d'Henri V", "Mort de Bedford", "Bedford régent",
   "Bataille de Patay", "Sacre de Charles VII à Reims", "Capture à Compiègne", "Campagne de la Loire", "Échec devant Paris", "Procès de Rouen",
@@ -444,6 +446,14 @@ export const raisonInterdit = (D, g, k) => {
   const x = k.interdit.find(n => g.joues[n]);
   return x ? `plus jouable après « ${x} »` : null;
 };
+// pourquoi un événement ne se joue pas : texte affiché à l'écran et dans la chronique (demande d'AlwwAl, 24/10)
+export function raisonSansEvenement(D, g, k, c) {
+  const r = raisonInterdit(D, g, k); if (r) return r;
+  if (!prerequisOk(D, g, k)) return k.prerequis === "Roi captif" ? "il faut qu'un roi soit captif" : `il faut d'abord que « ${k.prerequis.split(" ou ").join(" » ou « ")} » ait été joué`;
+  if (c === F && k.camp === F && k.ops === 1 && g.statuts.folieCharlesVI) return "folie de Charles VI : la France ne peut pas jouer d'événement français de 1 OPS";
+  if (!EFFETS[k.nom]) return "cette carte n'a pas d'événement";
+  return null;
+}
 export const evenementAutorise = (D, g, k) => !!k.decompte || (prerequisOk(D, g, k) && !raisonInterdit(D, g, k));
 export function evenementPossible(D, g, c, id) {
   const k = carte(D, id);
@@ -463,7 +473,7 @@ export function resoudreEvenement(D, g, joueur, id) {
   const k = carte(D, id);
   g._ctx = k.decompte ? `Décompte ${k.decompte}` : `Évt ${k.nom}`;
   if (k.decompte) { etape(g, { k: "evenement", id, camp: joueur, joueur }); decompter(D, g, k.decompte); return true; }
-  if (!evenementAutorise(D, g, k)) { etape(g, { k: "sansEffet", id, camp: joueur, raison: raisonInterdit(D, g, k) }); return false; }
+  if (!evenementAutorise(D, g, k)) { etape(g, { k: "sansEffet", id, camp: joueur, raison: raisonSansEvenement(D, g, k, joueur) }); return false; }
   const benef = k.camp === "N" ? joueur : k.camp;
   etape(g, { k: "evenement", id, camp: benef, joueur });
   // Fortune des armes : une grande bataille échoue sur un dé ≤ seuil ; il n'a pas lieu et l'adversaire marque 1 point
@@ -597,7 +607,7 @@ export function jouerTour(D, g) {
     const k = carte(D, id);
     let evt = false;
     if (evenementPossible(D, g, k.camp === "N" ? c : k.camp, id)) evt = resoudreEvenement(D, g, c, id);
-    else etape(g, { k: "sansEffet", id, camp: c, raison: raisonInterdit(D, g, k) });
+    else etape(g, { k: "sansEffet", id, camp: c, raison: raisonSansEvenement(D, g, k, k.camp === "N" ? c : k.camp) });
     defausser(D, g, id, evt);
   }
   // rounds d'action
