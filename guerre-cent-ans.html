@@ -920,7 +920,7 @@ table.calc tr.tot td{border-bottom:0;border-top:2px solid var(--encre);font-size
 <tbody>
 <tr>
 <td>Pastille rouge / bleue</td>
-<td>Gain ou perte pour l'Angleterre (rouge) ou la France (bleue) ; l'icône dit quoi : ⚑ Influence, Trésor, Légitimité, Loyauté. Pastille neutre : pour le joueur qui joue la carte.</td>
+<td>Gain ou perte pour l'Angleterre (rouge) ou la France (bleue) ; l'icône dit quoi : ⚑ Influence, Trésor, Légitimité, Loyauté. Pastille grise : sur une carte neutre, pour le joueur qui la joue ; sinon pour chaque camp, ou sans camp (Trêve, Crise). Sur une carte anglaise ou française, l'événement profite toujours au camp de la carte, même quand l'adversaire la joue pour ses OPS : la pastille en a la couleur.</td>
 </tr>
 <tr>
 <td>lieu tenu / lieux tenus</td>
@@ -7214,7 +7214,7 @@ const MOTS_RE = MOTS.map(([s, n]) => [new RegExp(`^(?:${s})$`, "u"), n]);
 // (rouge Angleterre, bleu France ; pleine pour un gain, cerclée pour une perte ; or pour les points, sépia si neutre).
 const J0 = "\u0001", J1 = "\u0002";
 const jeton = (res, camp, n) => `${J0}${res}|${camp || "N"}|${n}${J1}`;
-const CAMP_MOT = /(la France|l'Angleterre|France|Angleterre|[Ll]e joueur courant|[Jj]oueur courant)/g;
+const CAMP_MOT = /(la France|l'Angleterre|France|Angleterre|[Ll]e joueur courant|[Jj]oueur courant|\bJoueur\b)/g;
 function campAvant(t, pos) {
   // Dernier sujet (France / Angleterre / joueur courant) avant pos, hors « vers la France », « Île-de-France », « de France ».
   let camp = null, m;
@@ -7222,7 +7222,7 @@ function campAvant(t, pos) {
   while ((m = CAMP_MOT.exec(t)) && m.index < pos) {
     const avant = t.slice(Math.max(0, m.index - 6), m.index);
     if (/(vers |de |-|d')$/.test(avant)) continue;
-    camp = /France/.test(m[1]) ? "F" : /Angleterre/.test(m[1]) ? "A" : "J";
+    camp = /France/.test(m[1]) ? "F" : /Angleterre/.test(m[1]) ? "A" : /adversaire du $/.test(t.slice(Math.max(0, m.index - 14), m.index)) ? "N" : "J";
   }
   return camp;
 }
@@ -7232,6 +7232,7 @@ function jetonner(t) {
   const sub = (re, f) => { t = t.replace(re, (...a) => f(a, a[a.length - 2])); };
   sub(/(Trésor|Légitimité) ([AF]) ([+−-]\d+)/g, ([, r, c, n]) => `${jeton(r === "Trésor" ? "tresor" : "legit", c, signe(n))} ${r} ${c === "A" ? (r === "Trésor" ? "anglais" : "anglaise") : (r === "Trésor" ? "français" : "française")}`);
   sub(/([+−-]\d+) Inf§ ([AF])\b/g, ([, n, c]) => `${jeton("inf", c, signe(n))} Influence ${c === "A" ? "anglaise" : "française"}`);
+  sub(/([+−-]\d+) Inf§ (anglaise|française)\b/g, ([, n, q]) => `${jeton("inf", q === "anglaise" ? "A" : "F", signe(n))} Influence ${q}`);  // « +2 Inf. anglaise dans des lieux… » (24/10)
   sub(/(?<![\w§])([+−-]\d+) Inf§/g, ([, n], pos) => `${jeton("inf", campAvant(t, pos), signe(n))} Influence`);
   sub(/\b(anglaise|française) perd (\d+) Inf§/g, ([, q, n]) => `${q} perd ${jeton("inf", q === "anglaise" ? "A" : "F", "−" + n)} Influence`);
   sub(/\bperd (\d+) Inf§/g, ([, n], pos) => `perd ${jeton("inf", campAvant(t, pos), "−" + n)} Influence`);
@@ -9156,7 +9157,7 @@ const LEGENDE_PLAN = () => `<h3>Lieux</h3><table>` +
   ligneL(`<b>+ − ⤢</b>`, "Zoom (ou molette, pincement) ; glisser pour déplacer ; ⤢ revoit tout le plan.") + `</table>`;
 const LEGENDE_SIGLES = () => `<h3>Pastilles : gain ou perte, et pour qui</h3><table>` +
   ligneL(`${pastille("inf", "A", "+2")} ${pastille("inf", "F", "−1")}`, "Couleur = camp : <b class=\"tA\">rouge</b> Angleterre, <b class=\"tF\">bleu</b> France. Signe = gain (pastille pleine) ou perte (pastille claire).") +
-  ligneL(pastille("inf", "J", "+1"), "Pastille neutre : pour le joueur qui joue la carte.") +
+  ligneL(pastille("inf", "J", "+1"), "Pastille grise : sur une carte neutre, pour le joueur qui la joue ; sinon pour chaque camp, ou sans camp (Trêve, Crise). Sur une carte anglaise ou française, la pastille a toujours la couleur de ce camp, même si l'adversaire la joue.") +
   ligneL(`${pastille("inf", "F", "+1")}`, "Influence") + ligneL(pastille("tresor", "A", "+2"), "Trésor") + ligneL(pastille("legit", "F", "+1"), "Légitimité") +
   ligneL(pastille("loy", "A", "1"), "Loyauté d'une faction (crans)") + ligneL(pastille("treve", "N", "+1"), "Trêve") + ligneL(pastille("crise", "N", "+1"), "Crise") + ligneL(pastille("score", "F", "+2"), "Points de score") +
   `</table><h3>Icônes</h3><table>` +
