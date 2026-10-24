@@ -77,33 +77,34 @@ header.tete h1{font-size:clamp(1.3rem,2.4vw,1.9rem);line-height:1}
 .plan svg{display:block;width:100%;height:auto;flex:1;min-height:0}
 .legende{display:flex;flex-wrap:wrap;gap:2px 12px;padding:4px 8px;background:var(--velin);border-top:1px solid var(--sepia);font-family:var(--f-label);font-size:.7rem;color:var(--sepia)}
 .centre,.etat{display:grid;gap:8px;min-width:0;align-content:start}
-#jeu > header{order:0} .plan{order:1} .centre{order:2} .main-zone{order:3} #blocScore{order:4} .etat{order:5}
+#jeu > header{order:0} .plan{order:1} .centre{order:2} #bandeau{order:2} .main-zone{order:3} #blocScore{order:4} .etat{order:5}
 .bloc{background:color-mix(in srgb,var(--velin-2) 55%,var(--velin));border:1px solid color-mix(in srgb,var(--sepia) 40%,transparent);border-radius:4px;padding:8px 10px;display:grid;gap:6px;min-width:0}
 @media (min-width:1100px) and (min-height:700px){
   body{height:100vh;overflow:hidden;padding-block:8px;box-sizing:border-box}
   .page{height:100%;max-width:2400px}
-  #jeu{height:100%;grid-template-columns:calc((100vh - var(--hh) - 40px) * .74) minmax(0,1fr) 320px;grid-template-rows:auto auto minmax(0,1fr) auto;gap:8px 12px}
+  #jeu{height:100%;grid-template-columns:calc((100vh - var(--hh) - 40px) * .74) minmax(0,1fr) 320px;grid-template-rows:auto minmax(0,1fr) auto auto auto;gap:8px 12px}
   #jeu > header{grid-column:1/-1}
-  .plan{grid-column:1;grid-row:2/5;height:calc(100vh - var(--hh) - 32px)}
+  .plan{grid-column:1;grid-row:2/6;height:calc(100vh - var(--hh) - 32px)}
   .plan svg{height:100%;width:auto;max-width:100%;margin-inline:auto}
-  /* Événement en haut, main au milieu, score en bas ; factions et chronique à droite */
-  .centre{grid-column:2;grid-row:2;min-height:0;height:42vh;overflow:auto;display:flex;flex-direction:column}
-  #consigne{flex:1 0 auto;display:flex;flex-direction:column} #consigne > .lecture-nav,#consigne > .choix.pied{margin-top:auto;margin-bottom:-13px}
-  .main-zone{grid-column:2;grid-row:3;min-height:0;display:grid;grid-template-rows:auto minmax(0,1fr);overflow:hidden}
+  /* Événement en haut, bandeau des boutons, main, score en bas ; factions et chronique à droite */
+  .centre{grid-column:2;grid-row:2;min-height:0;overflow:hidden}
+  #bandeau{grid-column:2;grid-row:3}
+  .main-zone{grid-column:2;grid-row:4;min-height:0;display:grid;grid-template-rows:auto auto;overflow:hidden}
   .main{min-height:0;overflow:hidden;align-content:start;grid-auto-rows:max-content}
   .main.defile{overflow:auto}
-  #blocScore{grid-column:2/4;grid-row:4;grid-template-columns:minmax(190px,1fr) auto minmax(220px,1.3fr);align-items:center;gap:4px 18px}
+  #jeu .main{display:block;column-count:var(--cols,4);column-gap:8px;column-fill:balance;height:auto} #jeu .main > .carte{width:100%;break-inside:avoid;margin:0 0 8px}
+  #blocScore{grid-column:2/4;grid-row:5;grid-template-columns:minmax(190px,1fr) auto minmax(220px,1.3fr);align-items:center;gap:4px 18px}
   #blocScore > .choix{grid-column:1;grid-row:1}
   #blocScore > .score{grid-column:1;grid-row:2}
   #blocScore > .pistes{grid-column:2;grid-row:1/3}
   #blocScore > .legit-eff{grid-column:3;grid-row:1/3}
-  .etat{grid-column:3;grid-row:2/4;min-height:0;overflow:hidden;grid-template-rows:auto auto minmax(80px,1fr)}
+  .etat{grid-column:3;grid-row:2/5;min-height:0;overflow:hidden;grid-template-rows:auto auto minmax(80px,1fr)}
   .encours-l{max-height:22vh}
   .chronique{max-height:none!important;height:100%}
   .bloc.chron{min-height:0;grid-template-rows:auto minmax(0,1fr)}
 }
 @media (max-width:1099px),(max-height:699px){.plan svg{max-height:85vh}}
-@media (max-width:1099px),(max-height:699px){#jeu{padding-bottom:76px}#jeu .centre .lecture-nav,#jeu .centre .choix.pied{position:fixed;left:0;right:0;bottom:0;justify-content:center;padding:8px 16px calc(8px + env(safe-area-inset-bottom));border-top:1px solid color-mix(in srgb,var(--sepia) 40%,transparent)}}
+@media (max-width:1099px),(max-height:699px){#jeu{padding-bottom:76px}#bandeau{position:fixed;left:0;right:0;bottom:0;z-index:5;justify-content:center;padding:8px 16px calc(8px + env(safe-area-inset-bottom));border-top:1px solid color-mix(in srgb,var(--sepia) 40%,transparent)}}
 @media (min-width:1100px) and (min-height:700px) and (max-height:859px){.phase{grid-template-columns:minmax(0,1fr);padding-left:6px}.phase > :first-child:not(div){display:none}}
 /* ---------- pistes */
 .score{position:relative;height:26px;border-radius:3px;background:linear-gradient(90deg,var(--gueules) 0 50%,var(--azur) 50% 100%);opacity:.92}
@@ -171,7 +172,9 @@ select{font:inherit;padding:3px 6px;background:var(--velin);color:var(--encre);b
 @keyframes impacts{0%,23%,30%,54%,61%,85%,92%,100%{transform:none}24%,55%,86%{transform:translate(2px,-3px)}26%,57%,88%{transform:translate(-3px,2px)}}
 .effectifs{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 14px;font-size:.86rem;margin-top:4px}
 .effectifs .pertes{color:var(--gueules)}
-.effectifs-note{margin:2px 0 0;font-size:.72rem}
+.combat{display:grid;grid-template-columns:min(46%,calc(24vh * 7 / 4),400px) minmax(0,1fr);gap:6px 12px;align-items:start}
+.combat .scene.peinte{width:100%;margin:0} .combat-res{display:grid;gap:6px;min-width:0} .combat-res .effectifs{margin-top:0}
+@media (max-width:700px){.combat{grid-template-columns:1fr}}
 .melee{max-width:100%;margin:0 auto 4px;width:min(420px,100%)}
 .melee svg{display:block;width:100%;height:auto;overflow:visible}
 .melee .jambe{stroke:var(--encre);stroke-width:2;stroke-linecap:round}
@@ -192,7 +195,9 @@ select{font:inherit;padding:3px 6px;background:var(--velin);color:var(--encre);b
 .verdict.ok{color:var(--sinople)} .verdict.ko{color:var(--gueules)}
 .effets{margin:0;padding-left:18px;display:grid;gap:2px;font-size:.95rem}
 /* boutons Suivant / Jouer toujours au même endroit : collés en bas du panneau central, même quand son contenu défile (AlwwAl, 24/10) */
-.centre .lecture-nav,.centre .choix.pied{position:sticky;bottom:0;z-index:3;background:var(--velin);box-shadow:0 -6px 8px -6px rgba(43,29,18,.35);padding-block:8px 4px}
+/* Bandeau fixe des boutons (Suivant, Jouer, Ouvrir…) : toujours à la même place, entre l'événement et la main */
+#bandeau{min-height:44px;display:flex;align-items:center;gap:8px;padding:4px 10px;background:var(--velin);border:1px solid color-mix(in srgb,var(--sepia) 40%,transparent);border-radius:4px}
+#bandeau > *{flex:1;margin:0;border:0;padding:0}
 .lecture-nav{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;border-top:1px solid color-mix(in srgb,var(--sepia) 30%,transparent);padding-top:8px}
 .modes{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px}
 .mode{display:grid;grid-template-columns:auto 1fr;column-gap:6px;text-align:left;border:1px solid var(--encre);background:var(--velin);color:var(--encre);border-radius:4px;padding:6px 8px}

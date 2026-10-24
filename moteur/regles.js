@@ -424,7 +424,7 @@ export function decompter(D, g, r) {
 }
 
 // ---------------------------------------------------------------- jouer une carte
-import { EFFETS } from "./effets.js?v=0edd25ae";
+import { EFFETS } from "./effets.js?v=9396b840";
 // prérequis stricts : la carte requise doit avoir été jouée pour son événement (règnes, Jeanne d'Arc, Schisme) ; pour les autres, il suffit qu'elle soit sortie
 export const PREREQ_STRICTS = new Set(["Mort de Charles V", "Folie de Charles VI", "Mort de Charles VI", "Mort d'Henri V", "Mort de Bedford", "Bedford régent",
   "Bataille de Patay", "Sacre de Charles VII à Reims", "Capture à Compiègne", "Campagne de la Loire", "Échec devant Paris", "Procès de Rouen",
@@ -571,7 +571,7 @@ export function jouerTour(D, g) {
       if (g.pape.attente && D.idPape != null) { g.mains[g.pape.attente].push(D.idPape); g.pape.attente = null; }
     }
   }
-  g.tourFlags = {}; g.militaire = { A: 0, F: 0 }; g.diplo = { A: false, F: false }; g.legitTente = { A: false, F: false };
+  g.round = 0; g.tourFlags = {}; g.militaire = { A: 0, F: 0 }; g.diplo = { A: false, F: false }; g.legitTente = { A: false, F: false };  // round 0 = mise en place et ouverture (affichage et IA)
   treve(D, g, 1);
   const main = g.paquet.main[p === 1 ? 0 : 1], rounds = g.paquet.rounds[p === 1 ? 0 : 1];
   piocher(D, g, A, main); piocher(D, g, F, main);
@@ -609,6 +609,12 @@ export function jouerTour(D, g) {
       g.actif = c;
       const action = DECIDEURS[c].action(D, g, c, rounds - r);
       if (action) jouer(D, g, c, action);
+      else {
+        // règle stricte (AlwwAl, 24/10) : une carte par round. Sans usage possible (OPS nuls, événement impossible),
+        // la carte la plus faible est défaussée ; seul un joueur qui ne tient que des cartes pape passe.
+        const restes = g.mains[c].filter(x => !estPape(D, x)).sort((x, y) => carte(D, x).ops - carte(D, y).ops);
+        if (restes.length) { const id = restes[0]; g.mains[c] = g.mains[c].filter(x => x !== id); etape(g, { k: "defausse", camp: c, id }); log(g, `${c} défausse « ${carte(D, id).nom} » (aucun usage possible)`); defausser(D, g, id, false); }
+      }
     }
   }
   if (g.fin) return;
