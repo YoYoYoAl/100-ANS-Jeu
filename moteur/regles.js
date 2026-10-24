@@ -426,7 +426,7 @@ export function decompter(D, g, r) {
 }
 
 // ---------------------------------------------------------------- jouer une carte
-import { EFFETS } from "./effets.js?v=9cc1dbb8";
+import { EFFETS } from "./effets.js?v=03e3f9e1";
 // prérequis stricts : la carte requise doit avoir été jouée pour son événement (règnes, Jeanne d'Arc, Schisme) ; pour les autres, il suffit qu'elle soit sortie
 export const PREREQ_STRICTS = new Set(["Mort de Charles V", "Folie de Charles VI", "Mort de Charles VI", "Mort d'Henri V", "Mort de Bedford", "Bedford régent",
   "Bataille de Patay", "Sacre de Charles VII à Reims", "Capture à Compiègne", "Campagne de la Loire", "Échec devant Paris", "Procès de Rouen",
@@ -476,6 +476,15 @@ export function resoudreEvenement(D, g, joueur, id) {
   if (!evenementAutorise(D, g, k)) { etape(g, { k: "sansEffet", id, camp: joueur, raison: raisonSansEvenement(D, g, k, joueur) }); return false; }
   const benef = k.camp === "N" ? joueur : k.camp;
   etape(g, { k: "evenement", id, camp: benef, joueur });
+  // Lundi noir : annule la prochaine carte « Bataille … » anglaise, quelle qu'elle soit (avec ou sans jet ; bug signalé par AlwwAl le 24/10)
+  if (benef === A && g.statuts.lundiNoir && /^Bataille /.test(k.nom) && !/\bbataille\(/.test(String(EFFETS[k.nom]))) {  // les batailles à jet passent par bataille() (4 OPS militaires comptés)
+    g.statuts.lundiNoir = false;
+    etape(g, { k: "bataille", camp: A, nom: k.nom, lundiNoir: true, ok: false });
+    etape(g, { k: "effets", id, camp: benef, vide: true });
+    g.joues[k.nom] = true; g.stats.evenements[k.nom] = (g.stats.evenements[k.nom] || 0) + 1;
+    log(g, `Événement ${k.nom} annulé par Lundi noir`);
+    return true;
+  }
   // Fortune des armes : une grande bataille échoue sur un dé ≤ seuil ; il n'a pas lieu et l'adversaire marque 1 point
   if (g.regles.fortune && !(benef === A && g.statuts.lundiNoir) && (g.regles.fortuneCartes ? g.regles.fortuneCartes.includes(k.nom) : k.militaire)) {
     const d = de(g);
