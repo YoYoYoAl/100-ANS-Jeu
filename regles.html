@@ -30,6 +30,8 @@ button:focus-visible,select:focus-visible,.lieu:focus-visible,[tabindex]:focus-v
 .page{max-width:1600px;margin-inline:auto}
 /* ---------- en-tête, séquence, frise */
 header.tete{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:6px 16px;align-items:center;border-bottom:2px solid var(--or);padding-bottom:6px}
+header.tete > #blocScore{grid-column:1/-1}
+.legit-eff{display:none}
 header.tete h1{font-size:clamp(1.3rem,2.4vw,1.9rem);line-height:1}
 .date{font-family:var(--f-label);letter-spacing:.06em;font-size:.85rem;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px}
 .date .tour-gros{font-family:var(--f-titre);font-size:1.45rem;letter-spacing:0;color:var(--encre);background:var(--or);padding:0 10px;border-radius:5px;line-height:1.3}
@@ -77,35 +79,57 @@ header.tete h1{font-size:clamp(1.3rem,2.4vw,1.9rem);line-height:1}
 .plan svg{display:block;width:100%;height:auto;flex:1;min-height:0}
 .legende{display:flex;flex-wrap:wrap;gap:2px 12px;padding:4px 8px;background:var(--velin);border-top:1px solid var(--sepia);font-family:var(--f-label);font-size:.7rem;color:var(--sepia)}
 .centre,.etat{display:grid;gap:8px;min-width:0;align-content:start}
-#jeu > header{order:0} .plan{order:1} .centre{order:2} #bandeau{order:2} .main-zone{order:3} #blocScore{order:4} .etat{order:5}
+#jeu > header{order:0} #frise{order:0} .plan{order:1} .centre{order:2} #bandeau{order:2} .main-zone{order:3} #blocScore{order:4} .etat{order:5}
 .bloc{background:color-mix(in srgb,var(--velin-2) 55%,var(--velin));border:1px solid color-mix(in srgb,var(--sepia) 40%,transparent);border-radius:4px;padding:8px 10px;display:grid;gap:6px;min-width:0}
 @media (min-width:1100px) and (min-height:700px){
-  body{height:100vh;overflow:hidden;padding-block:8px;box-sizing:border-box}
-  .page{height:100%;max-width:2400px}
-  #jeu{height:100%;grid-template-columns:calc((100vh - var(--hh) - 40px) * .74) minmax(0,1fr) 320px;grid-template-rows:auto minmax(0,1fr) auto auto auto;gap:8px 12px}
-  #jeu > header{grid-column:1/-1}
-  .plan{grid-column:1;grid-row:2/6;height:calc(100vh - var(--hh) - 32px)}
+  body{height:100vh;overflow:hidden;padding-block:6px;padding-inline:6px;box-sizing:border-box}
+  .page{height:100%;max-width:none}
+  /* maquette d'AlwwAl (24/10) : score dans l'en-tête, frise condensée au-dessus du plan, toute la hauteur pour l'événement et la main */
+  #jeu{height:100%;grid-template-columns:calc((100vh - var(--hh) - var(--fh,60px) - 48px) * .74) minmax(0,1fr) 320px;grid-template-rows:auto auto minmax(0,1fr) auto auto;gap:6px 8px}
+  #jeu > header{grid-column:1/-1;grid-template-columns:auto minmax(0,1fr) minmax(0,1.7fr) auto;gap:4px 12px}
+  /* boutons en icônes 2 × 2 (infobulle pour le nom) */
+  #jeu > header > .outils{display:grid;grid-template-columns:auto auto;gap:3px}
+  #jeu > header > .outils .btn{font-size:0;width:34px;height:30px;padding:0;display:grid;place-items:center}
+  #jeu > header > .outils .btn .ic{width:17px;height:17px;margin:0}
+  #pleinEcran span,#abandon::before{font-size:17px;line-height:1}
+  #abandon::before{content:"⌂"}
+  #jeu > header > .outils{grid-column:4;grid-row:1}
+  #frise{grid-column:1;grid-row:2;grid-template-columns:repeat(4,minmax(0,1fr)) auto;gap:4px}
+  #frise .phase{grid-template-columns:30px minmax(0,1fr);padding:2px 4px 2px 2px;gap:4px}
+  #frise .phase > img{width:30px;height:30px}
+  #frise .phase .t{font-size:.6rem;letter-spacing:.02em;gap:3px}
+  #frise .decs{gap:2px}
+  #frise .dec{font-size:.58rem;padding:0 3px;gap:2px}
+  #frise .dec::before{width:5px;height:5px}
+  #frise .final{font-size:.58rem;padding:1px 4px;max-width:64px}
+  .plan{grid-column:1;grid-row:3/6;height:calc(100vh - var(--hh) - var(--fh,60px) - 40px)}
   .plan svg{height:100%;width:auto;max-width:100%;margin-inline:auto}
   /* Événement en haut, bandeau des boutons, main, score en bas ; factions et chronique à droite */
-  .centre{grid-column:2;grid-row:2;min-height:0;overflow:hidden}
-  #bandeau{grid-column:2;grid-row:3}
-  .main-zone{grid-column:2;grid-row:4;min-height:0;display:grid;grid-template-rows:auto auto;overflow:hidden}
+  .centre{grid-column:2;grid-row:2/4;min-height:0;overflow:hidden}
+  #bandeau{grid-column:2;grid-row:4}
+  .main-zone{grid-column:2;grid-row:5;min-height:0;display:grid;grid-template-rows:auto auto;overflow:hidden}
   .main{min-height:0;overflow:hidden;align-content:start;grid-auto-rows:max-content}
   .main.defile{overflow:auto}
-  #jeu .main{display:block;column-count:var(--cols,4);column-gap:8px;column-fill:balance;height:auto} #jeu .main > .carte{width:100%;break-inside:avoid;margin:0 0 8px}
-  #blocScore{grid-column:2/4;grid-row:5;grid-template-columns:minmax(190px,1fr) auto minmax(220px,1.3fr);align-items:center;gap:4px 18px}
+  /* cartes de taille fixe (demande d'AlwwAl, 24/10) : 6 × 2 cases, la taille ne dépend plus du nombre de cartes en main */
+  #jeu .main{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));grid-auto-rows:var(--hc,280px);gap:8px;height:auto;min-height:calc(2 * var(--hc,280px) + 8px)}
+  #jeu .main > .carte{height:100%;min-height:0}
+
+  #jeu .main.compacte .carte .img{height:64px}
+  #jeu .main > .carte .corps{zoom:var(--fz,1);overflow:hidden;min-height:0}
+  #jeu > header > #blocScore{grid-column:3;grid-row:1;grid-template-columns:minmax(220px,1fr) auto;align-items:center;gap:2px 18px;padding:3px 12px}
   #blocScore > .choix{grid-column:1;grid-row:1}
-  #blocScore > .score{grid-column:1;grid-row:2}
-  #blocScore > .pistes{grid-column:2;grid-row:1/3}
-  #blocScore > .legit-eff{grid-column:3;grid-row:1/3}
-  .etat{grid-column:3;grid-row:2/5;min-height:0;overflow:hidden;grid-template-rows:auto auto minmax(80px,1fr)}
+  #blocScore > .score{grid-column:1;grid-row:2;height:26px}
+  #blocScore > .pistes{grid-column:2;grid-row:1/3;gap:0 10px;font-size:.82rem}
+  #blocScore .pistes .t{font-size:.72rem}
+  #blocScore .pistes > *{white-space:nowrap;line-height:1.15} #blocScore .pistes .plus{display:none} #blocScore .cases i{height:10px;width:8px}
+  #blocScore > .legit-eff{display:none}
+  .etat{grid-column:3;grid-row:2/6;min-height:0;overflow:hidden;grid-template-rows:auto auto minmax(80px,1fr)}
   .encours-l{max-height:22vh}
   .chronique{max-height:none!important;height:100%}
   .bloc.chron{min-height:0;grid-template-rows:auto minmax(0,1fr)}
 }
 @media (max-width:1099px),(max-height:699px){.plan svg{max-height:85vh}}
 @media (max-width:1099px),(max-height:699px){#jeu{padding-bottom:76px}#bandeau{position:fixed;left:0;right:0;bottom:0;z-index:5;justify-content:center;padding:8px 16px calc(8px + env(safe-area-inset-bottom));border-top:1px solid color-mix(in srgb,var(--sepia) 40%,transparent)}}
-@media (min-width:1100px) and (min-height:700px) and (max-height:859px){.phase{grid-template-columns:minmax(0,1fr);padding-left:6px}.phase > :first-child:not(div){display:none}}
 /* ---------- pistes */
 .score{position:relative;height:26px;border-radius:3px;background:linear-gradient(90deg,var(--gueules) 0 50%,var(--azur) 50% 100%);opacity:.92}
 .score .marq{position:absolute;top:-20px;width:26px;height:48px;background:url(pieces/pion_score.png) center bottom/contain no-repeat;transform:translateX(-50%);transition:left .5s;filter:drop-shadow(0 1px 1px rgba(0,0,0,.35))}
@@ -121,6 +145,7 @@ header.tete h1{font-size:clamp(1.3rem,2.4vw,1.9rem);line-height:1}
 .loy{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;cursor:help}
 .feff{grid-column:1/-1;font-family:var(--f-label);font-size:.7rem;letter-spacing:.02em;color:var(--sepia);line-height:1.2;margin:-1px 0 3px}
 .feff.actif{color:inherit;background:color-mix(in srgb,var(--or) 18%,transparent);border-radius:3px;padding:1px 4px}
+.feff .actif{color:var(--encre);background:color-mix(in srgb,var(--or) 22%,transparent);border-radius:3px;padding:0 3px}
 .leff{display:block;font-family:var(--f-label);font-size:.7rem;letter-spacing:.02em;color:var(--sepia);line-height:1.25;margin:-1px 0 3px}
 .loy i{height:10px;border-radius:2px;background:var(--velin);border:1px solid color-mix(in srgb,var(--sepia) 45%,transparent)}
 .loy i.c0{background:var(--velin-2)}
@@ -131,7 +156,7 @@ header.tete h1{font-size:clamp(1.3rem,2.4vw,1.9rem);line-height:1}
 .loy i.on.a::after{background-image:url(pieces/cube_A.png)} .loy i.on.f::after{background-image:url(pieces/cube_F.png)} .loy i.on.n::after{background-image:url(pieces/cube_N.png)}
 .change-piste{outline:2px solid var(--halo);outline-offset:2px;border-radius:3px}
 /* ---------- consigne et récit */
-.consigne{border:2px solid var(--or);background:var(--velin)}
+.consigne{border:2px solid var(--or);background:var(--velin);box-sizing:border-box;align-content:start}
 .consigne.attente{border-color:color-mix(in srgb,var(--sepia) 40%,transparent)}
 .consigne.A{border-left:8px solid var(--gueules)} .consigne.F{border-left:8px solid var(--azur)}
 .consigne h2{font-size:1.4rem}
@@ -146,6 +171,8 @@ header.tete h1{font-size:clamp(1.3rem,2.4vw,1.9rem);line-height:1}
 .chance{font-family:var(--f-label);font-size:.9rem;color:var(--encre)}
 select{font:inherit;padding:3px 6px;background:var(--velin);color:var(--encre);border:1px solid var(--sepia)}
 .grande{display:grid;grid-template-columns:110px minmax(0,1fr);gap:12px;align-items:start}
+.ev3{display:grid;gap:8px}
+@media (min-width:1100px) and (min-height:700px){.ev3{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr) minmax(0,.75fr);gap:8px 16px;align-items:start}.ev3 > div{display:grid;gap:6px;min-width:0}.ev3 > .ev-m:last-child{grid-column:2/4}.ev-d .calc{width:100%}}
 .grande img,.grande .vide{width:110px;aspect-ratio:3/4;object-fit:cover;border-radius:5px;border:3px solid var(--sepia);background:var(--velin-2)}
 .grande.A img,.grande.A .vide{border-color:var(--gueules)} .grande.F img,.grande.F .vide{border-color:var(--azur)} .grande.S .vide{border-color:var(--or)}
 .grande .vide{display:grid;place-items:center;text-align:center;font-family:var(--f-titre);font-size:1.1rem;padding:6px}
@@ -223,6 +250,8 @@ select{font:inherit;padding:3px 6px;background:var(--velin);color:var(--encre);b
 .chronique .tt{font-family:var(--f-label);font-size:.7rem;color:var(--sepia);margin-right:5px}
 /* ---------- main : cartes lisibles sans clic */
 .main-zone{display:grid;gap:4px;min-width:0}
+.sigles{font-size:.75rem;cursor:help;margin-left:auto;border:2px solid var(--encre);border-radius:3px;padding:1px 10px;color:var(--encre);background:var(--velin)}
+.info-leg{position:absolute;right:8px;bottom:8px;z-index:2;border:2px solid var(--encre);border-radius:3px;background:var(--velin);color:var(--encre);font-family:var(--f-label);font-size:.85rem;letter-spacing:.04em;padding:3px 12px;cursor:help;box-shadow:0 1px 3px var(--ombre)}
 .main-zone .entete{display:flex;align-items:center;gap:4px 16px;flex-wrap:wrap}
 .main-zone .entete > :last-child{margin-left:auto}
 .main-zone h2{font-size:1.15rem}
@@ -251,7 +280,7 @@ select{font:inherit;padding:3px 6px;background:var(--velin);color:var(--encre);b
 .eff{display:grid;gap:3px}
 .eff .ligne{display:block}
 .eff .qui{font-family:var(--f-label);letter-spacing:.03em}
-.eff .ctx{color:var(--sepia)}
+.eff .ctx{color:var(--sepia)} .main .carte .ctx{display:none}
 .eff .gain{color:var(--sinople)} .eff .perte{color:var(--gueules)}
 .jeton{display:inline-flex;align-items:center;gap:2px;padding:0 6px 0 4px;margin:0 1px;border-radius:999px;font-family:var(--f-label);font-weight:700;font-size:.92em;line-height:1.45;letter-spacing:.02em;white-space:nowrap;vertical-align:baseline;border:2px solid transparent}
 .jeton .ic{width:1em;height:1em}
@@ -730,6 +759,53 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 </tr>
 </tbody>
 </table></div>
+<p>Sur les cartes de la main, le texte est <strong>condensé par des sigles</strong>. Le texte complet s'affiche sur l'écran d'événement quand vous choisissez la carte, et dans l'infobulle de la carte, avec la phrase de contexte historique.</p>
+<div class="rg-table"><table>
+<thead>
+<tr>
+<th>Sigle</th>
+<th>Sens</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pastille rouge / bleue</td>
+<td>Gain ou perte pour l'Angleterre (rouge) ou la France (bleue) ; l'icône dit quoi : ⚑ Influence, Trésor, Légitimité, Loyauté. Pastille neutre : pour le joueur qui joue la carte.</td>
+</tr>
+<tr>
+<td>lieu tenu / lieux tenus</td>
+<td>Dans un lieu (des lieux) où ce camp a déjà de l'Influence.</td>
+</tr>
+<tr>
+<td>Joueur</td>
+<td>Le joueur qui joue la carte.</td>
+</tr>
+<tr>
+<td>∞</td>
+<td>Effet durable.</td>
+</tr>
+<tr>
+<td>/tour</td>
+<td>À chaque fin de tour.</td>
+</tr>
+<tr>
+<td>→ « … »</td>
+<td>Jusqu'à ce que cette carte soit jouée.</td>
+</tr>
+<tr>
+<td>⇄</td>
+<td>La carte passe à l'adversaire.</td>
+</tr>
+<tr>
+<td>∅</td>
+<td>Jamais.</td>
+</tr>
+<tr>
+<td>retirée</td>
+<td>La carte est retirée du jeu après son événement.</td>
+</tr>
+</tbody>
+</table></div>
 <h3 id="r-2-4-les-pistes">2.4 Les pistes</h3>
 <div class="rg-table"><table>
 <thead>
@@ -774,11 +850,11 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 </table></div>
 <h3 id="r-2-5-l-ecran-de-jeu">2.5 L'écran de jeu</h3>
 <ul>
-<li><strong>En haut</strong> : la séquence du tour (l'étape en cours est surlignée) et la <strong>frise</strong> des phases, qui montre quelles cartes de décompte appartiennent à chaque phase et lesquelles ont déjà été jouées.</li>
-<li><strong>À gauche</strong> : le plan, avec zoom (boutons, molette ou pincement).</li>
-<li><strong>Au centre</strong> : l'événement en cours en haut, votre main au milieu avec les badges, le score et les pistes en bas, ainsi que la liste des effets durables en cours, qui indique aussi qui détient la « Faveur du pape » ou, pendant le Grand Schisme, le pape de chaque camp.</li>
-<li><strong>À droite</strong> : les factions (piste de Loyauté et effet actif) et la chronique de la partie.</li>
-<li>Les coups adverses sont rejoués pas à pas : bouton Suivant, lecture automatique, ou Tout passer.</li>
+<li><strong>En haut</strong> : la séquence du tour (l'étape en cours est surlignée), le <strong>score et les pistes</strong> (Trésor, Légitimité, Trêve, Crise ; survolez une piste pour son détail), et le bouton ⛶ du plein écran.</li>
+<li><strong>À gauche</strong> : la <strong>frise</strong> des phases au-dessus du plan, qui montre quelles cartes de décompte appartiennent à chaque phase et lesquelles ont déjà été jouées ; le plan, avec zoom (boutons, molette ou pincement).</li>
+<li><strong>Au centre</strong> : l'événement en cours en haut (carte et effets à gauche, consigne au milieu, calcul du dé à droite), le bandeau des boutons, puis votre main, aux cartes de taille fixe, avec les badges et la légende des sigles.</li>
+<li><strong>À droite</strong> : les factions, la liste des effets en cours (qui indique aussi qui détient la « Faveur du pape » ou, pendant le Grand Schisme, le pape de chaque camp) et la chronique de la partie.</li>
+<li>Les coups adverses sont rejoués pas à pas : bouton Suivant, lecture automatique, ou Tout passer. Même en lecture automatique, chaque jet de dé adverse (Assaut, Siège, Diplomatie, Légitimité, Bataille) attend votre clic.</li>
 <li>Chaque élément a une infobulle au survol.</li>
 </ul>
 <hr />
