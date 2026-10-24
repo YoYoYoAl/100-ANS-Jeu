@@ -2485,7 +2485,7 @@ const NBT = R.NB_TOURS, phaseT = t => R.phaseDe(t);
 const nbRounds = t => (etat?.g?.paquet?.rounds ?? [7, 8])[t <= 3 ? 0 : 1], tailleMain = t => (etat?.g?.paquet?.main ?? [9, 10])[t <= 3 ? 0 : 1];
 const prq = p => p.split(" ou ").join(" » ou « "); // prérequis alternatifs
 const jetLegit = (g, c, cible) => JET_LEGIT(cible);
-const SAUVE = "gca-prototype-partie-v28", AUTO = "gca-lecture-auto";
+const SAUVE = "gca-prototype-partie-v29", AUTO = "gca-lecture-auto";
 const sg = v => (v > 0 ? "+" : v < 0 ? "−" : "") + Math.abs(v);
 const nomC = id => R.carte(D, id).nom;
 let D;
