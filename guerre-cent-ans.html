@@ -7355,7 +7355,7 @@ const SRC_BRUIT = n => BRUIT_DATA[n] || "";
 function sonCombat(s) {
   if (!SON.on) return;
   const kind = s.k === "siege" ? "siege" : "assaut", e = s.k === "bataille" ? { ok: s.ok } : effectifs(s, kind), piste = cleCombat(s, kind, e).replace(/_[AF]_/, "_");
-  try { if (SON.combat) SON.combat.pause(); const a = new Audio(SRC_BRUIT(piste + "_" + (1 + Math.floor(Math.random() * 3))));  // 3 variantes par bruitage (24/10) a.volume = .8; SON.combat = a; a.play().catch(() => {}); } catch {}
+  try { if (SON.combat) SON.combat.pause(); const a = new Audio(SRC_BRUIT(piste + "_" + (1 + Math.floor(Math.random() * 3)))); /* 3 variantes par bruitage (24/10) */ a.volume = .8; SON.combat = a; a.play().catch(() => {}); } catch {}
 }
 const SONS = {
   carte: () => { souffle(0, .24, 1600, .7, .28); souffle(.06, .16, 4200, 1.2, .1); },
