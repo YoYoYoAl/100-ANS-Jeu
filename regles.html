@@ -603,19 +603,18 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 <p>Seules <strong>trois cartes</strong> font baisser la Trêve, une par phase au plus, toutes françaises : « Confiscation de la Guyenne » (phase I), « Confiscation de l'Aquitaine » (phase II) et « Sac de Fougères » (phase IV). Aucune en phase III. L'Angleterre doit s'en méfier quand la Trêve est basse.</p>
 <h2 id="r-2-materiel-et-lecture-de-l-ecran">2. Matériel et lecture de l'écran</h2>
 <h3 id="r-2-1-le-plan">2.1 Le plan</h3>
-<p>Le plan compte <strong>84 lieux</strong>, reliés par des liaisons. Deux lieux reliés sont <strong>voisins</strong> (les liaisons fonctionnent dans les deux sens). Chaque lieu est dessiné par une pièce :</p>
+<p>Le plan compte <strong>62 lieux</strong>, reliés par des liaisons. Deux lieux reliés sont <strong>voisins</strong> (les liaisons fonctionnent dans les deux sens). Chaque lieu est dessiné par une pièce :</p>
 <ul>
 <li><strong>La défense</strong> (1 à 4) est le chiffre inscrit sur la pièce. Elle sert au contrôle (section <a href="#r-4-controle-d-un-lieu-et-acces-pour-l-influence" data-sec>4</a>), à l'Assaut (section <a href="#r-7-les-actions-d-ops" data-sec>7</a>) et à certains effets de Crise.</li>
 <li><strong>Une place forte</strong> est dessinée par une pièce en forme de forteresse ; un lieu ouvert par une pièce simple. Les places fortes comptent à part dans les décomptes et rendent l'Assaut plus coûteux, mais permettent d'occuper le lieu.</li>
 <li><strong>Un port</strong> porte le symbole ⚓ à côté de son nom. Les ports comptent pour le revenu et pour le bonus de la Castille.</li>
 <li><strong>Une liaison maritime</strong> est dessinée en pointillés sur la mer. Elle ne sert qu'au camp qui a la <strong>maîtrise de la mer</strong>, ou aux deux si personne ne l'a (section <a href="#r-4-3-la-maitrise-de-la-manche" data-sec>4.3</a>).</li>
-<li><strong>L'encart « Écosse et marche du Nord »</strong>, en haut à gauche du plan, regroupe Durham et les trois lieux écossais.</li>
 <li><strong>La couleur de la pièce</strong> indique qui contrôle le lieu : rouge pour l'Angleterre, bleu pour la France, neutre si personne.</li>
 <li><strong>Les deux sceaux</strong> sous la pièce indiquent l'Influence anglaise (rouge) et française (bleue). Un sceau vide signifie 0.</li>
 </ul>
 <p>Survolez un lieu pour voir son infobulle : région, place forte ou lieu ouvert, défense, port, Influence de chaque camp, et ce qui manque à chaque camp pour le contrôler. Le survol allume aussi ses liaisons.</p>
 <h3 id="r-2-2-les-regions">2.2 Les régions</h3>
-<p>Les lieux sont répartis en <strong>10 régions</strong>, toutes décomptées. L'<strong>Angleterre</strong> ne peut jamais être attaquée (ni Assaut ni Siège) ; elle a sa carte de décompte en phase IV. L'<strong>Écosse</strong> est décomptée en phase II.</p>
+<p>Les lieux sont répartis en <strong>9 régions</strong>, toutes décomptées. Chaque région du royaume a <strong>autant de lieux que la valeur de son contrôle</strong> (Île-de-France 9, Normandie et Val de Loire 8…), et environ un tiers de places fortes. L'<strong>Angleterre</strong> ne peut jamais être attaquée (ni Assaut ni Siège) ; elle a sa carte de décompte en phase IV. L'<strong>Écosse</strong> n'a pas de lieux : c'est une faction, jouée par la Diplomatie et les cartes (section <a href="#r-12-factions-loyaute-et-papaute" data-sec>12</a>).</p>
 <div class="rg-table"><table>
 <thead>
 <tr>
@@ -623,72 +622,76 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 <th>Lieux (✦ place forte, ⚓ port, défense entre parenthèses)</th>
 <th>Lieux</th>
 <th>Places fortes</th>
+<th>Décompte</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Flandre</td>
-<td>Calais ✦⚓ (3), Amiens ✦ (2), Bruges ✦⚓ (2), Gand ✦ (2), Guînes ✦ (2), Le Crotoy ✦⚓ (2), Arras (2), Lille (2), Saint-Omer (2), Tournai (2), Ypres (2), Abbeville ⚓ (1)</td>
-<td>12</td>
+<td>Calais ✦⚓ (3), Gand ✦ (2), Amiens⚓ (2), Arras (2), Bruges⚓ (2), Lille (2)</td>
 <td>6</td>
+<td>2</td>
+<td>2·4·6</td>
 </tr>
 <tr>
 <td>Normandie</td>
-<td>Mont-Saint-Michel ✦⚓ (4), Falaise ✦ (3), Rouen ✦⚓ (3), Saint-Sauveur-le-Vicomte ✦ (3), Caen ✦⚓ (2), Cherbourg ✦⚓ (2), Harfleur ⚓ (2), Honfleur ⚓ (2), Le Mans (2), Dieppe ⚓ (1), Évreux (1)</td>
-<td>11</td>
-<td>6</td>
+<td>Mont-Saint-Michel ✦⚓ (4), Cherbourg ✦⚓ (3), Rouen ✦⚓ (3), Caen⚓ (3), Harfleur⚓ (2), Le Mans (2), Dieppe⚓ (1), Évreux (1)</td>
+<td>8</td>
+<td>3</td>
+<td>3·6·8</td>
 </tr>
 <tr>
 <td>Bretagne</td>
-<td>Brest ✦⚓ (3), Rennes ✦ (3), Auray ✦⚓ (2), Fougères ✦ (2), Hennebont ✦⚓ (2), Nantes ✦⚓ (2), Saint-Malo ✦⚓ (2), Vannes ⚓ (2)</td>
-<td>8</td>
-<td>7</td>
+<td>Rennes ✦ (3), Nantes ✦⚓ (2), Brest⚓ (3), Hennebont⚓ (2), Saint-Malo⚓ (2), Vannes⚓ (2)</td>
+<td>6</td>
+<td>2</td>
+<td>2·4·6</td>
 </tr>
 <tr>
 <td>Île-de-France</td>
-<td>Paris ✦ (4), Reims ✦ (3), Mantes ✦ (2), Meaux ✦ (2), Melun ✦ (2), Pontoise ✦ (2), Chartres (2), Compiègne (2), Saint-Denis (2), Troyes (2), Montereau (1)</td>
-<td>11</td>
-<td>6</td>
+<td>Paris ✦ (4), Reims ✦ (3), Meaux ✦ (2), Chartres (2), Compiègne (2), Melun (2), Pontoise (2), Troyes (2), Montereau (1)</td>
+<td>9</td>
+<td>3</td>
+<td>3·6·9</td>
 </tr>
 <tr>
 <td>Bourgogne</td>
-<td>Dijon ✦ (3), Lyon ✦ (2), Mâcon (2), Nancy (2), Auxerre (1), Nevers (1)</td>
-<td>6</td>
+<td>Dijon ✦ (3), Lyon ✦ (2), Chalon-sur-Saône (2), Mâcon (2), Nancy (2), Auxerre (1), Nevers (1)</td>
+<td>7</td>
 <td>2</td>
+<td>2·5·7</td>
 </tr>
 <tr>
 <td>Guyenne</td>
-<td>Bordeaux ✦⚓ (3), Bayonne ✦⚓ (2), La Réole ✦ (2), Aiguillon (1), Bergerac (1), Castillon (1), Dax (1), Périgueux (1)</td>
-<td>8</td>
-<td>3</td>
+<td>Bordeaux ✦⚓ (3), Bayonne ✦⚓ (2), Aiguillon (2), Bergerac (1), Castillon (1), Dax (1), Périgueux (1)</td>
+<td>7</td>
+<td>2</td>
+<td>2·5·7</td>
 </tr>
 <tr>
 <td>Languedoc</td>
-<td>Avignon ✦ (3), Carcassonne ✦ (3), Toulouse ✦ (3), Montpellier ⚓ (2), Narbonne ⚓ (2), Orthez (2), Lectoure (1), Rodez (1)</td>
-<td>8</td>
-<td>3</td>
+<td>Carcassonne ✦⚓ (3), Toulouse ✦ (3), Avignon (3), Montpellier⚓ (2), Lectoure (1), Rodez (1)</td>
+<td>6</td>
+<td>2</td>
+<td>2·4·6</td>
 </tr>
 <tr>
 <td>Val de Loire</td>
-<td>Angers ✦ (3), Bourges ✦ (3), Lusignan ✦ (3), Orléans ✦ (3), Chinon ✦ (2), La Rochelle ✦⚓ (2), Montargis ✦ (2), Limoges (2), Poitiers (2), Tours (2)</td>
-<td>10</td>
-<td>7</td>
-</tr>
-<tr>
-<td>Écosse</td>
-<td>Berwick ✦⚓ (3), Roxburgh ✦ (3), Édimbourg ✦⚓ (3)</td>
+<td>Bourges ✦ (3), Orléans ✦ (3), La Rochelle ✦⚓ (2), Angers (3), Poitiers (3), Chinon (2), Limoges (2), Tours (2)</td>
+<td>8</td>
 <td>3</td>
-<td>3</td>
+<td>3·6·8</td>
 </tr>
 <tr>
 <td>Angleterre</td>
-<td>Londres ✦⚓ (4), Douvres ✦⚓ (3), Durham ✦ (2), Pays de Galles (2), Plymouth ⚓ (2), Portsmouth ⚓ (2), Southampton ⚓ (2)</td>
-<td>7</td>
-<td>3</td>
+<td>Londres ✦⚓ (4), Douvres ✦⚓ (3), Pays de Galles (2), Plymouth⚓ (2), Southampton⚓ (2)</td>
+<td>5</td>
+<td>2</td>
+<td>1·1·2</td>
 </tr>
 </tbody>
 </table></div>
-<p>Au total : 46 places fortes et 29 ports. Les lieux ajoutés par la refonte B sont des points de passage historiques : Avignon, Guînes, Le Crotoy, Dieppe, Falaise, Saint-Sauveur-le-Vicomte, Mantes, Melun, Pontoise, Saint-Malo, Auray, Montargis, Lusignan, La Réole, Rodez, ainsi que Durham, Berwick, Roxburgh et Édimbourg. Les liaisons suivent les routes et les fleuves : la Seine passe par Mantes et Pontoise, la Loire par Orléans, Tours et Angers, la marche de Calais par Guînes. Les deux capitales sont <strong>Paris</strong> (voisins : Chartres, Mantes, Meaux, Melun, Pontoise, Saint-Denis) et <strong>Londres</strong> (voisins : Douvres, Durham, Pays de Galles, Southampton).</p>
+<p>Au total : 21 places fortes et 23 ports. Un lieu porte le nom de la ville principale de son pays : Cherbourg tient le Cotentin (avec Saint-Sauveur-le-Vicomte), Calais la Pale (avec Guînes), Pontoise le Vexin (avec Mantes), Amiens la Somme (avec Abbeville et Le Crotoy). Une carte qui nomme une de ces anciennes places agit sur la ville du plateau, indiquée dans son texte. Les deux capitales sont <strong>Paris</strong> (voisins : Chartres, Compiègne, Meaux, Melun, Pontoise) et <strong>Londres</strong> (voisins : Douvres, Pays de Galles, Southampton).</p>
 <h3 id="r-2-3-les-cartes">2.3 Les cartes</h3>
 <p>Le jeu compte <strong>209 cartes</strong> réparties en quatre paquets de phase, et une <strong>pile pontificale</strong> de 24 cartes, six par phase, qui ne vont jamais en main (section <a href="#r-12-3-la-pile-pontificale-et-le-grand-schisme" data-sec>12.3</a>).</p>
 <div class="rg-table"><table>
@@ -728,8 +731,8 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 <td>38</td>
 <td>14</td>
 <td>25</td>
-<td>10</td>
-<td>3 (Bretagne, Normandie, Écosse)</td>
+<td>11</td>
+<td>2 (Bretagne, Normandie)</td>
 </tr>
 <tr>
 <td>III</td>
@@ -758,7 +761,7 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 </tbody>
 </table></div>
 <p>Les cartes <strong>obligatoires</strong> (les grands événements et toutes les cartes de décompte) sont toujours en jeu. Seule une partie des cartes <strong>facultatives</strong> est tirée au hasard à la mise en place de chaque phase ; les autres sont <strong>écartées</strong> pour toute la partie (section <a href="#r-5-1-les-phases-et-le-paquet" data-sec>5.1</a>). Deux parties ne se jouent donc jamais avec exactement le même paquet.</p>
-<p>Chaque carte d'événement porte un camp (anglais, français ou neutre), une valeur de <strong>1 à 4 OPS</strong>, un texte d'effet, et parfois un <strong>prérequis</strong>, et une liste d'événements qui l'<strong>interdisent</strong> (section <a href="#r-6-3-prerequis-et-interdits" data-sec>6.3</a>). Les 10 cartes de décompte n'ont pas d'OPS. Sur les 209 cartes, 184 sont <strong>retirées</strong> après leur événement ; seules <strong>25 cartes récurrentes</strong> restent en jeu : les 10 cartes de décompte et 15 événements, « Embargo sur la laine », « Raids sur les côtes anglaises », « Charles de Blois », « Subside du Parlement », « Révolte paysanne », « Révolte urbaine », « Grandes Compagnies », « Retour de la peste », « Réformes de Charles V », « Guerre civile », « Le roi de Bourges », « Paix fourrées », « Dunois, Bâtard d'Orléans », « La Hire et Xaintrailles », « Écorcheurs ».</p>
+<p>Chaque carte d'événement porte un camp (anglais, français ou neutre), une valeur de <strong>1 à 4 OPS</strong>, un texte d'effet, et parfois un <strong>prérequis</strong>, et une liste d'événements qui l'<strong>interdisent</strong> (section <a href="#r-6-3-prerequis-et-interdits" data-sec>6.3</a>). Les 9 cartes de décompte n'ont pas d'OPS. Sur les 209 cartes, 185 sont <strong>retirées</strong> après leur événement ; seules <strong>24 cartes récurrentes</strong> restent en jeu : les 9 cartes de décompte et 15 événements, « Embargo sur la laine », « Raids sur les côtes anglaises », « Charles de Blois », « Subside du Parlement », « Révolte paysanne », « Révolte urbaine », « Grandes Compagnies », « Retour de la peste », « Réformes de Charles V », « Guerre civile », « Le roi de Bourges », « Paix fourrées », « Dunois, Bâtard d'Orléans », « La Hire et Xaintrailles », « Écorcheurs ».</p>
 <p>Plusieurs cartes de la version précédente ont été <strong>fusionnées</strong> en une seule carte qui laisse un choix (par exemple « Guerre civile de Castille » réunit du Guesclin en Castille, Nájera et Montiel) ; les cartes de la papauté sont passées dans la pile pontificale.</p>
 <p>Sous chaque carte de votre main, un <strong>badge</strong> indique ce que vous pouvez en faire :</p>
 <div class="rg-table"><table>
@@ -901,7 +904,7 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 <hr />
 <h2 id="r-3-mise-en-place-1337">3. Mise en place (1337)</h2>
 <ol>
-<li><strong>Influence fixe.</strong> On place l'Influence historique de 1337 : 31 Influence anglaise et 40 Influence française.</li>
+<li><strong>Influence fixe.</strong> On place l'Influence historique de 1337 : 24 Influence anglaise et 37 Influence française.</li>
 </ol>
 <div class="rg-table"><table>
 <thead>
@@ -912,16 +915,16 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 </thead>
 <tbody>
 <tr>
-<td>Angleterre (31)</td>
-<td>Bordeaux 4, Londres 4, Bayonne 3, Douvres 3, Gand 2, Dax 2, Southampton 2, Pays de Galles 2, Berwick 2, Bruges 1, Ypres 1, Abbeville 1, Portsmouth 1, Plymouth 1, Durham 1, Roxburgh 1</td>
+<td>Angleterre (24)</td>
+<td>Bordeaux 4, Londres 4, Bayonne 3, Douvres 3, Dax 2, Gand 2, Pays de Galles 2, Southampton 2, Bruges 1, Plymouth 1</td>
 </tr>
 <tr>
-<td>France (40)</td>
-<td>Paris 4, Rouen 3, Reims 3, Toulouse 3, Mont-Saint-Michel 2, Orléans 2, Bourges 2, Falaise 2, Tournai 1, Arras 1, Amiens 1, Saint-Denis 1, Lyon 1, Périgueux 1, Aiguillon 1, Carcassonne 1, Tours 1, Angers 1, Guînes 1, Dieppe 1, Saint-Sauveur-le-Vicomte 1, Melun 1, Pontoise 1, Montargis 1, Lusignan 1, La Réole 1, Rodez 1</td>
+<td>France (37)</td>
+<td>Paris 4, Reims 3, Rouen 3, Toulouse 3, Bourges 2, Caen 2, Mont-Saint-Michel 2, Orléans 2, Aiguillon 1, Amiens 1, Angers 1, Arras 1, Calais 1, Carcassonne 1, Cherbourg 1, Dieppe 1, Lille 1, Lyon 1, Melun 1, Poitiers 1, Pontoise 1, Périgueux 1, Rodez 1, Tours 1</td>
 </tr>
 </tbody>
 </table></div>
-<p>L'Agenais (Aiguillon) et le Périgord (Périgueux) sont tenus par la France depuis 1324. Les villes drapières de Flandre (Gand, Bruges, Ypres) penchent vers l'Angleterre, dont dépend leur laine : Jacques van Artevelde en prendra la tête en 1338. Au départ, l'Angleterre contrôle Abbeville, Bordeaux, Bayonne, Dax ses quatre lieux anglais Londres, Douvres, Southampton et Pays de Galles (Berwick et Roxburgh, garnisons anglaises en Écosse, ne sont pas contrôlés : il leur manque 1 Influence) ; la France contrôle Paris, Reims, Rouen, Toulouse, Périgueux, Aiguillon, Dieppe et Rodez. Les places royales ajoutées par la refonte B (Melun, Pontoise, Falaise, Saint-Sauveur-le-Vicomte, Montargis, Lusignan, La Réole, Guînes) ont 1 ou 2 Influence française, sans contrôle.</p>
+<p>L'Agenais (Aiguillon) et le Périgord (Périgueux) sont tenus par la France depuis 1324. Les villes drapières de Flandre (Gand, Bruges) penchent vers l'Angleterre, dont dépend leur laine : Jacques van Artevelde en prendra la tête en 1338. Au départ, l'Angleterre contrôle Bayonne, Bordeaux, Dax, Douvres, Gand, Londres, Pays de Galles, Southampton ; la France contrôle Dieppe, Paris, Périgueux, Reims, Rodez, Rouen, Toulouse.</p>
 <ol start="2">
 <li><strong>Influence libre.</strong> Valeurs actuelles : la <strong>France place 2 Influence</strong> libres, une par une, dans n'importe quel lieu hors de Guyenne et d'Angleterre (sans condition de voisinage). Puis l'<strong>Angleterre place 8 Influence</strong> libres, une par une, en Guyenne, en Flandre, en Bretagne ou dans n'importe quel port hors d'Angleterre.</li>
 <li><strong>Pistes.</strong> Trêve 5, Crise 0, score 0. Trésor : Angleterre 7, France 5. Légitimité : 0 et 0.</li>
@@ -949,7 +952,7 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 </tr>
 </tbody>
 </table></div>
-<p>Dès le départ, la Bourgogne (+2) donne donc à la France +1 à ses Sièges en Bourgogne, et l'Écosse (+2) +1 à ses Sièges en Écosse et à Durham.
+<p>Dès le départ, la Bourgogne (+2) donne donc à la France +1 à ses Sièges en Bourgogne, et l'Écosse (+2) coûte 1 Trésor par tour à l'Angleterre (section <a href="#r-12-2-tableau-des-factions" data-sec>12.2</a>).
 5. <strong>Cartes.</strong> On forme la pioche de la phase I : ses cartes obligatoires et le tirage de ses cartes facultatives (section <a href="#r-5-1-les-phases-et-le-paquet" data-sec>5.1</a>), et la pile pontificale de la phase I (section <a href="#r-12-3-la-pile-pontificale-et-le-grand-schisme" data-sec>12.3</a>). Le tour 1 commence : chaque joueur reçoit 8 cartes.</p>
 <hr />
 <h2 id="r-4-controle-d-un-lieu-et-acces-pour-l-influence">4. Contrôle d'un lieu et accès pour l'Influence</h2>
@@ -969,7 +972,6 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 </ol>
 <p>Deux restrictions s'ajoutent : <strong>la France ne peut pas placer d'Influence en Angleterre</strong>, sauf dans un lieu anglais où elle a déjà au moins 1 Influence (une tête de pont, posée par un événement) ; et après « Étienne Marcel », la France ne peut plus placer d'Influence à Paris tant que la Crise est à 3 ou plus.</p>
 <p>L'accès est établi <strong>au début de l'action</strong> : un lieu que l'on vient d'atteindre en y posant un premier point n'ouvre pas ses voisins pendant la même action.</p>
-<p>L'Écosse n'est reliée au continent que par mer (Édimbourg–Bruges) et à l'Angleterre par la marche (Durham–Berwick–Roxburgh). Poser de l'Influence en Écosse ne demande aucune condition de faction : il suffit d'y avoir accès.</p>
 <h3 id="r-4-3-la-maitrise-de-la-manche">4.3 La maîtrise de la Manche</h3>
 <p>Un camp a la <strong>maîtrise de la mer</strong> :</p>
 <ul>
@@ -1062,7 +1064,7 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 </tr>
 <tr>
 <td>6. Factions ralliées</td>
-<td>Chaque camp reçoit les bonus de début de tour de ses factions ralliées : Influence gratuite de la Bourgogne, de la Bretagne et de la Navarre, Influence gratuite de l'Écosse ralliée, et −1 OPS anglais si la France tient Berwick avec l'Écosse ralliée (section <a href="#r-12-factions-loyaute-et-papaute" data-sec>12</a>).</td>
+<td>Chaque camp reçoit les bonus de début de tour de ses factions ralliées : Influence gratuite de la Bourgogne, de la Bretagne et de la Navarre, et −1 OPS sur la première carte de l'adversaire si l'Écosse est ralliée avec l'Écosse ralliée (section <a href="#r-12-factions-loyaute-et-papaute" data-sec>12</a>).</td>
 </tr>
 <tr>
 <td>7. Ouverture</td>
@@ -1194,7 +1196,7 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 <td>−1 OPS sur chaque carte jouée par la France pour ses OPS, jusqu'à sa libération (section <a href="#r-6-6-effets-durables" data-sec>6.6</a>).</td>
 </tr>
 <tr>
-<td>« La révolte galloise » (contre l'Angleterre) ; la France tient Berwick avec l'Écosse ralliée</td>
+<td>« La révolte galloise » (contre l'Angleterre) ; l'Écosse ralliée à l'un des camps (contre l'autre)</td>
 <td>−1 OPS sur la <strong>première carte anglaise du tour</strong>. Si cette carte est jouée pour son événement, le malus est perdu.</td>
 </tr>
 <tr>
@@ -1303,13 +1305,13 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 <tr>
 <td>Calais imprenable</td>
 <td>Échec bourguignon devant Calais</td>
-<td>Calais et Guînes ne peuvent plus être attaquées ni assiégées</td>
+<td>Calais ne peut plus être attaquées ni assiégées</td>
 <td>Permanent.</td>
 </tr>
 <tr>
 <td>Pale de Calais</td>
 <td>Prise de Guînes</td>
-<td>+1 à la défense de Calais et de Guînes tant que l'Angleterre contrôle Calais</td>
+<td>+1 à la défense de Calais tant que l'Angleterre contrôle Calais</td>
 <td>Permanent.</td>
 </tr>
 <tr>
@@ -1377,7 +1379,7 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 <hr />
 <h3 id="r-6-8-choix-bourbier-transfuge-refonte-b">6.8 Choix, bourbier, transfuge (refonte B)</h3>
 <p><strong>Choix.</strong> Beaucoup d'événements donnent <strong>deux effets au choix</strong> (« Choisis : … ou … »). C'est toujours le <strong>bénéficiaire</strong> de l'événement qui choisit, jamais l'adversaire : pour une carte neutre, le joueur qui la joue ; pour une carte anglaise ou française, son camp, même quand l'adversaire la déclenche par ses OPS. L'écran pose la question avec un bouton par option.</p>
-<p><strong>Bourbier.</strong> Certains sièges historiques enlisent un camp : « Siège de Tournai » et « Échec devant Saint-Malo » (Angleterre), « Siège d'Aiguillon » (France), « Mort de Salisbury » (Angleterre devant Orléans). À chacun de ses rounds, le camp enlisé <strong>défausse une carte de 2 OPS ou plus</strong> au lieu de jouer, puis lance 1d6 : <strong>de 1 à 4</strong>, il se dégage et jouera normalement au round suivant. S'il n'a aucune carte de 2 OPS ou plus, il joue normalement ce round. « Jeanne d'Arc » met fin au bourbier d'Orléans.</p>
+<p><strong>Bourbier.</strong> Certains sièges historiques enlisent un camp : « Siège de Tournai » (à Lille) et « Échec devant Saint-Malo » (Angleterre), « Siège d'Aiguillon » (France), « Mort de Salisbury » (Angleterre devant Orléans). À chacun de ses rounds, le camp enlisé <strong>défausse une carte de 2 OPS ou plus</strong> au lieu de jouer, puis lance 1d6 : <strong>de 1 à 4</strong>, il se dégage et jouera normalement au round suivant. S'il n'a aucune carte de 2 OPS ou plus, il joue normalement ce round. « Jeanne d'Arc » met fin au bourbier d'Orléans.</p>
 <p><strong>Transfuge.</strong> « Godefroy d'Harcourt » et « Complot de Southampton » jouées à l'ouverture par leur propre camp annulent l'ouverture adverse (section <a href="#r-5-3-l-ouverture" data-sec>5.3</a>).</p>
 <p><strong>Coût optionnel.</strong> Quelques événements proposent de payer du Trésor pour un effet plus fort (« Siège de Saint-Sauveur-le-Vicomte », « Siège de Rouen », « Richard d'York lieutenant en France ») : sans Trésor suffisant, l'effet de repli s'applique.</p>
 <h3 id="r-6-7-fortune-des-armes">6.7 Fortune des armes</h3>
@@ -1709,7 +1711,7 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 <ul>
 <li>la <strong>valeur du niveau</strong> atteint dans la région (tableau ci-dessous, 0 sans présence) ;</li>
 <li><strong>+1 par place forte</strong> qu'il contrôle dans la région, sauf en Angleterre : les châteaux du royaume ne sont pas des conquêtes ;</li>
-<li><strong>+1 par lieu contrôlé voisin de la capitale adverse</strong> : Paris pour l'Angleterre (Chartres, Mantes, Meaux, Melun, Pontoise, Saint-Denis), Londres pour la France (Douvres, Durham, Pays de Galles, Southampton).</li>
+<li><strong>+1 par lieu contrôlé voisin de la capitale adverse</strong> : Paris pour l'Angleterre (Chartres, Compiègne, Meaux, Melun, Pontoise), Londres pour la France (Douvres, Pays de Galles, Southampton).</li>
 </ul>
 <p>La <strong>différence</strong> entre les deux camps va au score.</p>
 <div class="rg-table"><table>
@@ -1759,13 +1761,6 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 <td>Phase II</td>
 </tr>
 <tr>
-<td>Écosse</td>
-<td>1</td>
-<td>3</td>
-<td>4</td>
-<td>Phase II</td>
-</tr>
-<tr>
 <td>Languedoc</td>
 <td>2</td>
 <td>4</td>
@@ -1798,7 +1793,7 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 <h3 id="r-10-3-quand-decompte-t-on">10.3 Quand décompte-t-on ?</h3>
 <ul>
 <li>Quand un joueur joue une <strong>carte de décompte</strong> pendant un round d'action. Peu importe qui la joue : la région est comptée pour les deux camps. La carte va ensuite à la défausse.</li>
-<li>À la <strong>fin du tour 12</strong>, toutes les régions sont décomptées dans l'ordre : Écosse, Angleterre, Guyenne, Flandre, Bretagne, Normandie, Languedoc, Île-de-France, Bourgogne, Val de Loire.</li>
+<li>À la <strong>fin du tour 12</strong>, toutes les régions sont décomptées dans l'ordre : Angleterre, Guyenne, Flandre, Bretagne, Normandie, Languedoc, Île-de-France, Bourgogne, Val de Loire.</li>
 </ul>
 <p>Avant de jouer une carte de décompte, l'écran affiche une simulation : niveau de chaque camp, lieux et places fortes contrôlés, points de chacun et score après le décompte.</p>
 <h3 id="r-10-4-exemple-de-decompte-detaille-ile-de-france">10.4 Exemple de décompte détaillé : Île-de-France</h3>
@@ -1963,7 +1958,7 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 <hr />
 <h2 id="r-12-factions-loyaute-et-papaute">12. Factions, Loyauté et papauté</h2>
 <h3 id="r-12-1-principe">12.1 Principe</h3>
-<p>Le jeu compte <strong>six factions</strong> : Flandre, Bretagne, Bourgogne, Écosse, Castille et Navarre. Seule l'Écosse a aussi des lieux sur le plan (section <a href="#r-2-2-les-regions" data-sec>2.2</a>). Chaque faction a une piste de −3 (ralliée à l'Angleterre) à +3 (ralliée à la France). La Loyauté bouge par la Diplomatie (section <a href="#r-7-5-diplomatie" data-sec>7.5</a>) et par les événements.</p>
+<p>Le jeu compte <strong>six factions</strong> : Flandre, Bretagne, Bourgogne, Écosse, Castille et Navarre. Aucune n'a de lieux sur le plan : l'Écosse agit par sa Loyauté et par l'événement « Auld Alliance renouvelée » (phase II), où le camp vers lequel elle penche marque 2 points, 3 si elle est ralliée. Chaque faction a une piste de −3 (ralliée à l'Angleterre) à +3 (ralliée à la France). La Loyauté bouge par la Diplomatie (section <a href="#r-7-5-diplomatie" data-sec>7.5</a>) et par les événements.</p>
 <ul>
 <li>À <strong>±2</strong> (« favorable »), la faction donne son premier effet au camp vers lequel elle penche.</li>
 <li>À <strong>±3</strong> (« ralliée »), elle donne en plus son effet de ralliement. Les effets à ±2 restent actifs, sauf quand l'effet à ±3 les remplace (Trésor de la Flandre, bonus d'Assaut de la Bretagne).</li>
@@ -2000,8 +1995,8 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 <tr>
 <td>Écosse</td>
 <td>+2</td>
-<td>+1 aux Sièges en Écosse et à Durham</td>
-<td>1 Influence gratuite par tour en Écosse ; si la France tient Berwick, l'Angleterre perd 1 OPS sur sa première carte du tour</td>
+<td>L'adversaire perd 1 Trésor par tour (frontière écossaise)</td>
+<td>L'adversaire perd 1 OPS sur sa première carte du tour</td>
 </tr>
 <tr>
 <td>Castille</td>
@@ -2017,7 +2012,7 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 </tr>
 </tbody>
 </table></div>
-<p>Les Influences gratuites et le malus d'OPS de Berwick sont donnés au début du tour, après la pioche et avant l'ouverture. Le camp bénéficiaire choisit où placer les Influences gratuites.</p>
+<p>Les Influences gratuites et le malus d'OPS de l'Écosse ralliée sont donnés au début du tour, après la pioche et avant l'ouverture. Le camp bénéficiaire choisit où placer les Influences gratuites.</p>
 <h3 id="r-12-3-la-pile-pontificale-et-le-grand-schisme">12.3 La pile pontificale et le Grand Schisme</h3>
 <p>La papauté n'est pas une faction : elle n'a pas de piste de Loyauté et ne se vise pas par la Diplomatie. Elle n'a plus de carte en main : elle agit par une <strong>pile pontificale</strong> de 24 cartes, six par phase.</p>
 <p><strong>Le tirage.</strong> Au début de chaque tour, avant les bonus des factions et l'ouverture, on tire <strong>une carte</strong> de la pile de la phase et on la résout aussitôt. Personne ne la joue : son effet va au camp désigné sur la carte (le plus faible en Légitimité, celui qui mène au score, les deux camps…). Une carte obligatoire (« Grand Schisme d'Occident » en phase II, « Concile de Constance » en phase III) est toujours tirée pendant sa phase. Trois cartes sur six sortent par phase : les autres restent inconnues.</p>

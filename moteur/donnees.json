@@ -9,15 +9,13 @@
 "port": true,
 "inf": {
 "A": 0,
-"F": 0
+"F": 1
 },
 "voisins": [
-"Abbeville",
+"Amiens",
 "Arras",
-"Douvres",
-"Guînes",
-"Saint-Omer",
-"Ypres"
+"Bruges",
+"Douvres"
 ],
 "mer": [
 "Douvres"
@@ -28,19 +26,17 @@
 "region": "Flandre",
 "pays": "Flandre",
 "defense": 2,
-"pf": true,
+"pf": false,
 "port": true,
 "inf": {
 "A": 1,
 "F": 0
 },
 "voisins": [
+"Arras",
+"Calais",
 "Gand",
-"Ypres",
-"Édimbourg"
-],
-"mer": [
-"Édimbourg"
+"Lille"
 ]
 },
 {
@@ -56,40 +52,6 @@
 },
 "voisins": [
 "Bruges",
-"Tournai"
-]
-},
-{
-"nom": "Ypres",
-"region": "Flandre",
-"pays": "Flandre",
-"defense": 2,
-"pf": false,
-"port": false,
-"inf": {
-"A": 1,
-"F": 0
-},
-"voisins": [
-"Bruges",
-"Calais",
-"Lille",
-"Saint-Omer"
-]
-},
-{
-"nom": "Tournai",
-"region": "Flandre",
-"pays": "Tournaisis",
-"defense": 2,
-"pf": false,
-"port": false,
-"inf": {
-"A": 0,
-"F": 1
-},
-"voisins": [
-"Gand",
 "Lille"
 ]
 },
@@ -102,12 +64,12 @@
 "port": false,
 "inf": {
 "A": 0,
-"F": 0
+"F": 1
 },
 "voisins": [
 "Arras",
-"Tournai",
-"Ypres"
+"Bruges",
+"Gand"
 ]
 },
 {
@@ -123,47 +85,10 @@
 },
 "voisins": [
 "Amiens",
+"Bruges",
 "Calais",
 "Lille",
-"Reims",
-"Saint-Omer"
-]
-},
-{
-"nom": "Abbeville",
-"region": "Flandre",
-"pays": "Ponthieu",
-"defense": 1,
-"pf": false,
-"port": true,
-"inf": {
-"A": 1,
-"F": 0
-},
-"voisins": [
-"Amiens",
-"Calais",
-"Dieppe",
-"Le Crotoy",
-"Rouen"
-]
-},
-{
-"nom": "Saint-Omer",
-"region": "Flandre",
-"pays": "Artois",
-"defense": 2,
-"pf": false,
-"port": false,
-"inf": {
-"A": 0,
-"F": 0
-},
-"voisins": [
-"Arras",
-"Calais",
-"Guînes",
-"Ypres"
+"Reims"
 ]
 },
 {
@@ -171,16 +96,18 @@
 "region": "Flandre",
 "pays": "Picardie",
 "defense": 2,
-"pf": true,
-"port": false,
+"pf": false,
+"port": true,
 "inf": {
 "A": 0,
 "F": 1
 },
 "voisins": [
-"Abbeville",
 "Arras",
-"Compiègne"
+"Calais",
+"Compiègne",
+"Dieppe",
+"Rouen"
 ]
 },
 {
@@ -195,12 +122,11 @@
 "F": 3
 },
 "voisins": [
-"Abbeville",
+"Amiens",
 "Caen",
 "Dieppe",
 "Harfleur",
-"Honfleur",
-"Mantes",
+"Pontoise",
 "Évreux"
 ]
 },
@@ -208,17 +134,16 @@
 "nom": "Caen",
 "region": "Normandie",
 "pays": "Normandie",
-"defense": 2,
-"pf": true,
+"defense": 3,
+"pf": false,
 "port": true,
 "inf": {
 "A": 0,
-"F": 0
+"F": 2
 },
 "voisins": [
 "Cherbourg",
-"Falaise",
-"Honfleur",
+"Harfleur",
 "Le Mans",
 "Rouen"
 ]
@@ -235,32 +160,28 @@
 "F": 0
 },
 "voisins": [
-"Honfleur",
-"Portsmouth",
+"Caen",
 "Rouen",
 "Southampton"
 ],
 "mer": [
-"Southampton",
-"Portsmouth",
-"Honfleur"
+"Southampton"
 ]
 },
 {
 "nom": "Cherbourg",
 "region": "Normandie",
 "pays": "Cotentin",
-"defense": 2,
+"defense": 3,
 "pf": true,
 "port": true,
 "inf": {
 "A": 0,
-"F": 0
+"F": 1
 },
 "voisins": [
 "Caen",
 "Mont-Saint-Michel",
-"Saint-Sauveur-le-Vicomte",
 "Southampton"
 ],
 "mer": [
@@ -281,7 +202,7 @@
 "voisins": [
 "Chartres",
 "Le Mans",
-"Mantes",
+"Pontoise",
 "Rouen"
 ]
 },
@@ -298,30 +219,9 @@
 },
 "voisins": [
 "Caen",
-"Falaise",
-"Fougères",
+"Rennes",
 "Tours",
 "Évreux"
-]
-},
-{
-"nom": "Honfleur",
-"region": "Normandie",
-"pays": "Normandie",
-"defense": 2,
-"pf": false,
-"port": true,
-"inf": {
-"A": 0,
-"F": 0
-},
-"voisins": [
-"Caen",
-"Harfleur",
-"Rouen"
-],
-"mer": [
-"Harfleur"
 ]
 },
 {
@@ -337,9 +237,8 @@
 },
 "voisins": [
 "Cherbourg",
-"Fougères",
-"Saint-Malo",
-"Saint-Sauveur-le-Vicomte"
+"Rennes",
+"Saint-Malo"
 ]
 },
 {
@@ -355,7 +254,8 @@
 },
 "voisins": [
 "Brest",
-"Fougères",
+"Le Mans",
+"Mont-Saint-Michel",
 "Nantes",
 "Saint-Malo"
 ]
@@ -387,7 +287,7 @@
 "region": "Bretagne",
 "pays": "Bretagne",
 "defense": 3,
-"pf": true,
+"pf": false,
 "port": true,
 "inf": {
 "A": 0,
@@ -415,7 +315,6 @@
 "F": 0
 },
 "voisins": [
-"Auray",
 "Brest",
 "Hennebont",
 "Nantes"
@@ -426,33 +325,15 @@
 "region": "Bretagne",
 "pays": "Bretagne",
 "defense": 2,
-"pf": true,
+"pf": false,
 "port": true,
 "inf": {
 "A": 0,
 "F": 0
 },
 "voisins": [
-"Auray",
 "Brest",
 "Vannes"
-]
-},
-{
-"nom": "Fougères",
-"region": "Bretagne",
-"pays": "Bretagne",
-"defense": 2,
-"pf": true,
-"port": false,
-"inf": {
-"A": 0,
-"F": 0
-},
-"voisins": [
-"Le Mans",
-"Mont-Saint-Michel",
-"Rennes"
 ]
 },
 {
@@ -468,27 +349,10 @@
 },
 "voisins": [
 "Chartres",
-"Mantes",
+"Compiègne",
 "Meaux",
 "Melun",
-"Pontoise",
-"Saint-Denis"
-]
-},
-{
-"nom": "Saint-Denis",
-"region": "Île-de-France",
-"pays": "Île-de-France",
-"defense": 2,
-"pf": false,
-"port": false,
-"inf": {
-"A": 0,
-"F": 1
-},
-"voisins": [
-"Compiègne",
-"Paris"
+"Pontoise"
 ]
 },
 {
@@ -538,9 +402,9 @@
 },
 "voisins": [
 "Amiens",
+"Paris",
 "Pontoise",
-"Reims",
-"Saint-Denis"
+"Reims"
 ]
 },
 {
@@ -610,8 +474,8 @@
 },
 "voisins": [
 "Auxerre",
+"Chalon-sur-Saône",
 "Lyon",
-"Mâcon",
 "Nancy",
 "Troyes"
 ]
@@ -629,9 +493,9 @@
 },
 "voisins": [
 "Dijon",
-"Montargis",
 "Montereau",
-"Nevers"
+"Nevers",
+"Orléans"
 ]
 },
 {
@@ -647,7 +511,8 @@
 },
 "voisins": [
 "Auxerre",
-"Bourges"
+"Bourges",
+"Chalon-sur-Saône"
 ]
 },
 {
@@ -679,7 +544,7 @@
 "F": 0
 },
 "voisins": [
-"Dijon",
+"Chalon-sur-Saône",
 "Lyon"
 ]
 },
@@ -711,10 +576,10 @@
 "F": 0
 },
 "voisins": [
+"Aiguillon",
 "Castillon",
 "Dax",
 "La Rochelle",
-"La Réole",
 "Plymouth"
 ],
 "mer": [
@@ -734,8 +599,7 @@
 "F": 0
 },
 "voisins": [
-"Dax",
-"Orthez"
+"Dax"
 ]
 },
 {
@@ -751,7 +615,8 @@
 },
 "voisins": [
 "Bayonne",
-"Bordeaux"
+"Bordeaux",
+"Lectoure"
 ]
 },
 {
@@ -804,7 +669,6 @@
 "voisins": [
 "Aiguillon",
 "Castillon",
-"La Réole",
 "Périgueux"
 ]
 },
@@ -812,7 +676,7 @@
 "nom": "Aiguillon",
 "region": "Guyenne",
 "pays": "Agenais",
-"defense": 1,
+"defense": 2,
 "pf": false,
 "port": false,
 "inf": {
@@ -821,8 +685,8 @@
 },
 "voisins": [
 "Bergerac",
+"Bordeaux",
 "Castillon",
-"La Réole",
 "Lectoure",
 "Périgueux"
 ]
@@ -850,14 +714,13 @@
 "pays": "Languedoc",
 "defense": 3,
 "pf": true,
-"port": false,
+"port": true,
 "inf": {
 "A": 0,
 "F": 1
 },
 "voisins": [
 "Montpellier",
-"Narbonne",
 "Toulouse"
 ]
 },
@@ -875,7 +738,6 @@
 "voisins": [
 "Avignon",
 "Carcassonne",
-"Narbonne",
 "Rodez"
 ]
 },
@@ -892,40 +754,8 @@
 },
 "voisins": [
 "Aiguillon",
-"Orthez",
+"Dax",
 "Toulouse"
-]
-},
-{
-"nom": "Narbonne",
-"region": "Languedoc",
-"pays": "Languedoc",
-"defense": 2,
-"pf": false,
-"port": true,
-"inf": {
-"A": 0,
-"F": 0
-},
-"voisins": [
-"Carcassonne",
-"Montpellier"
-]
-},
-{
-"nom": "Orthez",
-"region": "Languedoc",
-"pays": "Béarn-Foix",
-"defense": 2,
-"pf": false,
-"port": false,
-"inf": {
-"A": 0,
-"F": 0
-},
-"voisins": [
-"Bayonne",
-"Lectoure"
 ]
 },
 {
@@ -940,9 +770,10 @@
 "F": 2
 },
 "voisins": [
+"Auxerre",
 "Bourges",
 "Chartres",
-"Montargis",
+"Melun",
 "Tours"
 ]
 },
@@ -970,7 +801,7 @@
 "region": "Val de Loire",
 "pays": "Touraine",
 "defense": 2,
-"pf": true,
+"pf": false,
 "port": false,
 "inf": {
 "A": 0,
@@ -1003,18 +834,17 @@
 "nom": "Poitiers",
 "region": "Val de Loire",
 "pays": "Poitou",
-"defense": 2,
+"defense": 3,
 "pf": false,
 "port": false,
 "inf": {
 "A": 0,
-"F": 0
+"F": 1
 },
 "voisins": [
 "Chinon",
 "La Rochelle",
-"Limoges",
-"Lusignan"
+"Limoges"
 ]
 },
 {
@@ -1030,7 +860,6 @@
 },
 "voisins": [
 "Bordeaux",
-"Lusignan",
 "Nantes",
 "Poitiers"
 ],
@@ -1044,7 +873,7 @@
 "region": "Val de Loire",
 "pays": "Anjou",
 "defense": 3,
-"pf": true,
+"pf": false,
 "port": false,
 "inf": {
 "A": 0,
@@ -1086,28 +915,8 @@
 },
 "voisins": [
 "Douvres",
-"Durham",
 "Pays de Galles",
 "Southampton"
-]
-},
-{
-"nom": "Portsmouth",
-"region": "Angleterre",
-"pays": "Hampshire",
-"defense": 2,
-"pf": false,
-"port": true,
-"inf": {
-"A": 1,
-"F": 0
-},
-"voisins": [
-"Harfleur",
-"Southampton"
-],
-"mer": [
-"Harfleur"
 ]
 },
 {
@@ -1149,7 +958,6 @@
 "Harfleur",
 "Londres",
 "Plymouth",
-"Portsmouth",
 "Saint-Malo"
 ],
 "mer": [
@@ -1199,7 +1007,7 @@
 "region": "Languedoc",
 "pays": "Comtat",
 "defense": 3,
-"pf": true,
+"pf": false,
 "port": false,
 "inf": {
 "A": 0,
@@ -1208,37 +1016,6 @@
 "voisins": [
 "Lyon",
 "Montpellier"
-]
-},
-{
-"nom": "Guînes",
-"region": "Flandre",
-"pays": "Calaisis",
-"defense": 2,
-"pf": true,
-"port": false,
-"inf": {
-"A": 0,
-"F": 1
-},
-"voisins": [
-"Calais",
-"Saint-Omer"
-]
-},
-{
-"nom": "Le Crotoy",
-"region": "Flandre",
-"pays": "Ponthieu",
-"defense": 2,
-"pf": true,
-"port": true,
-"inf": {
-"A": 0,
-"F": 0
-},
-"voisins": [
-"Abbeville"
 ]
 },
 {
@@ -1253,58 +1030,8 @@
 "F": 1
 },
 "voisins": [
-"Abbeville",
+"Amiens",
 "Rouen"
-]
-},
-{
-"nom": "Falaise",
-"region": "Normandie",
-"pays": "Normandie",
-"defense": 3,
-"pf": true,
-"port": false,
-"inf": {
-"A": 0,
-"F": 2
-},
-"voisins": [
-"Caen",
-"Le Mans"
-]
-},
-{
-"nom": "Saint-Sauveur-le-Vicomte",
-"region": "Normandie",
-"pays": "Cotentin",
-"defense": 3,
-"pf": true,
-"port": false,
-"inf": {
-"A": 0,
-"F": 1
-},
-"voisins": [
-"Cherbourg",
-"Mont-Saint-Michel"
-]
-},
-{
-"nom": "Mantes",
-"region": "Île-de-France",
-"pays": "Vexin",
-"defense": 2,
-"pf": true,
-"port": false,
-"inf": {
-"A": 0,
-"F": 0
-},
-"voisins": [
-"Paris",
-"Pontoise",
-"Rouen",
-"Évreux"
 ]
 },
 {
@@ -1312,15 +1039,15 @@
 "region": "Île-de-France",
 "pays": "Brie",
 "defense": 2,
-"pf": true,
+"pf": false,
 "port": false,
 "inf": {
 "A": 0,
 "F": 1
 },
 "voisins": [
-"Montargis",
 "Montereau",
+"Orléans",
 "Paris"
 ]
 },
@@ -1329,7 +1056,7 @@
 "region": "Île-de-France",
 "pays": "Vexin",
 "defense": 2,
-"pf": true,
+"pf": false,
 "port": false,
 "inf": {
 "A": 0,
@@ -1337,8 +1064,9 @@
 },
 "voisins": [
 "Compiègne",
-"Mantes",
-"Paris"
+"Paris",
+"Rouen",
+"Évreux"
 ]
 },
 {
@@ -1346,7 +1074,7 @@
 "region": "Bretagne",
 "pays": "Bretagne",
 "defense": 2,
-"pf": true,
+"pf": false,
 "port": true,
 "inf": {
 "A": 0,
@@ -1359,72 +1087,6 @@
 ],
 "mer": [
 "Southampton"
-]
-},
-{
-"nom": "Auray",
-"region": "Bretagne",
-"pays": "Bretagne",
-"defense": 2,
-"pf": true,
-"port": true,
-"inf": {
-"A": 0,
-"F": 0
-},
-"voisins": [
-"Hennebont",
-"Vannes"
-]
-},
-{
-"nom": "Montargis",
-"region": "Val de Loire",
-"pays": "Gâtinais",
-"defense": 2,
-"pf": true,
-"port": false,
-"inf": {
-"A": 0,
-"F": 1
-},
-"voisins": [
-"Auxerre",
-"Melun",
-"Orléans"
-]
-},
-{
-"nom": "Lusignan",
-"region": "Val de Loire",
-"pays": "Poitou",
-"defense": 3,
-"pf": true,
-"port": false,
-"inf": {
-"A": 0,
-"F": 1
-},
-"voisins": [
-"La Rochelle",
-"Poitiers"
-]
-},
-{
-"nom": "La Réole",
-"region": "Guyenne",
-"pays": "Bordelais",
-"defense": 2,
-"pf": true,
-"port": false,
-"inf": {
-"A": 0,
-"F": 1
-},
-"voisins": [
-"Aiguillon",
-"Bergerac",
-"Bordeaux"
 ]
 },
 {
@@ -1444,70 +1106,20 @@
 ]
 },
 {
-"nom": "Durham",
-"region": "Angleterre",
-"pays": "Durham",
+"nom": "Chalon-sur-Saône",
+"region": "Bourgogne",
+"pays": "Chalonnais",
 "defense": 2,
-"pf": true,
+"pf": false,
 "port": false,
-"inf": {
-"A": 1,
-"F": 0
-},
-"voisins": [
-"Berwick",
-"Londres"
-]
-},
-{
-"nom": "Berwick",
-"region": "Écosse",
-"pays": "Marche",
-"defense": 3,
-"pf": true,
-"port": true,
-"inf": {
-"A": 2,
-"F": 0
-},
-"voisins": [
-"Durham",
-"Roxburgh"
-]
-},
-{
-"nom": "Roxburgh",
-"region": "Écosse",
-"pays": "Marche",
-"defense": 3,
-"pf": true,
-"port": false,
-"inf": {
-"A": 1,
-"F": 0
-},
-"voisins": [
-"Berwick",
-"Édimbourg"
-]
-},
-{
-"nom": "Édimbourg",
-"region": "Écosse",
-"pays": "Lothian",
-"defense": 3,
-"pf": true,
-"port": true,
 "inf": {
 "A": 0,
 "F": 0
 },
 "voisins": [
-"Bruges",
-"Roxburgh"
-],
-"mer": [
-"Bruges"
+"Dijon",
+"Mâcon",
+"Nevers"
 ]
 }
 ],
@@ -2344,10 +1956,7 @@
 "retiree": true,
 "interdit": [],
 "fin": 4,
-"statut": "facultative",
-"renfort": {
-"inf": 1
-}
+"statut": "facultative"
 },
 {
 "id": 57,
@@ -2942,11 +2551,11 @@
 {
 "id": 238,
 "phase": 2,
-"camp": "S",
-"ops": 0,
-"nom": "Décompte : Écosse",
+"camp": "N",
+"ops": 2,
+"nom": "Auld Alliance renouvelée",
 "prerequis": "",
-"retiree": false,
+"retiree": true,
 "interdit": [],
 "fin": 4,
 "statut": "obligatoire"
@@ -4397,11 +4006,6 @@
 }
 ],
 "regions": {
-"Écosse": [
-1,
-3,
-4
-],
 "Angleterre": [
 1,
 1,

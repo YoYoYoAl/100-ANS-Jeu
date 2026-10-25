@@ -231,7 +231,6 @@ export function lieuxFaction(D, g, f) {
   if (f === "Navarre") return ["Évreux", "Cherbourg"];
   if (f === "Bourgogne" && fusionFlandre(g)) return zone(D, { r: ["Bourgogne", "Flandre"] });
   if (["Flandre", "Bretagne", "Bourgogne"].includes(f)) return zone(D, { r: f });
-  if (f === "Écosse") return [...zone(D, { r: "Écosse" }), "Durham"];
   return [];
 }
 // factions qu'on peut courtiser : plus de Flandre après la fusion
@@ -439,7 +438,7 @@ export function decompter(D, g, r) {
 }
 
 // ---------------------------------------------------------------- jouer une carte
-import { EFFETS, EFFETS_PONT } from "./effets.js?v=5ce436b0";
+import { EFFETS, EFFETS_PONT } from "./effets.js?v=44b94b24";
 // prérequis stricts : la carte requise doit avoir été jouée pour son événement (règnes, Jeanne d'Arc, Schisme) ; pour les autres, il suffit qu'elle soit sortie
 export const PREREQ_STRICTS = new Set(["Mort de Charles V", "Folie de Charles VI", "Mort de Charles VI", "Mort d'Henri V", "Mort de Bedford", "Bedford régent",
   "Bataille de Patay", "Sacre de Charles VII à Reims", "Capture à Compiègne", "Campagne de la Loire", "Échec devant Paris", "Procès de Rouen",
@@ -671,10 +670,8 @@ export function jouerTour(D, g) {
     if (rallie(g, "Bourgogne") === c) { etape(g, { k: "info", camp: c, txt: `La Bourgogne ralliée donne 2 Influence en Bourgogne, Île-de-France${et}.` }); placerLibre(D, g, c, 2, zone(D, { r: ["Bourgogne", "Île-de-France", ...fl] })); }
     if (rallie(g, "Bretagne") === c) { etape(g, { k: "info", camp: c, txt: "La Bretagne ralliée donne 1 Influence en Bretagne." }); placerLibre(D, g, c, 1, zone(D, { r: "Bretagne" })); }
     if (rallie(g, "Navarre") === c) { etape(g, { k: "info", camp: c, txt: "La Navarre ralliée donne 1 Influence à Évreux ou Cherbourg." }); placerLibre(D, g, c, 1, ["Évreux", "Cherbourg"]); }
-    if (rallie(g, "Écosse") === c) { // refonte B : 1 Influence en Écosse ; la France qui tient Berwick retient l'armée anglaise au nord
-      etape(g, { k: "info", camp: c, txt: "L'Écosse ralliée donne 1 Influence en Écosse." }); placerLibre(D, g, c, 1, zone(D, { r: "Écosse" }));
-      if (c === F && controle(D, g, "Berwick") === F) { g.opsMalus.A = 1; etape(g, { k: "info", camp: c, txt: "La France tient Berwick : l'Angleterre perd 1 OPS sur sa première carte du tour." }); }
-    }
+    // plateau A (25/10) : l'Écosse n'a plus de lieux ; ralliée, elle retient l'adversaire (−1 OPS sur sa première carte du tour)
+    if (rallie(g, "Écosse") === c) { g.opsMalus[adv(c)] = 1; etape(g, { k: "info", camp: c, txt: `L'Écosse ralliée retient ${adv(c) === A ? "l'Angleterre" : "la France"} : −1 OPS sur sa première carte du tour.` }); }
   }
   if (g.statuts.owain) g.opsMalus.A = 1;
   // ouverture (headline)
@@ -733,6 +730,7 @@ export function detailRevenu(D, g, c) {
   if (c === A && st.bedford) L.push(["régence de Bedford", 2]);
   if (c === A && st.artevelde) L.push(["laine flamande (Artevelde)", 1]);
   if (rallie(g, "Flandre") === c) L.push(["Flandre ralliée", 2]); else if (penche(g, "Flandre") === c) L.push(["Flandre favorable", 1]);
+  if (penche(g, "Écosse") === adv(c)) L.push(["frontière écossaise", -1]); // plateau A : l'Écosse favorable à l'adversaire coûte 1 Trésor par tour
   return { lignes: L.filter(([, v]) => v), total: L.reduce((t, [, v]) => t + v, 0) };
 }
 function finDeTour(D, g) {
