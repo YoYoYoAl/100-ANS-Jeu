@@ -7,7 +7,7 @@ import {
   A, F, adv, carte, controle, defense, lieuxAccessibles, coutInfluence, ciblesAssaut, bonusAssaut, coutAssaut,
   evenementPossible, opsCarte, jouer, resoudreEvenement, etatRegion, FACTIONS, factionsActives, alea, de,
   penche, lieuxFaction, fusionFlandre, signatureEtat, effetMarqueur, NB_TOURS, detenteurPape,
-} from "./regles.js?v=5f2a93df";
+} from "./regles.js?v=5ce436b0";
 
 const CAPITALES = { Paris: 4, Reims: 2.5, Rouen: 2, Bordeaux: 3, Londres: 3, Calais: 1.5, "Orléans": 1.5, Bourges: 1 };
 const REQ_LEGIT = [0, 2, 2, 3, 3, 3, 4, 4, 4]; // miroir de regles.js : OPS requis pour viser la case n
@@ -96,7 +96,6 @@ function revenuEstime(D, g, c) {
   if (c === F) r += (s.gabelle ? 2 : 0) + (s.pragmatique ? 1 : 0) + (s.taille ? 2 : 0) + (s.jacquesCoeur ? 1 : 0);
   else r += (s.bedford ? 2 : 0) + (s.artevelde ? 1 : 0);
   const fl = penche(g, "Flandre"); if (fl === c) r += Math.abs(g.loy[fusionFlandre(g) ? "Bourgogne" : "Flandre"]) >= 3 ? 2 : 1;
-  if (penche(g, "Écosse") === adv(c)) r -= 1;
   return Math.max(0, r);
 }
 function tresorUtile(D, g, c, P) {
@@ -449,6 +448,17 @@ export function creerIA(opts = {}) {
         if (v > bv) { bv = v; best = id; }
       }
       return best;
+    },
+    choix(D, g, c, titre, libelles, options) { // refonte B : choix entre deux effets ; défausse imposée (id) : la carte la moins utile
+      if (options.every(o => o.id != null)) { let bi = 0, bv = Infinity; options.forEach((o, i) => { const v = valeurCarte(D, c, o.id); if (v < bv) { bv = v; bi = i; } }); return bi; }
+      let bi = 0, bv = -Infinity;
+      options.forEach((o, i) => {
+        const h = cloner(g); h.journal = null;
+        try { o.f(h); } catch (e) { return; }
+        const v = pourCamp(c, evaluer(D, h, c, N)) + (alea(g) - 0.5) * N.alea * 0.1;
+        if (v > bv) { bv = v; bi = i; }
+      });
+      return bi;
     },
     action(D, g, c, roundsRestants) {
       const candidats = candidatsAction(D, g, c, roundsRestants, N.candidats);

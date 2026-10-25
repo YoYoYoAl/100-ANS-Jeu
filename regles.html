@@ -497,6 +497,21 @@ table.calc tr.tot td{border-bottom:0;border-top:2px solid var(--encre);font-size
 .encours-l .vide{border:0;background:none;color:var(--sepia);cursor:default}
 .feuille.large{max-width:1100px}
 .grille-cartes{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px}
+/* ---------- galerie des cartes */
+.gal-filtres{display:flex;flex-wrap:wrap;gap:8px;align-items:center;position:sticky;top:-16px;background:var(--velin);padding:6px 0;z-index:2;border-bottom:1px solid var(--sepia)}
+.gal-filtres input,.gal-filtres select{font:inherit;font-size:.95rem;padding:4px 8px;border:1px solid var(--sepia);border-radius:4px;background:var(--velin);color:var(--encre)}
+.gal-filtres input{flex:1 1 220px;min-width:0}
+.gal-liste{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,470px),1fr));gap:12px}
+.gal{display:grid;grid-template-columns:190px minmax(0,1fr);gap:12px;align-items:start;border:1px solid color-mix(in srgb,var(--sepia) 45%,transparent);border-radius:6px;padding:8px;content-visibility:auto;contain-intrinsic-size:auto 300px}
+.gal .carte{width:190px}
+.gal-txt{display:grid;gap:5px;font-size:.95rem;align-content:start}
+.gal-txt h3{margin:0;font-size:1.2rem}
+.gal-txt .hist{font-style:italic;margin:0}
+.gal-txt .eff-long{margin:0;font-size:.9rem}
+.gal-txt .meta{display:flex;flex-wrap:wrap;gap:4px}
+.gal-txt .meta span{font-family:var(--f-label);font-size:.78rem;border:1px solid var(--sepia);border-radius:3px;padding:0 6px}
+.gal-txt .meta .jouee{background:var(--or)}
+@media (max-width:560px){.gal{grid-template-columns:1fr}.gal .carte{margin-inline:auto}}
 /* ---------- v20 : cadres d'enluminure (Flux schnell), parchemin (Juggernaut XL), sceaux de cire (Flux) — outils/cadres_web.py */
 .bloc{border:9px solid transparent;border-image:url(pieces/cadre_panneau.png) 40 / 9px round;border-radius:0;background:var(--velin) url(pieces/parchemin.jpg) 0 0/256px;background-clip:padding-box;padding:4px 7px}
 .consigne.A,.consigne.F{border-left-width:9px;box-shadow:inset 6px 0 0 var(--cc)} .consigne.A{--cc:var(--gueules)} .consigne.F{--cc:var(--azur)}
@@ -527,7 +542,7 @@ table.calc tr.tot td{border-bottom:0;border-top:2px solid var(--encre);font-size
 
 body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:100vh;max-height:none;border-width:0 2px;border-radius:0}</style></head>
 <body><div class="feuille regles"><div class="choix" style="justify-content:space-between"><h2>Règles complètes · Guerre de Cent Ans</h2><a class="btn" href="index.html">Jouer</a></div>
-<div class="rg-corps" id="rgCorps"><nav class="rg-som" aria-label="Sommaire"><input type="search" class="rg-cherche" placeholder="Chercher dans les règles…" aria-label="Chercher dans les règles"><select class="rg-sel" aria-label="Aller à la section"><option value="">Aller à la section…</option><option value="r-1-but-du-jeu-et-fin-de-partie">1. But du jeu et fin de partie</option><option value="r-2-materiel-et-lecture-de-l-ecran">2. Matériel et lecture de l'écran</option><option value="r-3-mise-en-place-1337">3. Mise en place (1337)</option><option value="r-4-controle-d-un-lieu-et-acces-pour-l-influence">4. Contrôle d'un lieu et accès pour l'Influence</option><option value="r-5-deroulement-d-un-tour">5. Déroulement d'un tour</option><option value="r-6-jouer-une-carte">6. Jouer une carte</option><option value="r-7-les-actions-d-ops">7. Les actions d'OPS</option><option value="r-8-batailles">8. Batailles</option><option value="r-9-la-treve">9. La Trêve</option><option value="r-10-decomptes-des-regions">10. Décomptes des régions</option><option value="r-11-tresor-crise-et-legitimite">11. Trésor, Crise et Légitimité</option><option value="r-12-factions-loyaute-et-papaute">12. Factions, Loyauté et papauté</option><option value="r-13-modes-de-jeu-niveaux-de-l-ia-et-tableau-d-honneur">13. Modes de jeu, niveaux de l'IA et tableau d'honneur</option><option value="r-14-glossaire">14. Glossaire</option><option value="r-15-ou-trouver-quoi">15. Où trouver quoi</option></select><p class="rg-nb lbl" aria-live="polite"></p><ol><li class="n2"><a href="#r-1-but-du-jeu-et-fin-de-partie">1. But du jeu et fin de partie</a></li><li class="n3"><a href="#r-1-1-le-score">1.1 Le score</a></li><li class="n3"><a href="#r-1-2-toutes-les-facons-de-gagner-ou-de-perdre">1.2 Toutes les façons de gagner ou de perdre</a></li><li class="n3"><a href="#r-1-3-qui-perd-quand-la-treve-tombe-a-1">1.3 Qui perd quand la Trêve tombe à 1</a></li><li class="n2"><a href="#r-2-materiel-et-lecture-de-l-ecran">2. Matériel et lecture de l'écran</a></li><li class="n3"><a href="#r-2-1-le-plan">2.1 Le plan</a></li><li class="n3"><a href="#r-2-2-les-regions">2.2 Les régions</a></li><li class="n3"><a href="#r-2-3-les-cartes">2.3 Les cartes</a></li><li class="n3"><a href="#r-2-4-les-pistes">2.4 Les pistes</a></li><li class="n3"><a href="#r-2-5-l-ecran-de-jeu">2.5 L'écran de jeu</a></li><li class="n2"><a href="#r-3-mise-en-place-1337">3. Mise en place (1337)</a></li><li class="n2"><a href="#r-4-controle-d-un-lieu-et-acces-pour-l-influence">4. Contrôle d'un lieu et accès pour l'Influence</a></li><li class="n3"><a href="#r-4-1-controle">4.1 Contrôle</a></li><li class="n3"><a href="#r-4-2-ou-peut-on-placer-de-l-influence">4.2 Où peut-on placer de l'Influence ?</a></li><li class="n3"><a href="#r-4-3-la-maitrise-de-la-manche">4.3 La maîtrise de la Manche</a></li><li class="n2"><a href="#r-5-deroulement-d-un-tour">5. Déroulement d'un tour</a></li><li class="n3"><a href="#r-5-1-les-phases-et-le-paquet">5.1 Les phases et le paquet</a></li><li class="n3"><a href="#r-5-2-la-sequence-d-un-tour">5.2 La séquence d'un tour</a></li><li class="n3"><a href="#r-5-3-l-ouverture">5.3 L'ouverture</a></li><li class="n3"><a href="#r-5-4-les-rounds-d-action">5.4 Les rounds d'action</a></li><li class="n3"><a href="#r-5-5-les-chevauchees">5.5 Les chevauchées</a></li><li class="n2"><a href="#r-6-jouer-une-carte">6. Jouer une carte</a></li><li class="n3"><a href="#r-6-1-evenement-ou-ops">6.1 Événement ou OPS</a></li><li class="n3"><a href="#r-6-2-que-devient-la-carte">6.2 Que devient la carte ?</a></li><li class="n3"><a href="#r-6-3-prerequis-et-interdits">6.3 Prérequis et interdits</a></li><li class="n3"><a href="#r-6-4-evenements-sans-effet">6.4 Événements sans effet</a></li><li class="n3"><a href="#r-6-5-valeur-en-ops-d-une-carte">6.5 Valeur en OPS d'une carte</a></li><li class="n3"><a href="#r-6-6-effets-durables">6.6 Effets durables</a></li><li class="n3"><a href="#r-6-7-fortune-des-armes">6.7 Fortune des armes</a></li><li class="n2"><a href="#r-7-les-actions-d-ops">7. Les actions d'OPS</a></li><li class="n3"><a href="#r-7-1-generalites">7.1 Généralités</a></li><li class="n3"><a href="#r-7-2-influence">7.2 Influence</a></li><li class="n3"><a href="#r-7-3-assaut">7.3 Assaut</a></li><li class="n3"><a href="#r-7-4-siege">7.4 Siège</a></li><li class="n3"><a href="#r-7-5-diplomatie">7.5 Diplomatie</a></li><li class="n3"><a href="#r-7-6-legitimite">7.6 Légitimité</a></li><li class="n2"><a href="#r-8-batailles">8. Batailles</a></li><li class="n2"><a href="#r-9-la-treve">9. La Trêve</a></li><li class="n2"><a href="#r-10-decomptes-des-regions">10. Décomptes des régions</a></li><li class="n3"><a href="#r-10-1-les-niveaux">10.1 Les niveaux</a></li><li class="n3"><a href="#r-10-2-les-points">10.2 Les points</a></li><li class="n3"><a href="#r-10-3-quand-decompte-t-on">10.3 Quand décompte-t-on ?</a></li><li class="n3"><a href="#r-10-4-exemple-de-decompte-detaille-ile-de-france">10.4 Exemple de décompte détaillé : Île-de-France</a></li><li class="n2"><a href="#r-11-tresor-crise-et-legitimite">11. Trésor, Crise et Légitimité</a></li><li class="n3"><a href="#r-11-1-tresor-et-revenus">11.1 Trésor et revenus</a></li><li class="n3"><a href="#r-11-2-crise">11.2 Crise</a></li><li class="n3"><a href="#r-11-3-legitimite">11.3 Légitimité</a></li><li class="n2"><a href="#r-12-factions-loyaute-et-papaute">12. Factions, Loyauté et papauté</a></li><li class="n3"><a href="#r-12-1-principe">12.1 Principe</a></li><li class="n3"><a href="#r-12-2-tableau-des-factions">12.2 Tableau des factions</a></li><li class="n3"><a href="#r-12-3-la-faveur-du-pape-et-le-grand-schisme">12.3 La Faveur du pape et le Grand Schisme</a></li><li class="n3"><a href="#r-12-4-la-fusion-flandre-bourgogne-1384">12.4 La fusion Flandre-Bourgogne (1384)</a></li><li class="n2"><a href="#r-13-modes-de-jeu-niveaux-de-l-ia-et-tableau-d-honneur">13. Modes de jeu, niveaux de l'IA et tableau d'honneur</a></li><li class="n3"><a href="#r-13-1-modes-de-jeu">13.1 Modes de jeu</a></li><li class="n3"><a href="#r-13-2-niveaux-de-l-ia">13.2 Niveaux de l'IA</a></li><li class="n3"><a href="#r-13-3-tableau-d-honneur">13.3 Tableau d'honneur</a></li><li class="n2"><a href="#r-14-glossaire">14. Glossaire</a></li><li class="n2"><a href="#r-15-ou-trouver-quoi">15. Où trouver quoi</a></li></ol></nav><article class="rg-texte" data-titre="Règles du jeu, version 0.6">
+<div class="rg-corps" id="rgCorps"><nav class="rg-som" aria-label="Sommaire"><input type="search" class="rg-cherche" placeholder="Chercher dans les règles…" aria-label="Chercher dans les règles"><select class="rg-sel" aria-label="Aller à la section"><option value="">Aller à la section…</option><option value="r-1-but-du-jeu-et-fin-de-partie">1. But du jeu et fin de partie</option><option value="r-2-materiel-et-lecture-de-l-ecran">2. Matériel et lecture de l'écran</option><option value="r-3-mise-en-place-1337">3. Mise en place (1337)</option><option value="r-4-controle-d-un-lieu-et-acces-pour-l-influence">4. Contrôle d'un lieu et accès pour l'Influence</option><option value="r-5-deroulement-d-un-tour">5. Déroulement d'un tour</option><option value="r-6-jouer-une-carte">6. Jouer une carte</option><option value="r-7-les-actions-d-ops">7. Les actions d'OPS</option><option value="r-8-batailles">8. Batailles</option><option value="r-9-la-treve">9. La Trêve</option><option value="r-10-decomptes-des-regions">10. Décomptes des régions</option><option value="r-11-tresor-crise-et-legitimite">11. Trésor, Crise et Légitimité</option><option value="r-12-factions-loyaute-et-papaute">12. Factions, Loyauté et papauté</option><option value="r-13-modes-de-jeu-niveaux-de-l-ia-et-tableau-d-honneur">13. Modes de jeu, niveaux de l'IA et tableau d'honneur</option><option value="r-14-glossaire">14. Glossaire</option><option value="r-15-ou-trouver-quoi">15. Où trouver quoi</option></select><p class="rg-nb lbl" aria-live="polite"></p><ol><li class="n2"><a href="#r-1-but-du-jeu-et-fin-de-partie">1. But du jeu et fin de partie</a></li><li class="n3"><a href="#r-1-1-le-score">1.1 Le score</a></li><li class="n3"><a href="#r-1-2-toutes-les-facons-de-gagner-ou-de-perdre">1.2 Toutes les façons de gagner ou de perdre</a></li><li class="n3"><a href="#r-1-3-qui-perd-quand-la-treve-tombe-a-1">1.3 Qui perd quand la Trêve tombe à 1</a></li><li class="n2"><a href="#r-2-materiel-et-lecture-de-l-ecran">2. Matériel et lecture de l'écran</a></li><li class="n3"><a href="#r-2-1-le-plan">2.1 Le plan</a></li><li class="n3"><a href="#r-2-2-les-regions">2.2 Les régions</a></li><li class="n3"><a href="#r-2-3-les-cartes">2.3 Les cartes</a></li><li class="n3"><a href="#r-2-4-les-pistes">2.4 Les pistes</a></li><li class="n3"><a href="#r-2-5-l-ecran-de-jeu">2.5 L'écran de jeu</a></li><li class="n2"><a href="#r-3-mise-en-place-1337">3. Mise en place (1337)</a></li><li class="n2"><a href="#r-4-controle-d-un-lieu-et-acces-pour-l-influence">4. Contrôle d'un lieu et accès pour l'Influence</a></li><li class="n3"><a href="#r-4-1-controle">4.1 Contrôle</a></li><li class="n3"><a href="#r-4-2-ou-peut-on-placer-de-l-influence">4.2 Où peut-on placer de l'Influence ?</a></li><li class="n3"><a href="#r-4-3-la-maitrise-de-la-manche">4.3 La maîtrise de la Manche</a></li><li class="n2"><a href="#r-5-deroulement-d-un-tour">5. Déroulement d'un tour</a></li><li class="n3"><a href="#r-5-1-les-phases-et-le-paquet">5.1 Les phases et le paquet</a></li><li class="n3"><a href="#r-5-2-la-sequence-d-un-tour">5.2 La séquence d'un tour</a></li><li class="n3"><a href="#r-5-3-l-ouverture">5.3 L'ouverture</a></li><li class="n3"><a href="#r-5-4-les-rounds-d-action">5.4 Les rounds d'action</a></li><li class="n3"><a href="#r-5-5-les-chevauchees">5.5 Les chevauchées</a></li><li class="n2"><a href="#r-6-jouer-une-carte">6. Jouer une carte</a></li><li class="n3"><a href="#r-6-1-evenement-ou-ops">6.1 Événement ou OPS</a></li><li class="n3"><a href="#r-6-2-que-devient-la-carte">6.2 Que devient la carte ?</a></li><li class="n3"><a href="#r-6-3-prerequis-et-interdits">6.3 Prérequis et interdits</a></li><li class="n3"><a href="#r-6-4-evenements-sans-effet">6.4 Événements sans effet</a></li><li class="n3"><a href="#r-6-5-valeur-en-ops-d-une-carte">6.5 Valeur en OPS d'une carte</a></li><li class="n3"><a href="#r-6-6-effets-durables">6.6 Effets durables</a></li><li class="n3"><a href="#r-6-8-choix-bourbier-transfuge-refonte-b">6.8 Choix, bourbier, transfuge (refonte B)</a></li><li class="n3"><a href="#r-6-7-fortune-des-armes">6.7 Fortune des armes</a></li><li class="n2"><a href="#r-7-les-actions-d-ops">7. Les actions d'OPS</a></li><li class="n3"><a href="#r-7-1-generalites">7.1 Généralités</a></li><li class="n3"><a href="#r-7-2-influence">7.2 Influence</a></li><li class="n3"><a href="#r-7-3-assaut">7.3 Assaut</a></li><li class="n3"><a href="#r-7-4-siege">7.4 Siège</a></li><li class="n3"><a href="#r-7-5-diplomatie">7.5 Diplomatie</a></li><li class="n3"><a href="#r-7-6-legitimite">7.6 Légitimité</a></li><li class="n2"><a href="#r-8-batailles">8. Batailles</a></li><li class="n2"><a href="#r-9-la-treve">9. La Trêve</a></li><li class="n2"><a href="#r-10-decomptes-des-regions">10. Décomptes des régions</a></li><li class="n3"><a href="#r-10-1-les-niveaux">10.1 Les niveaux</a></li><li class="n3"><a href="#r-10-2-les-points">10.2 Les points</a></li><li class="n3"><a href="#r-10-3-quand-decompte-t-on">10.3 Quand décompte-t-on ?</a></li><li class="n3"><a href="#r-10-4-exemple-de-decompte-detaille-ile-de-france">10.4 Exemple de décompte détaillé : Île-de-France</a></li><li class="n2"><a href="#r-11-tresor-crise-et-legitimite">11. Trésor, Crise et Légitimité</a></li><li class="n3"><a href="#r-11-1-tresor-et-revenus">11.1 Trésor et revenus</a></li><li class="n3"><a href="#r-11-2-crise">11.2 Crise</a></li><li class="n3"><a href="#r-11-3-legitimite">11.3 Légitimité</a></li><li class="n2"><a href="#r-12-factions-loyaute-et-papaute">12. Factions, Loyauté et papauté</a></li><li class="n3"><a href="#r-12-1-principe">12.1 Principe</a></li><li class="n3"><a href="#r-12-2-tableau-des-factions">12.2 Tableau des factions</a></li><li class="n3"><a href="#r-12-3-la-pile-pontificale-et-le-grand-schisme">12.3 La pile pontificale et le Grand Schisme</a></li><li class="n3"><a href="#r-12-4-la-fusion-flandre-bourgogne-1384">12.4 La fusion Flandre-Bourgogne (1384)</a></li><li class="n2"><a href="#r-13-modes-de-jeu-niveaux-de-l-ia-et-tableau-d-honneur">13. Modes de jeu, niveaux de l'IA et tableau d'honneur</a></li><li class="n3"><a href="#r-13-1-modes-de-jeu">13.1 Modes de jeu</a></li><li class="n3"><a href="#r-13-2-niveaux-de-l-ia">13.2 Niveaux de l'IA</a></li><li class="n3"><a href="#r-13-3-tableau-d-honneur">13.3 Tableau d'honneur</a></li><li class="n2"><a href="#r-14-glossaire">14. Glossaire</a></li><li class="n2"><a href="#r-15-ou-trouver-quoi">15. Où trouver quoi</a></li></ol></nav><article class="rg-texte" data-titre="Règles du jeu, version 0.7 (refonte B)">
 <p><em>Guerre de Cent Ans</em> est un jeu de cartes et d'influence pour deux joueurs, ou pour un joueur contre l'ordinateur. L'un dirige l'Angleterre, l'autre la France, de 1337 à 1453. Le jeu reprend les grands principes de <em>Twilight Struggle</em> : chaque carte porte un événement historique et une valeur en points d'opérations (OPS), et l'on se dispute des régions qui sont décomptées au fil de la partie.</p>
 <p>Ce livret décrit les règles exactement comme le jeu les applique. Les valeurs chiffrées peuvent encore évoluer au fil des réglages.</p>
 <hr />
@@ -572,7 +587,7 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 <tr>
 <td><strong>Décompte final</strong></td>
 <td>À la fin du tour 12, si personne n'a encore gagné</td>
-<td>Les 8 régions sont décomptées une à une. Si le score atteint ±25 pendant ce décompte, la partie s'arrête là. Sinon, le camp en tête gagne.</td>
+<td>Les 10 régions sont décomptées une à une. Si le score atteint ±25 pendant ce décompte, la partie s'arrête là. Sinon, le camp en tête gagne.</td>
 </tr>
 <tr>
 <td><strong>Égalité au décompte final</strong></td>
@@ -584,21 +599,23 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 <p>L'ordre de la fin de tour compte : les chevauchées, les revenus, la Crise et la Légitimité sont résolus d'abord (et peuvent faire atteindre ±25), puis on vérifie les cartes de décompte gardées, puis les victoires automatiques, puis, au tour 12, le décompte final. Une carte de décompte gardée en main à la fin du tour 12 fait donc perdre avant même le décompte final.</p>
 <h3 id="r-1-3-qui-perd-quand-la-treve-tombe-a-1">1.3 Qui perd quand la Trêve tombe à 1</h3>
 <p>La Trêve tombe à 1 à cause d'un Assaut sur une place forte ou d'un événement qui la fait baisser. Le perdant est toujours <strong>le joueur actif</strong>, c'est-à-dire celui qui est en train de jouer la carte qui provoque la baisse. Pendant l'ouverture, c'est le joueur qui a révélé la carte.</p>
-<p>C'est vrai même quand la baisse vient d'un événement de l'adversaire. <strong>Exemple :</strong> la Trêve est à 2. L'Angleterre joue pour ses OPS la carte française « Usurpation d'Henri IV » (Légitimité anglaise −2, Trêve −1). L'événement français se déclenche pendant le tour de jeu anglais : la Trêve tombe à 1 et c'est l'<strong>Angleterre</strong> qui perd. Les quatre cartes qui font baisser la Trêve sont toutes françaises : « Confiscation de la Guyenne », « Confiscation de l'Aquitaine », « Usurpation d'Henri IV » et « Sac de Fougères ». L'Angleterre doit s'en méfier quand la Trêve est basse.</p>
-<hr />
+<p>C'est vrai même quand la baisse vient d'un événement de l'adversaire. <strong>Exemple :</strong> la Trêve est à 2. L'Angleterre joue pour ses OPS la carte française « Sac de Fougères » (Trêve −1, Bretagne 2 crans vers la France). L'événement français se déclenche pendant le tour de jeu anglais : la Trêve tombe à 1 et c'est l'<strong>Angleterre</strong> qui perd.</p>
+<p>Seules <strong>trois cartes</strong> font baisser la Trêve, une par phase au plus, toutes françaises : « Confiscation de la Guyenne » (phase I), « Confiscation de l'Aquitaine » (phase II) et « Sac de Fougères » (phase IV). Aucune en phase III. L'Angleterre doit s'en méfier quand la Trêve est basse.</p>
 <h2 id="r-2-materiel-et-lecture-de-l-ecran">2. Matériel et lecture de l'écran</h2>
 <h3 id="r-2-1-le-plan">2.1 Le plan</h3>
-<p>Le plan compte <strong>65 lieux</strong>, reliés par des liaisons. Deux lieux reliés sont <strong>voisins</strong> (les liaisons fonctionnent dans les deux sens). Chaque lieu est dessiné par une pièce :</p>
+<p>Le plan compte <strong>84 lieux</strong>, reliés par des liaisons. Deux lieux reliés sont <strong>voisins</strong> (les liaisons fonctionnent dans les deux sens). Chaque lieu est dessiné par une pièce :</p>
 <ul>
 <li><strong>La défense</strong> (1 à 4) est le chiffre inscrit sur la pièce. Elle sert au contrôle (section <a href="#r-4-controle-d-un-lieu-et-acces-pour-l-influence" data-sec>4</a>), à l'Assaut (section <a href="#r-7-les-actions-d-ops" data-sec>7</a>) et à certains effets de Crise.</li>
 <li><strong>Une place forte</strong> est dessinée par une pièce en forme de forteresse ; un lieu ouvert par une pièce simple. Les places fortes comptent à part dans les décomptes et rendent l'Assaut plus coûteux, mais permettent d'occuper le lieu.</li>
-<li><strong>Un port</strong> porte le symbole ⚓ à côté de son nom. Les ports comptent pour le revenu, pour la maîtrise de la Manche et pour le bonus de la Castille.</li>
+<li><strong>Un port</strong> porte le symbole ⚓ à côté de son nom. Les ports comptent pour le revenu et pour le bonus de la Castille.</li>
+<li><strong>Une liaison maritime</strong> est dessinée en pointillés sur la mer. Elle ne sert qu'au camp qui a la <strong>maîtrise de la mer</strong>, ou aux deux si personne ne l'a (section <a href="#r-4-3-la-maitrise-de-la-manche" data-sec>4.3</a>).</li>
+<li><strong>L'encart « Écosse et marche du Nord »</strong>, en haut à gauche du plan, regroupe Durham et les trois lieux écossais.</li>
 <li><strong>La couleur de la pièce</strong> indique qui contrôle le lieu : rouge pour l'Angleterre, bleu pour la France, neutre si personne.</li>
 <li><strong>Les deux sceaux</strong> sous la pièce indiquent l'Influence anglaise (rouge) et française (bleue). Un sceau vide signifie 0.</li>
 </ul>
 <p>Survolez un lieu pour voir son infobulle : région, place forte ou lieu ouvert, défense, port, Influence de chaque camp, et ce qui manque à chaque camp pour le contrôler. Le survol allume aussi ses liaisons.</p>
 <h3 id="r-2-2-les-regions">2.2 Les régions</h3>
-<p>Les lieux sont répartis en <strong>8 régions décomptées</strong> et une base arrière, l'<strong>Angleterre</strong>, qui n'est jamais décomptée et ne peut jamais être attaquée.</p>
+<p>Les lieux sont répartis en <strong>10 régions</strong>, toutes décomptées. L'<strong>Angleterre</strong> ne peut jamais être attaquée (ni Assaut ni Siège) ; elle a sa carte de décompte en phase IV. L'<strong>Écosse</strong> est décomptée en phase II.</p>
 <div class="rg-table"><table>
 <thead>
 <tr>
@@ -611,27 +628,27 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 <tbody>
 <tr>
 <td>Flandre</td>
-<td>Calais ✦⚓ (3), Bruges ✦⚓ (2), Gand ✦ (2), Amiens ✦ (2), Ypres (2), Tournai (2), Lille (2), Arras (2), Saint-Omer (2), Abbeville ⚓ (1)</td>
-<td>10</td>
-<td>4</td>
+<td>Calais ✦⚓ (3), Amiens ✦ (2), Bruges ✦⚓ (2), Gand ✦ (2), Guînes ✦ (2), Le Crotoy ✦⚓ (2), Arras (2), Lille (2), Saint-Omer (2), Tournai (2), Ypres (2), Abbeville ⚓ (1)</td>
+<td>12</td>
+<td>6</td>
 </tr>
 <tr>
 <td>Normandie</td>
-<td>Mont-Saint-Michel ✦⚓ (4), Rouen ✦⚓ (3), Caen ✦⚓ (2), Cherbourg ✦⚓ (2), Harfleur ⚓ (2), Honfleur ⚓ (2), Le Mans (2), Évreux (1)</td>
-<td>8</td>
-<td>4</td>
+<td>Mont-Saint-Michel ✦⚓ (4), Falaise ✦ (3), Rouen ✦⚓ (3), Saint-Sauveur-le-Vicomte ✦ (3), Caen ✦⚓ (2), Cherbourg ✦⚓ (2), Harfleur ⚓ (2), Honfleur ⚓ (2), Le Mans (2), Dieppe ⚓ (1), Évreux (1)</td>
+<td>11</td>
+<td>6</td>
 </tr>
 <tr>
 <td>Bretagne</td>
-<td>Rennes ✦ (3), Brest ✦⚓ (3), Nantes ✦⚓ (2), Hennebont ✦⚓ (2), Fougères ✦ (2), Vannes ⚓ (2)</td>
-<td>6</td>
-<td>5</td>
+<td>Brest ✦⚓ (3), Rennes ✦ (3), Auray ✦⚓ (2), Fougères ✦ (2), Hennebont ✦⚓ (2), Nantes ✦⚓ (2), Saint-Malo ✦⚓ (2), Vannes ⚓ (2)</td>
+<td>8</td>
+<td>7</td>
 </tr>
 <tr>
 <td>Île-de-France</td>
-<td>Paris ✦ (4), Reims ✦ (3), Meaux ✦ (2), Saint-Denis (2), Chartres (2), Compiègne (2), Troyes (2), Montereau (1)</td>
-<td>8</td>
-<td>3</td>
+<td>Paris ✦ (4), Reims ✦ (3), Mantes ✦ (2), Meaux ✦ (2), Melun ✦ (2), Pontoise ✦ (2), Chartres (2), Compiègne (2), Saint-Denis (2), Troyes (2), Montereau (1)</td>
+<td>11</td>
+<td>6</td>
 </tr>
 <tr>
 <td>Bourgogne</td>
@@ -641,33 +658,39 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 </tr>
 <tr>
 <td>Guyenne</td>
-<td>Bordeaux ✦⚓ (3), Bayonne ✦⚓ (2), Dax (1), Castillon (1), Périgueux (1), Aiguillon (1), Bergerac (1)</td>
-<td>7</td>
-<td>2</td>
+<td>Bordeaux ✦⚓ (3), Bayonne ✦⚓ (2), La Réole ✦ (2), Aiguillon (1), Bergerac (1), Castillon (1), Dax (1), Périgueux (1)</td>
+<td>8</td>
+<td>3</td>
 </tr>
 <tr>
 <td>Languedoc</td>
-<td>Toulouse ✦ (3), Carcassonne ✦ (3), Montpellier ⚓ (2), Narbonne ⚓ (2), Orthez (2), Lectoure (1)</td>
-<td>6</td>
-<td>2</td>
+<td>Avignon ✦ (3), Carcassonne ✦ (3), Toulouse ✦ (3), Montpellier ⚓ (2), Narbonne ⚓ (2), Orthez (2), Lectoure (1), Rodez (1)</td>
+<td>8</td>
+<td>3</td>
 </tr>
 <tr>
 <td>Val de Loire</td>
-<td>Orléans ✦ (3), Bourges ✦ (3), Angers ✦ (3), Chinon ✦ (2), La Rochelle ✦⚓ (2), Tours (2), Poitiers (2), Limoges (2)</td>
-<td>8</td>
-<td>5</td>
+<td>Angers ✦ (3), Bourges ✦ (3), Lusignan ✦ (3), Orléans ✦ (3), Chinon ✦ (2), La Rochelle ✦⚓ (2), Montargis ✦ (2), Limoges (2), Poitiers (2), Tours (2)</td>
+<td>10</td>
+<td>7</td>
 </tr>
 <tr>
-<td>Angleterre (non décomptée)</td>
-<td>Londres ✦⚓ (4), Douvres ✦⚓ (3), Southampton ⚓ (2), Portsmouth ⚓ (2), Plymouth ⚓ (2), Pays de Galles (2)</td>
-<td>6</td>
-<td>2</td>
+<td>Écosse</td>
+<td>Berwick ✦⚓ (3), Roxburgh ✦ (3), Édimbourg ✦⚓ (3)</td>
+<td>3</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Angleterre</td>
+<td>Londres ✦⚓ (4), Douvres ✦⚓ (3), Durham ✦ (2), Pays de Galles (2), Plymouth ⚓ (2), Portsmouth ⚓ (2), Southampton ⚓ (2)</td>
+<td>7</td>
+<td>3</td>
 </tr>
 </tbody>
 </table></div>
-<p>Au total : 29 places fortes et 23 ports. Les huit lieux ajoutés dans cette version sont Saint-Omer, Honfleur, Hennebont, Montereau, Mâcon, Bergerac, Narbonne et Angers. Les deux capitales sont <strong>Paris</strong> (voisins : Chartres, Meaux, Montereau, Orléans, Rouen, Saint-Denis) et <strong>Londres</strong> (voisins : Douvres, Pays de Galles, Southampton).</p>
+<p>Au total : 46 places fortes et 29 ports. Les lieux ajoutés par la refonte B sont des points de passage historiques : Avignon, Guînes, Le Crotoy, Dieppe, Falaise, Saint-Sauveur-le-Vicomte, Mantes, Melun, Pontoise, Saint-Malo, Auray, Montargis, Lusignan, La Réole, Rodez, ainsi que Durham, Berwick, Roxburgh et Édimbourg. Les liaisons suivent les routes et les fleuves : la Seine passe par Mantes et Pontoise, la Loire par Orléans, Tours et Angers, la marche de Calais par Guînes. Les deux capitales sont <strong>Paris</strong> (voisins : Chartres, Mantes, Meaux, Melun, Pontoise, Saint-Denis) et <strong>Londres</strong> (voisins : Douvres, Durham, Pays de Galles, Southampton).</p>
 <h3 id="r-2-3-les-cartes">2.3 Les cartes</h3>
-<p>La boîte compte <strong>235 cartes</strong> : 232 cartes réparties en quatre paquets de phase, et 3 cartes <strong>hors paquet</strong> consacrées au pape (section <a href="#r-12-3-la-faveur-du-pape-et-le-grand-schisme" data-sec>12.3</a>).</p>
+<p>Le jeu compte <strong>209 cartes</strong> réparties en quatre paquets de phase, et une <strong>pile pontificale</strong> de 24 cartes, six par phase, qui ne vont jamais en main (section <a href="#r-12-3-la-pile-pontificale-et-le-grand-schisme" data-sec>12.3</a>).</p>
 <div class="rg-table"><table>
 <thead>
 <tr>
@@ -688,55 +711,55 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 <td>I</td>
 <td>1 à 3</td>
 <td>1337-1360</td>
-<td>60</td>
+<td>53</td>
 <td>16</td>
-<td>44</td>
-<td>29</td>
-<td>19</td>
-<td>9</td>
+<td>37</td>
+<td>27</td>
+<td>16</td>
+<td>7</td>
 <td>3 (Guyenne, Flandre, Val de Loire)</td>
 </tr>
 <tr>
 <td>II</td>
 <td>4 à 6</td>
 <td>1360-1389</td>
-<td>61</td>
+<td>52</td>
 <td>14</td>
-<td>47</td>
-<td>15</td>
-<td>30</td>
+<td>38</td>
 <td>14</td>
-<td>2 (Bretagne, Normandie)</td>
+<td>25</td>
+<td>10</td>
+<td>3 (Bretagne, Normandie, Écosse)</td>
 </tr>
 <tr>
 <td>III</td>
 <td>7 à 9</td>
 <td>1389-1428</td>
-<td>60</td>
-<td>14</td>
-<td>46</td>
-<td>31</td>
-<td>14</td>
+<td>54</td>
 <td>13</td>
+<td>41</td>
+<td>31</td>
+<td>13</td>
+<td>8</td>
 <td>2 (Languedoc, Bourgogne)</td>
 </tr>
 <tr>
 <td>IV</td>
 <td>10 à 12</td>
 <td>1428-1453</td>
-<td>51</td>
-<td>17</td>
-<td>34</td>
-<td>12</td>
-<td>31</td>
-<td>7</td>
-<td>1 (Île-de-France)</td>
+<td>50</td>
+<td>18</td>
+<td>32</td>
+<td>13</td>
+<td>30</td>
+<td>5</td>
+<td>2 (Île-de-France, Angleterre)</td>
 </tr>
 </tbody>
 </table></div>
 <p>Les cartes <strong>obligatoires</strong> (les grands événements et toutes les cartes de décompte) sont toujours en jeu. Seule une partie des cartes <strong>facultatives</strong> est tirée au hasard à la mise en place de chaque phase ; les autres sont <strong>écartées</strong> pour toute la partie (section <a href="#r-5-1-les-phases-et-le-paquet" data-sec>5.1</a>). Deux parties ne se jouent donc jamais avec exactement le même paquet.</p>
-<p>Chaque carte d'événement porte un camp (anglais, français ou neutre), une valeur de <strong>1 à 4 OPS</strong>, un texte d'effet, et parfois un <strong>prérequis</strong>, et une liste d'événements qui l'<strong>interdisent</strong> (section <a href="#r-6-3-prerequis-et-interdits" data-sec>6.3</a>). Les 8 cartes de décompte n'ont pas d'OPS. Sur les 232 cartes de phase, 212 sont <strong>retirées</strong> après leur événement ; seules <strong>20 cartes récurrentes</strong> restent en jeu : les 8 cartes de décompte et 12 événements, « Charles de Blois », « Le roi de Bourges », « Dunois, Bâtard d'Orléans », « La Hire et Xaintrailles », « Écorcheurs », « Embargo sur la laine », « Raids sur les côtes anglaises », « Subside du Parlement », « Renouvellement de l'Auld Alliance », « Grandes Compagnies », « Retour de la peste » et « Aides et fouages ».</p>
-<p>Les 3 cartes hors paquet ne sont jamais piochées ni défaussées : la « <strong>Faveur du pape</strong> », que la France détient au départ et qui passe d'un camp à l'autre, et deux cartes de 1 OPS, « Pape d'Avignon » (France) et « Pape de Rome » (Angleterre), que chaque camp tient pendant le Grand Schisme.</p>
+<p>Chaque carte d'événement porte un camp (anglais, français ou neutre), une valeur de <strong>1 à 4 OPS</strong>, un texte d'effet, et parfois un <strong>prérequis</strong>, et une liste d'événements qui l'<strong>interdisent</strong> (section <a href="#r-6-3-prerequis-et-interdits" data-sec>6.3</a>). Les 10 cartes de décompte n'ont pas d'OPS. Sur les 209 cartes, 184 sont <strong>retirées</strong> après leur événement ; seules <strong>25 cartes récurrentes</strong> restent en jeu : les 10 cartes de décompte et 15 événements, « Embargo sur la laine », « Raids sur les côtes anglaises », « Charles de Blois », « Subside du Parlement », « Révolte paysanne », « Révolte urbaine », « Grandes Compagnies », « Retour de la peste », « Réformes de Charles V », « Guerre civile », « Le roi de Bourges », « Paix fourrées », « Dunois, Bâtard d'Orléans », « La Hire et Xaintrailles », « Écorcheurs ».</p>
+<p>Plusieurs cartes de la version précédente ont été <strong>fusionnées</strong> en une seule carte qui laisse un choix (par exemple « Guerre civile de Castille » réunit du Guesclin en Castille, Nájera et Montiel) ; les cartes de la papauté sont passées dans la pile pontificale.</p>
 <p>Sous chaque carte de votre main, un <strong>badge</strong> indique ce que vous pouvez en faire :</p>
 <div class="rg-table"><table>
 <thead>
@@ -764,7 +787,7 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 </tr>
 <tr>
 <td>Évt sans effet</td>
-<td>La condition n'est pas réunie : jouée maintenant, la carte ne changerait rien. Mieux vaut ses OPS.</td>
+<td>La condition n'est pas réunie : jouée maintenant, la carte ne changerait rien. L'événement ne peut pas être choisi : OPS seulement, tant que la situation ne change pas.</td>
 </tr>
 <tr>
 <td>Décompte</td>
@@ -859,6 +882,11 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 <td>−3 à +3, une par faction</td>
 <td>Flandre, Bretagne, Bourgogne, Écosse, Castille et Navarre. −3 : ralliée à l'Angleterre ; +3 : ralliée à la France.</td>
 </tr>
+<tr>
+<td>Maîtrise de la mer</td>
+<td>Angleterre, France ou personne</td>
+<td>Ouvre les liaisons maritimes au seul camp qui la détient (section <a href="#r-4-3-la-maitrise-de-la-manche" data-sec>4.3</a>).</td>
+</tr>
 </tbody>
 </table></div>
 <h3 id="r-2-5-l-ecran-de-jeu">2.5 L'écran de jeu</h3>
@@ -866,14 +894,14 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 <li><strong>En haut</strong> : la séquence du tour (l'étape en cours est surlignée), le <strong>score et les pistes</strong> (Trésor, Légitimité, Trêve, Crise ; survolez une piste pour son détail), et le bouton ⛶ du plein écran.</li>
 <li><strong>À gauche</strong> : la <strong>frise</strong> des phases au-dessus du plan, qui montre quelles cartes de décompte appartiennent à chaque phase et lesquelles ont déjà été jouées ; le plan, avec zoom (boutons, molette ou pincement).</li>
 <li><strong>Au centre</strong> : l'événement en cours en haut (carte et effets à gauche, consigne au milieu, calcul du dé à droite), le bandeau des boutons, puis votre main, aux cartes de taille fixe, avec les badges et la légende des sigles.</li>
-<li><strong>À droite</strong> : les factions, la liste des effets en cours (qui indique aussi qui détient la « Faveur du pape » ou, pendant le Grand Schisme, le pape de chaque camp) et la chronique de la partie.</li>
+<li><strong>À droite</strong> : les factions, la liste des effets en cours (dont la dernière carte de la pile pontificale et, pendant le Grand Schisme, le bonus de chaque camp) et la chronique de la partie.</li>
 <li>Les coups adverses sont rejoués pas à pas : bouton Suivant, lecture automatique, ou Tout passer. Même en lecture automatique, chaque jet de dé adverse (Assaut, Siège, Diplomatie, Légitimité, Bataille) attend votre clic.</li>
 <li>Chaque élément a une infobulle au survol.</li>
 </ul>
 <hr />
 <h2 id="r-3-mise-en-place-1337">3. Mise en place (1337)</h2>
 <ol>
-<li><strong>Influence fixe.</strong> On place l'Influence historique de 1337 : 27 Influence anglaise et 29 Influence française.</li>
+<li><strong>Influence fixe.</strong> On place l'Influence historique de 1337 : 31 Influence anglaise et 40 Influence française.</li>
 </ol>
 <div class="rg-table"><table>
 <thead>
@@ -884,16 +912,16 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 </thead>
 <tbody>
 <tr>
-<td>Angleterre (27)</td>
-<td>Londres 4, Bordeaux 4, Bayonne 3, Douvres 3, Dax 2, Gand 2, Southampton 2, Pays de Galles 2, Abbeville 1, Bruges 1, Ypres 1, Portsmouth 1, Plymouth 1</td>
+<td>Angleterre (31)</td>
+<td>Bordeaux 4, Londres 4, Bayonne 3, Douvres 3, Gand 2, Dax 2, Southampton 2, Pays de Galles 2, Berwick 2, Bruges 1, Ypres 1, Abbeville 1, Portsmouth 1, Plymouth 1, Durham 1, Roxburgh 1</td>
 </tr>
 <tr>
-<td>France (29)</td>
-<td>Paris 4, Rouen 3, Reims 3, Toulouse 3, Mont-Saint-Michel 2, Orléans 2, Bourges 2, Tournai 1, Arras 1, Amiens 1, Saint-Denis 1, Lyon 1, Périgueux 1, Aiguillon 1, Carcassonne 1, Tours 1, Angers 1</td>
+<td>France (40)</td>
+<td>Paris 4, Rouen 3, Reims 3, Toulouse 3, Mont-Saint-Michel 2, Orléans 2, Bourges 2, Falaise 2, Tournai 1, Arras 1, Amiens 1, Saint-Denis 1, Lyon 1, Périgueux 1, Aiguillon 1, Carcassonne 1, Tours 1, Angers 1, Guînes 1, Dieppe 1, Saint-Sauveur-le-Vicomte 1, Melun 1, Pontoise 1, Montargis 1, Lusignan 1, La Réole 1, Rodez 1</td>
 </tr>
 </tbody>
 </table></div>
-<p>L'Agenais (Aiguillon) et le Périgord (Périgueux) sont tenus par la France depuis 1324. Les villes drapières de Flandre (Gand, Bruges, Ypres) penchent vers l'Angleterre, dont dépend leur laine : Jacques van Artevelde en prendra la tête en 1338. Au départ, l'Angleterre contrôle Abbeville, Bordeaux, Bayonne, Dax et ses quatre lieux anglais Londres, Douvres, Southampton et Pays de Galles ; la France contrôle Paris, Reims, Rouen, Toulouse, Périgueux et Aiguillon.</p>
+<p>L'Agenais (Aiguillon) et le Périgord (Périgueux) sont tenus par la France depuis 1324. Les villes drapières de Flandre (Gand, Bruges, Ypres) penchent vers l'Angleterre, dont dépend leur laine : Jacques van Artevelde en prendra la tête en 1338. Au départ, l'Angleterre contrôle Abbeville, Bordeaux, Bayonne, Dax ses quatre lieux anglais Londres, Douvres, Southampton et Pays de Galles (Berwick et Roxburgh, garnisons anglaises en Écosse, ne sont pas contrôlés : il leur manque 1 Influence) ; la France contrôle Paris, Reims, Rouen, Toulouse, Périgueux, Aiguillon, Dieppe et Rodez. Les places royales ajoutées par la refonte B (Melun, Pontoise, Falaise, Saint-Sauveur-le-Vicomte, Montargis, Lusignan, La Réole, Guînes) ont 1 ou 2 Influence française, sans contrôle.</p>
 <ol start="2">
 <li><strong>Influence libre.</strong> Valeurs actuelles : la <strong>France place 2 Influence</strong> libres, une par une, dans n'importe quel lieu hors de Guyenne et d'Angleterre (sans condition de voisinage). Puis l'<strong>Angleterre place 8 Influence</strong> libres, une par une, en Guyenne, en Flandre, en Bretagne ou dans n'importe quel port hors d'Angleterre.</li>
 <li><strong>Pistes.</strong> Trêve 5, Crise 0, score 0. Trésor : Angleterre 7, France 5. Légitimité : 0 et 0.</li>
@@ -921,9 +949,8 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 </tr>
 </tbody>
 </table></div>
-<p>Dès le départ, la Bourgogne (+2) donne donc à la France +1 à ses Sièges en Bourgogne, et l'Écosse (+2) fait perdre 1 Trésor par tour à l'Angleterre.
-5. <strong>Faveur du pape.</strong> La France reçoit la carte « Faveur du pape » (section <a href="#r-12-3-la-faveur-du-pape-et-le-grand-schisme" data-sec>12.3</a>). Elle ne compte pas dans la taille de sa main.
-6. <strong>Cartes.</strong> On forme la pioche de la phase I : ses cartes obligatoires et le tirage de ses cartes facultatives (section <a href="#r-5-1-les-phases-et-le-paquet" data-sec>5.1</a>). Le tour 1 commence : chaque joueur reçoit 9 cartes.</p>
+<p>Dès le départ, la Bourgogne (+2) donne donc à la France +1 à ses Sièges en Bourgogne, et l'Écosse (+2) +1 à ses Sièges en Écosse et à Durham.
+5. <strong>Cartes.</strong> On forme la pioche de la phase I : ses cartes obligatoires et le tirage de ses cartes facultatives (section <a href="#r-5-1-les-phases-et-le-paquet" data-sec>5.1</a>), et la pile pontificale de la phase I (section <a href="#r-12-3-la-pile-pontificale-et-le-grand-schisme" data-sec>12.3</a>). Le tour 1 commence : chaque joueur reçoit 8 cartes.</p>
 <hr />
 <h2 id="r-4-controle-d-un-lieu-et-acces-pour-l-influence">4. Contrôle d'un lieu et accès pour l'Influence</h2>
 <h3 id="r-4-1-controle">4.1 Contrôle</h3>
@@ -937,19 +964,19 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 <p>Avec l'action Influence (section <a href="#r-7-2-influence" data-sec>7.2</a>), un camp peut placer de l'Influence dans les lieux suivants :</p>
 <ol>
 <li>tout lieu où il a <strong>déjà au moins 1 Influence</strong> ;</li>
-<li>tout lieu <strong>voisin</strong> d'un lieu où il a au moins 1 Influence (il n'est pas nécessaire de contrôler ce lieu) ;</li>
-<li><strong>tous les ports</strong>, s'il a la <strong>maîtrise de la Manche</strong> et contrôle au moins un port ;</li>
+<li>tout lieu <strong>voisin</strong> d'un lieu où il a au moins 1 Influence (il n'est pas nécessaire de contrôler ce lieu). Une <strong>liaison maritime</strong> ne compte que pour le camp qui a la maîtrise de la mer, ou pour les deux si personne ne l'a (section <a href="#r-4-3-la-maitrise-de-la-manche" data-sec>4.3</a>) ;</li>
 <li><strong>tous les lieux de Flandre</strong>, si la Flandre lui est ralliée (après la fusion de 1384, si la Bourgogne lui est ralliée).</li>
 </ol>
-<p>Une restriction s'ajoute : <strong>la France ne peut pas placer d'Influence en Angleterre</strong>, sauf dans un lieu anglais où elle a déjà au moins 1 Influence.</p>
+<p>Deux restrictions s'ajoutent : <strong>la France ne peut pas placer d'Influence en Angleterre</strong>, sauf dans un lieu anglais où elle a déjà au moins 1 Influence (une tête de pont, posée par un événement) ; et après « Étienne Marcel », la France ne peut plus placer d'Influence à Paris tant que la Crise est à 3 ou plus.</p>
 <p>L'accès est établi <strong>au début de l'action</strong> : un lieu que l'on vient d'atteindre en y posant un premier point n'ouvre pas ses voisins pendant la même action.</p>
+<p>L'Écosse n'est reliée au continent que par mer (Édimbourg–Bruges) et à l'Angleterre par la marche (Durham–Berwick–Roxburgh). Poser de l'Influence en Écosse ne demande aucune condition de faction : il suffit d'y avoir accès.</p>
 <h3 id="r-4-3-la-maitrise-de-la-manche">4.3 La maîtrise de la Manche</h3>
-<p>Un camp a la maîtrise de la Manche :</p>
+<p>Un camp a la <strong>maîtrise de la mer</strong> :</p>
 <ul>
 <li>si la <strong>Castille lui est ralliée</strong> (+3 pour la France, −3 pour l'Angleterre) ;</li>
-<li>ou si un événement la lui donne. La victoire anglaise à la « Bataille de l'Écluse » et la « Bataille de la Seine » (jusqu'à la fin du tour suivant, puis la maîtrise revient à son état d'avant) la donnent à l'Angleterre ; la « Bataille de La Rochelle » l'annule. Tant qu'un événement a fixé la maîtrise, il l'emporte sur la Castille.</li>
+<li>ou si un événement la lui donne : « Bataille de l'Écluse » (Angleterre), « Bataille de La Rochelle » (France, jusqu'à la fin de la phase II), « Avènement d'Henri V » ou « Les Espagnols sur mer » au choix, « Bataille de la Seine »… Tant qu'un événement a fixé la maîtrise, il l'emporte sur la Castille.</li>
 </ul>
-<hr />
+<p><strong>Effet.</strong> Les <strong>liaisons maritimes</strong> (Douvres–Calais, Southampton–Saint-Malo, Édimbourg–Bruges, etc.) ne servent qu'au camp qui a la maîtrise ; l'autre ne peut pas s'en servir pour placer de l'Influence. Si personne n'a la maîtrise, elles servent aux deux camps. La maîtrise ne donne plus d'accès à tous les ports.</p>
 <h2 id="r-5-deroulement-d-un-tour">5. Déroulement d'un tour</h2>
 <h3 id="r-5-1-les-phases-et-le-paquet">5.1 Les phases et le paquet</h3>
 <p>La partie dure <strong>12 tours</strong> au plus, en quatre phases de trois tours : phase I (tours 1 à 3, 1337-1360), phase II (tours 4 à 6, 1360-1389), phase III (tours 7 à 9, 1389-1428) et phase IV (tours 10 à 12, 1428-1453).</p>
@@ -964,13 +991,13 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 <tbody>
 <tr>
 <td>Taille de main</td>
-<td>9 cartes</td>
-<td>10 cartes</td>
+<td>8 cartes</td>
+<td>8 cartes</td>
 </tr>
 <tr>
 <td>Rounds d'action</td>
-<td>7</td>
-<td>8</td>
+<td>6</td>
+<td>6</td>
 </tr>
 </tbody>
 </table></div>
@@ -993,16 +1020,16 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 <tbody>
 <tr>
 <td>Nombre de cartes</td>
-<td>33</td>
-<td>34</td>
-<td>30</td>
+<td>26</td>
+<td>28</td>
+<td>26</td>
 <td>18</td>
 </tr>
 </tbody>
 </table></div>
 <p>Ces nombres sont un réglage et peuvent encore changer d'une version à l'autre.</p>
 <p><strong>Arrivée dans la pioche.</strong> Les nouvelles cartes de la phase sont mélangées, puis <strong>40 %</strong> d'entre elles sont posées sur le <strong>dessus</strong> de la pioche ; les <strong>60 %</strong> restantes sont mélangées avec les cartes qui restaient dans la pioche (pas avec la défausse). Les cartes de décompte de la nouvelle phase sont ensuite glissées au hasard parmi les <strong>12 cartes du dessus</strong> : elles arrivent en main le plus souvent dès ce tour, au plus tard au tour suivant. Au tour 1, toutes les cartes de la phase I sont simplement mélangées.</p>
-<p>Les cartes des phases précédentes restent dans la pioche, dans la défausse et dans les mains, et leur événement reste jouable (section <a href="#r-6-3-prerequis-et-interdits" data-sec>6.3</a>).</p>
+<p>Les cartes des phases précédentes restent dans la pioche et dans les mains. À chaque nouvelle phase, la <strong>défausse rejoint la pioche</strong> ; seules les cartes devenues injouables (événement interdit par une carte déjà jouée) sont écartées. Leur événement reste jouable sinon (section <a href="#r-6-3-prerequis-et-interdits" data-sec>6.3</a>).</p>
 <p>Quand la pioche est vide, on mélange la défausse pour former une nouvelle pioche. Les cartes retirées et les cartes écartées ne reviennent jamais ; une carte de décompte jouée va à la défausse et peut donc revenir.</p>
 <h3 id="r-5-2-la-sequence-d-un-tour">5.2 La séquence d'un tour</h3>
 <div class="rg-table"><table>
@@ -1018,8 +1045,8 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 <td>Aux tours 4, 7 et 10 seulement : cartes de la nouvelle phase (5.1). Au tour 7, fin de la cession de Cherbourg et Brest ; au tour 10, fin de la révolte galloise (6.6).</td>
 </tr>
 <tr>
-<td>2. Pape</td>
-<td>La « Faveur du pape » arrive chez le camp qui doit la recevoir. Pendant le Grand Schisme, chaque camp reprend en main son pape (section <a href="#r-12-3-la-faveur-du-pape-et-le-grand-schisme" data-sec>12.3</a>).</td>
+<td>2. Pile pontificale</td>
+<td>Pendant le Grand Schisme, chaque camp reçoit +1 OPS sur sa première carte du tour. Puis on tire la carte pontificale du tour et on la résout (section <a href="#r-12-3-la-pile-pontificale-et-le-grand-schisme" data-sec>12.3</a>).</td>
 </tr>
 <tr>
 <td>3. Remise à zéro</td>
@@ -1031,11 +1058,11 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 </tr>
 <tr>
 <td>5. Pioche</td>
-<td>L'Angleterre puis la France complètent leur main à 9 cartes (phase I) ou 10 (phases II à IV). Les cartes gardées du tour précédent comptent ; la « Faveur du pape » ne compte pas.</td>
+<td>L'Angleterre puis la France complètent leur main à 8 cartes. Les cartes gardées du tour précédent comptent. Si la Gabelle du sel est en jeu, la France choisit de la garder ou de l'abolir (Légitimité +1).</td>
 </tr>
 <tr>
 <td>6. Factions ralliées</td>
-<td>Chaque camp reçoit les bonus de début de tour de ses factions ralliées : Influence gratuite de la Bourgogne, de la Bretagne et de la Navarre, OPS retiré à l'adversaire par l'Écosse (section <a href="#r-12-factions-loyaute-et-papaute" data-sec>12</a>).</td>
+<td>Chaque camp reçoit les bonus de début de tour de ses factions ralliées : Influence gratuite de la Bourgogne, de la Bretagne et de la Navarre, Influence gratuite de l'Écosse ralliée, et −1 OPS anglais si la France tient Berwick avec l'Écosse ralliée (section <a href="#r-12-factions-loyaute-et-papaute" data-sec>12</a>).</td>
 </tr>
 <tr>
 <td>7. Ouverture</td>
@@ -1043,7 +1070,7 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 </tr>
 <tr>
 <td>8. Rounds d'action</td>
-<td>7 rounds en phase I, 8 ensuite. Dans chaque round, chaque camp joue une carte ; le premier joueur alterne : l'Angleterre aux tours impairs, la France aux tours pairs (5.4).</td>
+<td>6 rounds. Dans chaque round, chaque camp joue une carte ; le premier joueur alterne : l'Angleterre aux tours impairs, la France aux tours pairs (5.4).</td>
 </tr>
 <tr>
 <td>9. Chevauchées</td>
@@ -1072,12 +1099,13 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 <ul>
 <li><strong>Seul l'événement</strong> de la carte d'ouverture est joué. Ses OPS ne servent qu'à fixer l'ordre.</li>
 <li><strong>Ordre de résolution</strong> : la carte qui a <strong>le plus d'OPS</strong> est résolue en premier. En cas d'égalité, celle du premier joueur du tour passe d'abord (l'Angleterre aux tours impairs, la France aux tours pairs).</li>
-<li><strong>Une carte de décompte est interdite</strong> en ouverture, de même que la « <strong>Faveur du pape</strong> ». Un joueur qui n'a plus que des cartes de décompte (et la Faveur du pape) en main peut ne pas ouvrir.</li>
+<li><strong>Une carte de décompte est interdite</strong> en ouverture. Un joueur qui n'a plus que des cartes de décompte en main peut ne pas ouvrir.</li>
+<li><strong>Transfuge.</strong> « Godefroy d'Harcourt » (Angleterre) et « Complot de Southampton » (France), ouvertes par leur propre camp, <strong>annulent la carte d'ouverture adverse</strong>, qui va à la défausse sans effet.</li>
 <li>Une <strong>carte adverse</strong> ouverte joue son événement au profit de l'adversaire. Une <strong>carte neutre</strong> joue son événement pour celui qui l'a ouverte.</li>
 <li>Si l'événement ne peut pas être joué (prérequis absent ou événement interdit, section <a href="#r-6-3-prerequis-et-interdits" data-sec>6.3</a>), la carte est défaussée sans effet.</li>
 </ul>
 <h3 id="r-5-4-les-rounds-d-action">5.4 Les rounds d'action</h3>
-<p>À chaque round, chaque camp joue une carte. Le <strong>premier joueur alterne</strong> : l'Angleterre joue la première aux tours impairs (1, 3, 5…), la France aux tours pairs (2, 4, 6…). À égalité d'OPS en ouverture, le premier joueur du tour résout son événement d'abord. Un joueur dont la main est vide passe. Chaque carte est jouée soit pour son événement, soit pour ses OPS (section <a href="#r-6-jouer-une-carte" data-sec>6</a>). Avec 9 cartes et 8 cartes jouées par tour en phase I (ouverture + 7 rounds), ou 10 et 9 ensuite, chaque joueur garde en principe 1 carte pour le tour suivant, en plus de la « Faveur du pape » s'il la détient et ne la joue pas.</p>
+<p>À chaque round, chaque camp joue une carte. Le <strong>premier joueur alterne</strong> : l'Angleterre joue la première aux tours impairs (1, 3, 5…), la France aux tours pairs (2, 4, 6…). À égalité d'OPS en ouverture, le premier joueur du tour résout son événement d'abord. Un joueur dont la main est vide passe. Chaque carte est jouée soit pour son événement, soit pour ses OPS (section <a href="#r-6-jouer-une-carte" data-sec>6</a>). Avec 8 cartes en main et 7 cartes jouées par tour (ouverture + 6 rounds), chaque joueur garde en principe 1 carte pour le tour suivant.</p>
 <p>Une carte de décompte doit être jouée pendant un round d'action ; elle occupe ce round. Si vous tenez plus de cartes de décompte qu'il ne vous reste de rounds, vous perdrez à la fin du tour.</p>
 <h3 id="r-5-5-les-chevauchees">5.5 Les chevauchées</h3>
 <p>À la fin de chaque tour, chaque camp doit avoir engagé ce tour <strong>au moins autant d'OPS militaires que le niveau actuel de la Trêve</strong>. Pour chaque OPS manquant, l'adversaire gagne 1 point.</p>
@@ -1122,11 +1150,6 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 <td>Elle se joue uniquement comme un décompte.</td>
 <td>Aucun OPS.</td>
 </tr>
-<tr>
-<td>Faveur du pape</td>
-<td>Jamais d'événement.</td>
-<td>Vous utilisez ses OPS ; elle passe ensuite à l'adversaire (section <a href="#r-12-3-la-faveur-du-pape-et-le-grand-schisme" data-sec>12.3</a>).</td>
-</tr>
 </tbody>
 </table></div>
 <p><strong>Carte adverse jouée pour ses OPS : avant ou après.</strong> En choisissant la carte, vous décidez quand l'événement adverse se résout.</p>
@@ -1142,17 +1165,16 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 <li>Une carte dont l'événement a été joué et qui est marquée « retirée » <strong>quitte la partie</strong>. C'est vrai aussi pour un événement adverse déclenché par vos OPS, et pour un événement joué alors qu'il était sans effet faute de condition réunie (section <a href="#r-6-4-evenements-sans-effet" data-sec>6.4</a>).</li>
 <li>Une carte dont l'événement n'a pas eu lieu (jouée pour ses OPS, prérequis absent, événement interdit ou période passée) va à la <strong>défausse</strong>, même si elle est marquée « retirée ».</li>
 <li>Les cartes récurrentes vont toujours à la <strong>défausse</strong> et peuvent revenir quand la défausse est remélangée.</li>
-<li>La « <strong>Faveur du pape</strong> » ne va jamais à la défausse : elle passe à l'adversaire (section <a href="#r-12-3-la-faveur-du-pape-et-le-grand-schisme" data-sec>12.3</a>).</li>
 </ul>
 <h3 id="r-6-3-prerequis-et-interdits">6.3 Prérequis et interdits</h3>
 <p>Deux règles disent si l'événement d'une carte est encore possible. Quand l'une d'elles l'empêche, la carte porte le badge « <strong>Évt impossible</strong> » : elle se joue encore pour ses OPS, mais son événement est <strong>sans effet</strong>, et la chronique affiche la raison (prérequis manquant, « plus jouable après « … » »).</p>
-<p><strong>Prérequis.</strong> Certaines cartes exigent qu'une autre carte soit déjà <strong>sortie</strong> : jouée, pour son événement ou pour ses OPS (par exemple « Combat des Trente » exige « Guerre de succession de Bretagne »). Pour les cartes clés de l'histoire, le prérequis est <strong>strict</strong> : la carte requise doit avoir été jouée <strong>pour son événement</strong>. C'est le cas des règnes (« Mort de Charles V » exige « Avènement de Charles V » ; « Folie de Charles VI » et « Mort de Charles VI » exigent « Mort de Charles V » ; « Mort d'Henri V » exige « Avènement d'Henri V » ; « Bedford régent » exige « Mort d'Henri V » ; « Mort de Bedford » exige « Bedford régent »), de l'épopée de Jeanne d'Arc (« Bataille de Patay », « Sacre de Charles VII à Reims », « Capture à Compiègne », « Campagne de la Loire », « Échec devant Paris », « Procès de Rouen »), des conciles (« Concile de Constance », « Concile de Pise ») et de « Traité de Troyes », « Congrès d'Arras », « Reprise de Paris ». Certaines acceptent l'une de deux cartes : « Jeanne d'Arc » exige « Siège d'Orléans » <strong>ou</strong> « Campagne de Salisbury », ou encore de l'Influence anglaise à Orléans. « Rançon du roi Jean » exige que le roi de France soit captif (section <a href="#r-6-6-effets-durables" data-sec>6.6</a>). Une carte obligatoire n'a pour prérequis que des cartes obligatoires ; une carte facultative peut dépendre d'une carte écartée à la mise en place de la phase, et son événement reste alors impossible pour toute la partie.</p>
-<p><strong>Interdits.</strong> Certains événements rendent d'autres cartes injouables comme événement, parce que l'histoire ne les permet plus : la mort d'un personnage, une succession, une paix ou une rupture. Par exemple, après « Mort de du Guesclin », « Du Guesclin connétable » et les autres cartes de du Guesclin ne jouent plus leur événement ; après « Traité de Guérande », les cartes de la guerre de succession de Bretagne non plus ; après « Grand Schisme d'Occident », « Clément VI achète Avignon » non plus. La liste figure sur chaque carte (« Plus jouable après »).</p>
+<p><strong>Prérequis.</strong> Certaines cartes exigent qu'une autre carte soit déjà <strong>sortie</strong> : jouée, pour son événement ou pour ses OPS (par exemple « Combat des Trente » exige « Guerre de succession de Bretagne »). Pour les cartes clés de l'histoire, le prérequis est <strong>strict</strong> : la carte requise doit avoir été jouée <strong>pour son événement</strong>. C'est le cas des règnes (« Mort de Charles V » exige « Avènement de Charles V » ; « Folie de Charles VI » et « Mort de Charles VI » exigent « Mort de Charles V » ; « Mort d'Henri V » exige « Avènement d'Henri V » ; « Bedford régent » exige « Mort d'Henri V » ; « Mort de Bedford » exige « Bedford régent »), de l'épopée de Jeanne d'Arc (« Bataille de Patay », « Sacre de Charles VII à Reims », « Capture à Compiègne », « Campagne de la Loire », « Échec devant Paris », « Procès de Rouen »), des conciles (« Concile de Constance », « Concile de Pise ») et de « Traité de Troyes », « Congrès d'Arras », « Reprise de Paris ». Certaines acceptent l'une de deux cartes : « Jeanne d'Arc » exige « Siège d'Orléans » <strong>ou</strong> « Campagne de Salisbury », ou encore de l'Influence anglaise à Orléans. « La rançon du roi Jean » exige que le roi de France soit captif (section <a href="#r-6-6-effets-durables" data-sec>6.6</a>). Une carte peut aussi exiger une carte de la pile pontificale : « Croisade de Despenser » exige « Grand Schisme d'Occident ». Une carte obligatoire n'a pour prérequis que des cartes obligatoires ; une carte facultative peut dépendre d'une carte écartée à la mise en place de la phase, et son événement reste alors impossible pour toute la partie.</p>
+<p><strong>Interdits.</strong> Certains événements rendent d'autres cartes injouables comme événement, parce que l'histoire ne les permet plus : la mort d'un personnage, une succession, une paix ou une rupture. Par exemple, après « Mort de du Guesclin », « Du Guesclin connétable » et les autres cartes de du Guesclin ne jouent plus leur événement ; après « Traité de Guérande », les cartes de la guerre de succession de Bretagne non plus ; après « Mort de Salisbury », la campagne anglaise s'enlise (section <a href="#r-6-8-choix-bourbier-transfuge-refonte-b" data-sec>6.8</a>). La liste figure sur chaque carte (« Plus jouable après »).</p>
 <p><strong>Pas de péremption.</strong> Un événement ne devient jamais impossible parce que sa période est passée : une carte de la phase I tirée en phase III peut encore jouer son événement.</p>
 <p>Une carte <strong>adverse</strong> dont l'événement est impossible ne déclenche rien quand vous la jouez pour ses OPS : elle va à la défausse et pourra revenir. Si son prérequis est rempli entre-temps, son événement redeviendra possible ; un interdit, lui, est définitif.</p>
 <p><strong>Influence « là où il en a déjà ».</strong> Quand un événement donne de l'Influence « dans un lieu où » son bénéficiaire « en a déjà », celui-ci la place dans des lieux où il a déjà au moins 1 Influence. Ce gain, comme un gain de Trésor écrit à la fin de la carte, ne s'applique que si l'événement agit vraiment : un événement resté sans effet (condition non réunie) ne donne rien. Il s'applique aussi quand c'est l'adversaire qui déclenche l'événement en jouant la carte pour ses OPS. Pour un événement neutre, le bénéficiaire est le joueur qui le déclenche.</p>
 <h3 id="r-6-4-evenements-sans-effet">6.4 Événements sans effet</h3>
-<p>Le jeu simule l'événement de chaque carte de votre main. Si l'événement ne changerait rien sur le plateau (par exemple un Assaut gratuit dans une région où l'adversaire n'a aucune Influence), la carte porte le badge <strong>« Évt sans effet »</strong>. Vous pouvez quand même jouer l'événement, mais il ne se passera rien, et la carte sera retirée si elle est marquée ainsi. Les cartes dont l'effet est d'avoir été jouées (prérequis d'une autre carte, ou règle lue ailleurs comme « Héritage flamand de Philippe le Hardi » ou « Grand Schisme d'Occident ») ne portent jamais ce badge.</p>
+<p>Le jeu simule l'événement de chaque carte de votre main. Si l'événement ne changerait rien sur le plateau (par exemple un Assaut gratuit dans une région où l'adversaire n'a aucune Influence), la carte porte le badge <strong>« Évt sans effet »</strong>. Le choix « Événement » est alors grisé : la carte ne se joue que pour ses OPS, tant que la situation ne change pas. Les cartes dont l'effet est d'avoir été jouées (prérequis d'une autre carte, ou règle lue ailleurs comme « Héritage flamand de Philippe le Hardi » ou « Grand Schisme d'Occident ») ne portent jamais ce badge.</p>
 <h3 id="r-6-5-valeur-en-ops-d-une-carte">6.5 Valeur en OPS d'une carte</h3>
 <p>La valeur imprimée peut être modifiée :</p>
 <div class="rg-table"><table>
@@ -1165,18 +1187,18 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 <tbody>
 <tr>
 <td>Crise à 4 ou plus</td>
-<td>Les cartes de 1 OPS ne donnent <strong>plus aucun OPS</strong> : elles ne peuvent servir que pour leur événement. La « Faveur du pape », imprimée à 2 OPS, n'est pas concernée.</td>
+<td>Les cartes de 1 OPS ne donnent <strong>plus aucun OPS</strong> : elles ne peuvent servir que pour leur événement.</td>
 </tr>
 <tr>
 <td>Roi captif (après la victoire anglaise à Poitiers)</td>
 <td>−1 OPS sur chaque carte jouée par la France pour ses OPS, jusqu'à sa libération (section <a href="#r-6-6-effets-durables" data-sec>6.6</a>).</td>
 </tr>
 <tr>
-<td>Écosse ralliée à l'adversaire, « Owain Glyndŵr » (contre l'Angleterre)</td>
-<td>−1 OPS sur la <strong>première carte du tour</strong>. Si cette carte est jouée pour son événement, le malus est perdu.</td>
+<td>« La révolte galloise » (contre l'Angleterre) ; la France tient Berwick avec l'Écosse ralliée</td>
+<td>−1 OPS sur la <strong>première carte anglaise du tour</strong>. Si cette carte est jouée pour son événement, le malus est perdu.</td>
 </tr>
 <tr>
-<td>« Flotte d'invasion de L'Écluse », « Complot de Southampton », « Débarquement français au pays de Galles » (contre l'Angleterre)</td>
+<td>« Flotte d'invasion de L'Écluse », « Complot de Southampton » (contre l'Angleterre)</td>
 <td>−1 OPS sur la <strong>prochaine carte anglaise</strong>. Si cette carte est jouée pour son événement, le malus est perdu. Les malus de cette ligne et de la précédente ne se cumulent pas entre eux.</td>
 </tr>
 <tr>
@@ -1184,20 +1206,16 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 <td>−1 OPS sur toutes les cartes jouées par l'Angleterre pour leurs OPS pendant le tour suivant.</td>
 </tr>
 <tr>
-<td>« Faveur du pape » jouée</td>
-<td>+1 OPS sur la <strong>prochaine carte</strong> que ce camp joue pour ses OPS (section <a href="#r-12-3-la-faveur-du-pape-et-le-grand-schisme" data-sec>12.3</a>).</td>
+<td>Grand Schisme (pile pontificale) ; « Cardinaux à Calais » (camp qui ne mène pas)</td>
+<td>+1 OPS sur la <strong>première carte</strong> que ce camp joue dans le tour (section <a href="#r-12-3-la-pile-pontificale-et-le-grand-schisme" data-sec>12.3</a>).</td>
 </tr>
 <tr>
-<td>« Pape d'Avignon » (France), « Pape de Rome » (Angleterre), pendant le Grand Schisme</td>
-<td>Carte de 1 OPS ; une fois jouée, +1 OPS sur la <strong>prochaine carte</strong> que ce camp joue en Influence, Assaut, Siège, Diplomatie ou Légitimité. Elle revient en main au tour suivant (section <a href="#r-12-3-la-faveur-du-pape-et-le-grand-schisme" data-sec>12.3</a>).</td>
-</tr>
-<tr>
-<td>« Concile de Constance » joué</td>
-<td>La « Faveur du pape » ne vaut plus que 1 OPS.</td>
+<td>« Réformes de Charles V » (choix « endiguement »)</td>
+<td>+1 OPS sur toutes les cartes françaises jouées pour leurs OPS jusqu'à la fin du tour, 4 OPS au plus.</td>
 </tr>
 </tbody>
 </table></div>
-<p>Ces modificateurs se cumulent entre catégories, mais une carte d'au moins 1 OPS garde toujours au moins 1 OPS (sauf la règle de Crise ci-dessus). Le bonus du pape ne s'applique pas à la Faveur du pape elle-même ; les malus, si.</p>
+<p>Ces modificateurs se cumulent entre catégories, mais une carte d'au moins 1 OPS garde toujours au moins 1 OPS (sauf la règle de Crise ci-dessus).</p>
 <h3 id="r-6-6-effets-durables">6.6 Effets durables</h3>
 <p>Certains événements restent actifs après avoir été joués : jusqu'à la fin du tour, jusqu'à une autre carte, ou jusqu'à la fin de la partie. L'écran les liste dans les effets en cours.</p>
 <div class="rg-table"><table>
@@ -1218,9 +1236,21 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 </tr>
 <tr>
 <td>Assauts français</td>
-<td>Du Guesclin connétable, Compagnies d'ordonnance, Les frères Bureau (places fortes seulement)</td>
+<td>Du Guesclin connétable, Compagnies d'ordonnance, Les frères Bureau (places fortes seulement), Richemont connétable (au choix)</td>
 <td>+1 aux Assauts français chacun</td>
-<td>Du Guesclin : « Mort de du Guesclin ». Les autres : permanents.</td>
+<td>Du Guesclin : « Mort de du Guesclin ». Richemont : fin du tour suivant. Les autres : permanents.</td>
+</tr>
+<tr>
+<td>Assauts anglais</td>
+<td>Siège de Melun</td>
+<td>−1 aux Assauts anglais</td>
+<td>Fin du tour.</td>
+</tr>
+<tr>
+<td>Sièges anglais</td>
+<td>Le captal de Buch</td>
+<td>+1 aux Sièges anglais en Guyenne</td>
+<td>« Bataille de Cocherel » ou « Reconquête du Poitou ».</td>
 </tr>
 <tr>
 <td>Batailles anglaises</td>
@@ -1244,7 +1274,7 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 <td>Roi captif</td>
 <td>Bataille de Poitiers (victoire)</td>
 <td>−1 OPS sur chaque carte jouée par la France pour ses OPS</td>
-<td>Seulement « Traité de Brétigny », « Rançon du roi Jean » ou « Avènement de Charles V ». Il n'y a plus de libération automatique.</td>
+<td>Seulement « Traité de Brétigny », « La rançon du roi Jean » ou « Avènement de Charles V ». Il n'y a plus de libération automatique.</td>
 </tr>
 <tr>
 <td>Folie de Charles VI</td>
@@ -1254,7 +1284,7 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 </tr>
 <tr>
 <td>Révolte galloise</td>
-<td>Owain Glyndŵr</td>
+<td>La révolte galloise</td>
 <td>−1 OPS sur la première carte anglaise de chaque tour</td>
 <td>« Bataille de Shrewsbury », ou le début de la phase IV (tour 10).</td>
 </tr>
@@ -1273,7 +1303,31 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 <tr>
 <td>Calais imprenable</td>
 <td>Échec bourguignon devant Calais</td>
-<td>Calais ne peut plus être attaquée ni assiégée</td>
+<td>Calais et Guînes ne peuvent plus être attaquées ni assiégées</td>
+<td>Permanent.</td>
+</tr>
+<tr>
+<td>Pale de Calais</td>
+<td>Prise de Guînes</td>
+<td>+1 à la défense de Calais et de Guînes tant que l'Angleterre contrôle Calais</td>
+<td>Permanent.</td>
+</tr>
+<tr>
+<td>David II captif</td>
+<td>Bataille de Neville's Cross</td>
+<td>La Loyauté de l'Écosse ne dépasse pas +1</td>
+<td>Fin de la phase II (tour 7).</td>
+</tr>
+<tr>
+<td>Bourbier</td>
+<td>Siège de Tournai, Siège d'Aiguillon, Échec devant Saint-Malo, Mort de Salisbury</td>
+<td>Le camp enlisé défausse une carte à chaque round (section <a href="#r-6-8-choix-bourbier-transfuge-refonte-b" data-sec>6.8</a>)</td>
+<td>Dé de 1 à 4 ; « Jeanne d'Arc » libère Orléans.</td>
+</tr>
+<tr>
+<td>Décime</td>
+<td>Clément VI achète Avignon (pile pontificale)</td>
+<td>Trésor F +1 par tour tant que la Crise est à 2 ou moins</td>
 <td>Permanent.</td>
 </tr>
 <tr>
@@ -1296,9 +1350,9 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 </tr>
 <tr>
 <td>Grand Schisme</td>
-<td>Grand Schisme d'Occident</td>
-<td>Faveur du pape retirée ; chaque camp tient son pape, carte de 1 OPS qui donne +1 OPS à la carte suivante (section <a href="#r-12-3-la-faveur-du-pape-et-le-grand-schisme" data-sec>12.3</a>)</td>
-<td>« Concile de Constance ».</td>
+<td>Grand Schisme d'Occident (pile pontificale)</td>
+<td>+1 OPS sur la première carte de chaque camp à chaque tour (section <a href="#r-12-3-la-pile-pontificale-et-le-grand-schisme" data-sec>12.3</a>)</td>
+<td>« Concile de Constance ». « Soustraction d'obédience » prive la France de ce bonus un tour.</td>
 </tr>
 <tr>
 <td>Bretagne protégée</td>
@@ -1321,6 +1375,11 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 </tbody>
 </table></div>
 <hr />
+<h3 id="r-6-8-choix-bourbier-transfuge-refonte-b">6.8 Choix, bourbier, transfuge (refonte B)</h3>
+<p><strong>Choix.</strong> Beaucoup d'événements donnent <strong>deux effets au choix</strong> (« Choisis : … ou … »). C'est toujours le <strong>bénéficiaire</strong> de l'événement qui choisit, jamais l'adversaire : pour une carte neutre, le joueur qui la joue ; pour une carte anglaise ou française, son camp, même quand l'adversaire la déclenche par ses OPS. L'écran pose la question avec un bouton par option.</p>
+<p><strong>Bourbier.</strong> Certains sièges historiques enlisent un camp : « Siège de Tournai » et « Échec devant Saint-Malo » (Angleterre), « Siège d'Aiguillon » (France), « Mort de Salisbury » (Angleterre devant Orléans). À chacun de ses rounds, le camp enlisé <strong>défausse une carte de 2 OPS ou plus</strong> au lieu de jouer, puis lance 1d6 : <strong>de 1 à 4</strong>, il se dégage et jouera normalement au round suivant. S'il n'a aucune carte de 2 OPS ou plus, il joue normalement ce round. « Jeanne d'Arc » met fin au bourbier d'Orléans.</p>
+<p><strong>Transfuge.</strong> « Godefroy d'Harcourt » et « Complot de Southampton » jouées à l'ouverture par leur propre camp annulent l'ouverture adverse (section <a href="#r-5-3-l-ouverture" data-sec>5.3</a>).</p>
+<p><strong>Coût optionnel.</strong> Quelques événements proposent de payer du Trésor pour un effet plus fort (« Siège de Saint-Sauveur-le-Vicomte », « Siège de Rouen », « Richard d'York lieutenant en France ») : sans Trésor suffisant, l'effet de repli s'applique.</p>
 <h3 id="r-6-7-fortune-des-armes">6.7 Fortune des armes</h3>
 <p>Onze grandes batailles peuvent tourner court : « Bataille de Crécy », « Bataille de Poitiers », « Bataille d'Azincourt » (anglaises) et « Bataille de Cocherel », « Bataille de Pontvallain », « Bataille de La Rochelle », « Bataille de Roosebeke », « Bataille de Baugé », « Bataille de Patay », « Bataille de Formigny », « Bataille de Castillon » (françaises ou alliées). Quand l'un de ces événements se déclenche, on lance d'abord 1d6 : <strong>sur un 1</strong>, la fortune des armes tourne, l'événement n'a pas lieu, la carte va à la défausse (elle pourra revenir) et <strong>l'adversaire marque 1 point</strong>. Sur 2 à 6, l'événement se résout normalement (y compris le jet de bataille de la section <a href="#r-8-batailles" data-sec>8</a>). Une bataille anglaise annulée par « Lundi noir » n'a pas de jet de Fortune.</p>
 <h2 id="r-7-les-actions-d-ops">7. Les actions d'OPS</h2>
@@ -1361,10 +1420,6 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 </thead>
 <tbody>
 <tr>
-<td>Contrôler au moins un lieu voisin de la cible (un seul bonus, quel que soit le nombre de voisins)</td>
-<td>+1</td>
-</tr>
-<tr>
 <td>Du Guesclin connétable (France)</td>
 <td>+1</td>
 </tr>
@@ -1401,13 +1456,13 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 </ul>
 <p><strong>Trêve.</strong> Un Assaut contre une <strong>place forte</strong> fait <strong>baisser la Trêve de 1</strong>, qu'il réussisse ou non. Si elle tombe à 1, l'attaquant perd la partie.</p>
 <p><strong>Chevauchées.</strong> Les OPS de l'Assaut (levée comprise) comptent comme OPS militaires.</p>
-<p><strong>Exemple d'Assaut détaillé.</strong> Tour 2, Trêve 5, Crise 0. L'Angleterre contrôle Abbeville et a 7 Trésor. Elle joue une carte de 3 OPS contre Rouen (place forte, défense 3, 3 Influence française, aucune Influence anglaise).</p>
+<p><strong>Exemple d'Assaut détaillé.</strong> Tour 2, Trêve 5, Crise 0. L'Angleterre a 7 Trésor. Elle joue une carte de 3 OPS contre Rouen (place forte, défense 3, 3 Influence française, aucune Influence anglaise).</p>
 <ol>
 <li>Levée de compagnies : 3 Trésor, la carte passe à 4 OPS. Trésor : 4.</li>
 <li>Coût de l'Assaut sur place forte : 2 Trésor. Trésor : 2.</li>
 <li>Trésor engagé : 2, soit +1. Trésor : 0.</li>
-<li>Calcul : 1d6 + 4 (OPS) − 6 (défense 3 × 2) + 1 (Abbeville, voisin contrôlé) + 1 (Trésor engagé) = <strong>1d6 + 0</strong>.</li>
-<li>Le dé donne 5 : résultat 5. La France retire ses 3 Influence ; le surplus de 2 devient de l'Influence anglaise à Rouen. Rouen a maintenant 2 Influence anglaise et 0 française : personne ne le contrôle (il faudrait 3 à l'Angleterre).</li>
+<li>Calcul : 1d6 + 4 (OPS) − 6 (défense 3 × 2) + 1 (Trésor engagé) = <strong>1d6 − 1</strong> (les lieux voisins ne comptent qu'au Siège).</li>
+<li>Le dé donne 5 : résultat 4. La France retire ses 3 Influence ; le surplus de 1 devient de l'Influence anglaise à Rouen. Rouen a maintenant 1 Influence anglaise et 0 française : personne ne le contrôle (il faudrait 3 à l'Angleterre).</li>
 <li>La Trêve passe de 5 à 4. L'Angleterre a engagé 4 OPS militaires ce tour.</li>
 </ol>
 <p>Si la même attaque visait Évreux (lieu ouvert, défense 1), le coût ne serait que de 1 Trésor, la Trêve ne bougerait pas, mais tout surplus serait perdu : l'Assaut ne ferait que retirer de l'Influence française.</p>
@@ -1470,7 +1525,7 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 </tbody>
 </table></div>
 <h3 id="r-7-5-diplomatie">7.5 Diplomatie</h3>
-<p><strong>Cible.</strong> Une faction active : Flandre (jusqu'à la fusion de 1384, section <a href="#r-12-4-la-fusion-flandre-bourgogne-1384" data-sec>12.4</a>), Bretagne, Bourgogne, Écosse, Castille ou Navarre. La papauté n'est pas une faction : on ne peut pas la viser par la Diplomatie (section <a href="#r-12-3-la-faveur-du-pape-et-le-grand-schisme" data-sec>12.3</a>).</p>
+<p><strong>Cible.</strong> Une faction active : Flandre (jusqu'à la fusion de 1384, section <a href="#r-12-4-la-fusion-flandre-bourgogne-1384" data-sec>12.4</a>), Bretagne, Bourgogne, Écosse, Castille ou Navarre. La papauté n'est pas une faction : on ne peut pas la viser par la Diplomatie (section <a href="#r-12-3-la-pile-pontificale-et-le-grand-schisme" data-sec>12.3</a>).</p>
 <p><strong>Jet.</strong></p>
 <blockquote>
 <p>1d6 + OPS + bonus + (Trésor engagé ÷ 2) ≥ 5 + valeur absolue de la Loyauté actuelle</p>
@@ -1504,7 +1559,7 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 <p>L'équivalent de la course à l'espace de <em>Twilight Struggle</em>.</p>
 <ul>
 <li><strong>Une tentative par tour</strong> et par camp.</li>
-<li>On vise la case suivante de sa piste. La carte doit donner <strong>au moins le nombre d'OPS requis</strong>, compte tenu des malus et des bonus d'OPS (dont celui du pape, section <a href="#r-12-3-la-faveur-du-pape-et-le-grand-schisme" data-sec>12.3</a>) mais <strong>sans la levée de compagnies</strong>.</li>
+<li>On vise la case suivante de sa piste. La carte doit donner <strong>au moins le nombre d'OPS requis</strong>, compte tenu des malus et des bonus d'OPS (dont celui du Grand Schisme, section <a href="#r-12-3-la-pile-pontificale-et-le-grand-schisme" data-sec>12.3</a>) mais <strong>sans la levée de compagnies</strong>.</li>
 <li>On lance 1d6 : la réussite fait monter la piste d'une case. L'échec ne coûte rien d'autre que la carte.</li>
 <li>L'<strong>événement de la carte ne se déclenche pas</strong>, même s'il s'agit d'une carte adverse.</li>
 </ul>
@@ -1548,7 +1603,7 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 </tbody>
 </table></div>
 <p>Aucun bonus ne modifie le jet lui-même.</p>
-<p><strong>Exemple.</strong> La France est à 4 et vise la case 5 : il lui faut une carte d'au moins 3 OPS. Une carte de 2 OPS avec levée ne suffit pas ; une carte de 2 OPS jouée juste après la « Faveur du pape » (+1 OPS) suffit. Elle réussit sur 3 ou moins, soit 3 chances sur 6.</p>
+<p><strong>Exemple.</strong> La France est à 4 et vise la case 5 : il lui faut une carte d'au moins 3 OPS. Une carte de 2 OPS avec levée ne suffit pas ; une carte de 2 OPS jouée en première carte du tour pendant le Grand Schisme (+1 OPS) suffit. Elle réussit sur 3 ou moins, soit 3 chances sur 6.</p>
 <hr />
 <h2 id="r-8-batailles">8. Batailles</h2>
 <p>Cinq cartes sont des batailles à jet : « Bataille de Crécy », « Bataille de Poitiers », « Bataille d'Azincourt » (anglaises), « Bataille de Formigny » et « Bataille de Castillon » (françaises). Quand leur événement est joué, la bataille se résout ainsi :</p>
@@ -1619,8 +1674,8 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 <ul>
 <li>Elle <strong>remonte de 1</strong> au début de chaque tour (maximum 5).</li>
 <li>Elle <strong>baisse de 1</strong> à chaque Assaut contre une place forte (pas pour les Assauts gratuits des événements).</li>
-<li>Les événements « Confiscation de la Guyenne », « Confiscation de l'Aquitaine », « Usurpation d'Henri IV » et « Sac de Fougères » la font baisser de 1.</li>
-<li>Les événements « Trêve d'Esplechin », « Trêve de Malestroit », « Lundi noir », « Trêve de Bruges », « Paix d'Auxerre », « Médiation du cardinal Albergati » (+1), « Trêve de Leulinghem », « Trêve de vingt-huit ans », « Trêve de Tours » (+2) la font remonter ; « Traité de Brétigny » la remet à 5.</li>
+<li>Trois événements seulement la font baisser de 1 : « Confiscation de la Guyenne », « Confiscation de l'Aquitaine » et « Sac de Fougères » (section <a href="#r-1-3-qui-perd-quand-la-treve-tombe-a-1" data-sec>1.3</a>).</li>
+<li>Des événements la font remonter : « Trêve de Malestroit », « Lundi noir », « Paix fourrées » (+1), « Trêve de Leulinghem », « Trêve de vingt-huit ans », « Trêve de Tours » (+2), et plusieurs cartes de la pile pontificale (« Benoît XII entre les deux rois », « Trêve d'Esplechin », « Cardinaux à Calais », « Trêve de Bruges », « Jubilé de 1450 »…) ; « Traité de Brétigny » la remet à 5.</li>
 </ul>
 <p><strong>Le dilemme des chevauchées.</strong> Plus la Trêve est haute, plus chaque camp doit engager d'OPS militaires pour ne pas offrir de points à l'adversaire ; mais chaque Assaut sur une place forte la fait baisser, et s'approcher de 1 devient dangereux.</p>
 <hr />
@@ -1653,8 +1708,8 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 <p>Chaque camp marque :</p>
 <ul>
 <li>la <strong>valeur du niveau</strong> atteint dans la région (tableau ci-dessous, 0 sans présence) ;</li>
-<li><strong>+1 par place forte</strong> qu'il contrôle dans la région ;</li>
-<li><strong>+1 par lieu contrôlé voisin de la capitale adverse</strong> : Paris pour l'Angleterre (Chartres, Meaux, Montereau, Orléans, Rouen, Saint-Denis), Londres pour la France. Les voisins de Londres étant tous en Angleterre, région jamais décomptée, ce bonus ne profite en pratique qu'à l'Angleterre.</li>
+<li><strong>+1 par place forte</strong> qu'il contrôle dans la région, sauf en Angleterre : les châteaux du royaume ne sont pas des conquêtes ;</li>
+<li><strong>+1 par lieu contrôlé voisin de la capitale adverse</strong> : Paris pour l'Angleterre (Chartres, Mantes, Meaux, Melun, Pontoise, Saint-Denis), Londres pour la France (Douvres, Durham, Pays de Galles, Southampton).</li>
 </ul>
 <p>La <strong>différence</strong> entre les deux camps va au score.</p>
 <div class="rg-table"><table>
@@ -1704,6 +1759,13 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 <td>Phase II</td>
 </tr>
 <tr>
+<td>Écosse</td>
+<td>1</td>
+<td>3</td>
+<td>4</td>
+<td>Phase II</td>
+</tr>
+<tr>
 <td>Languedoc</td>
 <td>2</td>
 <td>4</td>
@@ -1724,12 +1786,19 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 <td>9</td>
 <td>Phase IV</td>
 </tr>
+<tr>
+<td>Angleterre</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>Phase IV</td>
+</tr>
 </tbody>
 </table></div>
 <h3 id="r-10-3-quand-decompte-t-on">10.3 Quand décompte-t-on ?</h3>
 <ul>
 <li>Quand un joueur joue une <strong>carte de décompte</strong> pendant un round d'action. Peu importe qui la joue : la région est comptée pour les deux camps. La carte va ensuite à la défausse.</li>
-<li>À la <strong>fin du tour 12</strong>, toutes les régions sont décomptées dans l'ordre : Guyenne, Flandre, Bretagne, Normandie, Languedoc, Île-de-France, Bourgogne, Val de Loire.</li>
+<li>À la <strong>fin du tour 12</strong>, toutes les régions sont décomptées dans l'ordre : Écosse, Angleterre, Guyenne, Flandre, Bretagne, Normandie, Languedoc, Île-de-France, Bourgogne, Val de Loire.</li>
 </ul>
 <p>Avant de jouer une carte de décompte, l'écran affiche une simulation : niveau de chaque camp, lieux et places fortes contrôlés, points de chacun et score après le décompte.</p>
 <h3 id="r-10-4-exemple-de-decompte-detaille-ile-de-france">10.4 Exemple de décompte détaillé : Île-de-France</h3>
@@ -1817,7 +1886,11 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 <td>+2 ; sinon +1</td>
 </tr>
 <tr>
-<td>Écosse à ±2 ou plus du côté adverse</td>
+<td>Décime de Clément VI (France, Crise à 2 ou moins)</td>
+<td>+1</td>
+</tr>
+<tr>
+<td>Embargo sur la laine (France, si la Flandre penche vers l'Angleterre)</td>
 <td>−1</td>
 </tr>
 </tbody>
@@ -1890,7 +1963,7 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 <hr />
 <h2 id="r-12-factions-loyaute-et-papaute">12. Factions, Loyauté et papauté</h2>
 <h3 id="r-12-1-principe">12.1 Principe</h3>
-<p>Le jeu compte <strong>six factions</strong> : Flandre, Bretagne, Bourgogne, Écosse, Castille et Navarre. Chaque faction a une piste de −3 (ralliée à l'Angleterre) à +3 (ralliée à la France). La Loyauté bouge par la Diplomatie (section <a href="#r-7-5-diplomatie" data-sec>7.5</a>) et par les événements.</p>
+<p>Le jeu compte <strong>six factions</strong> : Flandre, Bretagne, Bourgogne, Écosse, Castille et Navarre. Seule l'Écosse a aussi des lieux sur le plan (section <a href="#r-2-2-les-regions" data-sec>2.2</a>). Chaque faction a une piste de −3 (ralliée à l'Angleterre) à +3 (ralliée à la France). La Loyauté bouge par la Diplomatie (section <a href="#r-7-5-diplomatie" data-sec>7.5</a>) et par les événements.</p>
 <ul>
 <li>À <strong>±2</strong> (« favorable »), la faction donne son premier effet au camp vers lequel elle penche.</li>
 <li>À <strong>±3</strong> (« ralliée »), elle donne en plus son effet de ralliement. Les effets à ±2 restent actifs, sauf quand l'effet à ±3 les remplace (Trésor de la Flandre, bonus d'Assaut de la Bretagne).</li>
@@ -1927,14 +2000,14 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 <tr>
 <td>Écosse</td>
 <td>+2</td>
-<td>Le camp adverse perd 1 Trésor par tour</td>
-<td>En plus, le camp adverse perd 1 OPS sur sa première carte jouée pour ses OPS dans le tour</td>
+<td>+1 aux Sièges en Écosse et à Durham</td>
+<td>1 Influence gratuite par tour en Écosse ; si la France tient Berwick, l'Angleterre perd 1 OPS sur sa première carte du tour</td>
 </tr>
 <tr>
 <td>Castille</td>
 <td>+1</td>
 <td>+1 aux Assauts contre les ports</td>
-<td>Maîtrise de la Manche : Influence dans tous les ports si l'on en contrôle un (section <a href="#r-4-3-la-maitrise-de-la-manche" data-sec>4.3</a>)</td>
+<td>Maîtrise de la mer : liaisons maritimes réservées à ce camp (section <a href="#r-4-3-la-maitrise-de-la-manche" data-sec>4.3</a>)</td>
 </tr>
 <tr>
 <td>Navarre</td>
@@ -1944,24 +2017,192 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 </tr>
 </tbody>
 </table></div>
-<p>Les Influences gratuites et le malus d'OPS de l'Écosse sont donnés au début du tour, après la pioche et avant l'ouverture. Le camp bénéficiaire choisit où placer les Influences gratuites.</p>
-<h3 id="r-12-3-la-faveur-du-pape-et-le-grand-schisme">12.3 La Faveur du pape et le Grand Schisme</h3>
-<p>La papauté n'est pas une faction : elle n'a pas de piste de Loyauté et ne se vise pas par la Diplomatie. Elle est représentée par une carte hors paquet, la « <strong>Faveur du pape</strong> », qui fonctionne comme la carte Chine de <em>Twilight Struggle</em>.</p>
-<p><strong>La carte.</strong></p>
-<ul>
-<li>La <strong>France</strong> la détient au départ. Elle ne compte pas dans la taille de la main, n'est jamais piochée ni défaussée, et peut être gardée d'un tour à l'autre sans pénalité.</li>
-<li>Elle vaut <strong>2 OPS</strong>, et seulement <strong>1 OPS</strong> après le « Concile de Constance ». Les malus d'OPS s'y appliquent comme aux autres cartes (section <a href="#r-6-5-valeur-en-ops-d-une-carte" data-sec>6.5</a>).</li>
-<li>Elle se joue <strong>uniquement pour ses OPS</strong>, pendant un round d'action, pour l'une des cinq actions (Influence, Assaut, Siège, Diplomatie ou Légitimité). Elle n'a <strong>jamais d'événement</strong> et ne se joue <strong>jamais en ouverture</strong>.</li>
-<li>Après l'avoir jouée, le camp gagne <strong>+1 OPS sur la prochaine carte</strong> qu'il joue pour ses OPS, en Influence, Assaut, Siège, Diplomatie ou Légitimité. Ce bonus attend, au besoin jusqu'au tour suivant, la première carte jouée pour ses OPS ; une carte jouée pour son événement ne le consomme pas.</li>
-<li>Une fois jouée, la carte <strong>passe à l'adversaire</strong>, qui ne peut la jouer qu'<strong>au tour suivant</strong>.</li>
-</ul>
-<p><strong>Les événements qui la donnent.</strong> « Trêve d'Esplechin », « Trêve de Bruges », « Urbain V contre les Compagnies » et « Concile de Bâle » donnent la Faveur du pape au <strong>joueur courant</strong> : si l'adversaire la tient, elle quitte sa main, et le joueur courant la reçoit au tour suivant. « Clément VI achète Avignon » la lui donne <strong>tout de suite</strong> : il peut la jouer dès le round suivant. S'il la détient déjà, rien ne change. « Retour de Grégoire XI à Rome » la fait passer à l'Angleterre si la France la détient.</p>
-<p><strong>Le Grand Schisme.</strong></p>
-<ul>
-<li>La carte « <strong>Grand Schisme d'Occident</strong> » ouvre le Schisme : la Faveur du pape est <strong>retirée</strong>, où qu'elle soit, et les événements qui la donnent n'ont plus cet effet.</li>
-<li>Dès le tour suivant et à chaque tour du Schisme, chaque camp reçoit en main <strong>son pape</strong> : le « <strong>Pape d'Avignon</strong> » pour la France, le « <strong>Pape de Rome</strong> » pour l'Angleterre. C'est une carte de <strong>1 OPS</strong>, sans événement, jamais jouée en ouverture, qui se joue comme la Faveur du pape : ensuite, <strong>+1 OPS sur la prochaine carte</strong> que ce camp joue en Influence, Assaut, Siège, Diplomatie ou Légitimité. Elle ne va pas à la défausse : elle revient dans la main de son camp au tour suivant.</li>
-<li>La carte « <strong>Concile de Constance</strong> » clôt le Schisme : les deux papes quittent aussitôt les mains, et la Faveur du pape revient, donnée au joueur courant, qui la reçoit au tour suivant. Elle ne vaut plus que 1 OPS pour le reste de la partie.</li>
-</ul>
+<p>Les Influences gratuites et le malus d'OPS de Berwick sont donnés au début du tour, après la pioche et avant l'ouverture. Le camp bénéficiaire choisit où placer les Influences gratuites.</p>
+<h3 id="r-12-3-la-pile-pontificale-et-le-grand-schisme">12.3 La pile pontificale et le Grand Schisme</h3>
+<p>La papauté n'est pas une faction : elle n'a pas de piste de Loyauté et ne se vise pas par la Diplomatie. Elle n'a plus de carte en main : elle agit par une <strong>pile pontificale</strong> de 24 cartes, six par phase.</p>
+<p><strong>Le tirage.</strong> Au début de chaque tour, avant les bonus des factions et l'ouverture, on tire <strong>une carte</strong> de la pile de la phase et on la résout aussitôt. Personne ne la joue : son effet va au camp désigné sur la carte (le plus faible en Légitimité, celui qui mène au score, les deux camps…). Une carte obligatoire (« Grand Schisme d'Occident » en phase II, « Concile de Constance » en phase III) est toujours tirée pendant sa phase. Trois cartes sur six sortent par phase : les autres restent inconnues.</p>
+<p><strong>Le Grand Schisme.</strong> « Grand Schisme d'Occident » ouvre le Schisme : dès le tour suivant et jusqu'au « Concile de Constance », chaque camp a <strong>+1 OPS sur sa première carte du tour</strong> (son pape, Avignon pour la France, Rome pour l'Angleterre). « Soustraction d'obédience » prive la France de ce bonus pour un tour.</p>
+<div class="rg-table"><table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Carte</th>
+<th>Date</th>
+<th>Au bénéfice de</th>
+<th>Effet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>I</td>
+<td>Benoît XII entre les deux rois</td>
+<td>1337</td>
+<td>Le camp le plus faible en Légitimité</td>
+<td>Trêve +1 ; il choisit : Légitimité +1 ou Trésor +2.</td>
+</tr>
+<tr>
+<td>I</td>
+<td>Excommunication des Flamands</td>
+<td>1340</td>
+<td>France</td>
+<td>Flandre 1 cran vers la France ; l'Angleterre ne peut pas faire de Diplomatie en Flandre ce tour.</td>
+</tr>
+<tr>
+<td>I</td>
+<td>Trêve d'Esplechin</td>
+<td>25 septembre 1340</td>
+<td>Les deux camps</td>
+<td>Trêve +1 ; aucun Siège ce tour.</td>
+</tr>
+<tr>
+<td>I</td>
+<td>Cardinaux à Calais</td>
+<td>1347</td>
+<td>Le camp qui mène au score</td>
+<td>Trêve +2 ; l'autre camp a +1 OPS sur sa première carte du tour.</td>
+</tr>
+<tr>
+<td>I</td>
+<td>Clément VI achète Avignon</td>
+<td>9 juin 1348</td>
+<td>France</td>
+<td>Trésor F +2 ; décime : Trésor F +1 par tour tant que la Crise est à 2 ou moins.</td>
+</tr>
+<tr>
+<td>I</td>
+<td>Décime de Clément VI</td>
+<td>1350</td>
+<td>Le camp qui contrôle Avignon (sinon la France)</td>
+<td>Trésor +3, Crise +1.</td>
+</tr>
+<tr>
+<td>II</td>
+<td>Innocent VI et les négociations de Guînes</td>
+<td>1354</td>
+<td>Les deux camps</td>
+<td>Trêve +1 ; chaque camp peut déplacer 1 Influence.</td>
+</tr>
+<tr>
+<td>II</td>
+<td>Urbain V contre les Compagnies</td>
+<td>1364-1365</td>
+<td>Le camp qui a le plus d'Influence en Languedoc</td>
+<td>L'adversaire perd 2 Influence en Languedoc.</td>
+</tr>
+<tr>
+<td>II</td>
+<td>Dispense refusée</td>
+<td>1364</td>
+<td>France</td>
+<td>Le pape refuse le mariage flamand d'Edmond de Langley : Flandre 1 cran vers la France.</td>
+</tr>
+<tr>
+<td>II</td>
+<td>Trêve de Bruges</td>
+<td>27 juin 1375</td>
+<td>Les deux camps</td>
+<td>Trêve +2 ; aucun Assaut pendant l'ouverture et le premier round.</td>
+</tr>
+<tr>
+<td>II</td>
+<td>Retour de Grégoire XI à Rome</td>
+<td>17 janvier 1377</td>
+<td>Angleterre</td>
+<td>La papauté quitte Avignon : Légitimité A +1.</td>
+</tr>
+<tr>
+<td>II</td>
+<td>Grand Schisme d'Occident (obligatoire)</td>
+<td>20 septembre 1378</td>
+<td>Chaque camp (son pape)</td>
+<td>Jusqu'au Concile de Constance, chaque camp a +1 OPS sur sa première carte de chaque tour.</td>
+</tr>
+<tr>
+<td>III</td>
+<td>Croisade de Nicopolis</td>
+<td>25 septembre 1396</td>
+<td>Les deux camps</td>
+<td>Chaque camp perd 1 Influence ; Trêve +1.</td>
+</tr>
+<tr>
+<td>III</td>
+<td>Soustraction d'obédience</td>
+<td>1398</td>
+<td>Angleterre</td>
+<td>La France retire son obédience à Benoît XIII : son bonus du Schisme s'arrête ce tour.</td>
+</tr>
+<tr>
+<td>III</td>
+<td>Concile de Pise</td>
+<td>1409</td>
+<td>Le camp le plus faible en Légitimité</td>
+<td>Légitimité +1.</td>
+</tr>
+<tr>
+<td>III</td>
+<td>Concile de Constance (obligatoire)</td>
+<td>1414-1418</td>
+<td>Le camp qui mène au score</td>
+<td>Fin du Grand Schisme ; Légitimité +1.</td>
+</tr>
+<tr>
+<td>III</td>
+<td>Benoît XIII s'entête</td>
+<td>1417</td>
+<td>Angleterre</td>
+<td>Le pape de Peñíscola garde la Castille : Castille 1 cran vers l'Angleterre.</td>
+</tr>
+<tr>
+<td>III</td>
+<td>Martin V élu</td>
+<td>11 novembre 1417</td>
+<td>Les deux camps</td>
+<td>Crise −1.</td>
+</tr>
+<tr>
+<td>IV</td>
+<td>Légats de Martin V</td>
+<td>1423</td>
+<td>Le camp le plus faible en Légitimité</td>
+<td>Trêve +1 ; Trésor +2.</td>
+</tr>
+<tr>
+<td>IV</td>
+<td>Concile de Bâle</td>
+<td>1431-1449</td>
+<td>France</td>
+<td>Légitimité F +1, Crise −1.</td>
+</tr>
+<tr>
+<td>IV</td>
+<td>Médiation du cardinal Albergati</td>
+<td>août 1435</td>
+<td>Le camp le moins favorisé par la Bourgogne</td>
+<td>Bourgogne 1 cran vers lui.</td>
+</tr>
+<tr>
+<td>IV</td>
+<td>Eugène IV contre Bâle</td>
+<td>1439</td>
+<td>Angleterre</td>
+<td>Trésor A +2.</td>
+</tr>
+<tr>
+<td>IV</td>
+<td>Jubilé de 1450</td>
+<td>1450</td>
+<td>Les deux camps</td>
+<td>Crise −1, Trêve +1.</td>
+</tr>
+<tr>
+<td>IV</td>
+<td>Enquête du cardinal d'Estouteville</td>
+<td>1452</td>
+<td>France</td>
+<td>Première enquête pour la réhabilitation de Jeanne : Légitimité F +1.</td>
+</tr>
+</tbody>
+</table></div>
 <h3 id="r-12-4-la-fusion-flandre-bourgogne-1384">12.4 La fusion Flandre-Bourgogne (1384)</h3>
 <p>Après la carte « <strong>Héritage flamand de Philippe le Hardi</strong> » :</p>
 <ul>
@@ -1999,7 +2240,7 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 </tr>
 </tbody>
 </table></div>
-<p>La partie en cours est enregistrée dans le navigateur et peut être reprise depuis l'accueil. Une page « Règles en bref » et ce livret complet sont accessibles à tout moment. Le tutoriel animé est en refonte pour cette version des règles et n'est provisoirement pas disponible.</p>
+<p>La partie en cours est enregistrée dans le navigateur et peut être reprise depuis l'accueil. Une page « Règles en bref » et ce livret complet sont accessibles à tout moment. Le didacticiel animé (« Apprendre à jouer ») présente ces règles en quatorze chapitres, avec des exemples à manipuler. La « Galerie des cartes », sur l'accueil et pendant la partie, montre les 235 cartes avec leur image, leur effet, leur contexte historique, leurs prérequis et leurs interdits, avec une recherche et des filtres par phase, camp et type.</p>
 <h3 id="r-13-2-niveaux-de-l-ia">13.2 Niveaux de l'IA</h3>
 <div class="rg-table"><table>
 <thead>
@@ -2025,10 +2266,16 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 <td><strong>Roi</strong></td>
 <td>Fort : comme le Connétable, et il simule en plus la réponse adverse à ses meilleurs coups.</td>
 </tr>
+<tr>
+<td><strong>Empereur</strong></td>
+<td>Comme le Roi, avec une évaluation apprise sur des milliers de parties (rejouée après chaque changement de règles).</td>
+</tr>
+<tr>
+<td><strong>Légende</strong></td>
+<td>Comme l'Empereur, et il joue la suite du tour : pour ses meilleurs coups, il imagine la main adverse parmi les cartes qu'il ne voit pas et simule les coups suivants.</td>
+</tr>
 </tbody>
 </table></div>
-<p>| <strong>Empereur</strong> | Comme le Roi, avec une évaluation apprise sur des milliers de parties (rejouée après chaque changement de règles). |
-| <strong>Légende</strong> | Comme l'Empereur, et il joue la suite du tour : pour ses meilleurs coups, il imagine la main adverse parmi les cartes qu'il ne voit pas et simule les coups suivants. |</p>
 <h3 id="r-13-3-tableau-d-honneur">13.3 Tableau d'honneur</h3>
 <p>Chaque partie terminée est inscrite au tableau d'honneur de l'appareil, sous le nom du roi vainqueur de la phase où la partie s'achève (pour la France : Jean II le Bon en phase I, Charles V le Sage en phase II, Charles VI le Bien-Aimé en phase III, Charles VII le Victorieux en phase IV ; pour l'Angleterre : Édouard III, Richard II, Henri V et Henri VI), avec le type de victoire, le nombre de tours, les <strong>points</strong> et l'adversaire, et la <strong>carte décisive</strong> (l'événement ou le décompte qui a donné la victoire). Les points sont les points réels : la piste de score s'arrête à 25, mais le tableau d'honneur garde le total atteint (par exemple 31 si le dernier décompte a porté le score de 22 à 31). Le classement met en tête le plus grand nombre de points, puis la victoire la plus rapide. Les 15 meilleures parties sont affichées ; le tableau est gardé dans le navigateur.</p>
 <hr />
@@ -2110,16 +2357,20 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 <td>Faction à ±2 / à ±3 sur sa piste de Loyauté (section <a href="#r-12-factions-loyaute-et-papaute" data-sec>12</a>).</td>
 </tr>
 <tr>
-<td><strong>Faveur du pape</strong></td>
-<td>Carte hors paquet de 2 OPS (1 après le « Concile de Constance »), jouée seulement pour ses OPS, qui passe ensuite à l'adversaire (section <a href="#r-12-3-la-faveur-du-pape-et-le-grand-schisme" data-sec>12.3</a>).</td>
-</tr>
-<tr>
 <td><strong>Grand Schisme</strong></td>
-<td>Période entre « Grand Schisme d'Occident » et « Concile de Constance » : la Faveur du pape est retirée et chaque camp tient son pape, carte de 1 OPS qui donne +1 OPS à la carte suivante (section <a href="#r-12-3-la-faveur-du-pape-et-le-grand-schisme" data-sec>12.3</a>).</td>
+<td>Période entre « Grand Schisme d'Occident » et « Concile de Constance », deux cartes de la pile pontificale : +1 OPS sur la première carte de chaque camp à chaque tour (section <a href="#r-12-3-la-pile-pontificale-et-le-grand-schisme" data-sec>12.3</a>).</td>
 </tr>
 <tr>
-<td><strong>Hors paquet</strong></td>
-<td>Carte jamais piochée ni défaussée : la Faveur du pape et les deux cartes de rappel des papes.</td>
+<td><strong>Pile pontificale</strong></td>
+<td>Six cartes de la papauté par phase ; une est tirée et résolue au début de chaque tour (section <a href="#r-12-3-la-pile-pontificale-et-le-grand-schisme" data-sec>12.3</a>).</td>
+</tr>
+<tr>
+<td><strong>Bourbier</strong></td>
+<td>Camp enlisé dans un siège : il défausse une carte de 2 OPS ou plus à chaque round jusqu'à un dé de 1 à 4 (section <a href="#r-6-8-choix-bourbier-transfuge-refonte-b" data-sec>6.8</a>).</td>
+</tr>
+<tr>
+<td><strong>Liaison maritime</strong></td>
+<td>Liaison par la mer, réservée au camp qui a la maîtrise de la mer, ou aux deux si personne ne l'a (section <a href="#r-4-3-la-maitrise-de-la-manche" data-sec>4.3</a>).</td>
 </tr>
 <tr>
 <td><strong>Inf.</strong></td>
@@ -2142,8 +2393,8 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 <td>Lieu qui n'est pas une place forte.</td>
 </tr>
 <tr>
-<td><strong>Maîtrise de la Manche</strong></td>
-<td>Permet de placer de l'Influence dans tous les ports si l'on en contrôle un (section <a href="#r-4-3-la-maitrise-de-la-manche" data-sec>4.3</a>).</td>
+<td><strong>Maîtrise de la mer</strong></td>
+<td>Réserve les liaisons maritimes au camp qui la détient (section <a href="#r-4-3-la-maitrise-de-la-manche" data-sec>4.3</a>).</td>
 </tr>
 <tr>
 <td><strong>Occupation</strong></td>
@@ -2262,7 +2513,7 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 <td><a href="#r-4-2-ou-peut-on-placer-de-l-influence" data-sec>4.2</a></td>
 </tr>
 <tr>
-<td>La maîtrise de la Manche</td>
+<td>La maîtrise de la mer et les liaisons maritimes</td>
 <td><a href="#r-4-3-la-maitrise-de-la-manche" data-sec>4.3</a></td>
 </tr>
 <tr>
@@ -2354,8 +2605,12 @@ body{margin:0;font-family:var(--f-texte)} .feuille.regles{margin:0 auto;height:1
 <td><a href="#r-12-2-tableau-des-factions" data-sec>12.2</a></td>
 </tr>
 <tr>
-<td>La Faveur du pape et le Grand Schisme</td>
-<td><a href="#r-12-3-la-faveur-du-pape-et-le-grand-schisme" data-sec>12.3</a></td>
+<td>La pile pontificale et le Grand Schisme</td>
+<td><a href="#r-12-3-la-pile-pontificale-et-le-grand-schisme" data-sec>12.3</a></td>
+</tr>
+<tr>
+<td>Les choix, le bourbier et le transfuge</td>
+<td><a href="#r-6-8-choix-bourbier-transfuge-refonte-b" data-sec>6.8</a></td>
 </tr>
 <tr>
 <td>La fusion Flandre-Bourgogne</td>
