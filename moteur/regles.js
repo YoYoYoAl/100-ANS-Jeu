@@ -438,7 +438,7 @@ export function decompter(D, g, r) {
 }
 
 // ---------------------------------------------------------------- jouer une carte
-import { EFFETS, EFFETS_PONT } from "./effets.js?v=44b94b24";
+import { EFFETS, EFFETS_PONT } from "./effets.js?v=add5abc0";
 // prérequis stricts : la carte requise doit avoir été jouée pour son événement (règnes, Jeanne d'Arc, Schisme) ; pour les autres, il suffit qu'elle soit sortie
 export const PREREQ_STRICTS = new Set(["Mort de Charles V", "Folie de Charles VI", "Mort de Charles VI", "Mort d'Henri V", "Mort de Bedford", "Bedford régent",
   "Bataille de Patay", "Sacre de Charles VII à Reims", "Capture à Compiègne", "Campagne de la Loire", "Échec devant Paris", "Procès de Rouen",
@@ -599,13 +599,23 @@ export function choisir(D, g, c, titre, options) {
 }
 // Bourbier (Quagmire de Twilight) : à chacun de ses rounds, le camp enlisé défausse une carte de 2 OPS ou plus et lance un dé ; 1 à 4 le libère
 export function enliser(g, c, nom) { (g.statuts.bourbier ||= {})[c] = nom; }
-function roundBourbier(D, g, c) {
+export function roundBourbier(D, g, c) {
   const nom = g.statuts.bourbier?.[c];
   if (!nom) return false;
   const ids = g.mains[c].filter(x => !estPape(D, x) && !carte(D, x).decompte && carte(D, x).ops >= 2);
   if (!ids.length) return false; // aucune carte assez forte : le camp joue normalement
-  choisir(D, g, c, `${nom} : défaussez une carte de 2 OPS ou plus`, ids.map(id => ({ t: carte(D, id).nom, id, f: h => {
-    h.mains[c] = h.mains[c].filter(x => x !== id); h.defausse.push(id); h.sortis[carte(D, id).nom] = true; } })));
+  // AlwwAl (26/10) : une carte de décompte en main peut être jouée à la place ; elle remplace la défausse
+  // et met fin au bourbier (pas de dé)
+  const dec = g.mains[c].filter(x => carte(D, x).decompte);
+  const i = choisir(D, g, c, `${nom} : défaussez une carte de 2 OPS ou plus${dec.length ? " ou jouez votre décompte" : ""}`, [
+    ...dec.map(id => ({ t: `jouer « ${carte(D, id).nom} » à la place (fin du bourbier)`, decompte: id, f: h => jouer(D, h, c, { id, mode: "evenement" }) })),
+    ...ids.map(id => ({ t: carte(D, id).nom, id, f: h => {
+      h.mains[c] = h.mains[c].filter(x => x !== id); h.defausse.push(id); h.sortis[carte(D, id).nom] = true; } }))]);
+  if (i < dec.length) {
+    delete g.statuts.bourbier[c];
+    etape(g, { k: "info", camp: c, titre: nom, txt: `${nom} : le décompte joué met fin au bourbier, ${c === A ? "l'Angleterre" : "la France"} se dégage.` });
+    return true;
+  }
   const d = de(g);
   if (d <= 4) delete g.statuts.bourbier[c];
   etape(g, { k: "info", camp: c, titre: nom, txt: `${nom} : dé ${d}, ${d <= 4 ? `${c === A ? "l'Angleterre" : "la France"} se dégage` : "toujours enlisé"}.` });
